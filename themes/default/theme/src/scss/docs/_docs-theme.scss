@@ -530,6 +530,21 @@ html[data-theme="dark"] body.section-registry {
         }
     }
 
+    // Deprecation callout in an enum value table (_tables.scss); matches the
+    // property-table callout below.
+    .enum-values .property-message {
+        background-color: var(--color-orange-950);
+        color: var(--color-orange-300);
+
+        code {
+            background-color: color-mix(
+                in oklch,
+                var(--color-orange-300) 22%,
+                transparent
+            );
+        }
+    }
+
     // --- Definition-list "tables" (_lists.scss) — the API property tables. Same
     // flip as <table>: the dl + dt carry the gray surface, dd is the value cell.
     // <p> inside dd is already force-flipped to --docs-fg by the base rule, so

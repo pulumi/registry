@@ -14,3 +14,38 @@ table {
         @apply bg-white;
     }
 }
+
+// Enum value tables in API docs Supporting Types. The wrapper scrolls so long Go member names don't push the page
+// wider than a phone screen.
+.enum-values {
+    @apply mt-4 mb-8 overflow-x-auto;
+
+    table {
+        @apply w-full m-0 text-sm;
+    }
+
+    td {
+        @apply align-top break-words;
+
+        p {
+            @apply my-0;
+
+            &:not(:first-child) {
+                @apply mt-2;
+            }
+        }
+    }
+
+    // Only the tooltip target, so the bubble's own text isn't struck through.
+    .enum-deprecated .tooltip-target {
+        @apply line-through;
+    }
+
+    .property-message {
+        @apply bg-orange-200 text-orange-600 mt-2 px-3 py-2 rounded;
+
+        code {
+            @apply bg-orange-200;
+        }
+    }
+}

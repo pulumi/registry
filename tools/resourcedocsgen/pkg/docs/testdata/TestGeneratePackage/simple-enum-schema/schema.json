@@ -218,7 +218,8 @@
           "value": "small"
         },
         {
-          "value": "medium"
+          "value": "medium",
+          "description": "\n"
         },
         {
           "value": "large"

@@ -1414,64 +1414,106 @@ Enum<wbr>Thing<pulumi-choosable type="language" values="python,go" class="inline
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>Four</dt>
-    <dd><code>4</code></dd><dt>Six</dt>
-    <dd><code>6</code></dd><dt>Eight</dt>
-    <dd><code>8</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Four</td><td><code>4</code></td></tr>
+<tr><td>Six</td><td><code>6</code></td></tr>
+<tr><td>Eight</td><td><code>8</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Enum<wbr>Thing<wbr>Four</dt>
-    <dd><code>4</code></dd><dt>Enum<wbr>Thing<wbr>Six</dt>
-    <dd><code>6</code></dd><dt>Enum<wbr>Thing<wbr>Eight</dt>
-    <dd><code>8</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Enum<wbr>Thing<wbr>Four</td><td><code>4</code></td></tr>
+<tr><td>Enum<wbr>Thing<wbr>Six</td><td><code>6</code></td></tr>
+<tr><td>Enum<wbr>Thing<wbr>Eight</td><td><code>8</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>'\x04'</dt>
-    <dd><code>4</code></dd><dt>'\x06'</dt>
-    <dd><code>6</code></dd><dt>'\b'</dt>
-    <dd><code>8</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>4</code></td></tr>
+<tr><td><code>6</code></td></tr>
+<tr><td><code>8</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>Four</dt>
-    <dd><code>4</code></dd><dt>Six</dt>
-    <dd><code>6</code></dd><dt>Eight</dt>
-    <dd><code>8</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Four</td><td><code>4</code></td></tr>
+<tr><td>Six</td><td><code>6</code></td></tr>
+<tr><td>Eight</td><td><code>8</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>Four</dt>
-    <dd><code>4</code></dd><dt>Six</dt>
-    <dd><code>6</code></dd><dt>Eight</dt>
-    <dd><code>8</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Four</td><td><code>4</code></td></tr>
+<tr><td>Six</td><td><code>6</code></td></tr>
+<tr><td>Eight</td><td><code>8</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>FOUR</dt>
-    <dd><code>4</code></dd><dt>SIX</dt>
-    <dd><code>6</code></dd><dt>EIGHT</dt>
-    <dd><code>8</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>FOUR</td><td><code>4</code></td></tr>
+<tr><td>SIX</td><td><code>6</code></td></tr>
+<tr><td>EIGHT</td><td><code>8</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>'\x04'</dt>
-    <dd><code>4</code></dd><dt>'\x06'</dt>
-    <dd><code>6</code></dd><dt>'\b'</dt>
-    <dd><code>8</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>4</code></td></tr>
+<tr><td><code>6</code></td></tr>
+<tr><td><code>8</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 

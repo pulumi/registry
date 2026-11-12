@@ -1981,57 +1981,99 @@ APIKey<wbr>Source<pulumi-choosable type="language" values="python,go" class="inl
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>HEADER</dt>
-    <dd><code>HEADER</code></dd><dt>AUTHORIZER</dt>
-    <dd><code>AUTHORIZER</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>HEADER</td><td><code>HEADER</code></td></tr>
+<tr><td>AUTHORIZER</td><td><code>AUTHORIZER</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>APIKey<wbr>Source<wbr>HEADER</dt>
-    <dd><code>HEADER</code></dd><dt>APIKey<wbr>Source<wbr>AUTHORIZER</dt>
-    <dd><code>AUTHORIZER</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>APIKey<wbr>Source<wbr>HEADER</td><td><code>HEADER</code></td></tr>
+<tr><td>APIKey<wbr>Source<wbr>AUTHORIZER</td><td><code>AUTHORIZER</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"HEADER"</dt>
-    <dd><code>HEADER</code></dd><dt>"AUTHORIZER"</dt>
-    <dd><code>AUTHORIZER</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>HEADER</code></td></tr>
+<tr><td><code>AUTHORIZER</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>HEADER</dt>
-    <dd><code>HEADER</code></dd><dt>AUTHORIZER</dt>
-    <dd><code>AUTHORIZER</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>HEADER</td><td><code>HEADER</code></td></tr>
+<tr><td>AUTHORIZER</td><td><code>AUTHORIZER</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>HEADER</dt>
-    <dd><code>HEADER</code></dd><dt>AUTHORIZER</dt>
-    <dd><code>AUTHORIZER</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>HEADER</td><td><code>HEADER</code></td></tr>
+<tr><td>AUTHORIZER</td><td><code>AUTHORIZER</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>HEADER</dt>
-    <dd><code>HEADER</code></dd><dt>AUTHORIZER</dt>
-    <dd><code>AUTHORIZER</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>HEADER</td><td><code>HEADER</code></td></tr>
+<tr><td>AUTHORIZER</td><td><code>AUTHORIZER</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"HEADER"</dt>
-    <dd><code>HEADER</code></dd><dt>"AUTHORIZER"</dt>
-    <dd><code>AUTHORIZER</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>HEADER</code></td></tr>
+<tr><td><code>AUTHORIZER</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
@@ -2852,57 +2894,99 @@ Integration<wbr>Connection<wbr>Type<pulumi-choosable type="language" values="pyt
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>INTERNET</dt>
-    <dd><code>INTERNET</code></dd><dt>VPC_LINK</dt>
-    <dd><code>VPC_LINK</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>INTERNET</td><td><code>INTERNET</code></td></tr>
+<tr><td>VPC_LINK</td><td><code>VPC_LINK</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Integration<wbr>Connection<wbr>Type<wbr>INTERNET</dt>
-    <dd><code>INTERNET</code></dd><dt>Integration<wbr>Connection<wbr>Type_VPC_LINK</dt>
-    <dd><code>VPC_LINK</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Integration<wbr>Connection<wbr>Type<wbr>INTERNET</td><td><code>INTERNET</code></td></tr>
+<tr><td>Integration<wbr>Connection<wbr>Type_VPC_LINK</td><td><code>VPC_LINK</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"INTERNET"</dt>
-    <dd><code>INTERNET</code></dd><dt>"VPC_LINK"</dt>
-    <dd><code>VPC_LINK</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>INTERNET</code></td></tr>
+<tr><td><code>VPC_LINK</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>INTERNET</dt>
-    <dd><code>INTERNET</code></dd><dt>VPC_LINK</dt>
-    <dd><code>VPC_LINK</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>INTERNET</td><td><code>INTERNET</code></td></tr>
+<tr><td>VPC_LINK</td><td><code>VPC_LINK</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>INTERNET</dt>
-    <dd><code>INTERNET</code></dd><dt>VPC_LINK</dt>
-    <dd><code>VPC_LINK</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>INTERNET</td><td><code>INTERNET</code></td></tr>
+<tr><td>VPC_LINK</td><td><code>VPC_LINK</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>INTERNET</dt>
-    <dd><code>INTERNET</code></dd><dt>VP_C_LINK</dt>
-    <dd><code>VPC_LINK</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>INTERNET</td><td><code>INTERNET</code></td></tr>
+<tr><td>VP_C_LINK</td><td><code>VPC_LINK</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"INTERNET"</dt>
-    <dd><code>INTERNET</code></dd><dt>"VPC_LINK"</dt>
-    <dd><code>VPC_LINK</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>INTERNET</code></td></tr>
+<tr><td><code>VPC_LINK</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
@@ -2912,64 +2996,106 @@ Integration<wbr>Passthrough<wbr>Behavior<pulumi-choosable type="language" values
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>When_<wbr>no_<wbr>match</dt>
-    <dd><code>when_no_match</code></dd><dt>When_<wbr>no_<wbr>templates</dt>
-    <dd><code>when_no_templates</code></dd><dt>Never</dt>
-    <dd><code>never</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>When_<wbr>no_<wbr>match</td><td><code>when_no_match</code></td></tr>
+<tr><td>When_<wbr>no_<wbr>templates</td><td><code>when_no_templates</code></td></tr>
+<tr><td>Never</td><td><code>never</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Integration<wbr>Passthrough<wbr>Behavior_When_<wbr>no_<wbr>match</dt>
-    <dd><code>when_no_match</code></dd><dt>Integration<wbr>Passthrough<wbr>Behavior_When_<wbr>no_<wbr>templates</dt>
-    <dd><code>when_no_templates</code></dd><dt>Integration<wbr>Passthrough<wbr>Behavior<wbr>Never</dt>
-    <dd><code>never</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Integration<wbr>Passthrough<wbr>Behavior_When_<wbr>no_<wbr>match</td><td><code>when_no_match</code></td></tr>
+<tr><td>Integration<wbr>Passthrough<wbr>Behavior_When_<wbr>no_<wbr>templates</td><td><code>when_no_templates</code></td></tr>
+<tr><td>Integration<wbr>Passthrough<wbr>Behavior<wbr>Never</td><td><code>never</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"when_<wbr>no_<wbr>match"</dt>
-    <dd><code>when_no_match</code></dd><dt>"when_<wbr>no_<wbr>templates"</dt>
-    <dd><code>when_no_templates</code></dd><dt>"never"</dt>
-    <dd><code>never</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>when_no_match</code></td></tr>
+<tr><td><code>when_no_templates</code></td></tr>
+<tr><td><code>never</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>When_<wbr>no_<wbr>match</dt>
-    <dd><code>when_no_match</code></dd><dt>When_<wbr>no_<wbr>templates</dt>
-    <dd><code>when_no_templates</code></dd><dt>Never</dt>
-    <dd><code>never</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>When_<wbr>no_<wbr>match</td><td><code>when_no_match</code></td></tr>
+<tr><td>When_<wbr>no_<wbr>templates</td><td><code>when_no_templates</code></td></tr>
+<tr><td>Never</td><td><code>never</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>When_<wbr>no_<wbr>match</dt>
-    <dd><code>when_no_match</code></dd><dt>When_<wbr>no_<wbr>templates</dt>
-    <dd><code>when_no_templates</code></dd><dt>Never</dt>
-    <dd><code>never</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>When_<wbr>no_<wbr>match</td><td><code>when_no_match</code></td></tr>
+<tr><td>When_<wbr>no_<wbr>templates</td><td><code>when_no_templates</code></td></tr>
+<tr><td>Never</td><td><code>never</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>WHEN_NO_MATCH</dt>
-    <dd><code>when_no_match</code></dd><dt>WHEN_NO_TEMPLATES</dt>
-    <dd><code>when_no_templates</code></dd><dt>NEVER</dt>
-    <dd><code>never</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>WHEN_NO_MATCH</td><td><code>when_no_match</code></td></tr>
+<tr><td>WHEN_NO_TEMPLATES</td><td><code>when_no_templates</code></td></tr>
+<tr><td>NEVER</td><td><code>never</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"when_<wbr>no_<wbr>match"</dt>
-    <dd><code>when_no_match</code></dd><dt>"when_<wbr>no_<wbr>templates"</dt>
-    <dd><code>when_no_templates</code></dd><dt>"never"</dt>
-    <dd><code>never</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>when_no_match</code></td></tr>
+<tr><td><code>when_no_templates</code></td></tr>
+<tr><td><code>never</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
@@ -2979,78 +3105,120 @@ Integration<wbr>Type<pulumi-choosable type="language" values="python,go" class="
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>Aws</dt>
-    <dd><code>aws</code></dd><dt>Aws_<wbr>proxy</dt>
-    <dd><code>aws_proxy</code></dd><dt>Http</dt>
-    <dd><code>http</code></dd><dt>Http_<wbr>proxy</dt>
-    <dd><code>http_proxy</code></dd><dt>Mock</dt>
-    <dd><code>mock</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Aws</td><td><code>aws</code></td></tr>
+<tr><td>Aws_<wbr>proxy</td><td><code>aws_proxy</code></td></tr>
+<tr><td>Http</td><td><code>http</code></td></tr>
+<tr><td>Http_<wbr>proxy</td><td><code>http_proxy</code></td></tr>
+<tr><td>Mock</td><td><code>mock</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Integration<wbr>Type<wbr>Aws</dt>
-    <dd><code>aws</code></dd><dt>Integration<wbr>Type_Aws_<wbr>proxy</dt>
-    <dd><code>aws_proxy</code></dd><dt>Integration<wbr>Type<wbr>Http</dt>
-    <dd><code>http</code></dd><dt>Integration<wbr>Type_Http_<wbr>proxy</dt>
-    <dd><code>http_proxy</code></dd><dt>Integration<wbr>Type<wbr>Mock</dt>
-    <dd><code>mock</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Integration<wbr>Type<wbr>Aws</td><td><code>aws</code></td></tr>
+<tr><td>Integration<wbr>Type_Aws_<wbr>proxy</td><td><code>aws_proxy</code></td></tr>
+<tr><td>Integration<wbr>Type<wbr>Http</td><td><code>http</code></td></tr>
+<tr><td>Integration<wbr>Type_Http_<wbr>proxy</td><td><code>http_proxy</code></td></tr>
+<tr><td>Integration<wbr>Type<wbr>Mock</td><td><code>mock</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"aws"</dt>
-    <dd><code>aws</code></dd><dt>"aws_<wbr>proxy"</dt>
-    <dd><code>aws_proxy</code></dd><dt>"http"</dt>
-    <dd><code>http</code></dd><dt>"http_<wbr>proxy"</dt>
-    <dd><code>http_proxy</code></dd><dt>"mock"</dt>
-    <dd><code>mock</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>aws</code></td></tr>
+<tr><td><code>aws_proxy</code></td></tr>
+<tr><td><code>http</code></td></tr>
+<tr><td><code>http_proxy</code></td></tr>
+<tr><td><code>mock</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>Aws</dt>
-    <dd><code>aws</code></dd><dt>Aws_<wbr>proxy</dt>
-    <dd><code>aws_proxy</code></dd><dt>Http</dt>
-    <dd><code>http</code></dd><dt>Http_<wbr>proxy</dt>
-    <dd><code>http_proxy</code></dd><dt>Mock</dt>
-    <dd><code>mock</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Aws</td><td><code>aws</code></td></tr>
+<tr><td>Aws_<wbr>proxy</td><td><code>aws_proxy</code></td></tr>
+<tr><td>Http</td><td><code>http</code></td></tr>
+<tr><td>Http_<wbr>proxy</td><td><code>http_proxy</code></td></tr>
+<tr><td>Mock</td><td><code>mock</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>Aws</dt>
-    <dd><code>aws</code></dd><dt>Aws_<wbr>proxy</dt>
-    <dd><code>aws_proxy</code></dd><dt>Http</dt>
-    <dd><code>http</code></dd><dt>Http_<wbr>proxy</dt>
-    <dd><code>http_proxy</code></dd><dt>Mock</dt>
-    <dd><code>mock</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Aws</td><td><code>aws</code></td></tr>
+<tr><td>Aws_<wbr>proxy</td><td><code>aws_proxy</code></td></tr>
+<tr><td>Http</td><td><code>http</code></td></tr>
+<tr><td>Http_<wbr>proxy</td><td><code>http_proxy</code></td></tr>
+<tr><td>Mock</td><td><code>mock</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>AWS</dt>
-    <dd><code>aws</code></dd><dt>AWS_PROXY</dt>
-    <dd><code>aws_proxy</code></dd><dt>HTTP</dt>
-    <dd><code>http</code></dd><dt>HTTP_PROXY</dt>
-    <dd><code>http_proxy</code></dd><dt>MOCK</dt>
-    <dd><code>mock</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>AWS</td><td><code>aws</code></td></tr>
+<tr><td>AWS_PROXY</td><td><code>aws_proxy</code></td></tr>
+<tr><td>HTTP</td><td><code>http</code></td></tr>
+<tr><td>HTTP_PROXY</td><td><code>http_proxy</code></td></tr>
+<tr><td>MOCK</td><td><code>mock</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"aws"</dt>
-    <dd><code>aws</code></dd><dt>"aws_<wbr>proxy"</dt>
-    <dd><code>aws_proxy</code></dd><dt>"http"</dt>
-    <dd><code>http</code></dd><dt>"http_<wbr>proxy"</dt>
-    <dd><code>http_proxy</code></dd><dt>"mock"</dt>
-    <dd><code>mock</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>aws</code></td></tr>
+<tr><td><code>aws_proxy</code></td></tr>
+<tr><td><code>http</code></td></tr>
+<tr><td><code>http_proxy</code></td></tr>
+<tr><td><code>mock</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
@@ -3060,99 +3228,141 @@ Method<pulumi-choosable type="language" values="python,go" class="inline">, Meth
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>ANY</dt>
-    <dd><code>ANY</code></dd><dt>GET</dt>
-    <dd><code>GET</code></dd><dt>PUT</dt>
-    <dd><code>PUT</code></dd><dt>POST</dt>
-    <dd><code>POST</code></dd><dt>DELETE</dt>
-    <dd><code>DELETE</code></dd><dt>PATCH</dt>
-    <dd><code>PATCH</code></dd><dt>OPTIONS</dt>
-    <dd><code>OPTIONS</code></dd><dt>HEAD</dt>
-    <dd><code>HEAD</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ANY</td><td><code>ANY</code></td></tr>
+<tr><td>GET</td><td><code>GET</code></td></tr>
+<tr><td>PUT</td><td><code>PUT</code></td></tr>
+<tr><td>POST</td><td><code>POST</code></td></tr>
+<tr><td>DELETE</td><td><code>DELETE</code></td></tr>
+<tr><td>PATCH</td><td><code>PATCH</code></td></tr>
+<tr><td>OPTIONS</td><td><code>OPTIONS</code></td></tr>
+<tr><td>HEAD</td><td><code>HEAD</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Method<wbr>ANY</dt>
-    <dd><code>ANY</code></dd><dt>Method<wbr>GET</dt>
-    <dd><code>GET</code></dd><dt>Method<wbr>PUT</dt>
-    <dd><code>PUT</code></dd><dt>Method<wbr>POST</dt>
-    <dd><code>POST</code></dd><dt>Method<wbr>DELETE</dt>
-    <dd><code>DELETE</code></dd><dt>Method<wbr>PATCH</dt>
-    <dd><code>PATCH</code></dd><dt>Method<wbr>OPTIONS</dt>
-    <dd><code>OPTIONS</code></dd><dt>Method<wbr>HEAD</dt>
-    <dd><code>HEAD</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Method<wbr>ANY</td><td><code>ANY</code></td></tr>
+<tr><td>Method<wbr>GET</td><td><code>GET</code></td></tr>
+<tr><td>Method<wbr>PUT</td><td><code>PUT</code></td></tr>
+<tr><td>Method<wbr>POST</td><td><code>POST</code></td></tr>
+<tr><td>Method<wbr>DELETE</td><td><code>DELETE</code></td></tr>
+<tr><td>Method<wbr>PATCH</td><td><code>PATCH</code></td></tr>
+<tr><td>Method<wbr>OPTIONS</td><td><code>OPTIONS</code></td></tr>
+<tr><td>Method<wbr>HEAD</td><td><code>HEAD</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"ANY"</dt>
-    <dd><code>ANY</code></dd><dt>"GET"</dt>
-    <dd><code>GET</code></dd><dt>"PUT"</dt>
-    <dd><code>PUT</code></dd><dt>"POST"</dt>
-    <dd><code>POST</code></dd><dt>"DELETE"</dt>
-    <dd><code>DELETE</code></dd><dt>"PATCH"</dt>
-    <dd><code>PATCH</code></dd><dt>"OPTIONS"</dt>
-    <dd><code>OPTIONS</code></dd><dt>"HEAD"</dt>
-    <dd><code>HEAD</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>ANY</code></td></tr>
+<tr><td><code>GET</code></td></tr>
+<tr><td><code>PUT</code></td></tr>
+<tr><td><code>POST</code></td></tr>
+<tr><td><code>DELETE</code></td></tr>
+<tr><td><code>PATCH</code></td></tr>
+<tr><td><code>OPTIONS</code></td></tr>
+<tr><td><code>HEAD</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>ANY</dt>
-    <dd><code>ANY</code></dd><dt>GET</dt>
-    <dd><code>GET</code></dd><dt>PUT</dt>
-    <dd><code>PUT</code></dd><dt>POST</dt>
-    <dd><code>POST</code></dd><dt>DELETE</dt>
-    <dd><code>DELETE</code></dd><dt>PATCH</dt>
-    <dd><code>PATCH</code></dd><dt>OPTIONS</dt>
-    <dd><code>OPTIONS</code></dd><dt>HEAD</dt>
-    <dd><code>HEAD</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ANY</td><td><code>ANY</code></td></tr>
+<tr><td>GET</td><td><code>GET</code></td></tr>
+<tr><td>PUT</td><td><code>PUT</code></td></tr>
+<tr><td>POST</td><td><code>POST</code></td></tr>
+<tr><td>DELETE</td><td><code>DELETE</code></td></tr>
+<tr><td>PATCH</td><td><code>PATCH</code></td></tr>
+<tr><td>OPTIONS</td><td><code>OPTIONS</code></td></tr>
+<tr><td>HEAD</td><td><code>HEAD</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>ANY</dt>
-    <dd><code>ANY</code></dd><dt>GET</dt>
-    <dd><code>GET</code></dd><dt>PUT</dt>
-    <dd><code>PUT</code></dd><dt>POST</dt>
-    <dd><code>POST</code></dd><dt>DELETE</dt>
-    <dd><code>DELETE</code></dd><dt>PATCH</dt>
-    <dd><code>PATCH</code></dd><dt>OPTIONS</dt>
-    <dd><code>OPTIONS</code></dd><dt>HEAD</dt>
-    <dd><code>HEAD</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ANY</td><td><code>ANY</code></td></tr>
+<tr><td>GET</td><td><code>GET</code></td></tr>
+<tr><td>PUT</td><td><code>PUT</code></td></tr>
+<tr><td>POST</td><td><code>POST</code></td></tr>
+<tr><td>DELETE</td><td><code>DELETE</code></td></tr>
+<tr><td>PATCH</td><td><code>PATCH</code></td></tr>
+<tr><td>OPTIONS</td><td><code>OPTIONS</code></td></tr>
+<tr><td>HEAD</td><td><code>HEAD</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>ANY</dt>
-    <dd><code>ANY</code></dd><dt>GET</dt>
-    <dd><code>GET</code></dd><dt>PUT</dt>
-    <dd><code>PUT</code></dd><dt>POST</dt>
-    <dd><code>POST</code></dd><dt>DELETE</dt>
-    <dd><code>DELETE</code></dd><dt>PATCH</dt>
-    <dd><code>PATCH</code></dd><dt>OPTIONS</dt>
-    <dd><code>OPTIONS</code></dd><dt>HEAD</dt>
-    <dd><code>HEAD</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ANY</td><td><code>ANY</code></td></tr>
+<tr><td>GET</td><td><code>GET</code></td></tr>
+<tr><td>PUT</td><td><code>PUT</code></td></tr>
+<tr><td>POST</td><td><code>POST</code></td></tr>
+<tr><td>DELETE</td><td><code>DELETE</code></td></tr>
+<tr><td>PATCH</td><td><code>PATCH</code></td></tr>
+<tr><td>OPTIONS</td><td><code>OPTIONS</code></td></tr>
+<tr><td>HEAD</td><td><code>HEAD</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"ANY"</dt>
-    <dd><code>ANY</code></dd><dt>"GET"</dt>
-    <dd><code>GET</code></dd><dt>"PUT"</dt>
-    <dd><code>PUT</code></dd><dt>"POST"</dt>
-    <dd><code>POST</code></dd><dt>"DELETE"</dt>
-    <dd><code>DELETE</code></dd><dt>"PATCH"</dt>
-    <dd><code>PATCH</code></dd><dt>"OPTIONS"</dt>
-    <dd><code>OPTIONS</code></dd><dt>"HEAD"</dt>
-    <dd><code>HEAD</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>ANY</code></td></tr>
+<tr><td><code>GET</code></td></tr>
+<tr><td><code>PUT</code></td></tr>
+<tr><td><code>POST</code></td></tr>
+<tr><td><code>DELETE</code></td></tr>
+<tr><td><code>PATCH</code></td></tr>
+<tr><td><code>OPTIONS</code></td></tr>
+<tr><td><code>HEAD</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
@@ -3162,64 +3372,106 @@ Request<wbr>Validator<pulumi-choosable type="language" values="python,go" class=
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>ALL</dt>
-    <dd><code>ALL</code></dd><dt>PARAMS_ONLY</dt>
-    <dd><code>PARAMS_ONLY</code></dd><dt>BODY_ONLY</dt>
-    <dd><code>BODY_ONLY</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ALL</td><td><code>ALL</code></td></tr>
+<tr><td>PARAMS_ONLY</td><td><code>PARAMS_ONLY</code></td></tr>
+<tr><td>BODY_ONLY</td><td><code>BODY_ONLY</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Request<wbr>Validator<wbr>ALL</dt>
-    <dd><code>ALL</code></dd><dt>Request<wbr>Validator_PARAMS_ONLY</dt>
-    <dd><code>PARAMS_ONLY</code></dd><dt>Request<wbr>Validator_BODY_ONLY</dt>
-    <dd><code>BODY_ONLY</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Request<wbr>Validator<wbr>ALL</td><td><code>ALL</code></td></tr>
+<tr><td>Request<wbr>Validator_PARAMS_ONLY</td><td><code>PARAMS_ONLY</code></td></tr>
+<tr><td>Request<wbr>Validator_BODY_ONLY</td><td><code>BODY_ONLY</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"ALL"</dt>
-    <dd><code>ALL</code></dd><dt>"PARAMS_ONLY"</dt>
-    <dd><code>PARAMS_ONLY</code></dd><dt>"BODY_ONLY"</dt>
-    <dd><code>BODY_ONLY</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>ALL</code></td></tr>
+<tr><td><code>PARAMS_ONLY</code></td></tr>
+<tr><td><code>BODY_ONLY</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>ALL</dt>
-    <dd><code>ALL</code></dd><dt>PARAMS_ONLY</dt>
-    <dd><code>PARAMS_ONLY</code></dd><dt>BODY_ONLY</dt>
-    <dd><code>BODY_ONLY</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ALL</td><td><code>ALL</code></td></tr>
+<tr><td>PARAMS_ONLY</td><td><code>PARAMS_ONLY</code></td></tr>
+<tr><td>BODY_ONLY</td><td><code>BODY_ONLY</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>ALL</dt>
-    <dd><code>ALL</code></dd><dt>PARAMS_ONLY</dt>
-    <dd><code>PARAMS_ONLY</code></dd><dt>BODY_ONLY</dt>
-    <dd><code>BODY_ONLY</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ALL</td><td><code>ALL</code></td></tr>
+<tr><td>PARAMS_ONLY</td><td><code>PARAMS_ONLY</code></td></tr>
+<tr><td>BODY_ONLY</td><td><code>BODY_ONLY</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>ALL</dt>
-    <dd><code>ALL</code></dd><dt>PARAM_S_ONLY</dt>
-    <dd><code>PARAMS_ONLY</code></dd><dt>BOD_Y_ONLY</dt>
-    <dd><code>BODY_ONLY</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ALL</td><td><code>ALL</code></td></tr>
+<tr><td>PARAM_S_ONLY</td><td><code>PARAMS_ONLY</code></td></tr>
+<tr><td>BOD_Y_ONLY</td><td><code>BODY_ONLY</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"ALL"</dt>
-    <dd><code>ALL</code></dd><dt>"PARAMS_ONLY"</dt>
-    <dd><code>PARAMS_ONLY</code></dd><dt>"BODY_ONLY"</dt>
-    <dd><code>BODY_ONLY</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>ALL</code></td></tr>
+<tr><td><code>PARAMS_ONLY</code></td></tr>
+<tr><td><code>BODY_ONLY</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 

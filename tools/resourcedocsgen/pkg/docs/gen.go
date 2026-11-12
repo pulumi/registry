@@ -1162,13 +1162,14 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 							panic(err)
 						}
 						enumID := strings.ToLower(name + propertyLangSeparator + lang.String())
+						comment := dctx.resolveRefsForLanguage(selfRef, SanitizeDescription(e.Comment), lang)
 						langEnumValues = append(langEnumValues, enum{
 							ID:                 enumID,
 							DisplayName:        wbr(enumName),
 							Name:               enumName,
 							Value:              fmt.Sprintf("%v", e.Value),
-							Comment:            dctx.resolveRefsForLanguage(selfRef, SanitizeDescription(e.Comment), lang),
-							DeprecationMessage: SanitizeDescription(e.DeprecationMessage),
+							Comment:            strings.TrimSpace(comment),
+							DeprecationMessage: strings.TrimSpace(SanitizeDescription(e.DeprecationMessage)),
 						})
 					}
 					enums[lang] = langEnumValues

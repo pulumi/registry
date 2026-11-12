@@ -6028,57 +6028,99 @@ The following output properties are available:
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>Ship<wbr>To<wbr>Countries</dt>
-    <dd><code>ShipToCountries</code> Ship to country</dd><dt>Double<wbr>Encryption<wbr>Status</dt>
-    <dd><code>DoubleEncryptionStatus</code> Double encryption status</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Ship<wbr>To<wbr>Countries</td><td><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td>Double<wbr>Encryption<wbr>Status</td><td><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Supported<wbr>Filter<wbr>Types<wbr>Ship<wbr>To<wbr>Countries</dt>
-    <dd><code>ShipToCountries</code> Ship to country</dd><dt>Supported<wbr>Filter<wbr>Types<wbr>Double<wbr>Encryption<wbr>Status</dt>
-    <dd><code>DoubleEncryptionStatus</code> Double encryption status</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Supported<wbr>Filter<wbr>Types<wbr>Ship<wbr>To<wbr>Countries</td><td><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td>Supported<wbr>Filter<wbr>Types<wbr>Double<wbr>Encryption<wbr>Status</td><td><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"Ship<wbr>To<wbr>Countries"</dt>
-    <dd><code>ShipToCountries</code> Ship to country</dd><dt>"Double<wbr>Encryption<wbr>Status"</dt>
-    <dd><code>DoubleEncryptionStatus</code> Double encryption status</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>Ship<wbr>To<wbr>Countries</dt>
-    <dd><code>ShipToCountries</code> Ship to country</dd><dt>Double<wbr>Encryption<wbr>Status</dt>
-    <dd><code>DoubleEncryptionStatus</code> Double encryption status</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Ship<wbr>To<wbr>Countries</td><td><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td>Double<wbr>Encryption<wbr>Status</td><td><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>Ship<wbr>To<wbr>Countries</dt>
-    <dd><code>ShipToCountries</code> Ship to country</dd><dt>Double<wbr>Encryption<wbr>Status</dt>
-    <dd><code>DoubleEncryptionStatus</code> Double encryption status</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Ship<wbr>To<wbr>Countries</td><td><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td>Double<wbr>Encryption<wbr>Status</td><td><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>SHIP_TO_COUNTRIES</dt>
-    <dd><code>ShipToCountries</code> Ship to country</dd><dt>DOUBLE_ENCRYPTION_STATUS</dt>
-    <dd><code>DoubleEncryptionStatus</code> Double encryption status</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>SHIP_TO_COUNTRIES</td><td><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td>DOUBLE_ENCRYPTION_STATUS</td><td><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"Ship<wbr>To<wbr>Countries"</dt>
-    <dd><code>ShipToCountries</code> Ship to country</dd><dt>"Double<wbr>Encryption<wbr>Status"</dt>
-    <dd><code>DoubleEncryptionStatus</code> Double encryption status</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 

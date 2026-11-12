@@ -8,6 +8,7 @@ Falls back to push-registry.py on failure.
 Usage:
     uv run --with pyyaml scripts/ci/publish_to_registry.py
     uv run --with pyyaml scripts/ci/publish_to_registry.py --dry-run
+    uv run --with pyyaml scripts/ci/publish_to_registry.py --reconcile --dry-run
 """
 
 import argparse
@@ -16,6 +17,9 @@ import os
 import subprocess
 import sys
 import time
+import urllib.error
+import urllib.parse
+import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -23,6 +27,10 @@ import yaml
 
 REGISTRY_MIRROR_TOOLS_COMMIT = "dda1dfd85d540fab45a0d19060e963564d0b36aa"
 PUBLISHER_NAMES_RELPATH = "tools/resourcedocsgen/pkg/publishers/publisher-names.json"
+PACKAGES_RELDIR = "themes/default/data/registry/packages"
+SKIP_LIST_RELPATH = "scripts/ci/publish-skip-list.json"
+# Versions that landed before this commit are taken as they stand in the registry.
+RECONCILE_FLOOR = "157f57b29deb3d1ba460dc71055acaf2d0a463d5"
 
 @dataclass
 class Config:
@@ -100,20 +108,24 @@ def build_package_spec(
     if not yaml_path.exists():
         return SpecResult(None, error=f"{yaml_file} does not exist")
 
-    pkg = yaml_path.stem
-
-    if pkg.startswith("azure-native-v") or pkg.startswith("aws-v"):
-        return SpecResult(None, skipped=True)
-
     data = load_yaml_file(yaml_path)
     if data is None:
         return SpecResult(None, error=f"Failed to parse {yaml_file}")
+
+    return spec_from_package_data(yaml_file, data, publishers)
+
+
+def spec_from_package_data(yaml_file: str, data: dict, publishers: dict[str, str]) -> SpecResult:
+    pkg = Path(yaml_file).stem
+    if pkg.startswith("azure-native-v") or pkg.startswith("aws-v"):
+        return SpecResult(None, skipped=True)
 
     version = data.get("version")
     publisher_display = data.get("publisher")
     schema_url = data.get("schema_file_url")
 
-    if data.get("deprecated"):
+    # Older delistings marked the package with a "DEPRECATED" publisher instead of `deprecated: true`.
+    if data.get("deprecated") or publisher_display == "DEPRECATED":
         return SpecResult(None, skipped=True)
 
     if not version:
@@ -130,7 +142,7 @@ def build_package_spec(
 
     publisher = publishers[publisher_display]
     source = "opentofu" if schema_url and "opentofu" in schema_url else "pulumi"
-    version = version.lstrip("v")
+    version = str(version).lstrip("v")
 
     return SpecResult(f"{source}/{publisher}/{pkg}@{version}")
 
@@ -245,9 +257,13 @@ def publish_with_retry(specs: list[str], config: Config) -> bool:
     return False
 
 
+def all_package_yamls(repo_root: Path) -> list[str]:
+    package_dir = repo_root / PACKAGES_RELDIR
+    return sorted(str(p.relative_to(repo_root)) for p in package_dir.glob("*.yaml"))
+
+
 def validate_all(repo_root: Path) -> int:
-    package_dir = repo_root / "themes/default/data/registry/packages"
-    yaml_files = sorted(str(p.relative_to(repo_root)) for p in package_dir.glob("*.yaml"))
+    yaml_files = all_package_yamls(repo_root)
     specs, errors = build_specs(yaml_files, repo_root)
 
     print(f"{len(yaml_files)} package YAML files, {len(specs)} publishable specs")
@@ -258,6 +274,188 @@ def validate_all(repo_root: Path) -> int:
     for error in errors:
         print(f"  - {error}")
     return 1
+
+
+def package_yaml_revisions(repo_root: Path, floor: str) -> list[tuple[str, str]]:
+    """Return (commit, path) for every package YAML changed on HEAD's first-parent line since floor."""
+    result = subprocess.run(
+        ["git", "log", "--first-parent", "--format=commit %H", "--name-only",
+         f"{floor}..HEAD", "--", f"{PACKAGES_RELDIR}/*.yaml"],
+        cwd=repo_root,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    revisions = []
+    commit = None
+    for line in result.stdout.splitlines():
+        if line.startswith("commit "):
+            commit = line.removeprefix("commit ")
+        elif line:
+            revisions.append((commit, line))
+    return revisions
+
+
+def read_blobs(repo_root: Path, revs: list[str]) -> dict[str, bytes | None]:
+    """Read `<commit>:<path>` blobs in one git process; None marks a path deleted in that commit."""
+    proc = subprocess.run(
+        ["git", "cat-file", "--batch"],
+        cwd=repo_root,
+        input="".join(f"{rev}\n" for rev in revs).encode(),
+        capture_output=True,
+        check=True,
+    )
+    out = proc.stdout
+    blobs = {}
+    pos = 0
+    for rev in revs:
+        header_end = out.index(b"\n", pos)
+        header = out[pos:header_end].split()
+        pos = header_end + 1
+        if header[-1] == b"missing":
+            blobs[rev] = None
+            continue
+        size = int(header[2])
+        blobs[rev] = out[pos:pos + size]
+        pos += size + 1
+    return blobs
+
+
+def historical_specs(
+    repo_root: Path,
+    floor: str,
+    publishers: dict[str, str],
+    live_paths: set[str],
+    skipped_revisions: set[str],
+) -> tuple[set[str], list[str]]:
+    """Build a spec from every revision since floor of a package YAML that is still publishable at HEAD.
+
+    Packages delisted or removed since are left out, so reconciling never republishes them.
+    """
+    revisions = [
+        f"{commit}:{path}"
+        for commit, path in package_yaml_revisions(repo_root, floor)
+        if path in live_paths and f"{commit}:{path}" not in skipped_revisions
+    ]
+    specs = set()
+    errors = []
+    for rev, blob in read_blobs(repo_root, revisions).items():
+        if blob is None:
+            continue
+        path = rev.split(":", 1)[1]
+        try:
+            data = yaml.safe_load(blob)
+        except yaml.YAMLError as e:
+            errors.append(f"{rev}: {e}")
+            continue
+        if not isinstance(data, dict):
+            errors.append(f"{rev}: not a YAML mapping")
+            continue
+        result = spec_from_package_data(path, data, publishers)
+        if result.spec:
+            specs.add(result.spec)
+        elif result.error:
+            errors.append(f"{rev}: {result.error}")
+    return specs, errors
+
+
+def split_spec(spec: str) -> tuple[str, str]:
+    package, version = spec.rsplit("@", 1)
+    return package, version
+
+
+def published_versions(package: str) -> set[str]:
+    """List every published version of `<source>/<publisher>/<name>`; empty if the package doesn't exist."""
+    base_url = f"{os.environ['PULUMI_API_URL'].rstrip('/')}/api/registry/packages/{package}/versions"
+    headers = {"Accept": "application/json"}
+    token = os.environ.get("PULUMI_ACCESS_TOKEN")
+    if token:
+        headers["Authorization"] = f"token {token}"
+
+    versions = set()
+    continuation_token = None
+    while True:
+        query = {"limit": "500"}
+        if continuation_token:
+            query["continuationToken"] = continuation_token
+        request = urllib.request.Request(f"{base_url}?{urllib.parse.urlencode(query)}", headers=headers)
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                body = json.load(response)
+        except urllib.error.HTTPError as e:
+            if e.code == 404:
+                return set()
+            raise
+        versions.update(p["version"] for p in body.get("packages", []))
+        continuation_token = body.get("continuationToken")
+        if not continuation_token:
+            return versions
+
+
+def missing_specs(desired: set[str]) -> list[str]:
+    by_package: dict[str, set[str]] = {}
+    for spec in desired:
+        package, version = split_spec(spec)
+        by_package.setdefault(package, set()).add(version)
+
+    missing = []
+    for package, versions in sorted(by_package.items()):
+        missing.extend(f"{package}@{v}" for v in sorted(versions - published_versions(package)))
+    return missing
+
+
+def load_skip_list(repo_root: Path) -> dict[str, str]:
+    """Map each spec or `<commit>:<path>` revision that reconciling must ignore to the reason why."""
+    with open(repo_root / SKIP_LIST_RELPATH) as f:
+        return json.load(f)
+
+
+def reconcile(config: Config, floor: str) -> int:
+    """Publish every package version on master since floor that the registry doesn't have."""
+    publishers = load_publishers(config.repo_root)
+    skip_list = load_skip_list(config.repo_root)
+
+    head_specs = set()
+    live_paths = set()
+    errors = []
+    for yaml_file in all_package_yamls(config.repo_root):
+        result = build_package_spec(yaml_file, config.repo_root, publishers)
+        if result.spec:
+            head_specs.add(result.spec)
+            live_paths.add(yaml_file)
+        elif result.error:
+            errors.append(result.error)
+
+    history, history_errors = historical_specs(
+        config.repo_root, floor, publishers, live_paths, set(skip_list))
+    errors.extend(history_errors)
+    desired = (head_specs | history) - skip_list.keys()
+
+    print(f"{len(desired)} package versions expected in the registry "
+          f"({len(head_specs)} at HEAD, {len(history)} since {floor[:12]}, {len(skip_list)} on the skip list)")
+
+    missing = missing_specs(desired)
+    if not missing:
+        print("The registry has every expected version")
+    elif not publish_with_retry(missing, config):
+        return 1
+    elif not config.dry_run:
+        missing = missing_specs(set(missing))
+        if missing:
+            print(f"{len(missing)} versions are still missing from the registry:")
+            for spec in missing:
+                print(f"  {spec}")
+            print(f"Publish them, or add them to {SKIP_LIST_RELPATH} with a reason.")
+            return 1
+
+    if errors:
+        print("Some package versions could not be checked, because no spec could be built for them:")
+        for error in errors:
+            print(f"  - {error}")
+        print(f"Fix the YAML, or add the spec or `<commit>:<path>` revision to {SKIP_LIST_RELPATH} with a reason.")
+        return 1
+
+    return 0
 
 
 def main() -> int:
@@ -296,10 +494,24 @@ def main() -> int:
         action="store_true",
         help="Build a spec for every package YAML and report errors without publishing",
     )
+    parser.add_argument(
+        "--reconcile",
+        action="store_true",
+        help="Publish every package version on master since --floor that the registry is missing",
+    )
+    parser.add_argument(
+        "--floor",
+        default=RECONCILE_FLOOR,
+        help=f"Oldest commit whose package versions --reconcile checks (default: {RECONCILE_FLOOR[:12]})",
+    )
     args = parser.parse_args()
 
     if args.validate_all:
         return validate_all(args.repo_root.resolve())
+
+    if args.reconcile and args.specs:
+        print("Error: --reconcile and --specs are mutually exclusive")
+        return 1
 
     if not os.environ.get("PULUMI_API_URL"):
         print("Error: PULUMI_API_URL environment variable is required")
@@ -310,6 +522,9 @@ def main() -> int:
         max_retries=args.max_retries,
         dry_run=args.dry_run,
     )
+
+    if args.reconcile:
+        return reconcile(config, args.floor)
 
     errors = []
     if args.specs:

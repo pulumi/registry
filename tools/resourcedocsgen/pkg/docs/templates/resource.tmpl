@@ -224,7 +224,7 @@ The following arguments are supported:
 {{- end -}}
 
 <!-- Read resource -->
-{{ if ne (len .StateInputs) 0 }}
+{{ if ne (len .LookupParams) 0 }}
 ## Look up Existing {{.Header.Title}} Resource {#look-up}
 
 Get an existing {{.Header.Title}} resource's state with the given name, ID, and optional extra properties used to qualify the lookup.
@@ -243,8 +243,8 @@ Get an existing {{.Header.Title}} resource's state with the given name, ID, and 
 <div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class=nd>@staticmethod</span>
 <span class="k">def </span><span class="nf">get</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
         <span class="nx">id</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
-        <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">,</span>
-        {{ htmlSafe (index .LookupParams lPython) }}<span class="p">) -&gt;</span> {{ (index .ConstructorResource lPython).Name }}</code></pre></div>
+        <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None{{ with index .LookupParams lPython }}<span class="p">,</span>
+        {{ htmlSafe . }}{{ end }}<span class="p">) -&gt;</span> {{ (index .ConstructorResource lPython).Name }}</code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -292,7 +292,7 @@ Get an existing {{.Header.Title}} resource's state with the given name, ID, and 
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-{{ template "read_inputs" }}
+{{ template "read_inputs" (ne (len .StateInputs) 0) }}
 </pulumi-choosable>
 </div>
 
@@ -315,28 +315,30 @@ Get an existing {{.Header.Title}} resource's state with the given name, ID, and 
 
 <div>
 <pulumi-choosable type="language" values="go">
-{{ template "read_inputs" }}
+{{ template "read_inputs" true }}
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-{{ template "read_inputs" }}
+{{ template "read_inputs" (ne (len .StateInputs) 0) }}
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-{{ template "read_inputs" }}
+{{ template "read_inputs" (ne (len .StateInputs) 0) }}
 </pulumi-choosable>
 </div>
 
+{{ if ne (len .StateInputs) 0 -}}
 <div>
 <pulumi-choosable type="language" values="typescript,javascript,python,go,csharp,java">
 The following state arguments are supported:
 {{ template "properties" .StateInputs }}
 </pulumi-choosable>
 </div>
+{{- end }}
 
 {{ end }}
 

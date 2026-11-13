@@ -1468,7 +1468,7 @@ func (mod *modContext) getTSLookupParams(r *schema.Resource, stateParam string) 
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
 
-	return []formalParam{
+	params := []formalParam{
 		{
 			Name: "name",
 
@@ -1483,14 +1483,18 @@ func (mod *modContext) getTSLookupParams(r *schema.Resource, stateParam string) 
 				Link: docLangHelper.GetDocLinkForPulumiType(def, "ID"),
 			},
 		},
-		{
+	}
+	if r.StateInputs != nil {
+		params = append(params, formalParam{
 			Name:         "state",
 			OptionalFlag: "?",
 			Type: propertyType{
 				Name: stateParam,
 			},
-		},
-		{
+		})
+	}
+	return append(params,
+		formalParam{
 			Name:         "opts",
 			OptionalFlag: "?",
 			Type: propertyType{
@@ -1498,7 +1502,7 @@ func (mod *modContext) getTSLookupParams(r *schema.Resource, stateParam string) 
 				Link: docLangHelper.GetDocLinkForPulumiType(def, "CustomResourceOptions"),
 			},
 		},
-	}
+	)
 }
 
 func (mod *modContext) getGoLookupParams(r *schema.Resource, stateParam string) []formalParam {
@@ -1555,7 +1559,7 @@ func (mod *modContext) getCSLookupParams(r *schema.Resource, stateParam string) 
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
 
-	return []formalParam{
+	params := []formalParam{
 		{
 			Name: "name",
 			Type: propertyType{
@@ -1569,23 +1573,25 @@ func (mod *modContext) getCSLookupParams(r *schema.Resource, stateParam string) 
 				Link: docLangHelper.GetDocLinkForPulumiType(def, "Pulumi.Input"),
 			},
 		},
-		{
+	}
+	if r.StateInputs != nil {
+		params = append(params, formalParam{
 			Name:         "state",
 			OptionalFlag: "?",
 			Type: propertyType{
 				Name: stateParam,
 			},
-		},
-		{
-			Name:         "opts",
-			OptionalFlag: "?",
-			DefaultValue: " = null",
-			Type: propertyType{
-				Name: "CustomResourceOptions",
-				Link: docLangHelper.GetDocLinkForPulumiType(def, "Pulumi.CustomResourceOptions"),
-			},
-		},
+		})
 	}
+	return append(params, formalParam{
+		Name:         "opts",
+		OptionalFlag: "?",
+		DefaultValue: " = null",
+		Type: propertyType{
+			Name: "CustomResourceOptions",
+			Link: docLangHelper.GetDocLinkForPulumiType(def, "Pulumi.CustomResourceOptions"),
+		},
+	})
 }
 
 func (mod *modContext) getJavaLookupParams(r *schema.Resource, stateParam string) []formalParam {
@@ -1594,7 +1600,7 @@ func (mod *modContext) getJavaLookupParams(r *schema.Resource, stateParam string
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
 
-	return []formalParam{
+	params := []formalParam{
 		{
 			Name: "name",
 			Type: propertyType{
@@ -1608,26 +1614,31 @@ func (mod *modContext) getJavaLookupParams(r *schema.Resource, stateParam string
 				Link: docLangHelper.GetDocLinkForPulumiType(def, "Output"),
 			},
 		},
-		{
+	}
+	if r.StateInputs != nil {
+		params = append(params, formalParam{
 			Name: "state",
 			Type: propertyType{
 				Name: stateParam,
 			},
-		},
-		{
-			Name: "options",
-			Type: propertyType{
-				Name: "CustomResourceOptions",
-				Link: docLangHelper.GetDocLinkForPulumiType(def, "CustomResourceOptions"),
-			},
-		},
+		})
 	}
+	return append(params, formalParam{
+		Name: "options",
+		Type: propertyType{
+			Name: "CustomResourceOptions",
+			Link: docLangHelper.GetDocLinkForPulumiType(def, "CustomResourceOptions"),
+		},
+	})
 }
 
 func (mod *modContext) getPythonLookupParams(r *schema.Resource, stateParam string) []formalParam {
 	dctx := mod.context
 	// The input properties for a resource needs to be exploded as individual constructor params.
 	docLanguageHelper := dctx.getLanguageDocHelper(language.Python)
+	if r.StateInputs == nil {
+		return nil
+	}
 	params := slice.Prealloc[formalParam](len(r.StateInputs.Properties))
 	for _, p := range r.StateInputs.Properties {
 		typ := docLanguageHelper.GetTypeName(
@@ -1648,10 +1659,11 @@ func (mod *modContext) getPythonLookupParams(r *schema.Resource, stateParam stri
 }
 
 // genLookupParams generates a map of per-language way of rendering the formal parameters of the lookup function used to
-// lookup an existing resource.
+// lookup an existing resource. Every SDK generates a static get method for custom resources, so this returns parameters
+// for any resource that is neither a provider nor a component, whether or not the schema declares stateInputs.
 func (mod *modContext) genLookupParams(r *schema.Resource, stateParam string) map[language.Language]string {
 	lookupParams := make(map[language.Language]string)
-	if r.StateInputs == nil {
+	if r.IsProvider || r.IsComponent {
 		return lookupParams
 	}
 

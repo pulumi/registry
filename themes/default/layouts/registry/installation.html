@@ -59,52 +59,7 @@ $packageName := index $directories 2 }} {{ $packageHome := path.Join
             </div>
 
             <section class="docs-content">
-                {{ if strings.HasSuffix .Permalink "how-to-guides/" }} {{ if (eq
-                (len .Pages) 0) }} There are no guides yet for this package. {{
-                else }} {{ if not (eq (len (where .Pages "Params.language" "=="
-                nil)) 0) }}
-                <h2>Featured Guides</h2>
-
-                {{ range where .Pages "Params.language" "==" nil }}
-                <div class="pb-4">
-                    <a
-                        class="text-violet-primary hover:underline"
-                        href="{{ relref . .Path }}"
-                        >{{ .Title }}</a
-                    >
-                </div>
-                {{ end }}
-
-                <h2>How-to Guides by Language</h2>
-                {{ end }}
-
-                <div>
-                    <pulumi-chooser
-                        type="language"
-                        options="typescript,python,go,csharp"
-                    ></pulumi-chooser>
-                </div>
-
-                <pulumi-choosable type="language" value="typescript">
-                    {{ partial "registry/packages/how-to-language-index" (dict
-                    "package" . "language" "ts") }}
-                </pulumi-choosable>
-
-                <pulumi-choosable type="language" value="python">
-                    {{ partial "registry/packages/how-to-language-index" (dict
-                    "package" . "language" "py") }}
-                </pulumi-choosable>
-
-                <pulumi-choosable type="language" value="go">
-                    {{ partial "registry/packages/how-to-language-index" (dict
-                    "package" . "language" "go") }}
-                </pulumi-choosable>
-
-                <pulumi-choosable type="language" value="csharp">
-                    {{ partial "registry/packages/how-to-language-index" (dict
-                    "package" . "language" "cs") }}
-                </pulumi-choosable>
-                {{ end }} {{ else }} {{ .Content }} {{ end }}
+                {{ .Content }}
             </section>
         </div>
 

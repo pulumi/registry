@@ -9,7 +9,7 @@ name: stripe
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/stripe/terraform-provider-stripe
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/stripe/stripe/0.3.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/stripe/stripe/0.3.1/schema.json
 title: Stripe
-updated_on: 1786750584
-version: 0.3.0
+updated_on: 1794569720
+version: 0.3.1

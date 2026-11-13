@@ -61,49 +61,6 @@ $packageType := "provider" }} {{ if .package.component }} {{ $packageType =
                             >
                             by {{ .package.publisher }}
                         </div>
-
-                        {{ if .featured }}
-                        <p>
-                            <span class="text-gray-900 font-display">
-                                {{ .package.description }}
-                            </span>
-                        </p>
-                        {{ if .howtos }}
-                        <pulumi-accordion
-                            class="my-4 text-base rounded bg-white border-2 border-gray-900 group hover:bg-gray-900 hover:text-white transition-all"
-                        >
-                            <pulumi-accordion-item
-                                slot="item"
-                                class="text-base pl-1"
-                            >
-                                <div
-                                    slot="heading"
-                                    class="text-base group-hover:text-white whitespace-nowrap"
-                                >
-                                    Featured How-to Guides
-                                </div>
-                                <span slot="collapsed-icon"
-                                    >{{ partial "icon" (dict "name"
-                                    "plus-square") }}</span
-                                >
-                                <span slot="expanded-icon"
-                                    >{{ partial "icon" (dict "name"
-                                    "minus-square") }}</span
-                                >
-                                <ul class="m-0 p-0 list-none">
-                                    {{ range .howtos }}
-                                    <li class="mt-0">
-                                        <a
-                                            class="underline"
-                                            href="{{ .rel_link }}"
-                                            >{{ .name }}</a
-                                        >
-                                    </li>
-                                    {{ end }}
-                                </ul>
-                            </pulumi-accordion-item>
-                        </pulumi-accordion>
-                        {{ end }} {{ end }}
                     </div>
                 </div>
             </div>

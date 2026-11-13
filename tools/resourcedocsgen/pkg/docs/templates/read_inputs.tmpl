@@ -10,11 +10,13 @@
         <span class="property-indicator"></span>
     </dt>
     <dd>The <em>unique</em> provider ID of the resource to lookup.</dd>
+{{- if . }}
     <dt class="property-optional" title="Optional">
         <span>state</span>
         <span class="property-indicator"></span>
     </dt>
     <dd>Any extra arguments used during the lookup.</dd>
+{{- end }}
     <dt class="property-optional" title="Optional">
         <span>opts</span>
         <span class="property-indicator"></span>

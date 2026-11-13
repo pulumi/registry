@@ -1,12 +1,12 @@
 ---
 title: "v4 Provider Migration Guide"
 meta_desc: Learn how to migrate pulumi-kubernetes from v3 to v4
-layout: how-to-guide
+layout: package
 ---
 
-### Breaking changes
+## Breaking changes
 
-#### Make all resource output properties required
+### Make all resource output properties required
 In previous versions of pulumi-kubernetes, resource output properties were required types in some SDKs, and optional in others. This inconsistency caused problems for multi-language features and documentation. Go, Python, and Java SDKs have been updated to represent all resource outputs as required. This matches the previous representation in the NodeJS and .NET SDKs. This does not change the resources on the cluster, but will require users to update any explicit references to the underlying types in their Pulumi code.
 
 Examples:
@@ -46,10 +46,10 @@ Examples:
 
 {{< /chooser >}}
 
-#### Drop support for Kubernetes clusters older than v1.13
+### Drop support for Kubernetes clusters older than v1.13
 pulumi-kubernetes maintains backwards compatibility with a broad range of Kubernetes versions, including those past End of Life (EOL). This update drops support for clusters older than v1.13, which was released in December 2018, and has been EOL since October 2019. The older cluster versions do not support Server-side Apply (SSA), which is now the default for pulumi-kubernetes.
 
-#### Remove deprecated helm/v2 SDKs
+### Remove deprecated helm/v2 SDKs
 The helm/v2 SDK was deprecated in v3.19.2 (May 2022), and is now removed. The helm/v3 SDK provides equivalent support, but uses the helm client library rather than shelling out to the helm CLI, which required the user to manage that dependency separately, and led to a variety of compatibility bugs. The v2:Chart and v3:Chart resources are aliased, so users can change any v2.Chart resources to v3.Chart in their Pulumi code without a disruptive change on the next update.
 
 {{< chooser language "typescript,python,go,csharp" >}}

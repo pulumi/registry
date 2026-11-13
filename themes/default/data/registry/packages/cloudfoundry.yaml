@@ -9,7 +9,7 @@ name: cloudfoundry
 package_status: ga
 publisher: cloudfoundry
 repo_url: https://github.com/cloudfoundry/terraform-provider-cloudfoundry
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/cloudfoundry/cloudfoundry/1.18.0/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/cloudfoundry/cloudfoundry/1.19.0/schema.json
 title: cloudfoundry
-updated_on: 1793662508
-version: 1.18.0
+updated_on: 1794569713
+version: 1.19.0

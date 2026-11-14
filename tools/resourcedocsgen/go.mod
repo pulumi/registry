@@ -10,12 +10,12 @@ require (
 	github.com/hexops/autogold/v2 v2.3.1
 	github.com/pgavlin/goldmark v1.1.33-0.20200616210433-b5eb04559386
 	github.com/pkg/errors v0.9.1
-	github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3 v3.117.0
-	github.com/pulumi/pulumi-hcl v0.19.1
-	github.com/pulumi/pulumi-java v1.39.0
-	github.com/pulumi/pulumi-yaml v1.38.16
-	github.com/pulumi/pulumi/pkg/v3 v3.273.0
-	github.com/pulumi/pulumi/sdk/v3 v3.273.0
+	github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3 v3.118.0
+	github.com/pulumi/pulumi-hcl v0.20.0
+	github.com/pulumi/pulumi-java v1.40.0
+	github.com/pulumi/pulumi-yaml v1.39.0
+	github.com/pulumi/pulumi/pkg/v3 v3.276.0
+	github.com/pulumi/pulumi/sdk/v3 v3.276.0
 	github.com/sourcegraph/conc v0.3.0
 	github.com/spf13/cobra v1.10.2
 	github.com/stretchr/testify v1.12.1
@@ -57,7 +57,7 @@ require (
 	github.com/go-git/gcfg/v2 v2.0.2 // indirect
 	github.com/go-git/go-billy/v6 v6.0.0-beta.1 // indirect
 	github.com/go-git/go-git/v6 v6.0.0-beta.1 // indirect
-	github.com/go-jose/go-jose/v4 v4.1.6 // indirect
+	github.com/go-jose/go-jose/v4 v4.1.8 // indirect
 	github.com/go-logr/logr v1.4.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/godbus/dbus/v5 v5.2.2 // indirect
@@ -116,8 +116,8 @@ require (
 	github.com/pkg/term v1.1.0 // indirect
 	github.com/pulumi/appdash v0.0.0-20231130102222-75f619a67231 // indirect
 	github.com/pulumi/inflector v0.2.1 // indirect
-	github.com/pulumi/pulumi-cloud-sdk/go v1.20261103.0 // indirect
-	github.com/pulumi/pulumi-terraform-bridge/v3 v3.138.0 // indirect
+	github.com/pulumi/pulumi-cloud-sdk/go v1.20261112.0 // indirect
+	github.com/pulumi/pulumi-terraform-bridge/v3 v3.142.1-0.20261102104139-2c2d43eabd53 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/sabhiram/go-gitignore v0.0.0-20210923224102-525f6e181f06 // indirect

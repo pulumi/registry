@@ -11,7 +11,7 @@ name: formal
 package_status: ga
 publisher: Formal
 repo_url: https://github.com/formalco/pulumi-formal
-schema_file_url: https://raw.githubusercontent.com/formalco/pulumi-formal/v1.2.8/provider/cmd/pulumi-resource-formal/schema.json
+schema_file_url: https://raw.githubusercontent.com/formalco/pulumi-formal/v1.2.9/provider/cmd/pulumi-resource-formal/schema.json
 title: Formal
-updated_on: 1793330530
-version: v1.2.8
+updated_on: 1794620644
+version: v1.2.9

@@ -334,9 +334,9 @@ The following output properties are available:
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Burgundy</td><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
-<tr><td>Ruby</td><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
-<tr><td>Tineke</td><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+<tr><td>Burgundy</td><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>Ruby</td><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>Tineke</td><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
 </tbody>
 </table>
 </div>
@@ -349,9 +349,9 @@ The following output properties are available:
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Burgundy</td><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
-<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Ruby</td><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
-<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Tineke</td><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Burgundy</td><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Ruby</td><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Tineke</td><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
 </tbody>
 </table>
 </div>
@@ -364,9 +364,9 @@ The following output properties are available:
 <table>
 <thead><tr><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
-<tr><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
-<tr><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+<tr><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
 </tbody>
 </table>
 </div>
@@ -379,9 +379,9 @@ The following output properties are available:
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Burgundy</td><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
-<tr><td>Ruby</td><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
-<tr><td>Tineke</td><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+<tr><td>Burgundy</td><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>Ruby</td><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>Tineke</td><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
 </tbody>
 </table>
 </div>
@@ -394,9 +394,9 @@ The following output properties are available:
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Burgundy</td><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
-<tr><td>Ruby</td><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
-<tr><td>Tineke</td><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+<tr><td>Burgundy</td><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>Ruby</td><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>Tineke</td><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
 </tbody>
 </table>
 </div>
@@ -409,9 +409,9 @@ The following output properties are available:
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>BURGUNDY</td><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
-<tr><td>RUBY</td><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
-<tr><td>TINEKE</td><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+<tr><td>BURGUNDY</td><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>RUBY</td><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>TINEKE</td><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
 </tbody>
 </table>
 </div>
@@ -424,9 +424,9 @@ The following output properties are available:
 <table>
 <thead><tr><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
-<tr><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
-<tr><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+<tr><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
 </tbody>
 </table>
 </div>
@@ -443,9 +443,9 @@ The following output properties are available:
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Small</td><td><code>small</code></td></tr>
-<tr><td>Medium</td><td><code>medium</code></td></tr>
-<tr><td>Large</td><td><code>large</code></td></tr>
+<tr><td>Small</td><td class="enum-value"><code>small</code></td></tr>
+<tr><td>Medium</td><td class="enum-value"><code>medium</code></td></tr>
+<tr><td>Large</td><td class="enum-value"><code>large</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -458,9 +458,9 @@ The following output properties are available:
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Tree<wbr>Size<wbr>Small</td><td><code>small</code></td></tr>
-<tr><td>Tree<wbr>Size<wbr>Medium</td><td><code>medium</code></td></tr>
-<tr><td>Tree<wbr>Size<wbr>Large</td><td><code>large</code></td></tr>
+<tr><td>Tree<wbr>Size<wbr>Small</td><td class="enum-value"><code>small</code></td></tr>
+<tr><td>Tree<wbr>Size<wbr>Medium</td><td class="enum-value"><code>medium</code></td></tr>
+<tr><td>Tree<wbr>Size<wbr>Large</td><td class="enum-value"><code>large</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -473,9 +473,9 @@ The following output properties are available:
 <table>
 <thead><tr><th>Value</th></tr></thead>
 <tbody>
-<tr><td><code>small</code></td></tr>
-<tr><td><code>medium</code></td></tr>
-<tr><td><code>large</code></td></tr>
+<tr><td class="enum-value"><code>small</code></td></tr>
+<tr><td class="enum-value"><code>medium</code></td></tr>
+<tr><td class="enum-value"><code>large</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -488,9 +488,9 @@ The following output properties are available:
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Small</td><td><code>small</code></td></tr>
-<tr><td>Medium</td><td><code>medium</code></td></tr>
-<tr><td>Large</td><td><code>large</code></td></tr>
+<tr><td>Small</td><td class="enum-value"><code>small</code></td></tr>
+<tr><td>Medium</td><td class="enum-value"><code>medium</code></td></tr>
+<tr><td>Large</td><td class="enum-value"><code>large</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -503,9 +503,9 @@ The following output properties are available:
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Small</td><td><code>small</code></td></tr>
-<tr><td>Medium</td><td><code>medium</code></td></tr>
-<tr><td>Large</td><td><code>large</code></td></tr>
+<tr><td>Small</td><td class="enum-value"><code>small</code></td></tr>
+<tr><td>Medium</td><td class="enum-value"><code>medium</code></td></tr>
+<tr><td>Large</td><td class="enum-value"><code>large</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -518,9 +518,9 @@ The following output properties are available:
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>SMALL</td><td><code>small</code></td></tr>
-<tr><td>MEDIUM</td><td><code>medium</code></td></tr>
-<tr><td>LARGE</td><td><code>large</code></td></tr>
+<tr><td>SMALL</td><td class="enum-value"><code>small</code></td></tr>
+<tr><td>MEDIUM</td><td class="enum-value"><code>medium</code></td></tr>
+<tr><td>LARGE</td><td class="enum-value"><code>large</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -533,9 +533,9 @@ The following output properties are available:
 <table>
 <thead><tr><th>Value</th></tr></thead>
 <tbody>
-<tr><td><code>small</code></td></tr>
-<tr><td><code>medium</code></td></tr>
-<tr><td><code>large</code></td></tr>
+<tr><td class="enum-value"><code>small</code></td></tr>
+<tr><td class="enum-value"><code>medium</code></td></tr>
+<tr><td class="enum-value"><code>large</code></td></tr>
 </tbody>
 </table>
 </div>

@@ -991,10 +991,10 @@ Enum_XYZ<pulumi-choosable type="language" values="python,go" class="inline">, En
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Plain</td><td><code>A</code></td></tr>
-<tr><td>Snake_<wbr>case</td><td><code>B</code></td></tr>
-<tr><td>SHA256</td><td><code>C</code></td></tr>
-<tr><td>SHA256_<wbr>hash</td><td><code>D</code></td></tr>
+<tr><td>Plain</td><td class="enum-value"><code>A</code></td></tr>
+<tr><td>Snake_<wbr>case</td><td class="enum-value"><code>B</code></td></tr>
+<tr><td>SHA256</td><td class="enum-value"><code>C</code></td></tr>
+<tr><td>SHA256_<wbr>hash</td><td class="enum-value"><code>D</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1007,10 +1007,10 @@ Enum_XYZ<pulumi-choosable type="language" values="python,go" class="inline">, En
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Enum_XYZPlain</td><td><code>A</code></td></tr>
-<tr><td>Enum_XYZ_Snake_<wbr>case</td><td><code>B</code></td></tr>
-<tr><td>Enum_XYZSHA256</td><td><code>C</code></td></tr>
-<tr><td>Enum_XYZ_SHA256_<wbr>hash</td><td><code>D</code></td></tr>
+<tr><td>Enum_XYZPlain</td><td class="enum-value"><code>A</code></td></tr>
+<tr><td>Enum_XYZ_Snake_<wbr>case</td><td class="enum-value"><code>B</code></td></tr>
+<tr><td>Enum_XYZSHA256</td><td class="enum-value"><code>C</code></td></tr>
+<tr><td>Enum_XYZ_SHA256_<wbr>hash</td><td class="enum-value"><code>D</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1023,10 +1023,10 @@ Enum_XYZ<pulumi-choosable type="language" values="python,go" class="inline">, En
 <table>
 <thead><tr><th>Value</th></tr></thead>
 <tbody>
-<tr><td><code>A</code></td></tr>
-<tr><td><code>B</code></td></tr>
-<tr><td><code>C</code></td></tr>
-<tr><td><code>D</code></td></tr>
+<tr><td class="enum-value"><code>A</code></td></tr>
+<tr><td class="enum-value"><code>B</code></td></tr>
+<tr><td class="enum-value"><code>C</code></td></tr>
+<tr><td class="enum-value"><code>D</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1039,10 +1039,10 @@ Enum_XYZ<pulumi-choosable type="language" values="python,go" class="inline">, En
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Plain</td><td><code>A</code></td></tr>
-<tr><td>Snake_<wbr>case</td><td><code>B</code></td></tr>
-<tr><td>SHA256</td><td><code>C</code></td></tr>
-<tr><td>SHA256_<wbr>hash</td><td><code>D</code></td></tr>
+<tr><td>Plain</td><td class="enum-value"><code>A</code></td></tr>
+<tr><td>Snake_<wbr>case</td><td class="enum-value"><code>B</code></td></tr>
+<tr><td>SHA256</td><td class="enum-value"><code>C</code></td></tr>
+<tr><td>SHA256_<wbr>hash</td><td class="enum-value"><code>D</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1055,10 +1055,10 @@ Enum_XYZ<pulumi-choosable type="language" values="python,go" class="inline">, En
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Plain</td><td><code>A</code></td></tr>
-<tr><td>Snake_<wbr>case</td><td><code>B</code></td></tr>
-<tr><td>SHA256</td><td><code>C</code></td></tr>
-<tr><td>SHA256_<wbr>hash</td><td><code>D</code></td></tr>
+<tr><td>Plain</td><td class="enum-value"><code>A</code></td></tr>
+<tr><td>Snake_<wbr>case</td><td class="enum-value"><code>B</code></td></tr>
+<tr><td>SHA256</td><td class="enum-value"><code>C</code></td></tr>
+<tr><td>SHA256_<wbr>hash</td><td class="enum-value"><code>D</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1071,10 +1071,10 @@ Enum_XYZ<pulumi-choosable type="language" values="python,go" class="inline">, En
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>PLAIN</td><td><code>A</code></td></tr>
-<tr><td>SNAKE_CASE</td><td><code>B</code></td></tr>
-<tr><td>SHA256</td><td><code>C</code></td></tr>
-<tr><td>SHA256_HASH</td><td><code>D</code></td></tr>
+<tr><td>PLAIN</td><td class="enum-value"><code>A</code></td></tr>
+<tr><td>SNAKE_CASE</td><td class="enum-value"><code>B</code></td></tr>
+<tr><td>SHA256</td><td class="enum-value"><code>C</code></td></tr>
+<tr><td>SHA256_HASH</td><td class="enum-value"><code>D</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1087,10 +1087,10 @@ Enum_XYZ<pulumi-choosable type="language" values="python,go" class="inline">, En
 <table>
 <thead><tr><th>Value</th></tr></thead>
 <tbody>
-<tr><td><code>A</code></td></tr>
-<tr><td><code>B</code></td></tr>
-<tr><td><code>C</code></td></tr>
-<tr><td><code>D</code></td></tr>
+<tr><td class="enum-value"><code>A</code></td></tr>
+<tr><td class="enum-value"><code>B</code></td></tr>
+<tr><td class="enum-value"><code>C</code></td></tr>
+<tr><td class="enum-value"><code>D</code></td></tr>
 </tbody>
 </table>
 </div>

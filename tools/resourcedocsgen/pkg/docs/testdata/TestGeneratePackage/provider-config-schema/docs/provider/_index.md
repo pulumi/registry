@@ -522,8 +522,8 @@ Color<pulumi-choosable type="language" values="python,go" class="inline">, Color
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Blue</td><td><code>blue</code></td></tr>
-<tr><td>Red</td><td><code>red</code></td></tr>
+<tr><td>Blue</td><td class="enum-value"><code>blue</code></td></tr>
+<tr><td>Red</td><td class="enum-value"><code>red</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -536,8 +536,8 @@ Color<pulumi-choosable type="language" values="python,go" class="inline">, Color
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Color<wbr>Blue</td><td><code>blue</code></td></tr>
-<tr><td>Color<wbr>Red</td><td><code>red</code></td></tr>
+<tr><td>Color<wbr>Blue</td><td class="enum-value"><code>blue</code></td></tr>
+<tr><td>Color<wbr>Red</td><td class="enum-value"><code>red</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -550,8 +550,8 @@ Color<pulumi-choosable type="language" values="python,go" class="inline">, Color
 <table>
 <thead><tr><th>Value</th></tr></thead>
 <tbody>
-<tr><td><code>blue</code></td></tr>
-<tr><td><code>red</code></td></tr>
+<tr><td class="enum-value"><code>blue</code></td></tr>
+<tr><td class="enum-value"><code>red</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -564,8 +564,8 @@ Color<pulumi-choosable type="language" values="python,go" class="inline">, Color
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Blue</td><td><code>blue</code></td></tr>
-<tr><td>Red</td><td><code>red</code></td></tr>
+<tr><td>Blue</td><td class="enum-value"><code>blue</code></td></tr>
+<tr><td>Red</td><td class="enum-value"><code>red</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -578,8 +578,8 @@ Color<pulumi-choosable type="language" values="python,go" class="inline">, Color
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Blue</td><td><code>blue</code></td></tr>
-<tr><td>Red</td><td><code>red</code></td></tr>
+<tr><td>Blue</td><td class="enum-value"><code>blue</code></td></tr>
+<tr><td>Red</td><td class="enum-value"><code>red</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -592,8 +592,8 @@ Color<pulumi-choosable type="language" values="python,go" class="inline">, Color
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>BLUE</td><td><code>blue</code></td></tr>
-<tr><td>RED</td><td><code>red</code></td></tr>
+<tr><td>BLUE</td><td class="enum-value"><code>blue</code></td></tr>
+<tr><td>RED</td><td class="enum-value"><code>red</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -606,8 +606,8 @@ Color<pulumi-choosable type="language" values="python,go" class="inline">, Color
 <table>
 <thead><tr><th>Value</th></tr></thead>
 <tbody>
-<tr><td><code>blue</code></td></tr>
-<tr><td><code>red</code></td></tr>
+<tr><td class="enum-value"><code>blue</code></td></tr>
+<tr><td class="enum-value"><code>red</code></td></tr>
 </tbody>
 </table>
 </div>

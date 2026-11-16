@@ -4920,8 +4920,8 @@ The following output properties are available:
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Ship<wbr>To<wbr>Countries</td><td><code>ShipToCountries</code></td><td>Ship to country</td></tr>
-<tr><td>Double<wbr>Encryption<wbr>Status</td><td><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+<tr><td>Ship<wbr>To<wbr>Countries</td><td class="enum-value"><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td>Double<wbr>Encryption<wbr>Status</td><td class="enum-value"><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
 </tbody>
 </table>
 </div>
@@ -4934,8 +4934,8 @@ The following output properties are available:
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Supported<wbr>Filter<wbr>Types<wbr>Ship<wbr>To<wbr>Countries</td><td><code>ShipToCountries</code></td><td>Ship to country</td></tr>
-<tr><td>Supported<wbr>Filter<wbr>Types<wbr>Double<wbr>Encryption<wbr>Status</td><td><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+<tr><td>Supported<wbr>Filter<wbr>Types<wbr>Ship<wbr>To<wbr>Countries</td><td class="enum-value"><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td>Supported<wbr>Filter<wbr>Types<wbr>Double<wbr>Encryption<wbr>Status</td><td class="enum-value"><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
 </tbody>
 </table>
 </div>
@@ -4948,8 +4948,8 @@ The following output properties are available:
 <table>
 <thead><tr><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>ShipToCountries</code></td><td>Ship to country</td></tr>
-<tr><td><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+<tr><td class="enum-value"><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td class="enum-value"><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
 </tbody>
 </table>
 </div>
@@ -4962,8 +4962,8 @@ The following output properties are available:
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Ship<wbr>To<wbr>Countries</td><td><code>ShipToCountries</code></td><td>Ship to country</td></tr>
-<tr><td>Double<wbr>Encryption<wbr>Status</td><td><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+<tr><td>Ship<wbr>To<wbr>Countries</td><td class="enum-value"><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td>Double<wbr>Encryption<wbr>Status</td><td class="enum-value"><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
 </tbody>
 </table>
 </div>
@@ -4976,8 +4976,8 @@ The following output properties are available:
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Ship<wbr>To<wbr>Countries</td><td><code>ShipToCountries</code></td><td>Ship to country</td></tr>
-<tr><td>Double<wbr>Encryption<wbr>Status</td><td><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+<tr><td>Ship<wbr>To<wbr>Countries</td><td class="enum-value"><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td>Double<wbr>Encryption<wbr>Status</td><td class="enum-value"><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
 </tbody>
 </table>
 </div>
@@ -4990,8 +4990,8 @@ The following output properties are available:
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>SHIP_TO_COUNTRIES</td><td><code>ShipToCountries</code></td><td>Ship to country</td></tr>
-<tr><td>DOUBLE_ENCRYPTION_STATUS</td><td><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+<tr><td>SHIP_TO_COUNTRIES</td><td class="enum-value"><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td>DOUBLE_ENCRYPTION_STATUS</td><td class="enum-value"><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
 </tbody>
 </table>
 </div>
@@ -5004,8 +5004,8 @@ The following output properties are available:
 <table>
 <thead><tr><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>ShipToCountries</code></td><td>Ship to country</td></tr>
-<tr><td><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+<tr><td class="enum-value"><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td class="enum-value"><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
 </tbody>
 </table>
 </div>

@@ -957,7 +957,7 @@ Enum<wbr>Overlay<pulumi-choosable type="language" values="python,go" class="inli
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Some<wbr>Enum<wbr>Value</td><td><code>SOME_ENUM_VALUE</code></td></tr>
+<tr><td>Some<wbr>Enum<wbr>Value</td><td class="enum-value"><code>SOME_ENUM_VALUE</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -970,7 +970,7 @@ Enum<wbr>Overlay<pulumi-choosable type="language" values="python,go" class="inli
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Enum<wbr>Overlay<wbr>Some<wbr>Enum<wbr>Value</td><td><code>SOME_ENUM_VALUE</code></td></tr>
+<tr><td>Enum<wbr>Overlay<wbr>Some<wbr>Enum<wbr>Value</td><td class="enum-value"><code>SOME_ENUM_VALUE</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -983,7 +983,7 @@ Enum<wbr>Overlay<pulumi-choosable type="language" values="python,go" class="inli
 <table>
 <thead><tr><th>Value</th></tr></thead>
 <tbody>
-<tr><td><code>SOME_ENUM_VALUE</code></td></tr>
+<tr><td class="enum-value"><code>SOME_ENUM_VALUE</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -996,7 +996,7 @@ Enum<wbr>Overlay<pulumi-choosable type="language" values="python,go" class="inli
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Some<wbr>Enum<wbr>Value</td><td><code>SOME_ENUM_VALUE</code></td></tr>
+<tr><td>Some<wbr>Enum<wbr>Value</td><td class="enum-value"><code>SOME_ENUM_VALUE</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1009,7 +1009,7 @@ Enum<wbr>Overlay<pulumi-choosable type="language" values="python,go" class="inli
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Some<wbr>Enum<wbr>Value</td><td><code>SOME_ENUM_VALUE</code></td></tr>
+<tr><td>Some<wbr>Enum<wbr>Value</td><td class="enum-value"><code>SOME_ENUM_VALUE</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1022,7 +1022,7 @@ Enum<wbr>Overlay<pulumi-choosable type="language" values="python,go" class="inli
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>SOME_ENUM_VALUE</td><td><code>SOME_ENUM_VALUE</code></td></tr>
+<tr><td>SOME_ENUM_VALUE</td><td class="enum-value"><code>SOME_ENUM_VALUE</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1035,7 +1035,7 @@ Enum<wbr>Overlay<pulumi-choosable type="language" values="python,go" class="inli
 <table>
 <thead><tr><th>Value</th></tr></thead>
 <tbody>
-<tr><td><code>SOME_ENUM_VALUE</code></td></tr>
+<tr><td class="enum-value"><code>SOME_ENUM_VALUE</code></td></tr>
 </tbody>
 </table>
 </div>

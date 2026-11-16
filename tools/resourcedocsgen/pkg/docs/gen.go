@@ -384,6 +384,8 @@ type resourceDocArgs struct {
 
 	// LookupParams is a map of the param string to be rendered per language for looking-up a resource.
 	LookupParams map[language.Language]string
+	// LookupParamsTyped is the typed set of parameters for looking up a resource, in order, per language.
+	LookupParamsTyped map[language.Language][]formalParam
 	// StateInputs is a map per language and the corresponding slice of state input properties required while looking-up
 	// an existing resource.
 	StateInputs map[language.Language][]property
@@ -774,7 +776,19 @@ const (
 	ctorNameArgComment = "The unique name of the resource."
 	ctorArgsArgComment = "The arguments to resource properties."
 	ctorOptsArgComment = "Bag of options to control resource's behavior."
+
+	lookupNameComment = "The unique name of the resulting resource."
+	lookupIDComment   = "The unique provider ID of the resource to look up."
 )
+
+// lookupStateComment describes the state parameter of a resource's get method. Go generates the parameter even when the
+// state type has no fields, so the comment tells the reader what to pass in that case.
+func lookupStateComment(r *schema.Resource) string {
+	if r.StateInputs == nil {
+		return "Pass nil. This resource has no state arguments."
+	}
+	return "Known property values the provider needs, along with the ID, to find the resource. Usually not required."
+}
 
 func (mod *modContext) genConstructorTS(r *schema.Resource, argsOptional bool) []formalParam {
 	name := resourceName(r)
@@ -1471,17 +1485,20 @@ func (mod *modContext) getTSLookupParams(r *schema.Resource, stateParam string) 
 	params := []formalParam{
 		{
 			Name: "name",
-
 			Type: propertyType{
 				Name: "string",
 			},
+			Comment: lookupNameComment,
 		},
 		{
 			Name: "id",
 			Type: propertyType{
 				Name: "Input<ID>",
-				Link: docLangHelper.GetDocLinkForPulumiType(def, "ID"),
+				// The typed parameter list renders DescriptionName as HTML, so the angle brackets are escaped.
+				DescriptionName: "Input&lt;ID&gt;",
+				Link:            docLangHelper.GetDocLinkForPulumiType(def, "ID"),
 			},
+			Comment: lookupIDComment,
 		},
 	}
 	if r.StateInputs != nil {
@@ -1491,6 +1508,7 @@ func (mod *modContext) getTSLookupParams(r *schema.Resource, stateParam string) 
 			Type: propertyType{
 				Name: stateParam,
 			},
+			Comment: lookupStateComment(r),
 		})
 	}
 	return append(params,
@@ -1501,6 +1519,7 @@ func (mod *modContext) getTSLookupParams(r *schema.Resource, stateParam string) 
 				Name: "CustomResourceOptions",
 				Link: docLangHelper.GetDocLinkForPulumiType(def, "CustomResourceOptions"),
 			},
+			Comment: ctorOptsArgComment,
 		},
 	)
 }
@@ -1520,12 +1539,14 @@ func (mod *modContext) getGoLookupParams(r *schema.Resource, stateParam string) 
 				Name: "Context",
 				Link: docLangHelper.GetDocLinkForPulumiType(def, "Context"),
 			},
+			Comment: "Context object for the current deployment.",
 		},
 		{
 			Name: "name",
 			Type: propertyType{
 				Name: "string",
 			},
+			Comment: lookupNameComment,
 		},
 		{
 			Name: "id",
@@ -1533,6 +1554,7 @@ func (mod *modContext) getGoLookupParams(r *schema.Resource, stateParam string) 
 				Name: "IDInput",
 				Link: docLangHelper.GetDocLinkForPulumiType(def, "IDInput"),
 			},
+			Comment: lookupIDComment,
 		},
 		{
 			Name:         "state",
@@ -1540,6 +1562,7 @@ func (mod *modContext) getGoLookupParams(r *schema.Resource, stateParam string) 
 			Type: propertyType{
 				Name: stateParam,
 			},
+			Comment: lookupStateComment(r),
 		},
 		{
 			Name:         "opts",
@@ -1548,6 +1571,7 @@ func (mod *modContext) getGoLookupParams(r *schema.Resource, stateParam string) 
 				Name: "ResourceOption",
 				Link: docLangHelper.GetDocLinkForPulumiType(def, "ResourceOption"),
 			},
+			Comment: ctorOptsArgComment,
 		},
 	}
 }
@@ -1565,13 +1589,16 @@ func (mod *modContext) getCSLookupParams(r *schema.Resource, stateParam string) 
 			Type: propertyType{
 				Name: "string",
 			},
+			Comment: lookupNameComment,
 		},
 		{
 			Name: "id",
 			Type: propertyType{
-				Name: "Input<string>",
-				Link: docLangHelper.GetDocLinkForPulumiType(def, "Pulumi.Input"),
+				Name:            "Input<string>",
+				DescriptionName: "Input&lt;string&gt;",
+				Link:            docLangHelper.GetDocLinkForPulumiType(def, "Pulumi.Input"),
 			},
+			Comment: lookupIDComment,
 		},
 	}
 	if r.StateInputs != nil {
@@ -1581,6 +1608,7 @@ func (mod *modContext) getCSLookupParams(r *schema.Resource, stateParam string) 
 			Type: propertyType{
 				Name: stateParam,
 			},
+			Comment: lookupStateComment(r),
 		})
 	}
 	return append(params, formalParam{
@@ -1591,6 +1619,7 @@ func (mod *modContext) getCSLookupParams(r *schema.Resource, stateParam string) 
 			Name: "CustomResourceOptions",
 			Link: docLangHelper.GetDocLinkForPulumiType(def, "Pulumi.CustomResourceOptions"),
 		},
+		Comment: ctorOptsArgComment,
 	})
 }
 
@@ -1606,29 +1635,37 @@ func (mod *modContext) getJavaLookupParams(r *schema.Resource, stateParam string
 			Type: propertyType{
 				Name: "String",
 			},
+			Comment: lookupNameComment,
 		},
 		{
 			Name: "id",
 			Type: propertyType{
-				Name: "Output<String>",
-				Link: docLangHelper.GetDocLinkForPulumiType(def, "Output"),
+				Name:            "Output<String>",
+				DescriptionName: "Output&lt;String&gt;",
+				Link:            docLangHelper.GetDocLinkForPulumiType(def, "Output"),
 			},
+			Comment: lookupIDComment,
 		},
 	}
+	// The Java formal parameter template ignores OptionalFlag, so @Nullable only marks these optional in the typed list.
 	if r.StateInputs != nil {
 		params = append(params, formalParam{
-			Name: "state",
+			Name:         "state",
+			OptionalFlag: "@Nullable",
 			Type: propertyType{
 				Name: stateParam,
 			},
+			Comment: lookupStateComment(r),
 		})
 	}
 	return append(params, formalParam{
-		Name: "options",
+		Name:         "options",
+		OptionalFlag: "@Nullable",
 		Type: propertyType{
 			Name: "CustomResourceOptions",
 			Link: docLangHelper.GetDocLinkForPulumiType(def, "CustomResourceOptions"),
 		},
+		Comment: ctorOptsArgComment,
 	})
 }
 
@@ -1658,13 +1695,17 @@ func (mod *modContext) getPythonLookupParams(r *schema.Resource, stateParam stri
 	return params
 }
 
-// genLookupParams generates a map of per-language way of rendering the formal parameters of the lookup function used to
-// lookup an existing resource. Every SDK generates a static get method for custom resources, so this returns parameters
-// for any resource that is neither a provider nor a component, whether or not the schema declares stateInputs.
-func (mod *modContext) genLookupParams(r *schema.Resource, stateParam string) map[language.Language]string {
+// genLookupParams generates, per language, the rendered signature parameters of the lookup function used to look up an
+// existing resource, and the typed parameters listed beneath the signature. Every SDK generates a static get method for
+// custom resources, so this returns parameters for any resource that is neither a provider nor a component, whether or
+// not the schema declares stateInputs.
+func (mod *modContext) genLookupParams(
+	r *schema.Resource, stateParam string,
+) (map[language.Language]string, map[language.Language][]formalParam) {
 	lookupParams := make(map[language.Language]string)
+	typedParams := make(map[language.Language][]formalParam)
 	if r.IsProvider || r.IsComponent {
-		return lookupParams
+		return lookupParams, typedParams
 	}
 
 	pyIndent := strings.Repeat(" ", len("def get("))
@@ -1672,8 +1713,36 @@ func (mod *modContext) genLookupParams(r *schema.Resource, stateParam string) ma
 	for lang := range language.All() {
 		params := mod.getLookupParams(lang, r, stateParam)
 		lookupParams[lang] = renderParams(lang, params, pyIndent)
+		typedParams[lang] = params
 	}
-	return lookupParams
+	// The Python signature hard-codes resource_name, id, and opts in the template and explodes the state into keyword
+	// arguments, which are documented with the other state arguments.
+	typedParams[language.Python] = pythonLookupLeadingParams
+	return lookupParams, typedParams
+}
+
+var pythonLookupLeadingParams = []formalParam{
+	{
+		Name:    "resource_name",
+		Type:    propertyType{Name: "str"},
+		Comment: lookupNameComment,
+	},
+	{
+		Name:    "id",
+		Type:    propertyType{Name: "str"},
+		Comment: lookupIDComment,
+	},
+	{
+		Name:         "opts",
+		OptionalFlag: "optional",
+		DefaultValue: " = None",
+		Type: propertyType{
+			Name:            "Optional[ResourceOptions]",
+			DescriptionName: "ResourceOptions",
+			Link:            "/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions",
+		},
+		Comment: ctorOptsArgComment,
+	},
 }
 
 func (mod *modContext) getLookupParams(lang language.Language, r *schema.Resource, stateParam string) []formalParam {
@@ -1875,6 +1944,7 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 
 	supportedSnippetLanguages := mod.context.getSupportedSnippetLanguages(r.IsOverlay, r.OverlaySupportedLanguages)
 	docInfo := dctx.decomposeDocstring(selfRef, SanitizeDescription(r.Comment), supportedSnippetLanguages)
+	lookupParams, typedLookupParams := mod.genLookupParams(r, stateParam)
 	data := resourceDocArgs{
 		Header: mod.genResourceHeader(r),
 
@@ -1894,13 +1964,14 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 		ConstructorResource: mod.getConstructorResourceInfo(name, r.Token),
 		ArgsRequired:        !allOptionalInputs,
 
-		InputProperties:  inputProps,
-		OutputProperties: outputProps,
-		LookupParams:     mod.genLookupParams(r, stateParam),
-		StateInputs:      stateInputs,
-		StateParam:       stateParam,
-		NestedTypes:      mod.genNestedTypes(r, true /*resourceType*/, r.IsProvider),
-		MaxNestedTypes:   maxNestedTypes,
+		InputProperties:   inputProps,
+		OutputProperties:  outputProps,
+		LookupParams:      lookupParams,
+		LookupParamsTyped: typedLookupParams,
+		StateInputs:       stateInputs,
+		StateParam:        stateParam,
+		NestedTypes:       mod.genNestedTypes(r, true /*resourceType*/, r.IsProvider),
+		MaxNestedTypes:    maxNestedTypes,
 
 		Methods: mod.genMethods(r),
 

@@ -292,42 +292,31 @@ Get an existing {{.Header.Title}} resource's state with the given name, ID, and 
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-{{ template "read_inputs" (dict "StateType" (and (ne (len .StateInputs) 0) .StateParam) "HasStateInputs" (ne (len .StateInputs) 0)) }}
+{{ template "constructor_args" (index .LookupParamsTyped lNodejs) }}
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="resources-properties">
-    <dt class="property-required" title="Required">
-        <span>resource_name</span>
-        <span class="property-indicator"></span>
-    </dt>
-    <dd>The unique name of the resulting resource.</dd>
-    <dt class="property-required" title="Optional">
-        <span>id</span>
-        <span class="property-indicator"></span>
-    </dt>
-    <dd>The <em>unique</em> provider ID of the resource to lookup.</dd>
-</dl>
+{{ template "constructor_args" (index .LookupParamsTyped lPython) }}
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-{{ template "read_inputs" (dict "StateType" .StateParam "HasStateInputs" (ne (len .StateInputs) 0)) }}
+{{ template "constructor_args" (index .LookupParamsTyped lGo) }}
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-{{ template "read_inputs" (dict "StateType" (and (ne (len .StateInputs) 0) .StateParam) "HasStateInputs" (ne (len .StateInputs) 0)) }}
+{{ template "constructor_args" (index .LookupParamsTyped lCSharp) }}
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-{{ template "read_inputs" (dict "StateType" (and (ne (len .StateInputs) 0) .StateParam) "HasStateInputs" (ne (len .StateInputs) 0)) }}
+{{ template "constructor_args" (index .LookupParamsTyped lJava) }}
 </pulumi-choosable>
 </div>
 

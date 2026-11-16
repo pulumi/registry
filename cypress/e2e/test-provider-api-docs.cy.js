@@ -153,6 +153,30 @@ describe("Test Provider", () => {
                             .should("contain", expected);
                     });
                 });
+
+                it("gives every get parameter a type and description", () => {
+                    const values = {
+                        "TypeScript": "typescript",
+                        "Python": "python",
+                        "Go": "go",
+                        "C#": "csharp",
+                        "Java": "java",
+                    };
+
+                    Object.entries(values).forEach(([language, value]) => {
+                        cy.get("pulumi-chooser li a").contains(languageTabLabel[language]).first().click();
+                        cy.get("#look-up").nextUntil("h2")
+                            .find(`pulumi-choosable[type='language'][values*='${value}'] .resources-properties`)
+                            .first()
+                            .find("dt")
+                            .should("have.length.at.least", 2)
+                            .each(($dt) => {
+                                cy.wrap($dt).find(".property-type").invoke("text")
+                                    .should("have.length.gt", 0, `${language} get parameter ${$dt.find("span").first().text()} has no type`);
+                                cy.wrap($dt).next("dd").invoke("text").should("have.length.gt", 0);
+                            });
+                    });
+                });
             });
 
             // Verify that the inputs and outputs sections exist
@@ -207,8 +231,6 @@ describe("Test Provider", () => {
                         } else {
                             value = language.toLowerCase();
                         }
-                        // Stop at #outputs: later sections, such as "Look up Existing", reuse
-                        // the same property-list markup without types.
                         const inputsForLanguage = () =>
                             cy.get("#inputs").nextUntil("#outputs")
                                 .find(`pulumi-choosable[type='language'][values*='${value}']`);

@@ -292,7 +292,7 @@ Get an existing {{.Header.Title}} resource's state with the given name, ID, and 
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-{{ template "read_inputs" (and (ne (len .StateInputs) 0) .StateParam) }}
+{{ template "read_inputs" (dict "StateType" (and (ne (len .StateInputs) 0) .StateParam) "HasStateInputs" (ne (len .StateInputs) 0)) }}
 </pulumi-choosable>
 </div>
 
@@ -315,19 +315,19 @@ Get an existing {{.Header.Title}} resource's state with the given name, ID, and 
 
 <div>
 <pulumi-choosable type="language" values="go">
-{{ template "read_inputs" .StateParam }}
+{{ template "read_inputs" (dict "StateType" .StateParam "HasStateInputs" (ne (len .StateInputs) 0)) }}
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-{{ template "read_inputs" (and (ne (len .StateInputs) 0) .StateParam) }}
+{{ template "read_inputs" (dict "StateType" (and (ne (len .StateInputs) 0) .StateParam) "HasStateInputs" (ne (len .StateInputs) 0)) }}
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-{{ template "read_inputs" (and (ne (len .StateInputs) 0) .StateParam) }}
+{{ template "read_inputs" (dict "StateType" (and (ne (len .StateInputs) 0) .StateParam) "HasStateInputs" (ne (len .StateInputs) 0)) }}
 </pulumi-choosable>
 </div>
 

@@ -1,4 +1,4 @@
-{{/* The argument is the state type name, or false when the get method takes no state parameter. */}}
+{{/* StateType is the state parameter's type, or empty when the get method has no state parameter. HasStateInputs is false when the type has no fields, which only happens in Go. */}}
 {{ define "read_inputs" }}
 <dl class="resources-properties">
     <dt class="property-required" title="Required">
@@ -11,13 +11,17 @@
         <span class="property-indicator"></span>
     </dt>
     <dd>The <em>unique</em> provider ID of the resource to lookup.</dd>
-{{- if . }}
+{{- if .StateType }}
     <dt class="property-optional" title="Optional">
         <span>state</span>
         <span class="property-indicator"></span>
-        <span class="property-type">{{ . }}</span>
+        <span class="property-type">{{ .StateType }}</span>
     </dt>
-    <dd>Any extra arguments used during the lookup.</dd>
+{{- if .HasStateInputs }}
+    <dd>Known property values the provider needs, along with the ID, to find the resource. Usually not required.</dd>
+{{- else }}
+    <dd>Pass <code>nil</code>. This resource has no state arguments.</dd>
+{{- end }}
 {{- end }}
     <dt class="property-optional" title="Optional">
         <span>opts</span>

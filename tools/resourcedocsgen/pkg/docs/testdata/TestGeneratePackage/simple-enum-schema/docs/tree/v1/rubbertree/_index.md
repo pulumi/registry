@@ -925,7 +925,7 @@ Get an existing RubberTree resource's state with the given name, ID, and optiona
         <span class="property-indicator"></span>
         <span class="property-type">RubberTreeState</span>
     </dt>
-    <dd>Any extra arguments used during the lookup.</dd>
+    <dd>Known property values the provider needs, along with the ID, to find the resource. Usually not required.</dd>
     <dt class="property-optional" title="Optional">
         <span>opts</span>
         <span class="property-indicator"></span>
@@ -972,7 +972,7 @@ Get an existing RubberTree resource's state with the given name, ID, and optiona
         <span class="property-indicator"></span>
         <span class="property-type">RubberTreeState</span>
     </dt>
-    <dd>Any extra arguments used during the lookup.</dd>
+    <dd>Known property values the provider needs, along with the ID, to find the resource. Usually not required.</dd>
     <dt class="property-optional" title="Optional">
         <span>opts</span>
         <span class="property-indicator"></span>
@@ -1002,7 +1002,7 @@ Get an existing RubberTree resource's state with the given name, ID, and optiona
         <span class="property-indicator"></span>
         <span class="property-type">RubberTreeState</span>
     </dt>
-    <dd>Any extra arguments used during the lookup.</dd>
+    <dd>Known property values the provider needs, along with the ID, to find the resource. Usually not required.</dd>
     <dt class="property-optional" title="Optional">
         <span>opts</span>
         <span class="property-indicator"></span>
@@ -1032,7 +1032,7 @@ Get an existing RubberTree resource's state with the given name, ID, and optiona
         <span class="property-indicator"></span>
         <span class="property-type">RubberTreeState</span>
     </dt>
-    <dd>Any extra arguments used during the lookup.</dd>
+    <dd>Known property values the provider needs, along with the ID, to find the resource. Usually not required.</dd>
     <dt class="property-optional" title="Optional">
         <span>opts</span>
         <span class="property-indicator"></span>

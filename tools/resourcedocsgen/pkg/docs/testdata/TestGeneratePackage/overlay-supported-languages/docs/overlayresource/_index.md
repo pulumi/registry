@@ -752,7 +752,7 @@ Get an existing OverlayResource resource's state with the given name, ID, and op
         <span class="property-indicator"></span>
         <span class="property-type">OverlayResourceState</span>
     </dt>
-    <dd>Any extra arguments used during the lookup.</dd>
+    <dd>Pass <code>nil</code>. This resource has no state arguments.</dd>
     <dt class="property-optional" title="Optional">
         <span>opts</span>
         <span class="property-indicator"></span>

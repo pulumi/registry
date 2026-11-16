@@ -1241,7 +1241,7 @@ Get an existing TypeUses resource's state with the given name, ID, and optional 
         <span class="property-indicator"></span>
         <span class="property-type">TypeUsesState</span>
     </dt>
-    <dd>Any extra arguments used during the lookup.</dd>
+    <dd>Pass <code>nil</code>. This resource has no state arguments.</dd>
     <dt class="property-optional" title="Optional">
         <span>opts</span>
         <span class="property-indicator"></span>

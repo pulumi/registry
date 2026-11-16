@@ -334,6 +334,9 @@ function getDefaultExcludedKeywords() {
 
         // API base URL referenced in the airbyte provider's upstream README; 401s without auth.
         "https://api.airbyte.com/*",
+
+        // Dead external links with no replacement.
+        "https://docs.aws.amazon.com/opsworks/latest/userguide/stacks-eol-faqs.html", // aws: 404, OpsWorks user guide retired after EOL, no replacement
     ];
 }
 

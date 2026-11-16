@@ -636,8 +636,8 @@ Hash<wbr>Kind<pulumi-choosable type="language" values="python,go" class="inline"
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Adler32</td><td><code>Adler32</code></td><td>Adler32 implements the Adler-32 checksum.</td></tr>
-<tr><td>CRC32</td><td><code>CRC32</code></td><td>CRC32 implements the 32-bit cyclic redundancy check, or CRC-32, checksum.</td></tr>
+<tr><td>Adler32</td><td class="enum-value"><code>Adler32</code></td><td>Adler32 implements the Adler-32 checksum.</td></tr>
+<tr><td>CRC32</td><td class="enum-value"><code>CRC32</code></td><td>CRC32 implements the 32-bit cyclic redundancy check, or CRC-32, checksum.</td></tr>
 </tbody>
 </table>
 </div>
@@ -650,8 +650,8 @@ Hash<wbr>Kind<pulumi-choosable type="language" values="python,go" class="inline"
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Hash<wbr>Kind<wbr>Adler32</td><td><code>Adler32</code></td><td>Adler32 implements the Adler-32 checksum.</td></tr>
-<tr><td>Hash<wbr>Kind<wbr>CRC32</td><td><code>CRC32</code></td><td>CRC32 implements the 32-bit cyclic redundancy check, or CRC-32, checksum.</td></tr>
+<tr><td>Hash<wbr>Kind<wbr>Adler32</td><td class="enum-value"><code>Adler32</code></td><td>Adler32 implements the Adler-32 checksum.</td></tr>
+<tr><td>Hash<wbr>Kind<wbr>CRC32</td><td class="enum-value"><code>CRC32</code></td><td>CRC32 implements the 32-bit cyclic redundancy check, or CRC-32, checksum.</td></tr>
 </tbody>
 </table>
 </div>
@@ -664,8 +664,8 @@ Hash<wbr>Kind<pulumi-choosable type="language" values="python,go" class="inline"
 <table>
 <thead><tr><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>Adler32</code></td><td>Adler32 implements the Adler-32 checksum.</td></tr>
-<tr><td><code>CRC32</code></td><td>CRC32 implements the 32-bit cyclic redundancy check, or CRC-32, checksum.</td></tr>
+<tr><td class="enum-value"><code>Adler32</code></td><td>Adler32 implements the Adler-32 checksum.</td></tr>
+<tr><td class="enum-value"><code>CRC32</code></td><td>CRC32 implements the 32-bit cyclic redundancy check, or CRC-32, checksum.</td></tr>
 </tbody>
 </table>
 </div>
@@ -678,8 +678,8 @@ Hash<wbr>Kind<pulumi-choosable type="language" values="python,go" class="inline"
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Adler32</td><td><code>Adler32</code></td><td>Adler32 implements the Adler-32 checksum.</td></tr>
-<tr><td>CRC32</td><td><code>CRC32</code></td><td>CRC32 implements the 32-bit cyclic redundancy check, or CRC-32, checksum.</td></tr>
+<tr><td>Adler32</td><td class="enum-value"><code>Adler32</code></td><td>Adler32 implements the Adler-32 checksum.</td></tr>
+<tr><td>CRC32</td><td class="enum-value"><code>CRC32</code></td><td>CRC32 implements the 32-bit cyclic redundancy check, or CRC-32, checksum.</td></tr>
 </tbody>
 </table>
 </div>
@@ -692,8 +692,8 @@ Hash<wbr>Kind<pulumi-choosable type="language" values="python,go" class="inline"
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Adler32</td><td><code>Adler32</code></td><td>Adler32 implements the Adler-32 checksum.</td></tr>
-<tr><td>CRC32</td><td><code>CRC32</code></td><td>CRC32 implements the 32-bit cyclic redundancy check, or CRC-32, checksum.</td></tr>
+<tr><td>Adler32</td><td class="enum-value"><code>Adler32</code></td><td>Adler32 implements the Adler-32 checksum.</td></tr>
+<tr><td>CRC32</td><td class="enum-value"><code>CRC32</code></td><td>CRC32 implements the 32-bit cyclic redundancy check, or CRC-32, checksum.</td></tr>
 </tbody>
 </table>
 </div>
@@ -706,8 +706,8 @@ Hash<wbr>Kind<pulumi-choosable type="language" values="python,go" class="inline"
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>ADLER32</td><td><code>Adler32</code></td><td>Adler32 implements the Adler-32 checksum.</td></tr>
-<tr><td>CRC32</td><td><code>CRC32</code></td><td>CRC32 implements the 32-bit cyclic redundancy check, or CRC-32, checksum.</td></tr>
+<tr><td>ADLER32</td><td class="enum-value"><code>Adler32</code></td><td>Adler32 implements the Adler-32 checksum.</td></tr>
+<tr><td>CRC32</td><td class="enum-value"><code>CRC32</code></td><td>CRC32 implements the 32-bit cyclic redundancy check, or CRC-32, checksum.</td></tr>
 </tbody>
 </table>
 </div>
@@ -720,8 +720,8 @@ Hash<wbr>Kind<pulumi-choosable type="language" values="python,go" class="inline"
 <table>
 <thead><tr><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>Adler32</code></td><td>Adler32 implements the Adler-32 checksum.</td></tr>
-<tr><td><code>CRC32</code></td><td>CRC32 implements the 32-bit cyclic redundancy check, or CRC-32, checksum.</td></tr>
+<tr><td class="enum-value"><code>Adler32</code></td><td>Adler32 implements the Adler-32 checksum.</td></tr>
+<tr><td class="enum-value"><code>CRC32</code></td><td>CRC32 implements the 32-bit cyclic redundancy check, or CRC-32, checksum.</td></tr>
 </tbody>
 </table>
 </div>

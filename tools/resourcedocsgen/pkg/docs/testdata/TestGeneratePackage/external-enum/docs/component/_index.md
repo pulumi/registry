@@ -632,8 +632,8 @@ My<wbr>Enum<pulumi-choosable type="language" values="python,go" class="inline">,
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Pi</td><td><code>3.1415</code></td></tr>
-<tr><td>Small</td><td><code>1e-07</code></td></tr>
+<tr><td>Pi</td><td class="enum-value"><code>3.1415</code></td></tr>
+<tr><td>Small</td><td class="enum-value"><code>1e-07</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -646,8 +646,8 @@ My<wbr>Enum<pulumi-choosable type="language" values="python,go" class="inline">,
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>My<wbr>Enum<wbr>Pi</td><td><code>3.1415</code></td></tr>
-<tr><td>My<wbr>Enum<wbr>Small</td><td><code>1e-07</code></td></tr>
+<tr><td>My<wbr>Enum<wbr>Pi</td><td class="enum-value"><code>3.1415</code></td></tr>
+<tr><td>My<wbr>Enum<wbr>Small</td><td class="enum-value"><code>1e-07</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -660,8 +660,8 @@ My<wbr>Enum<pulumi-choosable type="language" values="python,go" class="inline">,
 <table>
 <thead><tr><th>Value</th></tr></thead>
 <tbody>
-<tr><td><code>3.1415</code></td></tr>
-<tr><td><code>1e-07</code></td></tr>
+<tr><td class="enum-value"><code>3.1415</code></td></tr>
+<tr><td class="enum-value"><code>1e-07</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -674,8 +674,8 @@ My<wbr>Enum<pulumi-choosable type="language" values="python,go" class="inline">,
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Pi</td><td><code>3.1415</code></td></tr>
-<tr><td>Small</td><td><code>1e-07</code></td></tr>
+<tr><td>Pi</td><td class="enum-value"><code>3.1415</code></td></tr>
+<tr><td>Small</td><td class="enum-value"><code>1e-07</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -688,8 +688,8 @@ My<wbr>Enum<pulumi-choosable type="language" values="python,go" class="inline">,
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Pi</td><td><code>3.1415</code></td></tr>
-<tr><td>Small</td><td><code>1e-07</code></td></tr>
+<tr><td>Pi</td><td class="enum-value"><code>3.1415</code></td></tr>
+<tr><td>Small</td><td class="enum-value"><code>1e-07</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -702,8 +702,8 @@ My<wbr>Enum<pulumi-choosable type="language" values="python,go" class="inline">,
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>PI</td><td><code>3.1415</code></td></tr>
-<tr><td>SMALL</td><td><code>1e-07</code></td></tr>
+<tr><td>PI</td><td class="enum-value"><code>3.1415</code></td></tr>
+<tr><td>SMALL</td><td class="enum-value"><code>1e-07</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -716,8 +716,8 @@ My<wbr>Enum<pulumi-choosable type="language" values="python,go" class="inline">,
 <table>
 <thead><tr><th>Value</th></tr></thead>
 <tbody>
-<tr><td><code>3.1415</code></td></tr>
-<tr><td><code>1e-07</code></td></tr>
+<tr><td class="enum-value"><code>3.1415</code></td></tr>
+<tr><td class="enum-value"><code>1e-07</code></td></tr>
 </tbody>
 </table>
 </div>

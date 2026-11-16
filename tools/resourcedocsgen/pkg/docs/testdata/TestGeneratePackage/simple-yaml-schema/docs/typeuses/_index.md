@@ -1721,8 +1721,8 @@ Output<wbr>Only<wbr>Enum<wbr>Type<pulumi-choosable type="language" values="pytho
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Foo</td><td><code>foo</code></td></tr>
-<tr><td>Bar</td><td><code>bar</code></td></tr>
+<tr><td>Foo</td><td class="enum-value"><code>foo</code></td></tr>
+<tr><td>Bar</td><td class="enum-value"><code>bar</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1735,8 +1735,8 @@ Output<wbr>Only<wbr>Enum<wbr>Type<pulumi-choosable type="language" values="pytho
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Output<wbr>Only<wbr>Enum<wbr>Type<wbr>Foo</td><td><code>foo</code></td></tr>
-<tr><td>Output<wbr>Only<wbr>Enum<wbr>Type<wbr>Bar</td><td><code>bar</code></td></tr>
+<tr><td>Output<wbr>Only<wbr>Enum<wbr>Type<wbr>Foo</td><td class="enum-value"><code>foo</code></td></tr>
+<tr><td>Output<wbr>Only<wbr>Enum<wbr>Type<wbr>Bar</td><td class="enum-value"><code>bar</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1749,8 +1749,8 @@ Output<wbr>Only<wbr>Enum<wbr>Type<pulumi-choosable type="language" values="pytho
 <table>
 <thead><tr><th>Value</th></tr></thead>
 <tbody>
-<tr><td><code>foo</code></td></tr>
-<tr><td><code>bar</code></td></tr>
+<tr><td class="enum-value"><code>foo</code></td></tr>
+<tr><td class="enum-value"><code>bar</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1763,8 +1763,8 @@ Output<wbr>Only<wbr>Enum<wbr>Type<pulumi-choosable type="language" values="pytho
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Foo</td><td><code>foo</code></td></tr>
-<tr><td>Bar</td><td><code>bar</code></td></tr>
+<tr><td>Foo</td><td class="enum-value"><code>foo</code></td></tr>
+<tr><td>Bar</td><td class="enum-value"><code>bar</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1777,8 +1777,8 @@ Output<wbr>Only<wbr>Enum<wbr>Type<pulumi-choosable type="language" values="pytho
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Foo</td><td><code>foo</code></td></tr>
-<tr><td>Bar</td><td><code>bar</code></td></tr>
+<tr><td>Foo</td><td class="enum-value"><code>foo</code></td></tr>
+<tr><td>Bar</td><td class="enum-value"><code>bar</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1791,8 +1791,8 @@ Output<wbr>Only<wbr>Enum<wbr>Type<pulumi-choosable type="language" values="pytho
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>FOO</td><td><code>foo</code></td></tr>
-<tr><td>BAR</td><td><code>bar</code></td></tr>
+<tr><td>FOO</td><td class="enum-value"><code>foo</code></td></tr>
+<tr><td>BAR</td><td class="enum-value"><code>bar</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1805,8 +1805,8 @@ Output<wbr>Only<wbr>Enum<wbr>Type<pulumi-choosable type="language" values="pytho
 <table>
 <thead><tr><th>Value</th></tr></thead>
 <tbody>
-<tr><td><code>foo</code></td></tr>
-<tr><td><code>bar</code></td></tr>
+<tr><td class="enum-value"><code>foo</code></td></tr>
+<tr><td class="enum-value"><code>bar</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1918,6 +1918,8 @@ Output<wbr>Only<wbr>Object<wbr>Type<pulumi-choosable type="language" values="pyt
 <h4 id="rubbertreevariety">
 Rubber<wbr>Tree<wbr>Variety<pulumi-choosable type="language" values="python,go" class="inline">, Rubber<wbr>Tree<wbr>Variety<wbr>Args</pulumi-choosable>
 </h4>
+types of rubber trees
+
 
 <div>
 <pulumi-choosable type="language" values="csharp">
@@ -1925,9 +1927,9 @@ Rubber<wbr>Tree<wbr>Variety<pulumi-choosable type="language" values="python,go" 
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Burgundy</td><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
-<tr><td>Ruby</td><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
-<tr><td>Tineke</td><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+<tr><td>Burgundy</td><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>Ruby</td><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>Tineke</td><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
 </tbody>
 </table>
 </div>
@@ -1940,9 +1942,9 @@ Rubber<wbr>Tree<wbr>Variety<pulumi-choosable type="language" values="python,go" 
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Burgundy</td><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
-<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Ruby</td><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
-<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Tineke</td><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Burgundy</td><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Ruby</td><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Tineke</td><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
 </tbody>
 </table>
 </div>
@@ -1955,9 +1957,9 @@ Rubber<wbr>Tree<wbr>Variety<pulumi-choosable type="language" values="python,go" 
 <table>
 <thead><tr><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
-<tr><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
-<tr><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+<tr><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
 </tbody>
 </table>
 </div>
@@ -1970,9 +1972,9 @@ Rubber<wbr>Tree<wbr>Variety<pulumi-choosable type="language" values="python,go" 
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Burgundy</td><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
-<tr><td>Ruby</td><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
-<tr><td>Tineke</td><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+<tr><td>Burgundy</td><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>Ruby</td><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>Tineke</td><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
 </tbody>
 </table>
 </div>
@@ -1985,9 +1987,9 @@ Rubber<wbr>Tree<wbr>Variety<pulumi-choosable type="language" values="python,go" 
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Burgundy</td><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
-<tr><td>Ruby</td><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
-<tr><td>Tineke</td><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+<tr><td>Burgundy</td><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>Ruby</td><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>Tineke</td><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
 </tbody>
 </table>
 </div>
@@ -2000,9 +2002,9 @@ Rubber<wbr>Tree<wbr>Variety<pulumi-choosable type="language" values="python,go" 
 <table>
 <thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>BURGUNDY</td><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
-<tr><td>RUBY</td><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
-<tr><td>TINEKE</td><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+<tr><td>BURGUNDY</td><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>RUBY</td><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>TINEKE</td><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
 </tbody>
 </table>
 </div>
@@ -2015,9 +2017,9 @@ Rubber<wbr>Tree<wbr>Variety<pulumi-choosable type="language" values="python,go" 
 <table>
 <thead><tr><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
-<tr><td><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
-<tr><td><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+<tr><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
 </tbody>
 </table>
 </div>

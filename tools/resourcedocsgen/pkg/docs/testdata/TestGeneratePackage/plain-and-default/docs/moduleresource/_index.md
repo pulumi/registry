@@ -1418,9 +1418,9 @@ Enum<wbr>Thing<pulumi-choosable type="language" values="python,go" class="inline
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Four</td><td><code>4</code></td></tr>
-<tr><td>Six</td><td><code>6</code></td></tr>
-<tr><td>Eight</td><td><code>8</code></td></tr>
+<tr><td>Four</td><td class="enum-value"><code>4</code></td></tr>
+<tr><td>Six</td><td class="enum-value"><code>6</code></td></tr>
+<tr><td>Eight</td><td class="enum-value"><code>8</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1433,9 +1433,9 @@ Enum<wbr>Thing<pulumi-choosable type="language" values="python,go" class="inline
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Enum<wbr>Thing<wbr>Four</td><td><code>4</code></td></tr>
-<tr><td>Enum<wbr>Thing<wbr>Six</td><td><code>6</code></td></tr>
-<tr><td>Enum<wbr>Thing<wbr>Eight</td><td><code>8</code></td></tr>
+<tr><td>Enum<wbr>Thing<wbr>Four</td><td class="enum-value"><code>4</code></td></tr>
+<tr><td>Enum<wbr>Thing<wbr>Six</td><td class="enum-value"><code>6</code></td></tr>
+<tr><td>Enum<wbr>Thing<wbr>Eight</td><td class="enum-value"><code>8</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1448,9 +1448,9 @@ Enum<wbr>Thing<pulumi-choosable type="language" values="python,go" class="inline
 <table>
 <thead><tr><th>Value</th></tr></thead>
 <tbody>
-<tr><td><code>4</code></td></tr>
-<tr><td><code>6</code></td></tr>
-<tr><td><code>8</code></td></tr>
+<tr><td class="enum-value"><code>4</code></td></tr>
+<tr><td class="enum-value"><code>6</code></td></tr>
+<tr><td class="enum-value"><code>8</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1463,9 +1463,9 @@ Enum<wbr>Thing<pulumi-choosable type="language" values="python,go" class="inline
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Four</td><td><code>4</code></td></tr>
-<tr><td>Six</td><td><code>6</code></td></tr>
-<tr><td>Eight</td><td><code>8</code></td></tr>
+<tr><td>Four</td><td class="enum-value"><code>4</code></td></tr>
+<tr><td>Six</td><td class="enum-value"><code>6</code></td></tr>
+<tr><td>Eight</td><td class="enum-value"><code>8</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1478,9 +1478,9 @@ Enum<wbr>Thing<pulumi-choosable type="language" values="python,go" class="inline
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>Four</td><td><code>4</code></td></tr>
-<tr><td>Six</td><td><code>6</code></td></tr>
-<tr><td>Eight</td><td><code>8</code></td></tr>
+<tr><td>Four</td><td class="enum-value"><code>4</code></td></tr>
+<tr><td>Six</td><td class="enum-value"><code>6</code></td></tr>
+<tr><td>Eight</td><td class="enum-value"><code>8</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1493,9 +1493,9 @@ Enum<wbr>Thing<pulumi-choosable type="language" values="python,go" class="inline
 <table>
 <thead><tr><th>Name</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td>FOUR</td><td><code>4</code></td></tr>
-<tr><td>SIX</td><td><code>6</code></td></tr>
-<tr><td>EIGHT</td><td><code>8</code></td></tr>
+<tr><td>FOUR</td><td class="enum-value"><code>4</code></td></tr>
+<tr><td>SIX</td><td class="enum-value"><code>6</code></td></tr>
+<tr><td>EIGHT</td><td class="enum-value"><code>8</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -1508,9 +1508,9 @@ Enum<wbr>Thing<pulumi-choosable type="language" values="python,go" class="inline
 <table>
 <thead><tr><th>Value</th></tr></thead>
 <tbody>
-<tr><td><code>4</code></td></tr>
-<tr><td><code>6</code></td></tr>
-<tr><td><code>8</code></td></tr>
+<tr><td class="enum-value"><code>4</code></td></tr>
+<tr><td class="enum-value"><code>6</code></td></tr>
+<tr><td class="enum-value"><code>8</code></td></tr>
 </tbody>
 </table>
 </div>

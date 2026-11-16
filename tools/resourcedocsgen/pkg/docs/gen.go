@@ -1176,9 +1176,10 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 				}
 
 				typs = append(typs, docNestedType{
-					Name:       wbr(name),
-					AnchorID:   strings.ToLower(name),
-					EnumValues: enums,
+					Name:        wbr(name),
+					AnchorID:    strings.ToLower(name),
+					Description: dctx.resolveRefs(selfRef, SanitizeDescription(typ.Comment)),
+					EnumValues:  enums,
 				})
 			}
 		}

@@ -36,6 +36,13 @@ table {
         }
     }
 
+    // Values are short identifiers, so keep each on one line. The global `td:not(:first-child) code` rule lets code
+    // break anywhere, which shrinks this column to a few characters when the description is long.
+    td.enum-value code {
+        @apply whitespace-nowrap;
+        word-break: normal;
+    }
+
     // Only the tooltip target, so the bubble's own text isn't struck through.
     .enum-deprecated .tooltip-target {
         @apply line-through;

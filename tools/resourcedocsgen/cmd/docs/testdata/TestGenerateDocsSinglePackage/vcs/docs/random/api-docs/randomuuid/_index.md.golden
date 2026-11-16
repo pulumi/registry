@@ -858,8 +858,9 @@ Get an existing RandomUuid resource's state with the given name, ID, and optiona
     <dt class="property-optional" title="Optional">
         <span>state</span>
         <span class="property-indicator"></span>
+        <span class="property-type">RandomUuidState</span>
     </dt>
-    <dd>Any extra arguments used during the lookup.</dd>
+    <dd>Known property values the provider needs, along with the ID, to find the resource. Usually not required.</dd>
     <dt class="property-optional" title="Optional">
         <span>opts</span>
         <span class="property-indicator"></span>
@@ -904,8 +905,9 @@ Get an existing RandomUuid resource's state with the given name, ID, and optiona
     <dt class="property-optional" title="Optional">
         <span>state</span>
         <span class="property-indicator"></span>
+        <span class="property-type">RandomUuidState</span>
     </dt>
-    <dd>Any extra arguments used during the lookup.</dd>
+    <dd>Known property values the provider needs, along with the ID, to find the resource. Usually not required.</dd>
     <dt class="property-optional" title="Optional">
         <span>opts</span>
         <span class="property-indicator"></span>
@@ -933,8 +935,9 @@ Get an existing RandomUuid resource's state with the given name, ID, and optiona
     <dt class="property-optional" title="Optional">
         <span>state</span>
         <span class="property-indicator"></span>
+        <span class="property-type">RandomUuidState</span>
     </dt>
-    <dd>Any extra arguments used during the lookup.</dd>
+    <dd>Known property values the provider needs, along with the ID, to find the resource. Usually not required.</dd>
     <dt class="property-optional" title="Optional">
         <span>opts</span>
         <span class="property-indicator"></span>
@@ -962,8 +965,9 @@ Get an existing RandomUuid resource's state with the given name, ID, and optiona
     <dt class="property-optional" title="Optional">
         <span>state</span>
         <span class="property-indicator"></span>
+        <span class="property-type">RandomUuidState</span>
     </dt>
-    <dd>Any extra arguments used during the lookup.</dd>
+    <dd>Known property values the provider needs, along with the ID, to find the resource. Usually not required.</dd>
     <dt class="property-optional" title="Optional">
         <span>opts</span>
         <span class="property-indicator"></span>

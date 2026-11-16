@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/checkly/pulumi-checkly/v2.14.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/checkly/pulumi-checkly/v3.0.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/checkly/pulumi-checkly/blob/v2.14.0/docs/installation-configuration.md
+edit_url: https://github.com/checkly/pulumi-checkly/blob/v3.0.0/docs/installation-configuration.md
 title: Checkly Installation & Configuration
 meta_desc: Provides an overview on how to configure credentials for the Checkly provider for Pulumi.
 layout: package
@@ -12,7 +12,7 @@ The Checkly provider is available as a package in most Pulumi languages:
 
 * JavaScript/TypeScript: [`@checkly/pulumi`](https://www.npmjs.com/package/@checkly/pulumi)
 * Python: [`pulumi-checkly`](https://pypi.org/project/pulumi-checkly/)
-* Go: [`github.com/checkly/pulumi-checkly/sdk/v2/go/checkly`](https://github.com/checkly/pulumi-checkly)
+* Go: [`github.com/checkly/pulumi-checkly/sdk/v3/go/checkly`](https://github.com/checkly/pulumi-checkly)
 * .NET: [`Pulumi.Checkly`](https://www.nuget.org/packages/Pulumi.Checkly)
 
 ## Authentication

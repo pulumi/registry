@@ -884,6 +884,7 @@ Get an existing Cat resource's state with the given name, ID, and optional extra
     <dt class="property-optional" title="Optional">
         <span>state</span>
         <span class="property-indicator"></span>
+        <span class="property-type">CatState</span>
     </dt>
     <dd>Any extra arguments used during the lookup.</dd>
     <dt class="property-optional" title="Optional">

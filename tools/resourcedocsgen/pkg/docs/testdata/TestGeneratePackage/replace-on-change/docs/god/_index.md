@@ -659,6 +659,7 @@ Get an existing God resource's state with the given name, ID, and optional extra
     <dt class="property-optional" title="Optional">
         <span>state</span>
         <span class="property-indicator"></span>
+        <span class="property-type">GodState</span>
     </dt>
     <dd>Any extra arguments used during the lookup.</dd>
     <dt class="property-optional" title="Optional">

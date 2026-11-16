@@ -659,6 +659,7 @@ Get an existing Workload resource's state with the given name, ID, and optional 
     <dt class="property-optional" title="Optional">
         <span>state</span>
         <span class="property-indicator"></span>
+        <span class="property-type">WorkloadState</span>
     </dt>
     <dd>Any extra arguments used during the lookup.</dd>
     <dt class="property-optional" title="Optional">

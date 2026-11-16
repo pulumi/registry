@@ -292,7 +292,7 @@ Get an existing {{.Header.Title}} resource's state with the given name, ID, and 
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-{{ template "read_inputs" (ne (len .StateInputs) 0) }}
+{{ template "read_inputs" (and (ne (len .StateInputs) 0) .StateParam) }}
 </pulumi-choosable>
 </div>
 
@@ -315,19 +315,19 @@ Get an existing {{.Header.Title}} resource's state with the given name, ID, and 
 
 <div>
 <pulumi-choosable type="language" values="go">
-{{ template "read_inputs" true }}
+{{ template "read_inputs" .StateParam }}
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-{{ template "read_inputs" (ne (len .StateInputs) 0) }}
+{{ template "read_inputs" (and (ne (len .StateInputs) 0) .StateParam) }}
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-{{ template "read_inputs" (ne (len .StateInputs) 0) }}
+{{ template "read_inputs" (and (ne (len .StateInputs) 0) .StateParam) }}
 </pulumi-choosable>
 </div>
 

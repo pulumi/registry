@@ -886,6 +886,7 @@ Get an existing Example_resource resource's state with the given name, ID, and o
     <dt class="property-optional" title="Optional">
         <span>state</span>
         <span class="property-indicator"></span>
+        <span class="property-type">Example_resourceState</span>
     </dt>
     <dd>Any extra arguments used during the lookup.</dd>
     <dt class="property-optional" title="Optional">

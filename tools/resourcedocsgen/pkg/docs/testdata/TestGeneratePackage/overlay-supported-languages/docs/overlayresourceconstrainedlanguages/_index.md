@@ -750,6 +750,7 @@ Get an existing OverlayResourceConstrainedLanguages resource's state with the gi
     <dt class="property-optional" title="Optional">
         <span>state</span>
         <span class="property-indicator"></span>
+        <span class="property-type">OverlayResourceConstrainedLanguagesState</span>
     </dt>
     <dd>Any extra arguments used during the lookup.</dd>
     <dt class="property-optional" title="Optional">

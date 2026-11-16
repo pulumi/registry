@@ -669,6 +669,7 @@ Get an existing BasicResource resource's state with the given name, ID, and opti
     <dt class="property-optional" title="Optional">
         <span>state</span>
         <span class="property-indicator"></span>
+        <span class="property-type">BasicResourceState</span>
     </dt>
     <dd>Any extra arguments used during the lookup.</dd>
     <dt class="property-optional" title="Optional">

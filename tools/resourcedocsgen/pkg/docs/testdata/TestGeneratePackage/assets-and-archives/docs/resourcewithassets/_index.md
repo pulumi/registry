@@ -897,6 +897,7 @@ Get an existing ResourceWithAssets resource's state with the given name, ID, and
     <dt class="property-optional" title="Optional">
         <span>state</span>
         <span class="property-indicator"></span>
+        <span class="property-type">ResourceWithAssetsState</span>
     </dt>
     <dd>Any extra arguments used during the lookup.</dd>
     <dt class="property-optional" title="Optional">

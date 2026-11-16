@@ -603,6 +603,7 @@ Get an existing Component2 resource's state with the given name, ID, and optiona
     <dt class="property-optional" title="Optional">
         <span>state</span>
         <span class="property-indicator"></span>
+        <span class="property-type">Component2State</span>
     </dt>
     <dd>Any extra arguments used during the lookup.</dd>
     <dt class="property-optional" title="Optional">

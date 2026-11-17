@@ -12,7 +12,7 @@ name: awsx
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-awsx
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-awsx/917bf1d5288773377427c2714358fbc629945192/provider/cmd/pulumi-resource-awsx/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-awsx/e5dbb32d51f5614548288773c71ea248efc1c1cd/provider/cmd/pulumi-resource-awsx/schema.json
 title: AWSx (Pulumi Components for AWS)
 updated_on: 1794305388
-version: v3.14.0-dev.awsx-docs-917bf1d5
+version: v3.14.0-dev.awsx-docs-e5dbb32d

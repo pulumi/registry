@@ -1618,7 +1618,7 @@ Get an existing ModuleResource resource's state with the given name, ID, and opt
 
 
 <h4 id="enumthing">
-Enum<wbr>Thing<pulumi-choosable type="language" values="python,go" class="inline">, Enum<wbr>Thing<wbr>Args</pulumi-choosable>
+Enum<wbr>Thing
 </h4>
 
 <div>

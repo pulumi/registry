@@ -979,7 +979,7 @@ Get an existing Cat resource's state with the given name, ID, and optional extra
 
 
 <h4 id="toy">
-Toy<pulumi-choosable type="language" values="python,go" class="inline">, Toy<wbr>Args</pulumi-choosable>
+Toy
 </h4>
 This is a toy
 

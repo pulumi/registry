@@ -627,7 +627,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 
 <h4 id="hashkind">
-Hash<wbr>Kind<pulumi-choosable type="language" values="python,go" class="inline">, Hash<wbr>Kind<wbr>Args</pulumi-choosable>
+Hash<wbr>Kind
 </h4>
 
 <div>

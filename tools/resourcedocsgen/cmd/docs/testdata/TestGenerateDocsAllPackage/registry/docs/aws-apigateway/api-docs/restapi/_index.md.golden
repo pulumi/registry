@@ -1976,7 +1976,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 
 <h4 id="apikeysource">
-APIKey<wbr>Source<pulumi-choosable type="language" values="python,go" class="inline">, APIKey<wbr>Source<wbr>Args</pulumi-choosable>
+APIKey<wbr>Source
 </h4>
 
 <div>
@@ -2889,7 +2889,7 @@ be &quot;header&quot; or &quot;query&quot;. If there are multiple identity sourc
 </div>
 
 <h4 id="integrationconnectiontype">
-Integration<wbr>Connection<wbr>Type<pulumi-choosable type="language" values="python,go" class="inline">, Integration<wbr>Connection<wbr>Type<wbr>Args</pulumi-choosable>
+Integration<wbr>Connection<wbr>Type
 </h4>
 
 <div>
@@ -2991,7 +2991,7 @@ Integration<wbr>Connection<wbr>Type<pulumi-choosable type="language" values="pyt
 </div>
 
 <h4 id="integrationpassthroughbehavior">
-Integration<wbr>Passthrough<wbr>Behavior<pulumi-choosable type="language" values="python,go" class="inline">, Integration<wbr>Passthrough<wbr>Behavior<wbr>Args</pulumi-choosable>
+Integration<wbr>Passthrough<wbr>Behavior
 </h4>
 
 <div>
@@ -3100,7 +3100,7 @@ Integration<wbr>Passthrough<wbr>Behavior<pulumi-choosable type="language" values
 </div>
 
 <h4 id="integrationtype">
-Integration<wbr>Type<pulumi-choosable type="language" values="python,go" class="inline">, Integration<wbr>Type<wbr>Args</pulumi-choosable>
+Integration<wbr>Type
 </h4>
 
 <div>
@@ -3223,7 +3223,7 @@ Integration<wbr>Type<pulumi-choosable type="language" values="python,go" class="
 </div>
 
 <h4 id="method">
-Method<pulumi-choosable type="language" values="python,go" class="inline">, Method<wbr>Args</pulumi-choosable>
+Method
 </h4>
 
 <div>
@@ -3367,7 +3367,7 @@ Method<pulumi-choosable type="language" values="python,go" class="inline">, Meth
 </div>
 
 <h4 id="requestvalidator">
-Request<wbr>Validator<pulumi-choosable type="language" values="python,go" class="inline">, Request<wbr>Validator<wbr>Args</pulumi-choosable>
+Request<wbr>Validator
 </h4>
 
 <div>

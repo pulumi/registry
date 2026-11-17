@@ -26,15 +26,10 @@ import (
 	"strings"
 	texttemplate "text/template"
 
-	"github.com/pgavlin/goldmark"
-	"github.com/pgavlin/goldmark/extension"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 )
 
-// md is a goldmark instance with GFM table support enabled.
-// The default goldmark.Convert() doesn't support tables, so upstream provider
-// descriptions with markdown tables would render as plain text.
-var md = goldmark.New(goldmark.WithExtensions(extension.Table))
+var md = newMarkdown()
 
 //go:embed *.tmpl
 var packagedTemplates embed.FS

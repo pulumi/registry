@@ -2165,7 +2165,7 @@ REQUEST Lambda Authorizers. Example: &quot;^x-[a-z]+&quot;.</dd><dt class="prope
 &quot;resource-server/scope&quot;. e.g. [&quot;com.hamuta.movies/drama.view&quot;,
 &quot;http://my.resource.com/file.read&quot;] For more information on resource servers and custom
 scopes visit the AWS documentation -
-https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</dd><dt class="property-optional"
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</a></dd><dt class="property-optional"
             title="Optional">
         <span id="parameterlocation_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameterlocation_csharp" style="color: inherit; text-decoration: inherit;">Parameter<wbr>Location</a>
@@ -2280,7 +2280,7 @@ REQUEST Lambda Authorizers. Example: &quot;^x-[a-z]+&quot;.</dd><dt class="prope
 &quot;resource-server/scope&quot;. e.g. [&quot;com.hamuta.movies/drama.view&quot;,
 &quot;http://my.resource.com/file.read&quot;] For more information on resource servers and custom
 scopes visit the AWS documentation -
-https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</dd><dt class="property-optional"
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</a></dd><dt class="property-optional"
             title="Optional">
         <span id="parameterlocation_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameterlocation_go" style="color: inherit; text-decoration: inherit;">Parameter<wbr>Location</a>
@@ -2395,7 +2395,7 @@ REQUEST Lambda Authorizers. Example: &quot;^x-[a-z]+&quot;.</dd><dt class="prope
 &quot;resource-server/scope&quot;. e.g. [&quot;com.hamuta.movies/drama.view&quot;,
 &quot;http://my.resource.com/file.read&quot;] For more information on resource servers and custom
 scopes visit the AWS documentation -
-https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</dd><dt class="property-optional"
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</a></dd><dt class="property-optional"
             title="Optional">
         <span id="parameter_location_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameter_location_hcl" style="color: inherit; text-decoration: inherit;">parameter_<wbr>location</a>
@@ -2510,7 +2510,7 @@ REQUEST Lambda Authorizers. Example: &quot;^x-[a-z]+&quot;.</dd><dt class="prope
 &quot;resource-server/scope&quot;. e.g. [&quot;com.hamuta.movies/drama.view&quot;,
 &quot;http://my.resource.com/file.read&quot;] For more information on resource servers and custom
 scopes visit the AWS documentation -
-https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</dd><dt class="property-optional"
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</a></dd><dt class="property-optional"
             title="Optional">
         <span id="parameterlocation_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameterlocation_java" style="color: inherit; text-decoration: inherit;">parameter<wbr>Location</a>
@@ -2625,7 +2625,7 @@ REQUEST Lambda Authorizers. Example: &quot;^x-[a-z]+&quot;.</dd><dt class="prope
 &quot;resource-server/scope&quot;. e.g. [&quot;com.hamuta.movies/drama.view&quot;,
 &quot;http://my.resource.com/file.read&quot;] For more information on resource servers and custom
 scopes visit the AWS documentation -
-https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</dd><dt class="property-optional"
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</a></dd><dt class="property-optional"
             title="Optional">
         <span id="parameterlocation_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameterlocation_nodejs" style="color: inherit; text-decoration: inherit;">parameter<wbr>Location</a>
@@ -2740,7 +2740,7 @@ REQUEST Lambda Authorizers. Example: &quot;^x-[a-z]+&quot;.</dd><dt class="prope
 &quot;resource-server/scope&quot;. e.g. [&quot;com.hamuta.movies/drama.view&quot;,
 &quot;http://my.resource.com/file.read&quot;] For more information on resource servers and custom
 scopes visit the AWS documentation -
-https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</dd><dt class="property-optional"
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</a></dd><dt class="property-optional"
             title="Optional">
         <span id="parameter_location_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameter_location_python" style="color: inherit; text-decoration: inherit;">parameter_<wbr>location</a>
@@ -2855,7 +2855,7 @@ REQUEST Lambda Authorizers. Example: &quot;^x-[a-z]+&quot;.</dd><dt class="prope
 &quot;resource-server/scope&quot;. e.g. [&quot;com.hamuta.movies/drama.view&quot;,
 &quot;http://my.resource.com/file.read&quot;] For more information on resource servers and custom
 scopes visit the AWS documentation -
-https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</dd><dt class="property-optional"
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</a></dd><dt class="property-optional"
             title="Optional">
         <span id="parameterlocation_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameterlocation_yaml" style="color: inherit; text-decoration: inherit;">parameter<wbr>Location</a>
@@ -3758,7 +3758,7 @@ gateway will validate these before sending traffic to the event handler.</dd><dt
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#target">Pulumi.<wbr>Aws<wbr>Api<wbr>Gateway.<wbr>Inputs.<wbr>Target</a></span>
     </dt>
-    <dd>The target for an integration route (see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html).</dd></dl>
+    <dd>The target for an integration route (see <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html</a>).</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -3879,7 +3879,7 @@ gateway will validate these before sending traffic to the event handler.</dd><dt
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#target">Target</a></span>
     </dt>
-    <dd>The target for an integration route (see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html).</dd></dl>
+    <dd>The target for an integration route (see <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html</a>).</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -4000,7 +4000,7 @@ gateway will validate these before sending traffic to the event handler.</dd><dt
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#target">object</a></span>
     </dt>
-    <dd>The target for an integration route (see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html).</dd></dl>
+    <dd>The target for an integration route (see <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html</a>).</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -4121,7 +4121,7 @@ gateway will validate these before sending traffic to the event handler.</dd><dt
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#target">Target</a></span>
     </dt>
-    <dd>The target for an integration route (see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html).</dd></dl>
+    <dd>The target for an integration route (see <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html</a>).</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -4242,7 +4242,7 @@ gateway will validate these before sending traffic to the event handler.</dd><dt
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#target">Target</a></span>
     </dt>
-    <dd>The target for an integration route (see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html).</dd></dl>
+    <dd>The target for an integration route (see <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html</a>).</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -4363,7 +4363,7 @@ gateway will validate these before sending traffic to the event handler.</dd><dt
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#target">Target</a></span>
     </dt>
-    <dd>The target for an integration route (see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html).</dd></dl>
+    <dd>The target for an integration route (see <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html</a>).</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -4484,7 +4484,7 @@ gateway will validate these before sending traffic to the event handler.</dd><dt
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#target">Property Map</a></span>
     </dt>
-    <dd>The target for an integration route (see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html).</dd></dl>
+    <dd>The target for an integration route (see <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html</a>).</dd></dl>
 </pulumi-choosable>
 </div>
 

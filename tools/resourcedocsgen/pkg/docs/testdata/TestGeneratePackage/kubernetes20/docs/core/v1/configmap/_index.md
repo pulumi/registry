@@ -704,7 +704,7 @@ The ConfigMap resource accepts the following [input](/docs/intro/concepts/inputs
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#objectmeta">Pulumi.<wbr>Kubernetes.<wbr>Meta.<wbr>V1.<wbr>Inputs.<wbr>Object<wbr>Meta</a></span>
     </dt>
-    <dd>Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</dd></dl>
+    <dd>Standard object's metadata. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -742,7 +742,7 @@ The ConfigMap resource accepts the following [input](/docs/intro/concepts/inputs
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#objectmeta">Object<wbr>Meta<wbr>Args</a></span>
     </dt>
-    <dd>Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</dd></dl>
+    <dd>Standard object's metadata. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -780,7 +780,7 @@ The ConfigMap resource accepts the following [input](/docs/intro/concepts/inputs
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#objectmeta">object</a></span>
     </dt>
-    <dd>Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</dd></dl>
+    <dd>Standard object's metadata. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -818,7 +818,7 @@ The ConfigMap resource accepts the following [input](/docs/intro/concepts/inputs
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#objectmeta">Object<wbr>Meta</a></span>
     </dt>
-    <dd>Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</dd></dl>
+    <dd>Standard object's metadata. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -856,7 +856,7 @@ The ConfigMap resource accepts the following [input](/docs/intro/concepts/inputs
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#objectmeta">meta.v1.<wbr>Object<wbr>Meta</a></span>
     </dt>
-    <dd>Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</dd></dl>
+    <dd>Standard object's metadata. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -894,7 +894,7 @@ The ConfigMap resource accepts the following [input](/docs/intro/concepts/inputs
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#objectmeta">meta.v1.<wbr>Object<wbr>Meta<wbr>Args</a></span>
     </dt>
-    <dd>Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</dd></dl>
+    <dd>Standard object's metadata. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -932,7 +932,7 @@ The ConfigMap resource accepts the following [input](/docs/intro/concepts/inputs
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#objectmeta">Property Map</a></span>
     </dt>
-    <dd>Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</dd></dl>
+    <dd>Standard object's metadata. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -1716,7 +1716,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">Dictionary&lt;string, string&gt;</span>
     </dt>
-    <dd>Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations</dd><dt class="property-optional"
+    <dd>Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations</a></dd><dt class="property-optional"
             title="Optional">
         <span id="clustername_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#clustername_csharp" style="color: inherit; text-decoration: inherit;">Cluster<wbr>Name</a>
@@ -1733,7 +1733,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.</p>
-<p>Populated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</p>
+<p>Populated by the system. Read-only. Null for lists. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="deletiongraceperiodseconds_csharp">
@@ -1751,7 +1751,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This field is set by the server when a graceful deletion is requested by the user, and is not directly settable by a client. The resource is expected to be deleted (no longer visible from resource lists, and not reachable by name) after the time in this field, once the finalizers list is empty. As long as the finalizers list contains items, deletion is blocked. Once the deletionTimestamp is set, this value may not be unset or be set further into the future, although it may be shortened or the resource may be deleted prior to this time. For example, a user may request that a pod is deleted in 30 seconds. The Kubelet will react by sending a graceful termination signal to the containers in the pod. After that 30 seconds, the Kubelet will send a hard termination signal (SIGKILL) to the container and after cleanup, remove the pod from the API. In the presence of network partitions, this object may still exist after this timestamp, until an administrator or automated process can determine the resource is fully terminated. If not set, graceful deletion of the object has not been requested.</p>
-<p>Populated by the system when a graceful deletion is requested. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</p>
+<p>Populated by the system when a graceful deletion is requested. Read-only. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="finalizers_csharp">
@@ -1770,7 +1770,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
     </dt>
     <dd><p>GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.</p>
 <p>If this field is specified and the generated name exists, the server will return a 409.</p>
-<p>Applied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency</p>
+<p>Applied only if Name is not specified. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="generation_csharp">
@@ -1787,7 +1787,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">Dictionary&lt;string, string&gt;</span>
     </dt>
-    <dd>Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels</dd><dt class="property-optional"
+    <dd>Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/labels" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/labels</a></dd><dt class="property-optional"
             title="Optional">
         <span id="managedfields_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#managedfields_csharp" style="color: inherit; text-decoration: inherit;">Managed<wbr>Fields</a>
@@ -1803,7 +1803,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</dd><dt class="property-optional"
+    <dd>Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</a></dd><dt class="property-optional"
             title="Optional">
         <span id="namespace_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#namespace_csharp" style="color: inherit; text-decoration: inherit;">Namespace</a>
@@ -1812,7 +1812,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the &quot;default&quot; namespace, but &quot;default&quot; is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.</p>
-<p>Must be a DNS_LABEL. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</p>
+<p>Must be a DNS_LABEL. Cannot be updated. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="ownerreferences_csharp">
@@ -1830,7 +1830,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.</p>
-<p>Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency</p>
+<p>Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="selflink_csharp">
@@ -1848,7 +1848,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.</p>
-<p>Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</p>
+<p>Populated by the system. Read-only. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</a></p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -1863,7 +1863,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">map[string]string</span>
     </dt>
-    <dd>Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations</dd><dt class="property-optional"
+    <dd>Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations</a></dd><dt class="property-optional"
             title="Optional">
         <span id="clustername_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#clustername_go" style="color: inherit; text-decoration: inherit;">Cluster<wbr>Name</a>
@@ -1880,7 +1880,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.</p>
-<p>Populated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</p>
+<p>Populated by the system. Read-only. Null for lists. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="deletiongraceperiodseconds_go">
@@ -1898,7 +1898,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This field is set by the server when a graceful deletion is requested by the user, and is not directly settable by a client. The resource is expected to be deleted (no longer visible from resource lists, and not reachable by name) after the time in this field, once the finalizers list is empty. As long as the finalizers list contains items, deletion is blocked. Once the deletionTimestamp is set, this value may not be unset or be set further into the future, although it may be shortened or the resource may be deleted prior to this time. For example, a user may request that a pod is deleted in 30 seconds. The Kubelet will react by sending a graceful termination signal to the containers in the pod. After that 30 seconds, the Kubelet will send a hard termination signal (SIGKILL) to the container and after cleanup, remove the pod from the API. In the presence of network partitions, this object may still exist after this timestamp, until an administrator or automated process can determine the resource is fully terminated. If not set, graceful deletion of the object has not been requested.</p>
-<p>Populated by the system when a graceful deletion is requested. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</p>
+<p>Populated by the system when a graceful deletion is requested. Read-only. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="finalizers_go">
@@ -1917,7 +1917,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
     </dt>
     <dd><p>GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.</p>
 <p>If this field is specified and the generated name exists, the server will return a 409.</p>
-<p>Applied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency</p>
+<p>Applied only if Name is not specified. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="generation_go">
@@ -1934,7 +1934,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">map[string]string</span>
     </dt>
-    <dd>Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels</dd><dt class="property-optional"
+    <dd>Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/labels" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/labels</a></dd><dt class="property-optional"
             title="Optional">
         <span id="managedfields_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#managedfields_go" style="color: inherit; text-decoration: inherit;">Managed<wbr>Fields</a>
@@ -1950,7 +1950,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</dd><dt class="property-optional"
+    <dd>Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</a></dd><dt class="property-optional"
             title="Optional">
         <span id="namespace_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#namespace_go" style="color: inherit; text-decoration: inherit;">Namespace</a>
@@ -1959,7 +1959,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the &quot;default&quot; namespace, but &quot;default&quot; is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.</p>
-<p>Must be a DNS_LABEL. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</p>
+<p>Must be a DNS_LABEL. Cannot be updated. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="ownerreferences_go">
@@ -1977,7 +1977,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.</p>
-<p>Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency</p>
+<p>Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="selflink_go">
@@ -1995,7 +1995,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.</p>
-<p>Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</p>
+<p>Populated by the system. Read-only. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</a></p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -2010,7 +2010,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">map(string)</span>
     </dt>
-    <dd>Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations</dd><dt class="property-optional"
+    <dd>Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations</a></dd><dt class="property-optional"
             title="Optional">
         <span id="cluster_name_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#cluster_name_hcl" style="color: inherit; text-decoration: inherit;">cluster_<wbr>name</a>
@@ -2027,7 +2027,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.</p>
-<p>Populated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</p>
+<p>Populated by the system. Read-only. Null for lists. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="deletion_grace_period_seconds_hcl">
@@ -2045,7 +2045,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This field is set by the server when a graceful deletion is requested by the user, and is not directly settable by a client. The resource is expected to be deleted (no longer visible from resource lists, and not reachable by name) after the time in this field, once the finalizers list is empty. As long as the finalizers list contains items, deletion is blocked. Once the deletionTimestamp is set, this value may not be unset or be set further into the future, although it may be shortened or the resource may be deleted prior to this time. For example, a user may request that a pod is deleted in 30 seconds. The Kubelet will react by sending a graceful termination signal to the containers in the pod. After that 30 seconds, the Kubelet will send a hard termination signal (SIGKILL) to the container and after cleanup, remove the pod from the API. In the presence of network partitions, this object may still exist after this timestamp, until an administrator or automated process can determine the resource is fully terminated. If not set, graceful deletion of the object has not been requested.</p>
-<p>Populated by the system when a graceful deletion is requested. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</p>
+<p>Populated by the system when a graceful deletion is requested. Read-only. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="finalizers_hcl">
@@ -2064,7 +2064,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
     </dt>
     <dd><p>GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.</p>
 <p>If this field is specified and the generated name exists, the server will return a 409.</p>
-<p>Applied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency</p>
+<p>Applied only if Name is not specified. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="generation_hcl">
@@ -2081,7 +2081,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">map(string)</span>
     </dt>
-    <dd>Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels</dd><dt class="property-optional"
+    <dd>Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/labels" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/labels</a></dd><dt class="property-optional"
             title="Optional">
         <span id="managed_fields_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#managed_fields_hcl" style="color: inherit; text-decoration: inherit;">managed_<wbr>fields</a>
@@ -2097,7 +2097,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</dd><dt class="property-optional"
+    <dd>Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</a></dd><dt class="property-optional"
             title="Optional">
         <span id="namespace_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#namespace_hcl" style="color: inherit; text-decoration: inherit;">namespace</a>
@@ -2106,7 +2106,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the &quot;default&quot; namespace, but &quot;default&quot; is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.</p>
-<p>Must be a DNS_LABEL. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</p>
+<p>Must be a DNS_LABEL. Cannot be updated. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="owner_references_hcl">
@@ -2124,7 +2124,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.</p>
-<p>Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency</p>
+<p>Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="self_link_hcl">
@@ -2142,7 +2142,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.</p>
-<p>Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</p>
+<p>Populated by the system. Read-only. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</a></p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -2157,7 +2157,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">Map&lt;String,String&gt;</span>
     </dt>
-    <dd>Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations</dd><dt class="property-optional"
+    <dd>Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations</a></dd><dt class="property-optional"
             title="Optional">
         <span id="clustername_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#clustername_java" style="color: inherit; text-decoration: inherit;">cluster<wbr>Name</a>
@@ -2174,7 +2174,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">String</span>
     </dt>
     <dd><p>CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.</p>
-<p>Populated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</p>
+<p>Populated by the system. Read-only. Null for lists. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="deletiongraceperiodseconds_java">
@@ -2192,7 +2192,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">String</span>
     </dt>
     <dd><p>DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This field is set by the server when a graceful deletion is requested by the user, and is not directly settable by a client. The resource is expected to be deleted (no longer visible from resource lists, and not reachable by name) after the time in this field, once the finalizers list is empty. As long as the finalizers list contains items, deletion is blocked. Once the deletionTimestamp is set, this value may not be unset or be set further into the future, although it may be shortened or the resource may be deleted prior to this time. For example, a user may request that a pod is deleted in 30 seconds. The Kubelet will react by sending a graceful termination signal to the containers in the pod. After that 30 seconds, the Kubelet will send a hard termination signal (SIGKILL) to the container and after cleanup, remove the pod from the API. In the presence of network partitions, this object may still exist after this timestamp, until an administrator or automated process can determine the resource is fully terminated. If not set, graceful deletion of the object has not been requested.</p>
-<p>Populated by the system when a graceful deletion is requested. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</p>
+<p>Populated by the system when a graceful deletion is requested. Read-only. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="finalizers_java">
@@ -2211,7 +2211,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
     </dt>
     <dd><p>GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.</p>
 <p>If this field is specified and the generated name exists, the server will return a 409.</p>
-<p>Applied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency</p>
+<p>Applied only if Name is not specified. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="generation_java">
@@ -2228,7 +2228,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">Map&lt;String,String&gt;</span>
     </dt>
-    <dd>Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels</dd><dt class="property-optional"
+    <dd>Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/labels" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/labels</a></dd><dt class="property-optional"
             title="Optional">
         <span id="managedfields_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#managedfields_java" style="color: inherit; text-decoration: inherit;">managed<wbr>Fields</a>
@@ -2244,7 +2244,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</dd><dt class="property-optional"
+    <dd>Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</a></dd><dt class="property-optional"
             title="Optional">
         <span id="namespace_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#namespace_java" style="color: inherit; text-decoration: inherit;">namespace</a>
@@ -2253,7 +2253,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">String</span>
     </dt>
     <dd><p>Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the &quot;default&quot; namespace, but &quot;default&quot; is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.</p>
-<p>Must be a DNS_LABEL. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</p>
+<p>Must be a DNS_LABEL. Cannot be updated. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="ownerreferences_java">
@@ -2271,7 +2271,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">String</span>
     </dt>
     <dd><p>An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.</p>
-<p>Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency</p>
+<p>Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="selflink_java">
@@ -2289,7 +2289,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">String</span>
     </dt>
     <dd><p>UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.</p>
-<p>Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</p>
+<p>Populated by the system. Read-only. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</a></p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -2304,7 +2304,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">{[key: string]: string}</span>
     </dt>
-    <dd>Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations</dd><dt class="property-optional"
+    <dd>Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations</a></dd><dt class="property-optional"
             title="Optional">
         <span id="clustername_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#clustername_nodejs" style="color: inherit; text-decoration: inherit;">cluster<wbr>Name</a>
@@ -2321,7 +2321,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.</p>
-<p>Populated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</p>
+<p>Populated by the system. Read-only. Null for lists. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="deletiongraceperiodseconds_nodejs">
@@ -2339,7 +2339,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This field is set by the server when a graceful deletion is requested by the user, and is not directly settable by a client. The resource is expected to be deleted (no longer visible from resource lists, and not reachable by name) after the time in this field, once the finalizers list is empty. As long as the finalizers list contains items, deletion is blocked. Once the deletionTimestamp is set, this value may not be unset or be set further into the future, although it may be shortened or the resource may be deleted prior to this time. For example, a user may request that a pod is deleted in 30 seconds. The Kubelet will react by sending a graceful termination signal to the containers in the pod. After that 30 seconds, the Kubelet will send a hard termination signal (SIGKILL) to the container and after cleanup, remove the pod from the API. In the presence of network partitions, this object may still exist after this timestamp, until an administrator or automated process can determine the resource is fully terminated. If not set, graceful deletion of the object has not been requested.</p>
-<p>Populated by the system when a graceful deletion is requested. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</p>
+<p>Populated by the system when a graceful deletion is requested. Read-only. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="finalizers_nodejs">
@@ -2358,7 +2358,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
     </dt>
     <dd><p>GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.</p>
 <p>If this field is specified and the generated name exists, the server will return a 409.</p>
-<p>Applied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency</p>
+<p>Applied only if Name is not specified. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="generation_nodejs">
@@ -2375,7 +2375,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">{[key: string]: string}</span>
     </dt>
-    <dd>Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels</dd><dt class="property-optional"
+    <dd>Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/labels" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/labels</a></dd><dt class="property-optional"
             title="Optional">
         <span id="managedfields_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#managedfields_nodejs" style="color: inherit; text-decoration: inherit;">managed<wbr>Fields</a>
@@ -2391,7 +2391,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</dd><dt class="property-optional"
+    <dd>Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</a></dd><dt class="property-optional"
             title="Optional">
         <span id="namespace_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#namespace_nodejs" style="color: inherit; text-decoration: inherit;">namespace</a>
@@ -2400,7 +2400,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the &quot;default&quot; namespace, but &quot;default&quot; is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.</p>
-<p>Must be a DNS_LABEL. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</p>
+<p>Must be a DNS_LABEL. Cannot be updated. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="ownerreferences_nodejs">
@@ -2418,7 +2418,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.</p>
-<p>Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency</p>
+<p>Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="selflink_nodejs">
@@ -2436,7 +2436,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">string</span>
     </dt>
     <dd><p>UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.</p>
-<p>Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</p>
+<p>Populated by the system. Read-only. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</a></p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -2451,7 +2451,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">Mapping[str, str]</span>
     </dt>
-    <dd>Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations</dd><dt class="property-optional"
+    <dd>Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations</a></dd><dt class="property-optional"
             title="Optional">
         <span id="cluster_name_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#cluster_name_python" style="color: inherit; text-decoration: inherit;">cluster_<wbr>name</a>
@@ -2468,7 +2468,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">str</span>
     </dt>
     <dd><p>CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.</p>
-<p>Populated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</p>
+<p>Populated by the system. Read-only. Null for lists. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="deletion_grace_period_seconds_python">
@@ -2486,7 +2486,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">str</span>
     </dt>
     <dd><p>DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This field is set by the server when a graceful deletion is requested by the user, and is not directly settable by a client. The resource is expected to be deleted (no longer visible from resource lists, and not reachable by name) after the time in this field, once the finalizers list is empty. As long as the finalizers list contains items, deletion is blocked. Once the deletionTimestamp is set, this value may not be unset or be set further into the future, although it may be shortened or the resource may be deleted prior to this time. For example, a user may request that a pod is deleted in 30 seconds. The Kubelet will react by sending a graceful termination signal to the containers in the pod. After that 30 seconds, the Kubelet will send a hard termination signal (SIGKILL) to the container and after cleanup, remove the pod from the API. In the presence of network partitions, this object may still exist after this timestamp, until an administrator or automated process can determine the resource is fully terminated. If not set, graceful deletion of the object has not been requested.</p>
-<p>Populated by the system when a graceful deletion is requested. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</p>
+<p>Populated by the system when a graceful deletion is requested. Read-only. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="finalizers_python">
@@ -2505,7 +2505,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
     </dt>
     <dd><p>GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.</p>
 <p>If this field is specified and the generated name exists, the server will return a 409.</p>
-<p>Applied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency</p>
+<p>Applied only if Name is not specified. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="generation_python">
@@ -2522,7 +2522,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">Mapping[str, str]</span>
     </dt>
-    <dd>Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels</dd><dt class="property-optional"
+    <dd>Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/labels" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/labels</a></dd><dt class="property-optional"
             title="Optional">
         <span id="managed_fields_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#managed_fields_python" style="color: inherit; text-decoration: inherit;">managed_<wbr>fields</a>
@@ -2538,7 +2538,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">str</span>
     </dt>
-    <dd>Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</dd><dt class="property-optional"
+    <dd>Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</a></dd><dt class="property-optional"
             title="Optional">
         <span id="namespace_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#namespace_python" style="color: inherit; text-decoration: inherit;">namespace</a>
@@ -2547,7 +2547,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">str</span>
     </dt>
     <dd><p>Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the &quot;default&quot; namespace, but &quot;default&quot; is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.</p>
-<p>Must be a DNS_LABEL. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</p>
+<p>Must be a DNS_LABEL. Cannot be updated. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="owner_references_python">
@@ -2565,7 +2565,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">str</span>
     </dt>
     <dd><p>An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.</p>
-<p>Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency</p>
+<p>Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="self_link_python">
@@ -2583,7 +2583,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">str</span>
     </dt>
     <dd><p>UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.</p>
-<p>Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</p>
+<p>Populated by the system. Read-only. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</a></p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -2598,7 +2598,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">Map&lt;String&gt;</span>
     </dt>
-    <dd>Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations</dd><dt class="property-optional"
+    <dd>Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations</a></dd><dt class="property-optional"
             title="Optional">
         <span id="clustername_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#clustername_yaml" style="color: inherit; text-decoration: inherit;">cluster<wbr>Name</a>
@@ -2615,7 +2615,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">String</span>
     </dt>
     <dd><p>CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.</p>
-<p>Populated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</p>
+<p>Populated by the system. Read-only. Null for lists. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="deletiongraceperiodseconds_yaml">
@@ -2633,7 +2633,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">String</span>
     </dt>
     <dd><p>DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This field is set by the server when a graceful deletion is requested by the user, and is not directly settable by a client. The resource is expected to be deleted (no longer visible from resource lists, and not reachable by name) after the time in this field, once the finalizers list is empty. As long as the finalizers list contains items, deletion is blocked. Once the deletionTimestamp is set, this value may not be unset or be set further into the future, although it may be shortened or the resource may be deleted prior to this time. For example, a user may request that a pod is deleted in 30 seconds. The Kubelet will react by sending a graceful termination signal to the containers in the pod. After that 30 seconds, the Kubelet will send a hard termination signal (SIGKILL) to the container and after cleanup, remove the pod from the API. In the presence of network partitions, this object may still exist after this timestamp, until an administrator or automated process can determine the resource is fully terminated. If not set, graceful deletion of the object has not been requested.</p>
-<p>Populated by the system when a graceful deletion is requested. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</p>
+<p>Populated by the system when a graceful deletion is requested. Read-only. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="finalizers_yaml">
@@ -2652,7 +2652,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
     </dt>
     <dd><p>GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.</p>
 <p>If this field is specified and the generated name exists, the server will return a 409.</p>
-<p>Applied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency</p>
+<p>Applied only if Name is not specified. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="generation_yaml">
@@ -2669,7 +2669,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">Map&lt;String&gt;</span>
     </dt>
-    <dd>Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels</dd><dt class="property-optional"
+    <dd>Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/labels" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/labels</a></dd><dt class="property-optional"
             title="Optional">
         <span id="managedfields_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#managedfields_yaml" style="color: inherit; text-decoration: inherit;">managed<wbr>Fields</a>
@@ -2685,7 +2685,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</dd><dt class="property-optional"
+    <dd>Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</a></dd><dt class="property-optional"
             title="Optional">
         <span id="namespace_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#namespace_yaml" style="color: inherit; text-decoration: inherit;">namespace</a>
@@ -2694,7 +2694,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">String</span>
     </dt>
     <dd><p>Namespace defines the space within which each name must be unique. An empty namespace is equivalent to the &quot;default&quot; namespace, but &quot;default&quot; is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.</p>
-<p>Must be a DNS_LABEL. Cannot be updated. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</p>
+<p>Must be a DNS_LABEL. Cannot be updated. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="ownerreferences_yaml">
@@ -2712,7 +2712,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">String</span>
     </dt>
     <dd><p>An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.</p>
-<p>Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency</p>
+<p>Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency</a></p>
 </dd><dt class="property-optional"
             title="Optional">
         <span id="selflink_yaml">
@@ -2730,7 +2730,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
         <span class="property-type">String</span>
     </dt>
     <dd><p>UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.</p>
-<p>Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</p>
+<p>Populated by the system. Read-only. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</a></p>
 </dd></dl>
 </pulumi-choosable>
 </div>
@@ -2759,7 +2759,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</dd><dt class="property-required"
+    <dd>Kind of the referent. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</a></dd><dt class="property-required"
             title="Required">
         <span id="name_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_csharp" style="color: inherit; text-decoration: inherit;">Name</a>
@@ -2767,7 +2767,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</dd><dt class="property-required"
+    <dd>Name of the referent. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</a></dd><dt class="property-required"
             title="Required">
         <span id="uid_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#uid_csharp" style="color: inherit; text-decoration: inherit;">Uid</a>
@@ -2775,7 +2775,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</dd><dt class="property-optional"
+    <dd>UID of the referent. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</a></dd><dt class="property-optional"
             title="Optional">
         <span id="blockownerdeletion_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#blockownerdeletion_csharp" style="color: inherit; text-decoration: inherit;">Block<wbr>Owner<wbr>Deletion</a>
@@ -2783,7 +2783,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">bool</span>
     </dt>
-    <dd>If true, AND if the owner has the &quot;foregroundDeletion&quot; finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs &quot;delete&quot; permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.</dd><dt class="property-optional"
+    <dd>If true, AND if the owner has the &quot;foregroundDeletion&quot; finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See <a href="https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion</a> for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs &quot;delete&quot; permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.</dd><dt class="property-optional"
             title="Optional">
         <span id="controller_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#controller_csharp" style="color: inherit; text-decoration: inherit;">Controller</a>
@@ -2813,7 +2813,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</dd><dt class="property-required"
+    <dd>Kind of the referent. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</a></dd><dt class="property-required"
             title="Required">
         <span id="name_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_go" style="color: inherit; text-decoration: inherit;">Name</a>
@@ -2821,7 +2821,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</dd><dt class="property-required"
+    <dd>Name of the referent. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</a></dd><dt class="property-required"
             title="Required">
         <span id="uid_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#uid_go" style="color: inherit; text-decoration: inherit;">Uid</a>
@@ -2829,7 +2829,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</dd><dt class="property-optional"
+    <dd>UID of the referent. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</a></dd><dt class="property-optional"
             title="Optional">
         <span id="blockownerdeletion_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#blockownerdeletion_go" style="color: inherit; text-decoration: inherit;">Block<wbr>Owner<wbr>Deletion</a>
@@ -2837,7 +2837,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">bool</span>
     </dt>
-    <dd>If true, AND if the owner has the &quot;foregroundDeletion&quot; finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs &quot;delete&quot; permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.</dd><dt class="property-optional"
+    <dd>If true, AND if the owner has the &quot;foregroundDeletion&quot; finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See <a href="https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion</a> for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs &quot;delete&quot; permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.</dd><dt class="property-optional"
             title="Optional">
         <span id="controller_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#controller_go" style="color: inherit; text-decoration: inherit;">Controller</a>
@@ -2867,7 +2867,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</dd><dt class="property-required"
+    <dd>Kind of the referent. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</a></dd><dt class="property-required"
             title="Required">
         <span id="name_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_hcl" style="color: inherit; text-decoration: inherit;">name</a>
@@ -2875,7 +2875,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</dd><dt class="property-required"
+    <dd>Name of the referent. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</a></dd><dt class="property-required"
             title="Required">
         <span id="uid_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#uid_hcl" style="color: inherit; text-decoration: inherit;">uid</a>
@@ -2883,7 +2883,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</dd><dt class="property-optional"
+    <dd>UID of the referent. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</a></dd><dt class="property-optional"
             title="Optional">
         <span id="block_owner_deletion_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#block_owner_deletion_hcl" style="color: inherit; text-decoration: inherit;">block_<wbr>owner_<wbr>deletion</a>
@@ -2891,7 +2891,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">bool</span>
     </dt>
-    <dd>If true, AND if the owner has the &quot;foregroundDeletion&quot; finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs &quot;delete&quot; permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.</dd><dt class="property-optional"
+    <dd>If true, AND if the owner has the &quot;foregroundDeletion&quot; finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See <a href="https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion</a> for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs &quot;delete&quot; permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.</dd><dt class="property-optional"
             title="Optional">
         <span id="controller_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#controller_hcl" style="color: inherit; text-decoration: inherit;">controller</a>
@@ -2921,7 +2921,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</dd><dt class="property-required"
+    <dd>Kind of the referent. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</a></dd><dt class="property-required"
             title="Required">
         <span id="name_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_java" style="color: inherit; text-decoration: inherit;">name</a>
@@ -2929,7 +2929,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</dd><dt class="property-required"
+    <dd>Name of the referent. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</a></dd><dt class="property-required"
             title="Required">
         <span id="uid_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#uid_java" style="color: inherit; text-decoration: inherit;">uid</a>
@@ -2937,7 +2937,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</dd><dt class="property-optional"
+    <dd>UID of the referent. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</a></dd><dt class="property-optional"
             title="Optional">
         <span id="blockownerdeletion_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#blockownerdeletion_java" style="color: inherit; text-decoration: inherit;">block<wbr>Owner<wbr>Deletion</a>
@@ -2945,7 +2945,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">Boolean</span>
     </dt>
-    <dd>If true, AND if the owner has the &quot;foregroundDeletion&quot; finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs &quot;delete&quot; permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.</dd><dt class="property-optional"
+    <dd>If true, AND if the owner has the &quot;foregroundDeletion&quot; finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See <a href="https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion</a> for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs &quot;delete&quot; permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.</dd><dt class="property-optional"
             title="Optional">
         <span id="controller_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#controller_java" style="color: inherit; text-decoration: inherit;">controller</a>
@@ -2975,7 +2975,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</dd><dt class="property-required"
+    <dd>Kind of the referent. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</a></dd><dt class="property-required"
             title="Required">
         <span id="name_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_nodejs" style="color: inherit; text-decoration: inherit;">name</a>
@@ -2983,7 +2983,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</dd><dt class="property-required"
+    <dd>Name of the referent. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</a></dd><dt class="property-required"
             title="Required">
         <span id="uid_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#uid_nodejs" style="color: inherit; text-decoration: inherit;">uid</a>
@@ -2991,7 +2991,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">string</span>
     </dt>
-    <dd>UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</dd><dt class="property-optional"
+    <dd>UID of the referent. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</a></dd><dt class="property-optional"
             title="Optional">
         <span id="blockownerdeletion_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#blockownerdeletion_nodejs" style="color: inherit; text-decoration: inherit;">block<wbr>Owner<wbr>Deletion</a>
@@ -2999,7 +2999,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">boolean</span>
     </dt>
-    <dd>If true, AND if the owner has the &quot;foregroundDeletion&quot; finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs &quot;delete&quot; permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.</dd><dt class="property-optional"
+    <dd>If true, AND if the owner has the &quot;foregroundDeletion&quot; finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See <a href="https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion</a> for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs &quot;delete&quot; permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.</dd><dt class="property-optional"
             title="Optional">
         <span id="controller_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#controller_nodejs" style="color: inherit; text-decoration: inherit;">controller</a>
@@ -3029,7 +3029,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">str</span>
     </dt>
-    <dd>Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</dd><dt class="property-required"
+    <dd>Kind of the referent. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</a></dd><dt class="property-required"
             title="Required">
         <span id="name_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_python" style="color: inherit; text-decoration: inherit;">name</a>
@@ -3037,7 +3037,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">str</span>
     </dt>
-    <dd>Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</dd><dt class="property-required"
+    <dd>Name of the referent. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</a></dd><dt class="property-required"
             title="Required">
         <span id="uid_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#uid_python" style="color: inherit; text-decoration: inherit;">uid</a>
@@ -3045,7 +3045,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">str</span>
     </dt>
-    <dd>UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</dd><dt class="property-optional"
+    <dd>UID of the referent. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</a></dd><dt class="property-optional"
             title="Optional">
         <span id="block_owner_deletion_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#block_owner_deletion_python" style="color: inherit; text-decoration: inherit;">block_<wbr>owner_<wbr>deletion</a>
@@ -3053,7 +3053,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">bool</span>
     </dt>
-    <dd>If true, AND if the owner has the &quot;foregroundDeletion&quot; finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs &quot;delete&quot; permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.</dd><dt class="property-optional"
+    <dd>If true, AND if the owner has the &quot;foregroundDeletion&quot; finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See <a href="https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion</a> for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs &quot;delete&quot; permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.</dd><dt class="property-optional"
             title="Optional">
         <span id="controller_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#controller_python" style="color: inherit; text-decoration: inherit;">controller</a>
@@ -3083,7 +3083,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</dd><dt class="property-required"
+    <dd>Kind of the referent. More info: <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds" target="_blank" rel="noopener">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</a></dd><dt class="property-required"
             title="Required">
         <span id="name_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#name_yaml" style="color: inherit; text-decoration: inherit;">name</a>
@@ -3091,7 +3091,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</dd><dt class="property-required"
+    <dd>Name of the referent. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names</a></dd><dt class="property-required"
             title="Required">
         <span id="uid_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#uid_yaml" style="color: inherit; text-decoration: inherit;">uid</a>
@@ -3099,7 +3099,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">String</span>
     </dt>
-    <dd>UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</dd><dt class="property-optional"
+    <dd>UID of the referent. More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids</a></dd><dt class="property-optional"
             title="Optional">
         <span id="blockownerdeletion_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#blockownerdeletion_yaml" style="color: inherit; text-decoration: inherit;">block<wbr>Owner<wbr>Deletion</a>
@@ -3107,7 +3107,7 @@ OwnerReference contains enough information to let you identify an owning object.
         <span class="property-indicator"></span>
         <span class="property-type">Boolean</span>
     </dt>
-    <dd>If true, AND if the owner has the &quot;foregroundDeletion&quot; finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs &quot;delete&quot; permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.</dd><dt class="property-optional"
+    <dd>If true, AND if the owner has the &quot;foregroundDeletion&quot; finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. See <a href="https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/architecture/garbage-collection/#foreground-deletion</a> for how the garbage collector interacts with this field and enforces the foreground deletion. Defaults to false. To set this field, a user needs &quot;delete&quot; permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.</dd><dt class="property-optional"
             title="Optional">
         <span id="controller_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#controller_yaml" style="color: inherit; text-decoration: inherit;">controller</a>

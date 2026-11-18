@@ -28,28 +28,29 @@ import (
 	"github.com/pgavlin/goldmark/util"
 )
 
-// linkifyURLRegexp is the fork's default URL pattern, except that a URL can't end in punctuation. The default only
-// trims a trailing "." or unbalanced ")", so "see https://example.com/a, and" would link "https://example.com/a,".
-// Placeholder characters ({}, [], <>) stay in the pattern so that a templated URL is matched whole and then rejected
-// by isExampleURL, rather than truncated at the placeholder and linked.
+// linkifyURLRegexp is the fork's default URL pattern, restricted to http(s) and changed so that a URL can't end in
+// punctuation. The default only trims a trailing "." or unbalanced ")", so "see https://example.com/a, and" would
+// link "https://example.com/a,". "{}" and "[]" stay in the pattern so that a templated URL is matched whole and then
+// rejected by shouldLink, rather than truncated at the placeholder and linked. "<" and ">" are left out because
+// descriptions converted from HTML often put a tag such as <br> directly after a URL.
 var linkifyURLRegexp = regexp.MustCompile(
-	`^(?:http|https|ftp)://(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]+` +
-		`(?:[/#?](?:[-a-zA-Z0-9@:%_+.~#$!?&/=();,'"{}\[\]<>^*]*[-a-zA-Z0-9/#=+~%@)}\]>])?)?`)
+	`^https?://[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]+` +
+		`(?:[/#?](?:[-a-zA-Z0-9@:%_+.~#$!?&/=();,'"{}\[\]^*]*[-a-zA-Z0-9/#=+~%@)}\]])?)?`)
 
-// neverMatch disables linkify's email detection. Addresses in provider schemas are almost always placeholders
-// ("joe@example.com"), so none of them become mailto: links.
+// neverMatch disables linkify's www. and email detection. A bare "www." host is rarely a citation, and addresses in
+// provider schemas are almost always placeholders ("joe@example.com").
 var neverMatch = regexp.MustCompile(`a^`)
 
-// exampleLinkify wraps goldmark's linkify parser and leaves URLs that are examples as plain text. Schemas often show a
-// sample value ("For example, https://myvault.vault.azure.net/keys/mykey"), and linking it sends readers to a page
-// that doesn't exist.
-type exampleLinkify struct {
+// citeLinkify wraps goldmark's linkify parser and links a bare URL only when the text around it cites it as a page to
+// read. Schemas often show a sample value ("For example, https://myvault.vault.azure.net/keys/mykey"), and linking it
+// sends readers to a page that doesn't exist, so a URL without that evidence stays plain text.
+type citeLinkify struct {
 	inner parser.InlineParser
 }
 
-func (p *exampleLinkify) Trigger() []byte { return p.inner.Trigger() }
+func (p *citeLinkify) Trigger() []byte { return p.inner.Trigger() }
 
-func (p *exampleLinkify) Parse(parent ast.Node, block text.Reader, pc parser.Context) ast.Node {
+func (p *citeLinkify) Parse(parent ast.Node, block text.Reader, pc parser.Context) ast.Node {
 	line, segment := block.PeekLine()
 	n := p.inner.Parse(parent, block, pc)
 	link, ok := n.(*ast.AutoLink)
@@ -58,14 +59,16 @@ func (p *exampleLinkify) Parse(parent ast.Node, block text.Reader, pc parser.Con
 	}
 	source := block.Source()
 	start := segment.Start
-	// The inner parser consumes one leading trigger character and appends it to parent as text.
+	// The inner parser consumes one leading trigger character and appends it to parent as text. This mirrors
+	// linkifyParser.Parse in github.com/pgavlin/goldmark/extension/linkify.go.
 	if strings.IndexByte(" *_~(", line[0]) >= 0 {
 		start++
 	}
 	label := link.Label(source)
+	end := start + len(label)
 	paraStart := bytes.LastIndex(source[:start], []byte("\n\n")) + 1
-	if isExampleURL(string(link.URL(source)), string(source[paraStart:start])) {
-		return ast.NewTextSegment(text.NewSegment(start, start+len(label)))
+	if !shouldLink(string(link.URL(source)), string(source[paraStart:start]), string(source[end:segment.Stop])) {
+		return ast.NewTextSegment(text.NewSegment(start, end))
 	}
 	return link
 }
@@ -73,7 +76,7 @@ func (p *exampleLinkify) Parse(parent ast.Node, block text.Reader, pc parser.Con
 func alternation(words ...string) string { return `(` + strings.Join(words, `|`) + `)` }
 
 var (
-	placeholderRegexp = regexp.MustCompile(`[{}\[\]<>*]|\$\{|/:[A-Za-z]|\.\.\.|(?i)xxx`)
+	placeholderRegexp = regexp.MustCompile(`[{}\[\]*]|\$\{|/:[A-Za-z]|\.\.\.|(?i)xxx|(?i)/(my|your|sample|example)[-_]`)
 	exampleHostRegexp = regexp.MustCompile(`(?i)` + strings.Join([]string{
 		`(^|\.)(example|test)\.(com|org|net)$`,
 		`\.(example|test|invalid|localhost)$`,
@@ -83,28 +86,35 @@ var (
 			"bucket", "vault", "tenant"),
 		`^` + alternation("hostname", "host", "server", "domain", "bucketname", "accountname", "servername") + `\.`,
 	}, `|`))
+	// htmlTagRegexp matches the tags that schema descriptions converted from HTML put directly after a URL. Any other
+	// "<" there starts a placeholder, as in "https://host/projects/<id>".
+	htmlTagRegexp = regexp.MustCompile(`(?i)^</?` + alternation("a", "b", "br", "code", "div", "em", "i", "li", "ol",
+		"p", "pre", "span", "strong", "sub", "sup", "table", "td", "th", "tr", "ul") + `\b`)
+	// citeCueRegexp matches phrases that point the reader at a page: "See https://...", "More info: https://...",
+	// "Documentation on CEL: https://...", "names that follow the conventions in https://...".
+	citeCueRegexp = regexp.MustCompile(`(?i)\b` + alternation(`see\b`, `refer\b`, `ref\s*:`, `please\s+reference`,
+		`check\b`, `more\s+info`, `information\s+(at|on|in|about)`, `for\s+(more\s+)?details`, `details\s+(at|in|on)`,
+		`learn\s+more`, `visit\b`, `read\s+(more|about)`, `according\s+to`, `as\s+per`, `per\s*$`,
+		`(available|found|listed|described|defined|documented|explained|specified)\s+(at|in|on|here)`,
+		`(conventions|requirements|restrictions|rules|guidelines)\s+(at|in|of)\s*$`,
+		`list\s+of\s+(available|supported|valid)\b[^.:]{0,40}:\s*$`,
+		`(documentation|docs|reference|specification|spec|deprecation|guide)\b[^.:]{0,40}[-:]\s*$`))
 	exampleCueRegexp = regexp.MustCompile(`(?i)\b` + alternation(`e\.g\b`, `eg[.:,]`, `examples?\b`, "for instance",
 		"such as", "of the form", "looks like", `like\b`))
-	// referenceCueRegexp marks a URL as a page to read even when an example cue precedes it, as in
-	// "For examples, see https://...".
-	referenceCueRegexp = regexp.MustCompile(`(?i)\b` + alternation("see", "here", "refer", "described", "defined",
-		"documentation", "docs", "more info", "information", "details", "learn more", "visit", "check", "available at",
-		"listed at", "found at", "specified in", "according to", "follows?", "restrictions", "conventions",
-		"specification") + `\b`)
 	// sentenceEndRegexp finds sentence boundaries, so a cue in an earlier sentence doesn't apply to this URL.
 	// A period ending "e.g." or "i.e." is not a boundary.
 	sentenceEndRegexp = regexp.MustCompile(`[;!?]\s|[^.]\.\s`)
 	abbrevRegexp      = regexp.MustCompile(`(?i)\b(e\.g|i\.e|eg|ie|etc|ex|vs)\.\s$`)
 )
 
-// isExampleURL reports whether a bare URL is a sample value rather than a page to visit. before is the text that
-// precedes the URL in its paragraph.
-func isExampleURL(rawURL, before string) bool {
-	if placeholderRegexp.MatchString(rawURL) {
-		return true
+// shouldLink reports whether a bare URL is cited as a page to visit. before is the text that precedes the URL in its
+// paragraph, and after is the rest of its line.
+func shouldLink(rawURL, before, after string) bool {
+	if placeholderRegexp.MatchString(rawURL) || (strings.HasPrefix(after, "<") && !htmlTagRegexp.MatchString(after)) {
+		return false
 	}
-	if u, err := url.Parse(rawURL); err == nil && exampleHostRegexp.MatchString(u.Hostname()) {
-		return true
+	if u, err := url.Parse(rawURL); err != nil || exampleHostRegexp.MatchString(u.Hostname()) {
+		return false
 	}
 	sentence := before
 	for _, m := range sentenceEndRegexp.FindAllStringIndex(before, -1) {
@@ -112,11 +122,24 @@ func isExampleURL(rawURL, before string) bool {
 			sentence = before[m[1]:]
 		}
 	}
-	// A URL in parentheses right after prose, as in "key rotation (https://...)", cites a source.
-	if strings.HasSuffix(strings.TrimSpace(sentence), "(") {
-		return false
+	// The cue nearest the URL decides, so "For examples, see https://..." links and "See below, e.g. https://..." doesn't.
+	citeAt := lastMatch(citeCueRegexp, sentence)
+	// A URL in parentheses right after prose, as in "key rotation (https://...)", or one that starts a new sentence
+	// after prose, as in "Defines the behavior of a node. https://...", cites a source.
+	trimmed := strings.TrimSpace(sentence)
+	if strings.HasSuffix(trimmed, "(") || (trimmed == "" && strings.TrimSpace(before) != "") {
+		citeAt = len(sentence)
 	}
-	return exampleCueRegexp.MatchString(sentence) && !referenceCueRegexp.MatchString(sentence)
+	return citeAt >= 0 && citeAt > lastMatch(exampleCueRegexp, sentence)
+}
+
+// lastMatch returns the start of the last match of re in s, or -1.
+func lastMatch(re *regexp.Regexp, s string) int {
+	ms := re.FindAllStringIndex(s, -1)
+	if len(ms) == 0 {
+		return -1
+	}
+	return ms[len(ms)-1][0]
 }
 
 // externalLinkTargets opens links to absolute http(s) URLs in a new tab, so following a reference to a vendor's docs
@@ -156,8 +179,10 @@ func newMarkdown() goldmark.Markdown {
 	return goldmark.New(
 		goldmark.WithExtensions(extension.Table),
 		goldmark.WithParserOptions(
-			parser.WithInlineParsers(util.Prioritized(&exampleLinkify{inner: extension.NewLinkifyParser(
+			parser.WithInlineParsers(util.Prioritized(&citeLinkify{inner: extension.NewLinkifyParser(
+				extension.WithLinkifyAllowedProtocols([][]byte{[]byte("http:"), []byte("https:")}),
 				extension.WithLinkifyURLRegexp(linkifyURLRegexp),
+				extension.WithLinkifyWWWRegexp(neverMatch),
 				extension.WithLinkifyEmailRegexp(neverMatch),
 			)}, 999)),
 			parser.WithASTTransformers(util.Prioritized(externalLinkTargets{}, 999)),

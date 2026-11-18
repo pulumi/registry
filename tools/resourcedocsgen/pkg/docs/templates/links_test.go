@@ -68,6 +68,19 @@ func TestMarkdownLinks(t *testing.T) {
 			"path parameter", "See https://gitlab.com/api/v4/projects/:projectId for this",
 			`See https://gitlab.com/api/v4/projects/:projectId for this`,
 		},
+		{
+			"sample path segment", "Generation number. https://storage.googleapis.com/my-bucket/foo/bar#1234567",
+			"Generation number. https://storage.googleapis.com/my-bucket/foo/bar#1234567",
+		},
+		{
+			"standalone sentence", "Spec defines the behavior of a service. https://git.k8s.io/community/api-conventions.md",
+			`<a href="https://git.k8s.io/community/api-conventions.md"` + ext,
+		},
+		{
+			"ref label", "Node labels. Ref: https://kubernetes.io/docs/user-guide/node-selection/",
+			`<a href="https://kubernetes.io/docs/user-guide/node-selection/"` + ext,
+		},
+		{"default value", "The GitHub API URL. Defaults to https://api.github.com/", "Defaults to https://api.github.com/"},
 		{"example host", "Point it at https://splunkserver.example.com", `Point it at https://splunkserver.example.com`},
 		{
 			"e.g. cue", "The base URL, e.g. https://api.eu.onelogin.com or https://api.us.onelogin.com.",
@@ -91,8 +104,30 @@ func TestMarkdownLinks(t *testing.T) {
 			`(<a href="https://iceberg.apache.org/"` + ext,
 		},
 		{
-			"cue in another paragraph", "For example, foo.\n\nhttps://kubernetes.io/docs/concepts/",
-			`<a href="https://kubernetes.io/docs/concepts/"` + ext,
+			"cite in another paragraph", "See below.\n\nThe endpoint is https://api.acme.io/healthz",
+			"The endpoint is https://api.acme.io/healthz",
+		},
+		{"no cite", "The URL of the Vault server, https://vault.acme.io:8200", "server, https://vault.acme.io:8200"},
+		{"bare URL alone", "https://kubernetes.io/docs/concepts/", "<p>https://kubernetes.io/docs/concepts/</p>"},
+		{"docs label", "Docs: https://docs.acme.io/limits", `<a href="https://docs.acme.io/limits"` + ext},
+		{
+			"example cue after cite", "See below, e.g. https://api.acme.io/v1",
+			"See below, e.g. https://api.acme.io/v1",
+		},
+		{
+			"example word does not cite", "Health check URL, e.g. https://api.acme.io/healthz",
+			"Health check URL, e.g. https://api.acme.io/healthz",
+		},
+		{"www not linked", "See www.pulumi.com/docs, then", "<p>See www.pulumi.com/docs, then</p>"},
+		{"ftp not linked", "See ftp://ftp.acme.io/pub for files", "<p>See ftp://ftp.acme.io/pub for files</p>"},
+		{
+			"html tag after URL", "See https://www.pulumi.com/docs/foo<br>next",
+			`<a href="https://www.pulumi.com/docs/foo"` + ext +
+				`https://www.pulumi.com/docs/foo</a><!-- raw HTML omitted -->next`,
+		},
+		{
+			"angle placeholder", "See https://api.acme.io/projects/<id> for one project",
+			"See https://api.acme.io/projects/",
 		},
 	}
 	for _, c := range cases {

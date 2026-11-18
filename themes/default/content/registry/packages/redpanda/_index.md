@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/2.6.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/redpanda-data/redpanda/2.7.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Redpanda Provider
@@ -19,7 +19,7 @@ pulumi package add terraform-provider redpanda-data/redpanda
 The Redpanda provider is designed for managing Redpanda clusters and Kafka resources in Redpanda Dedicated and Cloud environments. It supports the provisioning, management, and configuration of clusters and Kafka resources, facilitating seamless integration into Pulumi workflows.
 ## Configuration Reference
 
-- `accessToken` (String, Sensitive) Redpanda client token. You need either `accessToken`, or both `clientId` and `clientSecret` to use this provider. Can also be set with the `REDPANDA_ACCESS_TOKEN` environment variable.
+- `accessToken` (String, Sensitive) Redpanda client token. You need either `accessToken`, or both `clientId` and `clientSecret` to use this provider. Can also be set with the `REDPANDA_ACCESS_TOKEN` environment variable, unless `ignoreEnvironmentCredentials` is set.
 - `awsAccessKeyId` (String, Sensitive) AWS access key ID for BYOC clusters. Can also be set via AWS_ACCESS_KEY_ID.
 - `awsSecretAccessKey` (String, Sensitive) AWS secret access key for BYOC clusters. Can also be set via AWS_SECRET_ACCESS_KEY.
 - `awsSessionToken` (String, Sensitive) AWS session token for BYOC clusters (for temporary credentials). Can also be set via AWS_SESSION_TOKEN.
@@ -27,14 +27,16 @@ The Redpanda provider is designed for managing Redpanda clusters and Kafka resou
 - `azureClientSecret` (String, Sensitive) Used for creating and managing BYOC and BYOVPC clusters. Can also be specified in the environment as AZURE_CLIENT_SECRET or ARM_CLIENT_SECRET
 - `azureSubscriptionId` (String) The default Azure Subscription ID which should be used for Redpanda BYOC clusters. If another subscription is specified on a resource, it will take precedence. This can also be sourced from the `ARM_SUBSCRIPTION_ID` environment variable.
 - `azureTenantId` (String) Used for creating and managing BYOC and BYOVPC clusters. Can also be specified in the environment as AZURE_TENANT_ID or ARM_TENANT_ID
-- `clientId` (String, Sensitive) The ID for the client. You need either `clientId` AND `clientSecret`, or `accessToken`, to use this provider. Can also be set with the `REDPANDA_CLIENT_ID` environment variable.
-- `clientSecret` (String, Sensitive) Redpanda client secret. You need either `clientId` AND `clientSecret`, or `accessToken`, to use this provider. Can also be set with the `REDPANDA_CLIENT_SECRET` environment variable.
+- `clientId` (String, Sensitive) The ID for the client. You need either `clientId` AND `clientSecret`, or `accessToken`, to use this provider. Can also be set with the `REDPANDA_CLIENT_ID` environment variable, unless `ignoreEnvironmentCredentials` is set.
+- `clientSecret` (String, Sensitive) Redpanda client secret. You need either `clientId` AND `clientSecret`, or `accessToken`, to use this provider. Can also be set with the `REDPANDA_CLIENT_SECRET` environment variable, unless `ignoreEnvironmentCredentials` is set.
 - `gcpProjectId` (String) The default Google Cloud Project ID to use for Redpanda BYOC clusters. If another project is specified on a resource, it will take precedence. This can also be sourced from the `GOOGLE_PROJECT` environment variable, or any of the following ordered by precedence: `GOOGLE_PROJECT`, `GOOGLE_CLOUD_PROJECT`, `GCLOUD_PROJECT`, or `CLOUDSDK_CORE_PROJECT`.
 - `googleCredentials` (String, Sensitive) Used for creating and managing BYOC and BYOVPC clusters. Can also be specified in the environment as GOOGLE_CREDENTIALS
 - `googleCredentialsBase64` (String, Sensitive) Used for creating and managing BYOC and BYOVPC clusters. Is a convenience passthrough for base64 encoded credentials intended for use in CI/CD. Can also be specified in the environment as GOOGLE_CREDENTIALS_BASE64
+- `ignoreEnvironmentCredentials` (Boolean) Use only the Redpanda credentials in this block and ignore the `REDPANDA_CLIENT_ID`, `REDPANDA_CLIENT_SECRET`, and `REDPANDA_ACCESS_TOKEN` environment variables; cloud-provider credentials for BYOC are unaffected. When `true` and this block supplies no credentials, the configuration has none, whatever the environment exports: configuration succeeds and any resource, function, or action that uses it fails as under `skipCredentialsValidation`. Use it on a default provider configuration that exists only so that a resource which forgets `provider = redpanda.<alias>` fails instead of landing in the organization the environment points at. A `clientId` and `clientSecret` that are both empty strings, or an empty `accessToken`, count as unset. Partial credentials still fail.
+- `skipCredentialsValidation` (Boolean) Allow this provider configuration to have no credentials. When `true` and neither this block nor the environment supplies `clientId` and `clientSecret` or `accessToken`, configuration succeeds, and any resource, function, or action that uses this configuration fails with an error: at plan, or at apply for a function whose read Pulumi defers until a dependency is applied. Resources with `count = 0` never use it unless state still holds their instances, which need credentials to refresh or destroy. Use it for a shared configuration whose Redpanda resources are all disabled in some workspaces. A `clientId` and `clientSecret` that are both empty strings, or an empty `accessToken`, count as unset. Partial credentials, such as a `clientId` without a `clientSecret`, still fail.
 ## Authentication with Redpanda Cloud
 
-This provider requires a `clientId` and `clientSecret` for authentication with Redpanda Cloud services, enabling users to securely manage their Redpanda resources. You can get these by creating an account in [Redpanda Cloud](https://cloudv2.redpanda.com/home) and then [creating a client in the Redpanda Cloud UI](https://cloudv2.redpanda.com/clients).
+This provider requires a `clientId` and `clientSecret` (or an `accessToken`) for authentication with Redpanda Cloud services, enabling users to securely manage their Redpanda resources; the flags under Provider configurations without credentials cover a configuration that must exist but is never used. You can get these by creating an account in [Redpanda Cloud](https://cloudv2.redpanda.com/home) and then [creating a client in the Redpanda Cloud UI](https://cloudv2.redpanda.com/clients).
 ### Token cache
 
 The provider caches the OAuth2 access token to disk so that subsequent
@@ -85,6 +87,436 @@ authentication`). To also see the agent's Azure SDK credential attempts,
 including why a credential was skipped or failed, set
 `AZURE_SDK_GO_LOGGING=all` in the environment; they appear as
 `rpk: azure Authentication:` lines.
+## Provider configurations without credentials
+
+Two flags let a provider configuration exist without credentials. Each covers
+one case:
+
+- `ignoreEnvironmentCredentials = true` on a default `provider "redpanda"`
+  beside aliased configurations. The block is then the only source of Redpanda
+  credentials, so a resource or module that forgets `provider = redpanda.<alias>` fails
+  instead of using the organization the `REDPANDA_CLIENT_ID`,
+  `REDPANDA_CLIENT_SECRET`, or `REDPANDA_ACCESS_TOKEN` environment variables
+  point at. If every resource and module call names an alias, you can omit the
+  default block entirely.
+- `skipCredentialsValidation = true` on a shared configuration whose Redpanda
+  resources are all disabled with `count = 0` in some workspaces. Pulumi
+  still configures the provider for such resources, so without the flag it
+  needs credentials it never uses. Workspaces that do use the resources keep
+  supplying credentials through the block or the environment.
+
+The two attributes in the schema above state exactly when a resource that uses
+such a configuration fails.
+
+The default block beside aliased configurations:
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+config:
+    redpanda:ignoreEnvironmentCredentials:
+        value: true
+
+```
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as redpanda from "@pulumi/redpanda";
+
+const config = new pulumi.Config();
+const nonProdClientId = config.require("nonProdClientId");
+const nonProdClientSecret = config.require("nonProdClientSecret");
+const prodClientId = config.require("prodClientId");
+const prodClientSecret = config.require("prodClientSecret");
+const staging = new redpanda.ResourceGroup("staging", {name: "staging"});
+const production = new redpanda.ResourceGroup("production", {name: "production"});
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    redpanda:ignoreEnvironmentCredentials:
+        value: true
+
+```
+```python
+import pulumi
+import pulumi_redpanda as redpanda
+
+config = pulumi.Config()
+non_prod_client_id = config.require("nonProdClientId")
+non_prod_client_secret = config.require("nonProdClientSecret")
+prod_client_id = config.require("prodClientId")
+prod_client_secret = config.require("prodClientSecret")
+staging = redpanda.ResourceGroup("staging", name="staging")
+production = redpanda.ResourceGroup("production", name="production")
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    redpanda:ignoreEnvironmentCredentials:
+        value: true
+
+```
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Redpanda = Pulumi.Redpanda;
+
+return await Deployment.RunAsync(() =>
+{
+    var config = new Config();
+    var nonProdClientId = config.Require("nonProdClientId");
+    var nonProdClientSecret = config.Require("nonProdClientSecret");
+    var prodClientId = config.Require("prodClientId");
+    var prodClientSecret = config.Require("prodClientSecret");
+    var staging = new Redpanda.ResourceGroup("staging", new()
+    {
+        Name = "staging",
+    });
+
+    var production = new Redpanda.ResourceGroup("production", new()
+    {
+        Name = "production",
+    });
+
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    redpanda:ignoreEnvironmentCredentials:
+        value: true
+
+```
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/redpanda/v2/redpanda"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		cfg := config.New(ctx, "")
+		nonProdClientId := cfg.Require("nonProdClientId")
+		nonProdClientSecret := cfg.Require("nonProdClientSecret")
+		prodClientId := cfg.Require("prodClientId")
+		prodClientSecret := cfg.Require("prodClientSecret")
+		_, err := redpanda.NewResourceGroup(ctx, "staging", &redpanda.ResourceGroupArgs{
+			Name: pulumi.String("staging"),
+		})
+		if err != nil {
+			return err
+		}
+		_, err = redpanda.NewResourceGroup(ctx, "production", &redpanda.ResourceGroupArgs{
+			Name: pulumi.String("production"),
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    redpanda:ignoreEnvironmentCredentials:
+        value: true
+
+```
+```yaml
+configuration:
+  nonProdClientId:
+    type: string
+  nonProdClientSecret:
+    type: string
+  prodClientId:
+    type: string
+  prodClientSecret:
+    type: string
+resources:
+  staging:
+    type: redpanda:ResourceGroup
+    properties:
+      name: staging
+  production:
+    type: redpanda:ResourceGroup
+    properties:
+      name: production
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    redpanda:ignoreEnvironmentCredentials:
+        value: true
+
+```
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.redpanda.ResourceGroup;
+import com.pulumi.redpanda.ResourceGroupArgs;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        final var config = ctx.config();
+        final var nonProdClientId = config.get("nonProdClientId");
+        final var nonProdClientSecret = config.get("nonProdClientSecret");
+        final var prodClientId = config.get("prodClientId");
+        final var prodClientSecret = config.get("prodClientSecret");
+        var staging = new ResourceGroup("staging", ResourceGroupArgs.builder()
+            .name("staging")
+            .build());
+
+        var production = new ResourceGroup("production", ResourceGroupArgs.builder()
+            .name("production")
+            .build());
+
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
+
+The shared configuration with disabled resources:
+
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{% choosable language typescript %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: nodejs
+config:
+    redpanda:skipCredentialsValidation:
+        value: true
+
+```
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as redpanda from "@pulumi/redpanda";
+
+const config = new pulumi.Config();
+const redpandaEnabled = config.getBoolean("redpandaEnabled") || false;
+const shared: redpanda.ResourceGroup[] = [];
+for (const range = {value: 0}; range.value < (redpandaEnabled ? 1 : 0); range.value++) {
+    shared.push(new redpanda.ResourceGroup(`shared-${range.value}`, {name: "shared"}));
+}
+```
+{{% /choosable %}}
+{{% choosable language python %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: python
+config:
+    redpanda:skipCredentialsValidation:
+        value: true
+
+```
+```python
+import pulumi
+import pulumi_redpanda as redpanda
+
+config = pulumi.Config()
+redpanda_enabled = config.get_bool("redpandaEnabled")
+if redpanda_enabled is None:
+    redpanda_enabled = False
+shared = []
+for range in [{"value": i} for i in range(0, 1 if redpanda_enabled else 0)]:
+    shared.append(redpanda.ResourceGroup(f"shared-{range['value']}", name="shared"))
+```
+{{% /choosable %}}
+{{% choosable language csharp %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: dotnet
+config:
+    redpanda:skipCredentialsValidation:
+        value: true
+
+```
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Redpanda = Pulumi.Redpanda;
+
+return await Deployment.RunAsync(() =>
+{
+    var config = new Config();
+    var redpandaEnabled = config.GetBoolean("redpandaEnabled") ?? false;
+    var shared = new List<Redpanda.ResourceGroup>();
+    for (var rangeIndex = 0; rangeIndex < (redpandaEnabled ? 1 : 0); rangeIndex++)
+    {
+        var range = new { Value = rangeIndex };
+        shared.Add(new Redpanda.ResourceGroup($"shared-{range.Value}", new()
+        {
+            Name = "shared",
+        }));
+    }
+});
+
+```
+{{% /choosable %}}
+{{% choosable language go %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: go
+config:
+    redpanda:skipCredentialsValidation:
+        value: true
+
+```
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-pulumi-provider/sdks/go/redpanda/v2/redpanda"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		cfg := config.New(ctx, "")
+		redpandaEnabled := false
+		if param := cfg.GetBool("redpandaEnabled"); param {
+			redpandaEnabled = param
+		}
+		var tmp0 float64
+		if redpandaEnabled {
+			tmp0 = 1
+		} else {
+			tmp0 = 0
+		}
+		var shared []*redpanda.ResourceGroup
+		for index := 0; index < tmp0; index++ {
+			key0 := index
+			_ := index
+			__res, err := redpanda.NewResourceGroup(ctx, fmt.Sprintf("shared-%v", key0), &redpanda.ResourceGroupArgs{
+				Name: pulumi.String("shared"),
+			})
+			if err != nil {
+				return err
+			}
+			shared = append(shared, __res)
+		}
+		return nil
+	})
+}
+```
+{{% /choosable %}}
+{{% choosable language yaml %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: yaml
+config:
+    redpanda:skipCredentialsValidation:
+        value: true
+
+```
+```yaml
+configuration:
+  redpandaEnabled:
+    type: bool
+    default: false
+resources:
+  shared:
+    type: redpanda:ResourceGroup
+    properties:
+      name: shared
+    options: {}
+```
+{{% /choosable %}}
+{{% choosable language java %}}
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime: java
+config:
+    redpanda:skipCredentialsValidation:
+        value: true
+
+```
+```java
+package generated_program;
+
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.redpanda.ResourceGroup;
+import com.pulumi.redpanda.ResourceGroupArgs;
+import com.pulumi.codegen.internal.KeyedValue;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    public static void stack(Context ctx) {
+        final var config = ctx.config();
+        final var redpandaEnabled = config.get("redpandaEnabled").orElse(false);
+        for (var i = 0; i < (redpandaEnabled ? 1 : 0); i++) {
+            new ResourceGroup("shared-" + i, ResourceGroupArgs.builder()
+                .name("shared")
+                .build());
+
+
+}
+    }
+}
+```
+{{% /choosable %}}
+{{< /chooser >}}
 ## Example Provider Configuration
 
 Pulumi 1.0 or later:

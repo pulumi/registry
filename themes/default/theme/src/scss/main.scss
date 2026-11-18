@@ -312,6 +312,11 @@ $sitenav-offset: calc($sitenav-height + 16px);
 
     .resource-deprecated {
         @apply text-yellow-700 py-2 px-4 rounded border border-yellow-600;
+
+        // Links inherit the banner's color, so the underline is what marks them.
+        a {
+            @apply underline;
+        }
     }
 
     .aws-reinvent-blog-image {

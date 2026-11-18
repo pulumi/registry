@@ -1263,7 +1263,7 @@ Get an existing ConfigMap resource's state with the given name, ID, and optional
 <h4 id="managedfieldsentry">
 Managed<wbr>Fields<wbr>Entry<pulumi-choosable type="language" values="python,go" class="inline">, Managed<wbr>Fields<wbr>Entry<wbr>Args</pulumi-choosable>
 </h4>
-ManagedFieldsEntry is a workflow-id, a FieldSet and the group version of the resource that the fieldset applies to.
+<p>ManagedFieldsEntry is a workflow-id, a FieldSet and the group version of the resource that the fieldset applies to.</p>
 
 
 <div>
@@ -1703,7 +1703,7 @@ ManagedFieldsEntry is a workflow-id, a FieldSet and the group version of the res
 <h4 id="objectmeta">
 Object<wbr>Meta<pulumi-choosable type="language" values="python,go" class="inline">, Object<wbr>Meta<wbr>Args</pulumi-choosable>
 </h4>
-ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+<p>ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.</p>
 
 
 <div>
@@ -2738,7 +2738,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
 <h4 id="ownerreference">
 Owner<wbr>Reference<pulumi-choosable type="language" values="python,go" class="inline">, Owner<wbr>Reference<wbr>Args</pulumi-choosable>
 </h4>
-OwnerReference contains enough information to let you identify an owning object. An owning object must be in the same namespace as the dependent, or be cluster-scoped, so there is no namespace field.
+<p>OwnerReference contains enough information to let you identify an owning object. An owning object must be in the same namespace as the dependent, or be cluster-scoped, so there is no namespace field.</p>
 
 
 <div>

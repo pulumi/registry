@@ -622,7 +622,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <h4 id="kubeclientsettings">
 Kube<wbr>Client<wbr>Settings<pulumi-choosable type="language" values="python,go" class="inline">, Kube<wbr>Client<wbr>Settings<wbr>Args</pulumi-choosable>
 </h4>
-Options for tuning the Kubernetes client used by a Provider.
+<p>Options for tuning the Kubernetes client used by a Provider.</p>
 
 
 <div>

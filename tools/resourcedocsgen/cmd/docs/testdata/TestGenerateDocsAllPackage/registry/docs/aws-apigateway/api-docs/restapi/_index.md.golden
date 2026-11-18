@@ -2080,7 +2080,7 @@ APIKey<wbr>Source<pulumi-choosable type="language" values="python,go" class="inl
 <h4 id="authorizer">
 Authorizer<pulumi-choosable type="language" values="python,go" class="inline">, Authorizer<wbr>Args</pulumi-choosable>
 </h4>
-LambdaAuthorizer provides the definition for a custom Authorizer for API Gateway.
+<p>LambdaAuthorizer provides the definition for a custom Authorizer for API Gateway.</p>
 
 
 <div>
@@ -3636,9 +3636,9 @@ Required<wbr>Parameter<pulumi-choosable type="language" values="python,go" class
 <h4 id="route">
 Route<pulumi-choosable type="language" values="python,go" class="inline">, Route<wbr>Args</pulumi-choosable>
 </h4>
-A route that that APIGateway should accept and forward to some type of destination. All routes
+<p>A route that that APIGateway should accept and forward to some type of destination. All routes
 have an incoming path that they match against.  However, destinations are determined by the kind
-of the route.
+of the route.</p>
 
 
 <div>

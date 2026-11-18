@@ -1222,7 +1222,7 @@ Get an existing ConfigMapList resource's state with the given name, ID, and opti
 <h4 id="configmap">
 Config<wbr>Map<pulumi-choosable type="language" values="python,go" class="inline">, Config<wbr>Map<wbr>Args</pulumi-choosable>
 </h4>
-ConfigMap holds configuration data for pods to consume.
+<p>ConfigMap holds configuration data for pods to consume.</p>
 
 
 <div>
@@ -1494,7 +1494,7 @@ ConfigMap holds configuration data for pods to consume.
 <h4 id="listmeta">
 List<wbr>Meta<pulumi-choosable type="language" values="python,go" class="inline">, List<wbr>Meta<wbr>Args</pulumi-choosable>
 </h4>
-ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}.
+<p>ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}.</p>
 
 
 <div>
@@ -1766,7 +1766,7 @@ ListMeta describes metadata that synthetic resources must have, including lists 
 <h4 id="managedfieldsentry">
 Managed<wbr>Fields<wbr>Entry<pulumi-choosable type="language" values="python,go" class="inline">, Managed<wbr>Fields<wbr>Entry<wbr>Args</pulumi-choosable>
 </h4>
-ManagedFieldsEntry is a workflow-id, a FieldSet and the group version of the resource that the fieldset applies to.
+<p>ManagedFieldsEntry is a workflow-id, a FieldSet and the group version of the resource that the fieldset applies to.</p>
 
 
 <div>
@@ -2206,7 +2206,7 @@ ManagedFieldsEntry is a workflow-id, a FieldSet and the group version of the res
 <h4 id="objectmeta">
 Object<wbr>Meta<pulumi-choosable type="language" values="python,go" class="inline">, Object<wbr>Meta<wbr>Args</pulumi-choosable>
 </h4>
-ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.
+<p>ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.</p>
 
 
 <div>
@@ -3241,7 +3241,7 @@ ObjectMeta is metadata that all persisted resources must have, which includes al
 <h4 id="ownerreference">
 Owner<wbr>Reference<pulumi-choosable type="language" values="python,go" class="inline">, Owner<wbr>Reference<wbr>Args</pulumi-choosable>
 </h4>
-OwnerReference contains enough information to let you identify an owning object. An owning object must be in the same namespace as the dependent, or be cluster-scoped, so there is no namespace field.
+<p>OwnerReference contains enough information to let you identify an owning object. An owning object must be in the same namespace as the dependent, or be cluster-scoped, so there is no namespace field.</p>
 
 
 <div>

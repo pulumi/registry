@@ -114,6 +114,16 @@ func init() {
 			//nolint:gosec
 			return template.HTML(html)
 		},
+		"markdownifyBlock": func(html string) template.HTML {
+			// Convert a string of Markdown into HTML, keeping the <p> tags, for descriptions that stand on their own
+			// under a heading. Link styles only apply inside a block like <p>, <li>, or <dd>.
+			var buf bytes.Buffer
+			if err := md.Convert([]byte(html), &buf); err != nil {
+				log.Fatalf("rendering Markdown: %v", err)
+			}
+			//nolint:gosec
+			return template.HTML(strings.TrimSpace(buf.String()))
+		},
 		"markdownify": func(html string) template.HTML {
 			// Convert a string of Markdown into HTML.
 			var buf bytes.Buffer

@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/maxlaverse/bitwarden/0.22.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/maxlaverse/bitwarden/0.23.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Bitwarden Provider
@@ -19,6 +19,7 @@ pulumi package add terraform-provider maxlaverse/bitwarden
 Use the Bitwarden provider to manage your [Password Manager](https://bitwarden.com/products/personal/) Logins and Secure Notes, and [Secrets Manager](https://bitwarden.com/products/secrets-manager/) Secrets.
 You must configure the provider with proper credentials before you can use it.
 If you're not using `clientImplementation = "embedded"`, you also need a [Password Manager CLI](https://bitwarden.com/help/article/cli/#download-and-install) or [Secrets Manager CLI](https://bitwarden.com/help/secrets-manager-cli/) installed locally.
+Password Manager login items, SSH keys, and secure notes can be read without storing values in plan or state with the `bitwarden.ItemLogin`, `bitwarden.ItemSshKey`, and `bitwarden.ItemSecureNote` ephemeral resources.
 Secrets Manager secrets can be read with the `bitwarden.Secret` function or, without storing values in plan or state, with the `bitwarden.Secret` ephemeral resource.
 
 > **Note:**  or OpenTofu 1.12 or later (Protocol 6).
@@ -134,6 +135,8 @@ The Password Manager accepts different combinations of credentials to authentica
 * *[Personal API Key](https://bitwarden.com/help/personal-api-key/)* (requires `masterPassword`, `clientId` and `clientSecret` to be set).
 * *Email and Password* (requires `email` and `masterPassword` to be set) (prefer *Personal API keys* instead).
 * User-provided *Session Key* (requires `sessionKey` to be set), which only works with a pre-downloaded Vault (See *Generating a Session Key*).
+
+To read an existing login item, SSH key, or secure note without storing it in plan or state, use the corresponding ephemeral resource instead of the function.
 #### Generating a Client ID and Secret
 The recommended way to interact with your Password Manager Vault using the Bitwarden Provider Pulumi plugin is to generate an API key.
 This allows you to easily revoke access to your Vault without having to change your master password.

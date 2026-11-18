@@ -69,12 +69,12 @@ Classify each confirmed-broken link as **actionable** (no open PR covers it) or 
 
 `source` and `destination` are live `https://www.pulumi.com/registry/...` URLs.
 
-1. Strip the origin to get the path, e.g. `/registry/packages/aws/how-to-guides/7-0-migration/`.
+1. Strip the origin to get the path, e.g. `/registry/packages/aws/guides/7-0-migration/`.
 2. The package name is the segment after `/registry/packages/`. Its metadata is `themes/default/data/registry/packages/<name>.yaml`; read `publisher` and `repo_url` from it.
 3. Find the file behind the **page** (`source`) under `themes/default/content/registry/packages/<name>/`:
    - `/registry/packages/<name>/` → `_index.md`
    - `/registry/packages/<name>/installation-configuration/` → `installation-configuration.md`
-   - any other sub-path → the matching `.md` or `_index.md` below it (for example `aws/how-to-guides/7-0-migration.md`, `azure-native/from-v2-to-v3/resource-versions.md`, `kubernetes/faq.md`). Images a page links relatively live next to it or under `themes/default/static/`.
+   - any other sub-path → the matching `.md` or `_index.md` below it (for example `aws/guides/7-0-migration.md`, `azure-native/guides/from-v2-to-v3/resource-versions.md`, `gcp/guides/10-0-migration.md`). Images a page links relatively live next to it or under `themes/default/static/`.
    - `/registry/packages/<name>/api-docs/...` → generated from the provider schema by `resourcedocsgen`; nothing here to edit.
    - `/registry/` and any other non-package page → Grep under `themes/default/layouts/`, `themes/default/content/`, and `themes/default/data/` for the link text.
    - `https://github.com/pulumi/pulumi` → the checker crawls this page directly as an additional route; links on it are GitHub's own chrome, not ours. An exclusion-list entry at most.

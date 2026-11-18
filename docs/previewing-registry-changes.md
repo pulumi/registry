@@ -4,7 +4,7 @@ Every package page under `pulumi.com/registry` is assembled at build time from t
 
 - **Provider schemas**, downloaded during the build, which become the API docs — a page per resource and function, plus the nav tree beside them.
 - **`docs/_index.md` from each provider's repo**, fetched at publish time and committed here under `themes/default/content/registry/packages/<package>/`, which becomes the package's Overview page. An `installation-configuration.md` beside it, where a package has one, becomes the Install & config page.
-- **Guides written directly in this repository**, under that same directory's `how-to-guides/`, which become the How-to guides section — the AWS migration guides, the Kubernetes FAQ, and so on.
+- **Guides written directly in this repository**, under that same directory's `guides/`, which become the Guides section — the AWS and GCP migration guides, for example.
 - **Per-package metadata**, at `themes/default/data/registry/packages/<package>.yaml`, which records each package's version, schema URL, title, publisher, logo, and category.
 - **This repository's layouts, templates, and theme**, which render every one of those into the pages readers see.
 

@@ -9,7 +9,7 @@ layout: package
 [client-go]: https://github.com/kubernetes/client-go
 [provider-args]: /registry/packages/kubernetes/api-docs/provider
 [provider-kubeconfig]: /registry/packages/kubernetes/api-docs/provider#inputs
-[ssa-guide]: /registry/packages/kubernetes/how-to-guides/managing-resources-with-server-side-apply
+[ssa-guide]: /dev/tutorials/managing-resources-with-server-side-apply/
 [kubeconfig]: https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/
 [install]: /docs/install/
 [nodejs]: https://nodejs.org/en/
@@ -40,7 +40,7 @@ following steps.
 
 1. [Install the Pulumi CLI][install].
 1. Install a package manager for your Pulumi program language runtime, such as [npm] or [Yarn] for [Node.js][nodejs], or PyPI for Python.
-1. Provision a Kubernetes cluster. For a new managed Kubernetes cluster, check out the [guides.](/registry/packages/kubernetes/how-to-guides)
+1. Provision a Kubernetes cluster. For a new managed Kubernetes cluster, check out the [Kubernetes templates](/dev/templates/kubernetes/).
 1. Download [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 
 ## Setup

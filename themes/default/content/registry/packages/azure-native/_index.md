@@ -121,21 +121,21 @@ resource "azure-native_resources_resource_group" "resourceGroup" {
 
 {{< /chooser >}}
 
-Visit the [How-to Guides](./how-to-guides) to find step-by-step guides for specific scenarios like running an app in Azure App Service or setting up a serverless Azure Function.
+Visit the [tutorials](/dev/tutorials/) to find step-by-step guides for specific scenarios like running an app in Azure App Service or setting up a serverless Azure Function.
 
 ## Migration
 
 ### From Azure Classic
 
-If you're already using the [Pulumi Azure Classic Provider](/registry/packages/azure) and would like to migrate to Azure Native, use the [migration guide](./from-classic).
+If you're already using the [Pulumi Azure Classic Provider](/registry/packages/azure) and would like to migrate to Azure Native, use the [migration guide](./guides/from-classic/).
 
 ### From v2 to v3
 
-To migrate from v2 to v3 of the Pulumi Azure Native Provider, use the [v3 upgrade guide](./from-v2-to-v3/).
+To migrate from v2 to v3 of the Pulumi Azure Native Provider, use the [v3 upgrade guide](./guides/from-v2-to-v3/).
 
 ### From v1 to v2
 
-To migrate from v1 to v2 of the Pulumi Azure Native Provider, use the [v2 upgrade guide](./from-v1-to-v2/).
+To migrate from v1 to v2 of the Pulumi Azure Native Provider, use the [v2 upgrade guide](./guides/from-v1-to-v2/).
 
 ### From Azure Resource Manager (ARM) templates
 
@@ -143,12 +143,12 @@ If you have Azure Resource Manager (ARM) templates that you'd like to migrate to
 
 ## Manage incompatible resources using the Azure SDK
 
-Some Azure resources aren't included in Azure Native because they're not compatible with the [Pulumi resource model](/docs/concepts/how-pulumi-works). If you need to manage these kinds of resources, you can use convenience helpers provided by Azure Native to set up an Azure SDK client and credentials in your preferred language. Use these how-to guides to get started:
+Some Azure resources aren't included in Azure Native because they're not compatible with the [Pulumi resource model](/docs/concepts/how-pulumi-works). If you need to manage these kinds of resources, you can use convenience helpers provided by Azure Native to set up an Azure SDK client and credentials in your preferred language. Use these examples to get started:
 
-* [Typescript](/registry/packages/azure-native/how-to-guides/azure-ts-call-azure-sdk)
-* [Go](/registry/packages/azure-native/how-to-guides/azure-go-call-azure-sdk)
-* [C#](/registry/packages/azure-native/how-to-guides/azure-cs-call-azure-api)
-* [Python](/registry/packages/azure-native/how-to-guides/azure-py-call-azure-sdk)
+* [Typescript](/dev/examples/azure-ts-call-azure-sdk/)
+* [Go](/dev/examples/azure-go-call-azure-sdk/)
+* [C#](/dev/examples/azure-cs-call-azure-api/)
+* [Python](/dev/examples/azure-py-call-azure-sdk/)
 
 ## How resources are versioned
 

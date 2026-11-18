@@ -1,8 +1,13 @@
 ---
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-awsx/v3.14.0/docs/installation-configuration.md
+# Do not edit by hand unless you're certain you know what you are doing!
+edit_url: https://github.com/pulumi/pulumi-awsx/blob/v3.14.0/docs/installation-configuration.md
 title: AWSx Installation & Configuration
 meta_desc: How to set up credentials to use the Pulumi AWSx Component library and choose configuration options to tailor the provider to suit your use case.
 layout: package
 ---
+
+<!-- Generated from docs/source/installation-configuration.md; do not edit directly. -->
 
 <!-- markdownlint-disable url -->
 [iam-user-console]: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console

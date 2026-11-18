@@ -11,7 +11,7 @@ name: delivery
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-delivery
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-delivery/v0.1.0/provider/cmd/pulumi-resource-delivery/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-delivery/v0.2.0/provider/cmd/pulumi-resource-delivery/schema.json
 title: Pulumi Delivery
-updated_on: 1795013888
-version: v0.1.0
+updated_on: 1795018172
+version: v0.2.0

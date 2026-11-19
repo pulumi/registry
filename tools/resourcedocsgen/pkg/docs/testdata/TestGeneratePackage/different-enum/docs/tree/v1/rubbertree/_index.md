@@ -1555,7 +1555,7 @@ Container<wbr>Brightness<pulumi-choosable type="language" values="python,go" cla
 <h4 id="containercolor">
 Container<wbr>Color<pulumi-choosable type="language" values="python,go" class="inline">, Container<wbr>Color<wbr>Args</pulumi-choosable>
 </h4>
-plant container colors
+<p>plant container colors</p>
 
 
 <div>
@@ -1666,7 +1666,7 @@ plant container colors
 <h4 id="containersize">
 Container<wbr>Size<pulumi-choosable type="language" values="python,go" class="inline">, Container<wbr>Size<wbr>Args</pulumi-choosable>
 </h4>
-plant container sizes
+<p>plant container sizes</p>
 
 
 <div>
@@ -1981,7 +1981,7 @@ Farm<pulumi-choosable type="language" values="python,go" class="inline">, Farm<w
 <h4 id="rubbertreevariety">
 Rubber<wbr>Tree<wbr>Variety<pulumi-choosable type="language" values="python,go" class="inline">, Rubber<wbr>Tree<wbr>Variety<wbr>Args</pulumi-choosable>
 </h4>
-types of rubber trees
+<p>types of rubber trees</p>
 
 
 <div>

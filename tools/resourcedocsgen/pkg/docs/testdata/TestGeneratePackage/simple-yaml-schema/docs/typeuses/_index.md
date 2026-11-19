@@ -2127,7 +2127,7 @@ Output<wbr>Only<wbr>Object<wbr>Type<pulumi-choosable type="language" values="pyt
 <h4 id="rubbertreevariety">
 Rubber<wbr>Tree<wbr>Variety<pulumi-choosable type="language" values="python,go" class="inline">, Rubber<wbr>Tree<wbr>Variety<wbr>Args</pulumi-choosable>
 </h4>
-types of rubber trees
+<p>types of rubber trees</p>
 
 
 <div>

@@ -58,6 +58,9 @@ After you have upgraded the AWS provider library to `v7` you need to run Pulumi 
 $ pulumi up --refresh --run-program
 ```
 
+- `--refresh` migrates the state to the new major version's schema, so it doesn't produce a diff.
+- `--run-program` makes the refresh use the new provider version instead of the old one.
+
 ## Removed Provider Arguments
 
 Remove the following from your provider configuration—they are no longer supported:
@@ -3129,7 +3132,7 @@ Remove `resolveConflicts`—it is no longer supported. Use `resolveConflictsOnCr
 
 ## Resource `aws.eks.Cluster`
 
-`certificateAuthority` is no longer supported. Use `certificateAuthorities` instead.
+`certificateAuthorities` is no longer supported. Use `certificateAuthority` instead.
 
 ## Resource `aws.elasticache.ReplicationGroup`
 

@@ -2127,7 +2127,7 @@ Output<wbr>Only<wbr>Object<wbr>Type
 <h4 id="rubbertreevariety">
 Rubber<wbr>Tree<wbr>Variety
 </h4>
-types of rubber trees
+<p>types of rubber trees</p>
 
 
 <div>

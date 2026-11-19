@@ -891,7 +891,7 @@ Get an existing Res resource's state with the given name, ID, and optional extra
 <h4 id="innertype">
 Inner<wbr>Type
 </h4>
-It's fine to use urn and id in nested objects
+<p>It's fine to use urn and id in nested objects</p>
 
 
 <div>

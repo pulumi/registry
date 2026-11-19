@@ -925,7 +925,7 @@ Get an existing ModuleTest resource's state with the given name, ID, and optiona
 <h4 id="typ">
 Typ<pulumi-choosable type="language" values="python,go" class="inline">, Typ<wbr>Args</pulumi-choosable>
 </h4>
-A test for namespaces (mod main)
+<p>A test for namespaces (mod main)</p>
 
 
 <div>
@@ -1141,7 +1141,7 @@ A test for namespaces (mod main)
 <h4 id="typ">
 Typ<pulumi-choosable type="language" values="python,go" class="inline">, Typ<wbr>Args</pulumi-choosable>
 </h4>
-A test for namespaces (mod 1)
+<p>A test for namespaces (mod 1)</p>
 
 
 <div>
@@ -1245,7 +1245,7 @@ A test for namespaces (mod 1)
 <h4 id="typ">
 Typ<pulumi-choosable type="language" values="python,go" class="inline">, Typ<wbr>Args</pulumi-choosable>
 </h4>
-A test for namespaces (mod 2)
+<p>A test for namespaces (mod 2)</p>
 
 
 <div>

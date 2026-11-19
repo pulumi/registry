@@ -1152,7 +1152,7 @@ Get an existing Foo resource's state with the given name, ID, and optional extra
 <h4 id="helmreleasesettings">
 Helm<wbr>Release<wbr>Settings<pulumi-choosable type="language" values="python,go" class="inline">, Helm<wbr>Release<wbr>Settings<wbr>Args</pulumi-choosable>
 </h4>
-BETA FEATURE - Options to configure the Helm Release resource.
+<p>BETA FEATURE - Options to configure the Helm Release resource.</p>
 
 
 <div>
@@ -1368,7 +1368,7 @@ BETA FEATURE - Options to configure the Helm Release resource.
 <h4 id="kubeclientsettings">
 Kube<wbr>Client<wbr>Settings<pulumi-choosable type="language" values="python,go" class="inline">, Kube<wbr>Client<wbr>Settings<wbr>Args</pulumi-choosable>
 </h4>
-Options for tuning the Kubernetes client used by a Provider.
+<p>Options for tuning the Kubernetes client used by a Provider.</p>
 
 
 <div>
@@ -1584,7 +1584,7 @@ Options for tuning the Kubernetes client used by a Provider.
 <h4 id="layeredtype">
 Layered<wbr>Type<pulumi-choosable type="language" values="python,go" class="inline">, Layered<wbr>Type<wbr>Args</pulumi-choosable>
 </h4>
-Make sure that defaults propagate through types
+<p>Make sure that defaults propagate through types</p>
 
 
 <div>

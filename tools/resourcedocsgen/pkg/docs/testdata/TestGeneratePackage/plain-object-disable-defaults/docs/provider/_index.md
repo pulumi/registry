@@ -459,7 +459,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 <h4 id="helmreleasesettings">
 Helm<wbr>Release<wbr>Settings<pulumi-choosable type="language" values="python,go" class="inline">, Helm<wbr>Release<wbr>Settings<wbr>Args</pulumi-choosable>
 </h4>
-BETA FEATURE - Options to configure the Helm Release resource.
+<p>BETA FEATURE - Options to configure the Helm Release resource.</p>
 
 
 <div>

@@ -348,7 +348,7 @@ Only the first {{ .MaxNestedTypes }} types are included in this documentation.
 </h4>
 
 {{- if $elem.Description }}
-{{ markdownify $elem.Description }}
+{{ markdownifyBlock $elem.Description }}
 {{ end -}}
 {{- if $elem.Properties }}{{template "properties" $elem.Properties -}}{{ end -}}
 {{- if $elem.EnumValues }}{{- template "enums" $elem.EnumValues -}}{{ end -}}

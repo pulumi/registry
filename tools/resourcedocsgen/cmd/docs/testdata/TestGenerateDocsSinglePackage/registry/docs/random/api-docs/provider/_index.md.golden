@@ -407,6 +407,6 @@ All [input](#inputs) properties are implicitly available as output properties. A
 	<dt>License</dt>
 	<dd>Apache-2.0</dd>
 	<dt>Notes</dt>
-	<dd>This Pulumi package is based on the <a href="https://github.com/terraform-providers/terraform-provider-random"><code>random</code> Terraform Provider</a>.</dd>
+	<dd>This Pulumi package is based on the <a href="https://github.com/terraform-providers/terraform-provider-random" target="_blank" rel="noopener"><code>random</code> Terraform Provider</a>.</dd>
 </dl>
 

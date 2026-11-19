@@ -981,7 +981,7 @@ Get an existing Cat resource's state with the given name, ID, and optional extra
 <h4 id="toy">
 Toy
 </h4>
-This is a toy
+<p>This is a toy</p>
 
 
 <div>

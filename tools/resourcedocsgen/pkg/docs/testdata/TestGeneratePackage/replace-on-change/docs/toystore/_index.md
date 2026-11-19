@@ -925,7 +925,7 @@ Get an existing ToyStore resource's state with the given name, ID, and optional 
 <h4 id="chew">
 Chew
 </h4>
-A toy for a dog
+<p>A toy for a dog</p>
 
 
 <div>
@@ -1029,7 +1029,7 @@ A toy for a dog
 <h4 id="laser">
 Laser
 </h4>
-A Toy for a cat
+<p>A Toy for a cat</p>
 
 
 <div>
@@ -1245,7 +1245,7 @@ A Toy for a cat
 <h4 id="toy">
 Toy
 </h4>
-This is a toy
+<p>This is a toy</p>
 
 
 <div>

@@ -104,6 +104,15 @@ To add or update a community provider package:
 
 **Dynamically bridged Terraform providers are not managed here.** These are the packages consumed with `pulumi package add terraform-provider <name>`; their YAML has a `schema_file_url` containing `registry.opentofu.org` and a `description` of the form `A Pulumi provider dynamically bridged from <name>.` They come from the internal `pulumi/terraform-to-pulumi-registry-pipeline` repo, which watches the providers listed under `watched-providers` in its `Pulumi.yaml` and sends a `push-provider-update` event whenever one ships a new version, regenerating the package YAML here. Adding, removing, or re-pointing one — for example, when an upstream provider moves to a new namespace — is an edit to that list, so file the issue or PR in `pulumi/terraform-to-pulumi-registry-pipeline`, not in this repo and not in `pulumi/pulumi-terraform-provider` (the Any Terraform Provider plugin itself). When you delist one here with `deprecated: true`, also take it off `watched-providers`. `resourcedocsgen metadata` won't overwrite a delisted package's YAML, but it posts a warning every time the pipeline pushes a new version. See [`docs/architecture.md`](docs/architecture.md#terraform-providers) for the full flow.
 
+### Writing or rewriting a landing page
+
+When you write or substantially rewrite a package's Overview or Install & config page — the hand-maintained ones listed in [`docs/architecture.md`](docs/architecture.md#overview-pages-kept-in-this-repository), or a draft for a provider repository's `docs/` — follow [`docs/overview-page.md`](docs/overview-page.md), and generate the installation and configuration sections rather than writing them by hand:
+
+- `bin/resourcedocsgen gen-install --schemaFile <schema.json> --version <x.y.z>` writes the `## Installation` chooser. Pass `--version` so the Java and HCL tabs get a real version instead of a `VERSION` placeholder, and `--languages` if the package doesn't publish every SDK the schema declares. The TypeScript and Python tabs list a command for every package manager the Pulumi docs support (npm, Yarn, pnpm, and Bun; pip, uv, and Poetry). If you add one to the generator, also update the template in `docs/overview-page.md`, and regenerate rather than hand-edit an existing page's tabs.
+- `bin/resourcedocsgen gen-config --schemaFile <schema.json>` writes the configuration parameter list. Its descriptions are the raw schema text, so edit them for readability, drop obsolete options, and fill in the two `TODO` comments it ends with: environment-variable fallbacks the schema doesn't mention (search the provider source for the variables it reads) and options that interact.
+
+Build the tool with `make bin/resourcedocsgen`. Both commands are experimental and print to stdout, so paste the output into the page.
+
 On every push to `master`, `publish_to_registry.py` publishes packages to the live Pulumi registry service — the Pulumi Cloud store behind `pulumi package add`, which is separate from the rendered site. `push-registry.py` runs only if that step fails.
 
 ---

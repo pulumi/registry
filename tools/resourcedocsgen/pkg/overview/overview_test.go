@@ -140,15 +140,15 @@ func TestDeriveInstallsDefaults(t *testing.T) {
 		byLanguage[install.Language] = install
 	}
 
-	assert.Equal(t, "npm install @pulumi/ise", byLanguage[LangTypeScript].Command)
-	assert.Equal(t, "pip install pulumi-ise", byLanguage[LangPython].Command)
-	assert.Equal(t, "dotnet add package Pulumi.Ise", byLanguage[LangCSharp].Command)
+	assert.Equal(t, "npm install @pulumi/ise", byLanguage[LangTypeScript].Commands[0].Command)
+	assert.Equal(t, "uv add pulumi-ise", byLanguage[LangPython].Commands[1].Command)
+	assert.Equal(t, []PackageManagerCommand{{Command: "dotnet add package Pulumi.Ise"}}, byLanguage[LangCSharp].Commands)
 	assert.Equal(t, "com.pulumi:ise", byLanguage[LangJava].Package)
 	assert.Contains(t, byLanguage[LangJava].Gradle, "com.pulumi:ise:0.5.0")
 
 	// No importBasePath, so the Go path is guessed from the repository and the
 	// caller is told so.
-	assert.Equal(t, "go get github.com/pulumi/pulumi-ise/sdk/go/ise", byLanguage[LangGo].Command)
+	assert.Equal(t, "go get github.com/pulumi/pulumi-ise/sdk/go/ise", byLanguage[LangGo].Commands[0].Command)
 	assert.Contains(t, plan.Warnings[0], "no go importBasePath")
 }
 
@@ -163,11 +163,30 @@ func TestDeriveInstallsPrefersSchemaNames(t *testing.T) {
 		"v0.1.19", []string{LangTypeScript, LangPython, LangGo})
 
 	require.Len(t, plan.Languages, 3)
-	assert.Equal(t, "npm install @pydantic/pulumi-logfire", plan.Languages[0].Command)
+	assert.Equal(t, "npm install @pydantic/pulumi-logfire", plan.Languages[0].Commands[0].Command)
 	// PyPI treats the two spellings as one project; published pages use hyphens.
-	assert.Equal(t, "pip install pulumi-logfire", plan.Languages[1].Command)
-	assert.Equal(t, "go get github.com/pydantic/pulumi-logfire/sdk/go/logfire", plan.Languages[2].Command)
+	assert.Equal(t, "uv add pulumi-logfire", plan.Languages[1].Commands[1].Command)
+	assert.Equal(t, "go get github.com/pydantic/pulumi-logfire/sdk/go/logfire", plan.Languages[2].Commands[0].Command)
 	assert.Empty(t, plan.Warnings)
+}
+
+func TestDeriveInstallsCoversEverySupportedPackageManager(t *testing.T) {
+	t.Parallel()
+
+	plan := DeriveInstalls(spec(t, `{"name":"ise"}`), "v0.5.0", []string{LangTypeScript, LangPython})
+
+	require.Len(t, plan.Languages, 2)
+	assert.Equal(t, []PackageManagerCommand{
+		{Tool: "npm", Command: "npm install @pulumi/ise"},
+		{Tool: "Yarn", Command: "yarn add @pulumi/ise"},
+		{Tool: "pnpm", Command: "pnpm add @pulumi/ise"},
+		{Tool: "Bun", Command: "bun add @pulumi/ise"},
+	}, plan.Languages[0].Commands)
+	assert.Equal(t, []PackageManagerCommand{
+		{Tool: "pip", Note: "Add `pulumi-ise` to `requirements.txt`, then run:", Command: "pip install -r requirements.txt"},
+		{Tool: "uv", Command: "uv add pulumi-ise"},
+		{Tool: "Poetry", Command: "poetry add pulumi-ise"},
+	}, plan.Languages[1].Commands)
 }
 
 func TestDeriveInstallsKeepsExistingGoMajorVersion(t *testing.T) {
@@ -179,7 +198,7 @@ func TestDeriveInstallsKeepsExistingGoMajorVersion(t *testing.T) {
 		"v7.12.0", []string{LangGo})
 
 	require.Len(t, plan.Languages, 1)
-	assert.Equal(t, "go get github.com/pulumi/pulumi-vault/sdk/v7/go/vault", plan.Languages[0].Command)
+	assert.Equal(t, "go get github.com/pulumi/pulumi-vault/sdk/v7/go/vault", plan.Languages[0].Commands[0].Command)
 	assert.Empty(t, plan.Warnings)
 }
 

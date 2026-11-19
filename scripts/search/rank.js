@@ -115,7 +115,7 @@ module.exports = {
                 }
 
                 return 770;
-            } else if (page.href.match(/how-to-guides/)) {
+            } else if (page.href.match(/\/guides\//)) {
                 return 760;
             }
         }
@@ -136,7 +136,7 @@ module.exports = {
                 return 680;
             } else if (page.href.match(/api-docs/)) {
                 return 670;
-            } else if (page.href.match(/how-to-guides/)) {
+            } else if (page.href.match(/\/guides\//)) {
                 return 660;
             }
         }
@@ -157,7 +157,7 @@ module.exports = {
                 return 580;
             } else if (page.href.match(/api-docs/)) {
                 return 570;
-            } else if (page.href.match(/how-to-guides/)) {
+            } else if (page.href.match(/\/guides\//)) {
                 return 560;
             }
         }
@@ -170,7 +170,7 @@ module.exports = {
                 return 480;
             } else if (page.href.match(/api-docs/)) {
                 return 470;
-            } else if (page.href.match(/how-to-guides/)) {
+            } else if (page.href.match(/\/guides\//)) {
                 return 460;
             }
         }

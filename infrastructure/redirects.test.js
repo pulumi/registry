@@ -174,8 +174,8 @@ test("/foo.md -> internal rewrite to /foo/index.md", () => {
 });
 
 test("nested leaf: .md suffix on a how-to-guide", () => {
-    const result = handler(request("/registry/packages/aws/how-to-guides/6-0-migration.md"));
-    assertPassThrough(result, "/registry/packages/aws/how-to-guides/6-0-migration/index.md");
+    const result = handler(request("/registry/packages/aws/guides/6-0-migration.md"));
+    assertPassThrough(result, "/registry/packages/aws/guides/6-0-migration/index.md");
 });
 
 test("registry root: /registry/ + Accept -> URI rewrite to /registry/index.md", () => {

@@ -1,6 +1,6 @@
 {{ define "main" }} {{ $directories := (split .Page.File.Path "/")}} {{
 $packageName := index $directories 2 }} {{ $packageHome := path.Join
-"registry/packages" $packageName }} {{ $title_tag := .Params.title_tag }}
+"registry/packages" $packageName }} {{ $guidesHome := printf "/%s/guides/" $packageHome }} {{ $title_tag := .Params.title_tag }}
 
 <div class="docs-list-main">
     <div class="docs-main-nav-toggle-wrapper">
@@ -27,10 +27,10 @@ $packageName := index $directories 2 }} {{ $packageHome := path.Join
                         {{ with .GetPage $packageHome }}{{ .Title }}{{ end }}:
                         Installation & Configuration
                     </h1>
-                    {{ else if strings.HasSuffix .Permalink "how-to-guides/" }}
+                    {{ else if eq .RelPermalink $guidesHome }}
                     <h1>
                         {{ with .GetPage $packageHome }}{{ .Title }}{{ end }}:
-                        How-to-Guides
+                        Guides
                     </h1>
                     {{ else if strings.Contains .Permalink "api-docs" }}
                     <!--Don't show the title in the top-most index page.-->
@@ -50,8 +50,7 @@ $packageName := index $directories 2 }} {{ $packageHome := path.Join
                     {{ end }} {{ else }} {{ if and (.Params.h1) (not
                     .Params.notitle) }}
                     <h1>{{ .Params.h1 }}</h1>
-                    {{ else if and (ne .Title "") (not .Params.notitle) (not (in
-                    .Page.File.Path "how-to-guides/_index.md")) }}
+                    {{ else if and (ne .Title "") (not .Params.notitle) (ne .RelPermalink $guidesHome) }}
                     <h1>{{ partial "registry/package/title.html" . }}</h1>
                     {{ end }} {{ end }}
                 </div>
@@ -67,15 +66,14 @@ $packageName := index $directories 2 }} {{ $packageHome := path.Join
             </div>
 
             <section class="docs-content">
-                {{ if strings.HasSuffix .Permalink "how-to-guides/" }}
-                {{ range .Pages }}
-                <div class="pb-4">
-                    <a
-                        class="text-violet-primary hover:underline"
-                        href="{{ relref . .Path }}"
-                        >{{ .Title }}</a
-                    >
-                </div>
+                {{ if eq .RelPermalink $guidesHome }}
+                {{ .Content }}
+                {{ with .Pages }}
+                <ul>
+                    {{ range . }}
+                    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ with .Description }}: {{ . }}{{ end }}</li>
+                    {{ end }}
+                </ul>
                 {{ else }}
                 There are no guides yet for this package.
                 {{ end }}

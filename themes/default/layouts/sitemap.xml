@@ -33,7 +33,7 @@
       more honest than a fabricated date.
 
       For everything else under a package (the overview page, the
-      installation-configuration page, how-to-guides — all committed,
+      installation-configuration page, guides — all committed,
       git-tracked content), .Lastmod already reflects real git history.
       We still prefer the package's own updated_on epoch when it is
       newer, since a new provider release can make the overview page's

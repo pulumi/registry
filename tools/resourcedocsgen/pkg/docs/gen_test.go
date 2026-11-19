@@ -1007,3 +1007,72 @@ func TestFunctionInvokeOptionsTypes(t *testing.T) {
 		assert.NotContains(t, args.FunctionArgsOutputOptions, language.Go)
 	})
 }
+
+func TestNestedTypeInputUsage(t *testing.T) {
+	t.Parallel()
+
+	objectType := func() schema.ComplexTypeSpec {
+		return schema.ComplexTypeSpec{
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Type:       "object",
+				Properties: map[string]schema.PropertySpec{"value": {TypeSpec: schema.TypeSpec{Type: "string"}}},
+			},
+		}
+	}
+	ref := func(name string) schema.PropertySpec {
+		return schema.PropertySpec{TypeSpec: schema.TypeSpec{Ref: "#/types/prov:module/" + name + ":" + name}}
+	}
+
+	spec := newTestPackageSpec()
+	spec.Types["prov:module/InputOnly:InputOnly"] = objectType()
+	spec.Types["prov:module/OutputOnly:OutputOnly"] = objectType()
+	spec.Types["prov:module/StateOnly:StateOnly"] = objectType()
+	spec.Types["prov:module/Kind:Kind"] = schema.ComplexTypeSpec{
+		ObjectTypeSpec: schema.ObjectTypeSpec{Type: "string"},
+		Enum:           []schema.EnumValueSpec{{Value: "a"}, {Value: "b"}},
+	}
+	spec.Resources["prov:module/usage:Usage"] = schema.ResourceSpec{
+		ObjectTypeSpec: schema.ObjectTypeSpec{
+			Properties: map[string]schema.PropertySpec{
+				"outputOnly": ref("OutputOnly"),
+				"stateOnly":  ref("StateOnly"),
+				"kind":       ref("Kind"),
+			},
+		},
+		InputProperties: map[string]schema.PropertySpec{
+			"inputOnly": ref("InputOnly"),
+			"kind":      ref("Kind"),
+		},
+		StateInputs: &schema.ObjectTypeSpec{
+			Properties: map[string]schema.PropertySpec{"stateOnly": ref("StateOnly")},
+		},
+	}
+
+	schemaPkg, err := schema.ImportSpec(spec, nil, schema.NewNullLoader(), schema.ValidationOptions{
+		AllowDanglingReferences: true,
+	})
+	require.NoError(t, err)
+	mod := NewContext("test", schemaPkg).generateModulesFromSchemaPackage("test", schemaPkg)["module"]
+	require.NotNil(t, mod, "module 'module' not generated")
+	r := getResourceFromModule("Usage", mod)
+	require.NotNil(t, r, "resource Usage not found")
+
+	got := map[string]bool{}
+	for _, nt := range mod.genNestedTypes(r, true, false) {
+		got[nt.AnchorID] = nt.Input
+	}
+
+	for anchor, want := range map[string]bool{
+		"inputonly":  true,
+		"stateonly":  true,
+		"outputonly": false,
+		"kind":       false,
+	} {
+		t.Run(anchor, func(t *testing.T) {
+			t.Parallel()
+			gotInput, ok := got[anchor]
+			require.True(t, ok, "nested type %q missing from %v", anchor, got)
+			assert.Equal(t, want, gotInput, "Input for nested type %q", anchor)
+		})
+	}
+}

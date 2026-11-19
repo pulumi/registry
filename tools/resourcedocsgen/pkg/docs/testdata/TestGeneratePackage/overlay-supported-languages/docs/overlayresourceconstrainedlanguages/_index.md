@@ -948,7 +948,7 @@ Config<wbr>Map<wbr>Overlay<pulumi-choosable type="language" values="python,go" c
 </div>
 
 <h4 id="enumoverlay">
-Enum<wbr>Overlay<pulumi-choosable type="language" values="python,go" class="inline">, Enum<wbr>Overlay<wbr>Args</pulumi-choosable>
+Enum<wbr>Overlay
 </h4>
 
 <div>

@@ -811,7 +811,7 @@ Get an existing NoRecursive resource's state with the given name, ID, and option
 
 
 <h4 id="rec">
-Rec<pulumi-choosable type="language" values="python,go" class="inline">, Rec<wbr>Args</pulumi-choosable>
+Rec
 </h4>
 
 <div>

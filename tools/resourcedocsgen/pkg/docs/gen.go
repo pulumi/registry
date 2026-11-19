@@ -298,10 +298,12 @@ type enum struct {
 type docNestedType struct {
 	Name        string
 	Description string
-	Input       bool
-	AnchorID    string
-	Properties  map[language.Language][]property
-	EnumValues  map[language.Language][]enum
+	// Input reports whether the page uses this type as an input. Python and Go only generate a FooArgs type for
+	// object types that are used as inputs somewhere, so the heading names FooArgs only when this is true.
+	Input      bool
+	AnchorID   string
+	Properties map[language.Language][]property
+	EnumValues map[language.Language][]enum
 }
 
 // propertyType represents the type of a property.
@@ -1155,6 +1157,7 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 					Name:        wbr(name),
 					AnchorID:    strings.ToLower(name),
 					Description: dctx.resolveRefs(selfRef, SanitizeDescription(typ.Comment)),
+					Input:       tokens[token].Input,
 					Properties:  props,
 				})
 			case *schema.EnumType:
@@ -2025,6 +2028,12 @@ func (mod *modContext) getTypes(member interface{}, types nestedTypeUsageInfo) {
 		}
 		for _, p := range t.InputProperties {
 			mod.getNestedTypes(p.Type, types, true)
+		}
+		// The get section's state arguments use the input form of these types (FooArgs in Python and Go).
+		if t.StateInputs != nil {
+			for _, p := range t.StateInputs.Properties {
+				mod.getNestedTypes(p.Type, types, true)
+			}
 		}
 		for _, m := range t.Methods {
 			mod.getTypes(m.Function, types)

@@ -1921,7 +1921,7 @@ Object<wbr>With<wbr>Node<wbr>Optional<wbr>Inputs<pulumi-choosable type="language
 </div>
 
 <h4 id="outputonlyenumtype">
-Output<wbr>Only<wbr>Enum<wbr>Type<pulumi-choosable type="language" values="python,go" class="inline">, Output<wbr>Only<wbr>Enum<wbr>Type<wbr>Args</pulumi-choosable>
+Output<wbr>Only<wbr>Enum<wbr>Type
 </h4>
 
 <div>
@@ -2023,7 +2023,7 @@ Output<wbr>Only<wbr>Enum<wbr>Type<pulumi-choosable type="language" values="pytho
 </div>
 
 <h4 id="outputonlyobjecttype">
-Output<wbr>Only<wbr>Object<wbr>Type<pulumi-choosable type="language" values="python,go" class="inline">, Output<wbr>Only<wbr>Object<wbr>Type<wbr>Args</pulumi-choosable>
+Output<wbr>Only<wbr>Object<wbr>Type
 </h4>
 
 <div>
@@ -2125,7 +2125,7 @@ Output<wbr>Only<wbr>Object<wbr>Type<pulumi-choosable type="language" values="pyt
 </div>
 
 <h4 id="rubbertreevariety">
-Rubber<wbr>Tree<wbr>Variety<pulumi-choosable type="language" values="python,go" class="inline">, Rubber<wbr>Tree<wbr>Variety<wbr>Args</pulumi-choosable>
+Rubber<wbr>Tree<wbr>Variety
 </h4>
 types of rubber trees
 

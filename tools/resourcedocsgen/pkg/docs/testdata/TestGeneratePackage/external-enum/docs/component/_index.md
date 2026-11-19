@@ -832,7 +832,7 @@ Get an existing Component resource's state with the given name, ID, and optional
 
 
 <h4 id="myenum">
-My<wbr>Enum<pulumi-choosable type="language" values="python,go" class="inline">, My<wbr>Enum<wbr>Args</pulumi-choosable>
+My<wbr>Enum
 </h4>
 
 <div>

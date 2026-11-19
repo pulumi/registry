@@ -513,7 +513,7 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 
 <h4 id="color">
-Color<pulumi-choosable type="language" values="python,go" class="inline">, Color<wbr>Args</pulumi-choosable>
+Color
 </h4>
 
 <div>

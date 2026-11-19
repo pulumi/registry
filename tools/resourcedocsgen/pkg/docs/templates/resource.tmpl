@@ -344,7 +344,7 @@ Only the first {{ .MaxNestedTypes }} types are included in this documentation.
 {{ range $index, $elem := .NestedTypes }}
 {{ if lt $index $.MaxNestedTypes }}
 <h4 id="{{ $elem.AnchorID }}">
-{{ htmlSafe $elem.Name }}<pulumi-choosable type="language" values="python,go" class="inline">, {{ htmlSafe $elem.Name }}<wbr>Args</pulumi-choosable>
+{{ htmlSafe $elem.Name }}{{ if $elem.Input }}<pulumi-choosable type="language" values="python,go" class="inline">, {{ htmlSafe $elem.Name }}<wbr>Args</pulumi-choosable>{{ end }}
 </h4>
 
 {{- if $elem.Description }}

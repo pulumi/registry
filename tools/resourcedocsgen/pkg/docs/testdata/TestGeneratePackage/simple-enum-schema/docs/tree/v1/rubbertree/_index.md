@@ -1451,7 +1451,7 @@ Container<pulumi-choosable type="language" values="python,go" class="inline">, C
 </div>
 
 <h4 id="containerbrightness">
-Container<wbr>Brightness<pulumi-choosable type="language" values="python,go" class="inline">, Container<wbr>Brightness<wbr>Args</pulumi-choosable>
+Container<wbr>Brightness
 </h4>
 
 <div>
@@ -1553,7 +1553,7 @@ Container<wbr>Brightness<pulumi-choosable type="language" values="python,go" cla
 </div>
 
 <h4 id="containercolor">
-Container<wbr>Color<pulumi-choosable type="language" values="python,go" class="inline">, Container<wbr>Color<wbr>Args</pulumi-choosable>
+Container<wbr>Color
 </h4>
 plant container colors
 
@@ -1664,7 +1664,7 @@ plant container colors
 </div>
 
 <h4 id="containersize">
-Container<wbr>Size<pulumi-choosable type="language" values="python,go" class="inline">, Container<wbr>Size<wbr>Args</pulumi-choosable>
+Container<wbr>Size
 </h4>
 plant container sizes
 
@@ -1775,7 +1775,7 @@ plant container sizes
 </div>
 
 <h4 id="diameter">
-Diameter<pulumi-choosable type="language" values="python,go" class="inline">, Diameter<wbr>Args</pulumi-choosable>
+Diameter
 </h4>
 
 <div>
@@ -1877,7 +1877,7 @@ Diameter<pulumi-choosable type="language" values="python,go" class="inline">, Di
 </div>
 
 <h4 id="farm">
-Farm<pulumi-choosable type="language" values="python,go" class="inline">, Farm<wbr>Args</pulumi-choosable>
+Farm
 </h4>
 
 <div>
@@ -1979,7 +1979,7 @@ Farm<pulumi-choosable type="language" values="python,go" class="inline">, Farm<w
 </div>
 
 <h4 id="rubbertreevariety">
-Rubber<wbr>Tree<wbr>Variety<pulumi-choosable type="language" values="python,go" class="inline">, Rubber<wbr>Tree<wbr>Variety<wbr>Args</pulumi-choosable>
+Rubber<wbr>Tree<wbr>Variety
 </h4>
 types of rubber trees
 
@@ -2090,7 +2090,7 @@ types of rubber trees
 </div>
 
 <h4 id="treesize">
-Tree<wbr>Size<pulumi-choosable type="language" values="python,go" class="inline">, Tree<wbr>Size<wbr>Args</pulumi-choosable>
+Tree<wbr>Size
 </h4>
 
 <div>

@@ -923,7 +923,7 @@ Get an existing ToyStore resource's state with the given name, ID, and optional 
 
 
 <h4 id="chew">
-Chew<pulumi-choosable type="language" values="python,go" class="inline">, Chew<wbr>Args</pulumi-choosable>
+Chew
 </h4>
 A toy for a dog
 
@@ -1027,7 +1027,7 @@ A toy for a dog
 </div>
 
 <h4 id="laser">
-Laser<pulumi-choosable type="language" values="python,go" class="inline">, Laser<wbr>Args</pulumi-choosable>
+Laser
 </h4>
 A Toy for a cat
 
@@ -1243,7 +1243,7 @@ A Toy for a cat
 </div>
 
 <h4 id="toy">
-Toy<pulumi-choosable type="language" values="python,go" class="inline">, Toy<wbr>Args</pulumi-choosable>
+Toy
 </h4>
 This is a toy
 

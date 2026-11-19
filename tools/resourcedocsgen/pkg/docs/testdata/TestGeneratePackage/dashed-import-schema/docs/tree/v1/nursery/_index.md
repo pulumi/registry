@@ -850,7 +850,7 @@ Get an existing Nursery resource's state with the given name, ID, and optional e
 
 
 <h4 id="rubbertreevariety">
-Rubber<wbr>Tree<wbr>Variety<pulumi-choosable type="language" values="python,go" class="inline">, Rubber<wbr>Tree<wbr>Variety<wbr>Args</pulumi-choosable>
+Rubber<wbr>Tree<wbr>Variety
 </h4>
 types of rubber trees
 
@@ -961,7 +961,7 @@ types of rubber trees
 </div>
 
 <h4 id="treesize">
-Tree<wbr>Size<pulumi-choosable type="language" values="python,go" class="inline">, Tree<wbr>Size<wbr>Args</pulumi-choosable>
+Tree<wbr>Size
 </h4>
 
 <div>

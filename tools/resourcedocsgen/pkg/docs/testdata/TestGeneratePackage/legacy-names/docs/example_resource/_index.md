@@ -982,7 +982,7 @@ Get an existing Example_resource resource's state with the given name, ID, and o
 
 
 <h4 id="enum_xyz">
-Enum_XYZ<pulumi-choosable type="language" values="python,go" class="inline">, Enum_XYZ<wbr>Args</pulumi-choosable>
+Enum_XYZ
 </h4>
 
 <div>

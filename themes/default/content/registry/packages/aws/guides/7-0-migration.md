@@ -11,7 +11,7 @@ weight: 1
 
 ## Upstream Changes
 
-The upstream target has been changed from [v5.100.0](https://github.com/pulumi/pulumi-aws/pull/5605) to targeting v5.11.0. That means that the upstream [migration guide](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/guides/version-6-upgrade) as well as the following `CHANGELOG`s are relevant:
+The upstream target has been changed from [v5.100.0](https://github.com/pulumi/pulumi-aws/pull/5605) to [v6.3.0](https://github.com/pulumi/pulumi-aws/pull/5654). That means that the upstream [migration guide](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/guides/version-6-upgrade) as well as the following `CHANGELOG`s are relevant:
 - [v6.0.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v6.0.0)
 - [v6.1.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v6.1.0)
 - [v6.2.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v6.2.0)
@@ -19,10 +19,12 @@ The upstream target has been changed from [v5.100.0](https://github.com/pulumi/p
 
 ## Prerequisites to Upgrade to v7.0.0
 
--> Before upgrading to version `7.0.0`, first upgrade to the latest available `6.x` version of the provider. Run `pulumi preview` and confirm that:
+{{< notes >}}
+Before upgrading to version `7.0.0`, first upgrade to the latest available `6.x` version of the provider. Run `pulumi preview` and confirm that:
 
 - Your preview completes without errors or unexpected changes.
 - There are no deprecation warnings related to the changes described in this guide.
+{{< /notes >}}
 
 {{< notes >}}
 It is also recommended that you run `pulumi up --refresh` prior to upgrading to ensure that your Pulumi state is up to date.

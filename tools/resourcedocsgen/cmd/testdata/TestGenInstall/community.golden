@@ -3,15 +3,51 @@
 {{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 
+npm:
+
 ```bash
 npm install @pydantic/pulumi-logfire
+```
+
+Yarn:
+
+```bash
+yarn add @pydantic/pulumi-logfire
+```
+
+pnpm:
+
+```bash
+pnpm add @pydantic/pulumi-logfire
+```
+
+Bun:
+
+```bash
+bun add @pydantic/pulumi-logfire
 ```
 
 {{% /choosable %}}
 {{% choosable language python %}}
 
+pip:
+
+Add `pulumi-logfire` to `requirements.txt`, then run:
+
 ```bash
-pip install pulumi-logfire
+pip install -r requirements.txt
+```
+
+uv:
+
+```bash
+uv add pulumi-logfire
+```
+
+Poetry:
+
+```bash
+poetry add pulumi-logfire
 ```
 
 {{% /choosable %}}

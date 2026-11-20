@@ -69,7 +69,7 @@ func RenderInstallation(plan InstallPlan) string {
 			b.WriteString("\nGradle:\n\n")
 			b.WriteString(fence("groovy", install.Gradle))
 		case published:
-			b.WriteString(bashFence(install.Command))
+			writeCommands(&b, install.Commands)
 		case lang == LangYAML:
 			// YAML consumes the package directly rather than through an SDK.
 			b.WriteString(bashFence(plan.PackageAdd))
@@ -236,6 +236,26 @@ func escapeCell(s string) string {
 
 func fence(language, body string) string {
 	return fmt.Sprintf("```%s\n%s\n```\n", language, body)
+}
+
+// writeCommands renders a language's install commands. A single command stands
+// alone; several are labeled by package manager, the way Java's Maven and
+// Gradle blocks are.
+func writeCommands(b *strings.Builder, commands []PackageManagerCommand) {
+	if len(commands) == 1 {
+		b.WriteString(bashFence(commands[0].Command))
+		return
+	}
+	for i, c := range commands {
+		if i > 0 {
+			b.WriteString("\n")
+		}
+		fmt.Fprintf(b, "%s:\n\n", c.Tool)
+		if c.Note != "" {
+			b.WriteString(c.Note + "\n\n")
+		}
+		b.WriteString(bashFence(c.Command))
+	}
 }
 
 func bashFence(command string) string {

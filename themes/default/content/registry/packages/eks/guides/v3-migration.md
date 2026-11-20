@@ -45,22 +45,34 @@ Have a look at [Gracefully upgrading node groups](#gracefully-upgrading-node-gro
 
 ### Gracefully upgrading node groups
 
-The `ManagedNodeGroup` component gracefully handles updates by default. EKS will:
-- boot the updated replacement nodes  
-- cordon the old nodes to ensure no new pods get launched onto them  
-- drain the old nodes one-by-one
+#### Managed node groups (`ManagedNodeGroup`)
+
+The `ManagedNodeGroup` component has different update behaviors depending on the type of change.
+
+For regular updates, such as scaling or labels, EKS will:
+
+- boot the updated replacement nodes
+- cordon the old nodes to ensure no new pods get launched onto them
+- drain all nodes in the node group simultaneously
 - shut down the empty old nodes
 
-The detailed update procedure can be seen in the [AWS docs](https://docs.aws.amazon.com/eks/latest/userguide/managed-node-update-behavior.html).
+Some changes, such as updating the AMI type (for example, migrating from AL2 to AL2023), can't be made in place and require a full replacement:
 
-For self-managed node groups (i.e., the `NodeGroup` and `NodeGroupV2` components) you have two options:
+- A new node group is created first.
+- The old node group is deleted after the new one is ready.
+- EKS drains all pods from the old node group simultaneously during deletion.
 
-1. Update the node group in place. Pulumi does this by first creating the new replacement nodes and then shutting down the old ones which will move pods to the new nodes forcibly. This is the default behavior when node groups are updated.  
-2. Create a new node group and move your Pods to that group. Migrating to a new node group is more graceful than simply updating the node group in place. This is because the migration process taints the old node group as `NoSchedule` and drains the nodes gradually.
+The detailed update procedure can be seen in the [AWS docs](https://docs.aws.amazon.com/eks/latest/userguide/managed-node-update-behavior.html). If draining all nodes at once doesn't suit your workload, follow the [graceful upgrade](#graceful-upgrade) steps below.
 
-The second option involves the following steps:
+#### Self-managed node groups (`NodeGroup` and `NodeGroupV2`)
 
-* Create the replacement node group side-by-side with the existing node group. When doing this you need to make sure that the two node groups are allowed to communicate with each other. You can achieve this in the following way:
+For self-managed node groups (i.e., the `NodeGroup` and `NodeGroupV2` components), Pulumi updates the node group in place. Pulumi does this by first creating the new replacement nodes and then shutting down the old ones, which moves pods to the new nodes forcibly. This is the default behavior when node groups are updated. To migrate to a new node group more gracefully, follow the steps below.
+
+#### Graceful upgrade
+
+You can gracefully update your node groups by creating a new node group side-by-side with the existing node group and then draining the old node group gradually. This involves the following steps:
+
+* Create the replacement node group side-by-side with the existing node group. For self-managed node groups, you need to make sure that the two node groups are allowed to communicate with each other. You can achieve this in the following way:
 
 
 {{< chooser language "typescript,python,go,csharp,java" >}}
@@ -243,12 +255,20 @@ var newToOld = new SecurityGroupIngressRule("newToOld", SecurityGroupIngressRule
 
 {{< /chooser >}}
 
-* Find the nodes of the old node group. First take a note of the name of the auto scaling group associated with that node group and then run the following AWS CLI command, replacing `$ASG_GROUP_NAME` with the actual name of the auto scaling group:
+* Find the nodes of the old node group.
 
-```bash
-aws ec2 describe-instances --filter "Name=tag:aws:autoscaling:groupName,Values=$ASG_GROUP_NAME" \
-    | jq -r '.Reservations[].Instances[].PrivateDnsName'
-```
+    For managed node groups, take a note of the node group name and then run the following kubectl command, replacing `$NODE_GROUP_NAME` with the actual name of the node group:
+
+    ```bash
+    kubectl get nodes -l eks.amazonaws.com/nodegroup=$NODE_GROUP_NAME -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'
+    ```
+
+    For self-managed node groups, take a note of the name of the auto scaling group associated with that node group and then run the following AWS CLI command, replacing `$ASG_GROUP_NAME` with the actual name of the auto scaling group:
+
+    ```bash
+    aws ec2 describe-instances --filter "Name=tag:aws:autoscaling:groupName,Values=$ASG_GROUP_NAME" \
+        | jq -r '.Reservations[].Instances[].PrivateDnsName'
+    ```
 
 * Drain each of the nodes of the old node group one by one. This will mark the nodes as unschedulable and gracefully move pods to other nodes. For more information have a look at this article in the [kubernetes documentation](https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/).
 

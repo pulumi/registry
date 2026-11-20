@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """Unit tests for publish_to_registry.py"""
 
+import io
 import json
+import subprocess
 import tempfile
+import urllib.error
 import unittest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
@@ -13,9 +16,14 @@ from publish_to_registry import (
     build_package_spec,
     build_specs,
     get_changed_packages,
+    historical_specs,
     load_publishers,
     main,
+    missing_specs,
     publish_with_retry,
+    published_versions,
+    reconcile,
+    spec_from_package_data,
     validate_all,
 )
 
@@ -451,6 +459,222 @@ class TestPublishSpecsIntegration(unittest.TestCase):
             os.environ.clear()
             os.environ.update(env_backup)
 
+
+class TestSpecFromPackageData(unittest.TestCase):
+    def test_skips_deprecated_publisher_marker(self):
+        result = spec_from_package_data(
+            "themes/default/data/registry/packages/aquasec.yaml",
+            {"version": "v0.8.29", "publisher": "DEPRECATED"},
+            {"Pulumi": "pulumi"},
+        )
+
+        self.assertTrue(result.skipped)
+        self.assertIsNone(result.error)
+
+
+class TestHistoricalSpecs(unittest.TestCase):
+    def setUp(self):
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.repo_root = Path(self.temp_dir.name)
+        self.packages_dir = self.repo_root / "themes/default/data/registry/packages"
+        self.packages_dir.mkdir(parents=True)
+        self._git("init", "-q")
+        self._git("config", "user.email", "test@example.com")
+        self._git("config", "user.name", "test")
+        (self.repo_root / "README").write_text("floor")
+        self._git("add", ".")
+        self._git("commit", "-q", "-m", "floor")
+        self.floor = self._git("rev-parse", "HEAD").strip()
+
+    def tearDown(self):
+        self.temp_dir.cleanup()
+
+    def _git(self, *args):
+        return subprocess.run(["git", *args], cwd=self.repo_root, check=True,
+                              capture_output=True, text=True).stdout
+
+    def _commit_yaml(self, name: str, content: str):
+        (self.packages_dir / f"{name}.yaml").write_text(content)
+        self._git("add", ".")
+        self._git("commit", "-q", "-m", f"{name}")
+
+    def _specs(self, live_paths=None, skipped=frozenset()):
+        if live_paths is None:
+            live_paths = {f"themes/default/data/registry/packages/{p.name}" for p in self.packages_dir.glob("*.yaml")}
+        return historical_specs(self.repo_root, self.floor, {"Pulumi": "pulumi"}, live_paths, set(skipped))
+
+    def test_collects_every_version_since_floor(self):
+        self._commit_yaml("random", "version: v1.0.0\npublisher: Pulumi\n")
+        self._commit_yaml("random", "version: v1.1.0\npublisher: Pulumi\n")
+        self._commit_yaml("random", "version: v1.2.0\npublisher: Pulumi\n")
+
+        specs, errors = self._specs()
+
+        self.assertEqual(specs, {
+            "pulumi/pulumi/random@1.0.0",
+            "pulumi/pulumi/random@1.1.0",
+            "pulumi/pulumi/random@1.2.0",
+        })
+        self.assertEqual(errors, [])
+
+    def test_leaves_out_packages_not_live_at_head(self):
+        self._commit_yaml("random", "version: v1.0.0\npublisher: Pulumi\n")
+        self._commit_yaml("crowdstrike", "version: v0.0.14\npublisher: Pulumi\n")
+        self._commit_yaml("crowdstrike", "version: v0.0.14\npublisher: Pulumi\ndeprecated: true\n")
+
+        specs, errors = self._specs(live_paths={"themes/default/data/registry/packages/random.yaml"})
+
+        self.assertEqual(specs, {"pulumi/pulumi/random@1.0.0"})
+        self.assertEqual(errors, [])
+
+    def test_reports_unbuildable_revisions_unless_skipped(self):
+        self._commit_yaml("broken", "version: [unclosed\n")
+        self._commit_yaml("broken", "version: v1.0.0\npublisher: Pulumi\n")
+        rev = f"{self._git('rev-parse', 'HEAD~1').strip()}:themes/default/data/registry/packages/broken.yaml"
+
+        specs, errors = self._specs()
+        self.assertEqual(specs, {"pulumi/pulumi/broken@1.0.0"})
+        self.assertEqual(len(errors), 1)
+        self.assertTrue(errors[0].startswith(rev))
+
+        _, errors = self._specs(skipped={rev})
+        self.assertEqual(errors, [])
+
+    def test_ignores_revisions_that_delete_the_file(self):
+        self._commit_yaml("gone", "version: v1.0.0\npublisher: Pulumi\n")
+        (self.packages_dir / "gone.yaml").unlink()
+        self._git("commit", "-q", "-am", "delete gone")
+
+        specs, errors = self._specs(live_paths={"themes/default/data/registry/packages/gone.yaml"})
+
+        self.assertEqual(specs, {"pulumi/pulumi/gone@1.0.0"})
+        self.assertEqual(errors, [])
+
+
+def _versions_response(versions, token=None):
+    body = {"packages": [{"version": v} for v in versions]}
+    if token:
+        body["continuationToken"] = token
+    return io.BytesIO(json.dumps(body).encode())
+
+
+class TestPublishedVersions(unittest.TestCase):
+    @patch.dict("os.environ", {"PULUMI_API_URL": "https://api.example.com"})
+    @patch("publish_to_registry.urllib.request.urlopen")
+    def test_follows_continuation_token(self, mock_urlopen):
+        mock_urlopen.side_effect = [
+            _versions_response(["1.2.0", "1.1.0"], token="next"),
+            _versions_response(["1.0.0"]),
+        ]
+
+        versions = published_versions("pulumi/pulumi/random")
+
+        self.assertEqual(versions, {"1.0.0", "1.1.0", "1.2.0"})
+        second_url = mock_urlopen.call_args_list[1][0][0].full_url
+        self.assertIn("continuationToken=next", second_url)
+
+    @patch.dict("os.environ", {"PULUMI_API_URL": "https://api.example.com"})
+    @patch("publish_to_registry.urllib.request.urlopen")
+    def test_unknown_package_has_no_versions(self, mock_urlopen):
+        mock_urlopen.side_effect = urllib.error.HTTPError("url", 404, "Not Found", {}, None)
+
+        self.assertEqual(published_versions("pulumi/pulumi/new"), set())
+
+    @patch.dict("os.environ", {"PULUMI_API_URL": "https://api.example.com"})
+    @patch("publish_to_registry.urllib.request.urlopen")
+    def test_raises_on_server_error(self, mock_urlopen):
+        mock_urlopen.side_effect = urllib.error.HTTPError("url", 500, "Error", {}, None)
+
+        with self.assertRaises(urllib.error.HTTPError):
+            published_versions("pulumi/pulumi/random")
+
+
+class TestMissingSpecs(unittest.TestCase):
+    @patch("publish_to_registry.published_versions")
+    def test_returns_versions_the_registry_lacks(self, mock_published):
+        mock_published.side_effect = lambda package: {
+            "pulumi/pulumi/random": {"1.0.0", "1.2.0"},
+            "pulumi/pulumi/new": set(),
+        }[package]
+
+        missing = missing_specs({
+            "pulumi/pulumi/random@1.0.0",
+            "pulumi/pulumi/random@1.1.0",
+            "pulumi/pulumi/random@1.2.0",
+            "pulumi/pulumi/new@0.1.0",
+        })
+
+        self.assertEqual(missing, ["pulumi/pulumi/new@0.1.0", "pulumi/pulumi/random@1.1.0"])
+        self.assertEqual(mock_published.call_count, 2)
+
+
+@patch("publish_to_registry.load_publishers", return_value={})
+@patch("publish_to_registry.all_package_yamls", return_value=["random.yaml"])
+@patch("publish_to_registry.build_package_spec", return_value=SpecResult("pulumi/pulumi/random@1.2.0"))
+@patch("publish_to_registry.load_skip_list", return_value={"pulumi/pulumi/old@0.1.0": "deleted on purpose"})
+class TestReconcile(unittest.TestCase):
+    def setUp(self):
+        self.config = Config(repo_root=Path("/repo"))
+
+    def _reconcile(self, history_errors=()):
+        history = ({"pulumi/pulumi/random@1.1.0", "pulumi/pulumi/old@0.1.0"}, list(history_errors))
+        with patch("publish_to_registry.historical_specs", return_value=history) as mock_history:
+            code = reconcile(self.config, "floor")
+        self.assertEqual(mock_history.call_args[0][3], {"random.yaml"})
+        return code
+
+    @patch("publish_to_registry.publish_with_retry", return_value=True)
+    @patch("publish_to_registry.missing_specs")
+    def test_publishes_missing_and_rechecks(self, mock_missing, mock_publish, *_):
+        mock_missing.side_effect = [["pulumi/pulumi/random@1.1.0"], []]
+
+        self.assertEqual(self._reconcile(), 0)
+
+        self.assertEqual(mock_missing.call_args_list[0][0][0],
+                         {"pulumi/pulumi/random@1.1.0", "pulumi/pulumi/random@1.2.0"})
+        mock_publish.assert_called_once_with(["pulumi/pulumi/random@1.1.0"], self.config)
+
+    @patch("publish_to_registry.publish_with_retry", return_value=True)
+    @patch("publish_to_registry.missing_specs")
+    def test_fails_when_versions_stay_missing(self, mock_missing, mock_publish, *_):
+        mock_missing.side_effect = [["pulumi/pulumi/random@1.1.0"], ["pulumi/pulumi/random@1.1.0"]]
+
+        self.assertEqual(self._reconcile(), 1)
+
+    @patch("publish_to_registry.publish_with_retry", return_value=False)
+    @patch("publish_to_registry.missing_specs", return_value=["pulumi/pulumi/random@1.1.0"])
+    def test_fails_when_publish_fails(self, mock_missing, mock_publish, *_):
+        self.assertEqual(self._reconcile(), 1)
+
+        mock_missing.assert_called_once()
+
+    @patch("publish_to_registry.publish_with_retry", return_value=False)
+    @patch("publish_to_registry.missing_specs", return_value=["pulumi/pulumi/random@1.1.0"])
+    def test_dry_run_fails_when_publish_fails(self, mock_missing, mock_publish, *_):
+        self.config.dry_run = True
+
+        self.assertEqual(self._reconcile(), 1)
+
+    @patch("publish_to_registry.publish_with_retry", return_value=True)
+    @patch("publish_to_registry.missing_specs", return_value=["pulumi/pulumi/random@1.1.0"])
+    def test_dry_run_does_not_recheck(self, mock_missing, mock_publish, *_):
+        self.config.dry_run = True
+
+        self.assertEqual(self._reconcile(), 0)
+
+        mock_missing.assert_called_once()
+
+    @patch("publish_to_registry.publish_with_retry")
+    @patch("publish_to_registry.missing_specs", return_value=[])
+    def test_nothing_missing_publishes_nothing(self, mock_missing, mock_publish, *_):
+        self.assertEqual(self._reconcile(), 0)
+
+        mock_publish.assert_not_called()
+
+    @patch("publish_to_registry.publish_with_retry")
+    @patch("publish_to_registry.missing_specs", return_value=[])
+    def test_fails_when_history_has_unbuildable_revisions(self, mock_missing, mock_publish, *_):
+        self.assertEqual(self._reconcile(history_errors=["abc:broken.yaml: bad"]), 1)
 
 class TestEveryPackageResolves(unittest.TestCase):
     """Every committed package must build a spec, or the publish job fails after merge."""

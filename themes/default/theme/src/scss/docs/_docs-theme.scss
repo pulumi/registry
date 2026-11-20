@@ -422,6 +422,25 @@ html[data-theme="dark"] body.section-registry {
         .toggleButton-topLevel {
             color: var(--docs-fg-muted);
         }
+
+        // The chevron icons are near-black SVGs painted as backgrounds, which
+        // `color` can't reach, so draw them as masks filled with the muted text color.
+        .toggleButton div.keyboard-arrow-right-gray,
+        .toggleButton div.keyboard-arrow-down-gray-14-14 {
+            background: var(--docs-fg-muted);
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+        }
+
+        .toggleButton div.keyboard-arrow-right-gray {
+            -webkit-mask-image: url(/images/docs/icons/keyboard-arrow-right-gray.svg);
+            mask-image: url(/images/docs/icons/keyboard-arrow-right-gray.svg);
+        }
+
+        .toggleButton div.keyboard-arrow-down-gray-14-14 {
+            -webkit-mask-image: url(/images/docs/icons/keyboard-arrow-down-gray-14-14.svg);
+            mask-image: url(/images/docs/icons/keyboard-arrow-down-gray-14-14.svg);
+        }
     }
 }
 

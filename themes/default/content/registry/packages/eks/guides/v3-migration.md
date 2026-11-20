@@ -43,6 +43,12 @@ You can either upgrade the OS right away, or intentionally configure AL2 as the 
 
 Have a look at [Gracefully upgrading node groups](#gracefully-upgrading-node-groups) for more information around the upgrade procedure.
 
+### Default instance type updated to `t3.medium`
+
+Node groups that don't set `instanceType`, including the cluster's default node group, now use `t3.medium` instead of `t2.medium`.
+AWS is phasing out `t2.medium`, which can cause capacity problems when scaling, and `t3.medium` costs slightly less.
+To keep `t2.medium`, set `instanceType` explicitly.
+
 ### Gracefully upgrading node groups
 
 The `ManagedNodeGroup` component gracefully handles updates by default. EKS will:

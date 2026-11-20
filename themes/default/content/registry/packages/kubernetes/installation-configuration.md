@@ -255,9 +255,9 @@ When set to `"true"`, Server-Side Apply overrides field conflicts for this resou
 
 The field manager name Pulumi uses for Server-Side Apply operations on this resource.
 
-### Annotations Pulumi sets
+### Labels and annotations Pulumi sets
 
-The provider writes these annotations to resources it manages:
+The provider writes this metadata to resources it manages:
 
-- `pulumi.com/autonamed` — Pulumi generated the resource's name, because `metadata.name` wasn't set.
-- `app.kubernetes.io/managed-by` — Pulumi manages the resource. Not set when Server-Side Apply is enabled.
+- `pulumi.com/autonamed` (annotation) — Pulumi generated the resource's name, because `metadata.name` wasn't set.
+- `app.kubernetes.io/managed-by` (label) — Pulumi manages the resource. Not set when Server-Side Apply is enabled.

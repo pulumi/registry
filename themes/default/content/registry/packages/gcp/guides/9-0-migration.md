@@ -19,7 +19,7 @@ See the [Version 8 Upgrade Guide](/registry/packages/gcp/guides/8-0-migration/) 
 GCP provider v9.0 includes several breaking changes to a few resources and invokes. Here are the details:
 
 - Resource `gcp.alloydb.Cluster`:
-    - The field `deletionProtection` has been added with a default value of `true`. This field destroying or recreating the cluster during `pulumi up`. In 9.0.0, existing clusters will have `deletionProtection` set to true during the next refresh unless otherwise set in the program configuration.
+    - The field `deletionProtection` has been added with a default value of `true`. This field prevents Pulumi from destroying or recreating the cluster during `pulumi up`. In 9.0.0, existing clusters will have `deletionProtection` set to true during the next refresh unless otherwise set in the program configuration.
 
 - Resource `gcp.apigee.KeystoresAliasesKeyCertFile`:
     - The field `certsInfo` is no longer an input and instead is only available as an output property.

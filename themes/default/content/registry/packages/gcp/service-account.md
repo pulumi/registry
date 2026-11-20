@@ -6,13 +6,14 @@ layout: package
 ---
 
 [Google Cloud Platform Credentials]: https://console.cloud.google.com/apis/credentials
+[Google service account private key in JSON format]: https://cloud.google.com/iam/docs/keys-create-delete
 
 Using a Google service account allows you to use Pulumi in a non-interactive setting (for example CI/CD systems, where a person can not complete the normal `gcloud auth application-default login` flow). A service account can also be used when developing locally to ensure a specific set of scoped credentials not tied to a user account are used. This can be useful even when developing locally to give you more control over the account role used for deployment.
 
 To use a service account with Pulumi you will need to provide the Google Cloud Platform Provider with a [Google service account private key in JSON format].
 You can create and download credentials using the [Google Cloud Platform Credentials] page on the Google Cloud Platform Console.
 
-> Your credentials are only used to authenticate with Google Cloud APIs on your behalf. Your credentials are never sent to pulumi.com.
+> Your credentials are only used to authenticate with Google Cloud APIs on your behalf. If you store them in stack configuration, set them as a secret so they're encrypted in your stack's config file and state.
 
 ## Using your credentials
 
@@ -45,21 +46,21 @@ export GOOGLE_APPLICATION_CREDENTIALS=<path-to-credentials.json>
 Windows Powershell
 
 ```powershell
-$env:GOOGLE_APPLICATION_CREDENTIALS=<path-tocredentials.json>
+$env:GOOGLE_APPLICATION_CREDENTIALS=<path-to-credentials.json>
 ```
 
 {{% /choosable %}}
 {{< /chooser >}}
 
-### Set the credentials in your Pulumi.yaml
+### Set the credentials in your stack configuration
 
-You may also set your credentials in your Pulumi.yaml config file:
+You may also set your credentials in your stack's `Pulumi.<stack-name>.yaml` config file. Use `--secret` so the value is encrypted:
 
 {{< chooser os "linux,macos,windows" >}}
 {{% choosable os linux %}}
 
 ```bash
-pulumi config set gcp:credentials <your-credentials> # contents or filepath
+pulumi config set gcp:credentials --secret <your-credentials> # contents or filepath
 ```
 
 {{% /choosable %}}
@@ -67,7 +68,7 @@ pulumi config set gcp:credentials <your-credentials> # contents or filepath
 {{% choosable os macos %}}
 
 ```bash
-pulumi config set gcp:credentials <your-credentials> # contents or filepath
+pulumi config set gcp:credentials --secret <your-credentials> # contents or filepath
 ```
 
 {{% /choosable %}}
@@ -77,7 +78,7 @@ pulumi config set gcp:credentials <your-credentials> # contents or filepath
 Windows Powershell
 
 ```powershell
-pulumi config set gcp:credentials <your-credentials> # contents or filepath
+pulumi config set gcp:credentials --secret <your-credentials> # contents or filepath
 ```
 
 {{% /choosable %}}

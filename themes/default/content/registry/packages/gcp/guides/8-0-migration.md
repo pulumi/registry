@@ -9,7 +9,7 @@ aliases:
 ---
 
 ## Upstream Changes
-The v8 release of the pulumi-gcp provider is targeting upstream [v6.0.1](https://github.com/hashicorp/terraform-provider-google/releases/tag/v6.1.0). 
+The v8 release of the pulumi-gcp provider is targeting upstream [v6.0.1](https://github.com/hashicorp/terraform-provider-google/releases/tag/v6.0.1). 
 Please refer to the [upstream migration guide](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/version_6_upgrade) as well as the [v.6.0.0 CHANGELOG](https://github.com/hashicorp/terraform-provider-google/releases/tag/v6.0.0).
 
 Of note: Multiple resources now have a new field `deletionProtection` which is set to true by default and will prevent these resources from getting deleted with `pulumi destroy`. When upgrading, it is recommended you add this field and set it to the desired behavior.

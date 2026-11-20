@@ -10,7 +10,7 @@ aliases:
 
 ## Upstream Changes
 
-The upstream target has been changed from [v4.84.0](https://github.com/pulumi/pulumi-gcp/pull/1220) to targeting [v5.0.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v5.0.0). That means that the upstream [migration guide](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/version_5_upgrade) as well as the [v.5.0.0](https://github.com/hashicorp/terraform-provider-google/releases/tag/v5.0.0) `CHANGELOG`s are relevant.
+The upstream target has been changed from [v4.84.0](https://github.com/pulumi/pulumi-gcp/pull/1220) to targeting [v5.0.0](https://github.com/hashicorp/terraform-provider-google/releases/tag/v5.0.0). That means that the upstream [migration guide](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/version_5_upgrade) as well as the [v.5.0.0](https://github.com/hashicorp/terraform-provider-google/releases/tag/v5.0.0) `CHANGELOG`s are relevant.
 
 ## Renamed resources and functions
 

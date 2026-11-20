@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-awsx/v3.14.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-awsx/v3.15.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-awsx/blob/v3.14.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-awsx/blob/v3.15.0/docs/_index.md
 title: AWSx (Pulumi AWS Components)
 meta_desc: Well-Architected Infrastructure as Code for AWS. The easiest way to AWS — from development to production.
 layout: package

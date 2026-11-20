@@ -2,7 +2,7 @@
 title: Amazon EKS v3 Migration Guide
 meta_desc: How to upgrade from v2 to v3 of the EKS provider
 layout: package
-weight: 1
+weight: 2
 aliases:
   - /registry/packages/eks/how-to-guides/v3-migration/
 ---

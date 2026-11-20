@@ -10,7 +10,7 @@ aliases:
 
 ## About
 
-The Pulumi Azure Native Provider v3 is now available. To upgrade to v3 and take advantage of the smaller SDKs and other improvements, there are a few changes you may need to make depending on your Pulumi programs.
+This guide covers upgrading from v2 to v3 of the Pulumi Azure Native Provider. To upgrade to v3 and take advantage of the smaller SDKs and other improvements, there are a few changes you may need to make depending on your Pulumi programs.
 
 ## Upgrade Steps
 
@@ -26,7 +26,7 @@ In your Pulumi program, upgrade the package to point to the latest v3.x version.
 
 * JavaScript/TypeScript: [`@pulumi/azure-native`](https://www.npmjs.com/package/@pulumi/azure-native/v/3.0.0)
 * Python: [`pulumi-azure-native`](https://pypi.org/project/pulumi-azure-native/3.0.0/)
-* Go: [`github.com/pulumi/pulumi-azure-native/sdk/go/azure`](https://github.com/pulumi/pulumi-azure-native/releases/tag/v3.0.0)
+* Go: [`github.com/pulumi/pulumi-azure-native-sdk`](https://github.com/pulumi/pulumi-azure-native-sdk), one module per Azure service, such as `github.com/pulumi/pulumi-azure-native-sdk/storage/v3`
 * .NET: [`Pulumi.AzureNative`](https://www.nuget.org/packages/Pulumi.AzureNative/3.0.0)
 * Java: [`com.pulumi.azurenative`](https://central.sonatype.com/artifact/com.pulumi/azure-native/3.0.0)
 
@@ -63,7 +63,7 @@ In your Pulumi program, upgrade the package to point to the latest v3.x version.
 In go.mod:
 ```go
 - github.com/pulumi/pulumi-azure-native-sdk/storage v2.89.3
-+ github.com/pulumi/pulumi-azure-native-sdk/v3/storage v3.0.0
++ github.com/pulumi/pulumi-azure-native-sdk/storage/v3 v3.0.0
 ```
 
 Go programs will also need all imports updated to include `v3` in the path.
@@ -172,64 +172,77 @@ All affected resources are listed below:
 - `azure-native:security:DefenderForStorage`
 - `azure-native:vmwarecloudsimple:DedicatedCloudNode`
 
-#### MySQL and PostgreSQL Server and Flexible Server
+#### MySQL and PostgreSQL Single Server and Azure Cosmos DB for PostgreSQL
 
-Tracked by [#2753](https://github.com/pulumi/pulumi-azure-native/issues/2753), this change cleanly separates the different PostgreSQL offerings from Azure: Flexible Servers, Server Groups V2, and the deprecated Single Server offering.
+Tracked by [#2753](https://github.com/pulumi/pulumi-azure-native/issues/2753). The `dbformysql` and `dbforpostgresql` modules cover more than one Azure offering, and some resources from different offerings share a name in the Azure API, so in v2 some of them were missing from the default modules. In v3, they have distinct names:
+
+- Single Server resources (API version `2017-12-01`) are in the default modules with a `SingleServer` prefix, such as `SingleServer`, `SingleServerDatabase`, and `SingleServerFirewallRule`. In v2, these were only available from explicit API-version modules such as `dbformysql/v20171201`, which v3 doesn't include.
+- Azure Cosmos DB for PostgreSQL resources in `dbforpostgresql` have a `ServerGroup` prefix: `Cluster` is now `ServerGroupCluster`, and `Role` is now `ServerGroupRole`. `ServerGroupFirewallRule` and `ServerGroupPrivateEndpointConnection` are new.
+
+Resources without a prefix, such as `Server` and `FirewallRule`, refer to Flexible Server, as they did in v2. The renamed resources have aliases for their v2 types, so updating your program doesn't replace them.
 
 {{< chooser language "typescript,python,csharp,go,yaml" >}}
 
 {{% choosable language typescript %}}
 
 ```typescript
-- import * as mysqldb from "@pulumi/azure-native/dbformysql"
-+ import * as mysqldb from "@pulumi/azure-native/dbformysql/v20171201"
+- import * as mysqldb from "@pulumi/azure-native/dbformysql/v20171201";
+- const server = new mysqldb.Server("server", { /* ... */ });
++ import * as mysqldb from "@pulumi/azure-native/dbformysql";
++ const server = new mysqldb.SingleServer("server", { /* ... */ });
 
-- import * as postgresqldb from "@pulumi/azure-native/dbforpostgresql"
-+ import * as postgresqldb from "@pulumi/azure-native/dbforpostgresql/v20171201"
+- const cluster = new postgresqldb.Cluster("cluster", { /* ... */ });
++ const cluster = new postgresqldb.ServerGroupCluster("cluster", { /* ... */ });
 ```
 
 {{% /choosable %}}
 {{% choosable language python %}}
 
 ```python
-- from pulumi_azure_native import dbformysql
-+ from pulumi_azure_native.dbformysql import v20171201 as dbformysql
+- from pulumi_azure_native.dbformysql import v20171201 as dbformysql
+- server = dbformysql.Server("server", ...)
++ from pulumi_azure_native import dbformysql
++ server = dbformysql.SingleServer("server", ...)
 
-- from pulumi_azure_native import dbforpostgresql
-+ from pulumi_azure_native.dbforpostgresql import v20171201 as dbforpostgresql
+- cluster = dbforpostgresql.Cluster("cluster", ...)
++ cluster = dbforpostgresql.ServerGroupCluster("cluster", ...)
 ```
 
 {{% /choosable %}}
 {{% choosable language csharp %}}
 
 ```csharp
-- using MySQLDB = Pulumi.AzureNative.DBforMySQL;
-+ using MySQLDB = Pulumi.AzureNative.DBforMySQL.V20171201;
+- using MySQLDB = Pulumi.AzureNative.DBforMySQL.V20171201;
+- var server = new MySQLDB.Server("server", new() { /* ... */ });
++ using MySQLDB = Pulumi.AzureNative.DBforMySQL;
++ var server = new MySQLDB.SingleServer("server", new() { /* ... */ });
 
-- using PostgreSQLDB = Pulumi.AzureNative.DBforPostgreSQL;
-+ using PostgreSQLDB = Pulumi.AzureNative.DBforPostgreSQL.V20171201;
+- var cluster = new PostgreSQLDB.Cluster("cluster", new() { /* ... */ });
++ var cluster = new PostgreSQLDB.ServerGroupCluster("cluster", new() { /* ... */ });
 ```
 
 {{% /choosable %}}
 {{% choosable language go %}}
 
 ```go
-- import mysqldb "github.com/pulumi/pulumi-azure-native-sdk/dbformysql"
-+ import mysqldb "github.com/pulumi/pulumi-azure-native-sdk/dbformysql/v2/v20200601"
+- import mysqldb "github.com/pulumi/pulumi-azure-native-sdk/dbformysql/v2/v20171201"
+- server, err := mysqldb.NewServer(ctx, "server", &mysqldb.ServerArgs{ /* ... */ })
++ import mysqldb "github.com/pulumi/pulumi-azure-native-sdk/dbformysql/v3"
++ server, err := mysqldb.NewSingleServer(ctx, "server", &mysqldb.SingleServerArgs{ /* ... */ })
 
-- import postgresqldb "github.com/pulumi/pulumi-azure-native-sdk/dbforpostgresql"
-+ import postgresqldb "github.com/pulumi/pulumi-azure-native-sdk/dbforpostgresql/v2/20171201"
+- cluster, err := postgresqldb.NewCluster(ctx, "cluster", &postgresqldb.ClusterArgs{ /* ... */ })
++ cluster, err := postgresqldb.NewServerGroupCluster(ctx, "cluster", &postgresqldb.ServerGroupClusterArgs{ /* ... */ })
 ```
 
 {{% /choosable %}}
 {{% choosable language yaml %}}
 
 ```yaml
-- type: azure-native:dbformysql:Server
-+ type: azure-native:dbformysql/v20171201:Server
+- type: azure-native:dbformysql/v20171201:Server
++ type: azure-native:dbformysql:SingleServer
 
-- type: azure-native:dbforpostgresql:Server
-+ type: azure-native:dbforpostgresql/v20171201:Server
+- type: azure-native:dbforpostgresql:Cluster
++ type: azure-native:dbforpostgresql:ServerGroupCluster
 ```
 
 {{% /choosable %}}

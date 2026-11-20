@@ -22,7 +22,7 @@ Because of this difference, the SDKs of the two providers are not compatible wit
 
 Configurations of the native Azure provider and the classic Azure provider are similar. However, for the new provider, each setting has to start with `azure-native` instead of `azure`. For instance, the active subscription is configured with `azure-native:subscriptionId` instead of `azure:subscriptionId`.
 
-You can find all the configuration settings in the Configuration section of Azure-Native.
+You can find all the configuration settings in the [Configuration options](/registry/packages/azure-native/installation-configuration/#configuration-options) section of the Azure Native installation and configuration guide.
 
 ## Use the native Azure provider for new projects
 
@@ -94,7 +94,7 @@ Let's run through the steps to migrate our first resource: the resource group.
 1. Identify the type of the new resource in the native provider. In our case, it’s going to be a ResourceGroup resource in the resources module. Note that both names can be different from the names in the Azure provider. We can find the new resource in the [API Reference docs](https://www.pulumi.com/registry/packages/azure-native/api-docs/resources/resourcegroup/).
 
 2. Scroll down the API Reference doc to the Import section and copy the import command:
-`pulumi import azure-native:resources/latest:ResourceGroup my-resource-group /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group`
+`pulumi import azure-native:resources:ResourceGroup my-resource-group /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group`
 
 3. Run the command `pulumi stack export` and open the resulting JSON in a text editor. Find the entry with type `azure:core/resourceGroup:ResourceGroup` and note its `id` and `urn` property values. The `id` should look like this:
 `/subscriptions/01234567-89ab-cdef-0123-456789abcdef/resourceGroups/my-rgca05c9f8`
@@ -102,7 +102,7 @@ and the `urn` should be like
 `urn:pulumi:dev::ts::azure:core/resourceGroup:ResourceGroup::my-rg`
 
 4. Use this ID and your desired logical resource name to compose the import command. For the example above, it will be
-`pulumi import azure-native:resources/latest:ResourceGroup my-rg /subscriptions/01234567-89ab-cdef-0123-456789abcdef/resourceGroups/my-rgca05c9f8`
+`pulumi import azure-native:resources:ResourceGroup my-rg /subscriptions/01234567-89ab-cdef-0123-456789abcdef/resourceGroups/my-rgca05c9f8`
 
 5. Run the command to start managing the existing resource group with the native Azure provider and confirm the import operation. The following output should be printed:
 
@@ -197,7 +197,7 @@ Locate the resource in the [API docs](https://www.pulumi.com/registry/packages/a
 Compose and run the import command:
 
 ```
-pulumi import azure-native:storage/latest:StorageAccount storage /subscriptions/01234567-89ab-cdef-0123-456789abcdef/resourceGroups/my-rgca05c9f8/providers/Microsoft.Storage/storageAccounts/storagea791686
+pulumi import azure-native:storage:StorageAccount storage /subscriptions/01234567-89ab-cdef-0123-456789abcdef/resourceGroups/my-rgca05c9f8/providers/Microsoft.Storage/storageAccounts/storagea791686
 ```
 
 and paste the code to your program.

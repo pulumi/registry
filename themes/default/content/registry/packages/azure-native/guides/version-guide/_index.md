@@ -140,8 +140,8 @@ Note: there is no change in the Pulumi program. `pulumi package add` sets up a `
 package main
 
 import (
-	"github.com/pulumi/pulumi-azure-native-sdk/resources/v2"
-	"github.com/pulumi/pulumi-azure-native-sdk/storage/v2"
+	"github.com/pulumi/pulumi-azure-native-sdk/resources/v3"
+	"github.com/pulumi/pulumi-azure-native-sdk/storage/v3"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -401,8 +401,8 @@ return await Deployment.RunAsync(() =>
 package main
 
 import (
-	resources "github.com/pulumi/pulumi-azure-native-sdk/resources/v2"
-	storage "github.com/pulumi/pulumi-azure-native-sdk/storage/v2"
+	resources "github.com/pulumi/pulumi-azure-native-sdk/resources/v3"
+	storage "github.com/pulumi/pulumi-azure-native-sdk/storage/v3"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

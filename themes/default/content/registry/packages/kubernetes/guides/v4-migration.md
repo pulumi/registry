@@ -58,7 +58,7 @@ Examples:
 {{< /chooser >}}
 
 ### Drop support for Kubernetes clusters older than v1.13
-pulumi-kubernetes maintains backwards compatibility with a broad range of Kubernetes versions, including those past End of Life (EOL). This update drops support for clusters older than v1.13, which was released in December 2018, and has been EOL since October 2019. Server-side Apply (SSA), which is now the default for pulumi-kubernetes, needs a newer cluster than that: it was introduced as an alpha feature in v1.14 and became generally available in v1.22.
+pulumi-kubernetes maintains backwards compatibility with a broad range of Kubernetes versions, including those past End of Life (EOL). This update drops support for clusters older than v1.13, which was released in December 2018, and has been EOL since October 2019. Server-side Apply (SSA), which is now the default for pulumi-kubernetes, needs a newer cluster than that: it was introduced as alpha in v1.14, enabled by default in v1.16, and generally available in v1.22. On clusters without SSA, set the `enableServerSideApply` provider configuration to `"false"` to use Client-side Apply instead (see [Server-side Apply by default](#server-side-apply-by-default)).
 
 ### Remove deprecated helm/v2 SDKs
 The helm/v2 SDK was deprecated in v3.19.2 (May 2022), and is now removed. The helm/v3 SDK provides equivalent support, but uses the helm client library rather than shelling out to the helm CLI, which required the user to manage that dependency separately, and led to a variety of compatibility bugs. The v2:Chart and v3:Chart resources are aliased, so users can change any v2.Chart resources to v3.Chart in their Pulumi code without a disruptive change on the next update.

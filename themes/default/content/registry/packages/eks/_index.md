@@ -48,7 +48,7 @@ pulumi.export("kubeconfig", cluster.kubeconfig)
 package main
 
 import (
-	"github.com/pulumi/pulumi-eks/sdk/go/eks"
+	"github.com/pulumi/pulumi-eks/sdk/v4/go/eks"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

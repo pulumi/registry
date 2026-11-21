@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/spectrocloud/spectrocloud/0.30.6/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/spectrocloud/spectrocloud/0.30.7/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Spectrocloud Provider
@@ -325,5 +325,7 @@ Without the flag, `spectrocloud.ClusterProfile` uses its legacy in-place mutatio
 - `host` (String) The Spectro Cloud API host url. Can also be set with the `SPECTROCLOUD_HOST` environment variable. Defaults to <https://api.spectrocloud.com>
 - `ignoreInsecureTlsError` (Boolean) Ignore insecure TLS errors for Spectro Cloud API endpoints. ⚠️ WARNING: Setting this to true disables SSL certificate verification and makes connections vulnerable to man-in-the-middle attacks. Only use this in development/testing environments or when connecting to self-signed certificates in trusted networks. Defaults to false.
 - `projectName` (String) The Palette project the provider will target. If no value is provided, the `Default` Palette project is used. The default value is `Default`.
+- `requestTimeout` (Number) Maximum time, in seconds, for a single Palette API call, from sending the request to reading the whole response. It applies to every call the provider makes, including the status checks while it waits for a cluster to become ready. A timed-out read is retried up to `retryAttempts` times with exponential backoff, so with the default of 10 retries a call that keeps timing out can take tens of minutes to fail; a timed-out write is not retried, because it may already have been applied. Set to `-1` to remove the limit. Can also be set with the `SPECTROCLOUD_REQUEST_TIMEOUT` environment variable. Defaults to 300.
+- `responseIdleTimeout` (Number) Time, in seconds, that a Palette API response may go without sending any data before the call is cancelled. The timer starts once the response begins and restarts whenever data arrives, so a large response that keeps arriving is not cut off. Cancelled reads are retried as described for `requestTimeout`. Set to `-1` to disable. Can also be set with the `SPECTROCLOUD_RESPONSE_IDLE_TIMEOUT` environment variable. Defaults to 60.
 - `retryAttempts` (Number) Number of retry attempts. Can also be set with the `SPECTROCLOUD_RETRY_ATTEMPTS` environment variable. Defaults to 10.
 - `trace` (Boolean) Enable HTTP request tracing. Can also be set with the `SPECTROCLOUD_TRACE` environment variable. To enable Pulumi debug logging, set `TF_LOG=DEBUG`. Visit the Pulumi documentation to learn more about Pulumi debugging.

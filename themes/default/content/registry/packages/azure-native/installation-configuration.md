@@ -402,6 +402,7 @@ All configuration parameters are optional.
 | `clientCertificatePath` | The path to a certificate to use as client secret for Service Principal authentication. It can also be sourced from the `ARM_CLIENT_CERTIFICATE_PATH` environment variable. |
 | `clientId` | The client ID to use for OIDC, Service Principal, or user-assigned identity authentication. It can also be sourced from the `ARM_CLIENT_ID` environment variable. |
 | `clientSecret` | The client secret to use for Service Principal authentication. It can also be sourced from the `ARM_CLIENT_SECRET` environment variable. |
+| `disableInstanceDiscovery` | Set to true to skip instance discovery and authority validation during authentication. Use this when the metadata endpoint can't be reached, such as in private clouds or Azure Stack. It can also be sourced from the `ARM_DISABLE_INSTANCE_DISCOVERY` environment variable. |
 | `disablePulumiPartnerId` | This will disable the Pulumi Partner ID which is used if a custom `partnerId` isn't specified. It can also be sourced from the `ARM_DISABLE_PULUMI_PARTNER_ID` environment variable. |
 | `environment` | The cloud environment to use. It can also be sourced from the ARM_ENVIRONMENT environment variable. Supported values are (case-insensitive): `public` or `AzureCloud` (default), `usgovernment` or `AzureUSGovernment`, `china` or `AzureChinaCloud`. |
 | `location` | The location to use. ResourceGroups will consult this property for a default location, if one was not supplied explicitly when defining the resource. |

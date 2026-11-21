@@ -12,7 +12,7 @@ There are some breaking changes which are detailed in this document.
 
 ## VPC CNI Component changes
 
-The VPC CNI cluster component is now configured as an EKS addon as mentioned in the “New Features” section above. This brings the following changes:
+The VPC CNI cluster component is now configured as an EKS addon. This brings the following changes:
 
 - Removed `enableIpv6` input property. The component automatically configures the IP version now, depending on whether the cluster is running in IPv4 or IPv6 mode.
 - Removed `image`, `initImage`, `nodeAgentImage` input properties. The component now automatically selects an image registry in the cluster’s region to pull the images from.
@@ -42,6 +42,12 @@ To align the provider with EKS best practices we’ve updated the default operat
 You can either upgrade the OS right away, or intentionally configure AL2 as the desired operating system by using the `operatingSystem` parameter that’s available on all node groups.
 
 Have a look at [Gracefully upgrading node groups](#gracefully-upgrading-node-groups) for more information around the upgrade procedure.
+
+### Default instance type updated to `t3.medium`
+
+Node groups that don't set `instanceType`, including the cluster's default node group, now use `t3.medium` instead of `t2.medium`.
+AWS is phasing out `t2.medium`, which can cause capacity problems when scaling, and `t3.medium` costs slightly less.
+To keep `t2.medium`, set `instanceType` explicitly.
 
 ### Gracefully upgrading node groups
 

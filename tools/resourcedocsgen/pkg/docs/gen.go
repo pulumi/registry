@@ -1135,70 +1135,71 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 
 	var typs []docNestedType
 	for _, token := range sortedTokens {
-		for iter := mod.pkg.Types().Range(); iter.Next(); {
-			t, err := iter.Type()
-			contract.AssertNoErrorf(err, "error iterating types")
-			switch typ := t.(type) {
-			case *schema.ObjectType:
-				if typ.Token != token || len(typ.Properties) == 0 || typ.IsInputShape() {
-					continue
-				}
-
-				selfRef := schema.DocRefForType(typ)
-				// Create a map to hold the per-language properties of this object.
-				props := make(map[language.Language][]property)
-				for lang := range language.All() {
-					props[lang] = mod.getProperties(selfRef, typ.Properties, lang, true, true, isProvider)
-				}
-
-				//nolint:staticcheck
-				name := strings.Title(tokenToName(typ.Token))
-				typs = append(typs, docNestedType{
-					Name:        wbr(name),
-					AnchorID:    strings.ToLower(name),
-					Description: dctx.resolveRefs(selfRef, SanitizeDescription(typ.Comment)),
-					Input:       tokens[token].Input,
-					Properties:  props,
-				})
-			case *schema.EnumType:
-				if typ.Token != token || len(typ.Elements) == 0 {
-					continue
-				}
-				//nolint:staticcheck
-				name := strings.Title(tokenToName(typ.Token))
-				selfRef := schema.DocRefForType(typ)
-
-				enums := make(map[language.Language][]enum)
-				for lang := range language.All() {
-					docLangHelper := dctx.getLanguageDocHelper(lang)
-
-					var langEnumValues []enum
-					for _, e := range typ.Elements {
-						enumName, err := docLangHelper.GetEnumName(e, name)
-						if err != nil {
-							panic(err)
-						}
-						enumID := strings.ToLower(name + propertyLangSeparator + lang.String())
-						comment := dctx.resolveRefsForLanguage(selfRef, SanitizeDescription(e.Comment), lang)
-						langEnumValues = append(langEnumValues, enum{
-							ID:                 enumID,
-							DisplayName:        wbr(enumName),
-							Name:               enumName,
-							Value:              fmt.Sprintf("%v", e.Value),
-							Comment:            strings.TrimSpace(comment),
-							DeprecationMessage: strings.TrimSpace(SanitizeDescription(e.DeprecationMessage)),
-						})
-					}
-					enums[lang] = langEnumValues
-				}
-
-				typs = append(typs, docNestedType{
-					Name:        wbr(name),
-					AnchorID:    strings.ToLower(name),
-					Description: dctx.resolveRefs(selfRef, SanitizeDescription(typ.Comment)),
-					EnumValues:  enums,
-				})
+		t, ok, err := mod.pkg.Types().Get(token)
+		contract.AssertNoErrorf(err, "error looking up type %q", token)
+		if !ok {
+			continue
+		}
+		switch typ := t.(type) {
+		case *schema.ObjectType:
+			if typ.Token != token || len(typ.Properties) == 0 || typ.IsInputShape() {
+				continue
 			}
+
+			selfRef := schema.DocRefForType(typ)
+			// Create a map to hold the per-language properties of this object.
+			props := make(map[language.Language][]property)
+			for lang := range language.All() {
+				props[lang] = mod.getProperties(selfRef, typ.Properties, lang, true, true, isProvider)
+			}
+
+			//nolint:staticcheck
+			name := strings.Title(tokenToName(typ.Token))
+			typs = append(typs, docNestedType{
+				Name:        wbr(name),
+				AnchorID:    strings.ToLower(name),
+				Description: dctx.resolveRefs(selfRef, SanitizeDescription(typ.Comment)),
+				Input:       tokens[token].Input,
+				Properties:  props,
+			})
+		case *schema.EnumType:
+			if typ.Token != token || len(typ.Elements) == 0 {
+				continue
+			}
+			//nolint:staticcheck
+			name := strings.Title(tokenToName(typ.Token))
+			selfRef := schema.DocRefForType(typ)
+
+			enums := make(map[language.Language][]enum)
+			for lang := range language.All() {
+				docLangHelper := dctx.getLanguageDocHelper(lang)
+
+				var langEnumValues []enum
+				for _, e := range typ.Elements {
+					enumName, err := docLangHelper.GetEnumName(e, name)
+					if err != nil {
+						panic(err)
+					}
+					enumID := strings.ToLower(name + propertyLangSeparator + lang.String())
+					comment := dctx.resolveRefsForLanguage(selfRef, SanitizeDescription(e.Comment), lang)
+					langEnumValues = append(langEnumValues, enum{
+						ID:                 enumID,
+						DisplayName:        wbr(enumName),
+						Name:               enumName,
+						Value:              fmt.Sprintf("%v", e.Value),
+						Comment:            strings.TrimSpace(comment),
+						DeprecationMessage: strings.TrimSpace(SanitizeDescription(e.DeprecationMessage)),
+					})
+				}
+				enums[lang] = langEnumValues
+			}
+
+			typs = append(typs, docNestedType{
+				Name:        wbr(name),
+				AnchorID:    strings.ToLower(name),
+				Description: dctx.resolveRefs(selfRef, SanitizeDescription(typ.Comment)),
+				EnumValues:  enums,
+			})
 		}
 	}
 

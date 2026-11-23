@@ -9,7 +9,7 @@ name: hcl
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-hcl
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-hcl/317fe48ef1180bb28a0ddbaa79b3080a1ee56447/registry/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-hcl/70dfbb1925e351622c2827a4260c0b350a8f1496/registry/schema.json
 title: Any HCL Module
-updated_on: 1794974858
-version: 0.20.1
+updated_on: 1795427010
+version: 0.20.3

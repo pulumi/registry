@@ -132,6 +132,8 @@ How BLC matches a keyword: if the URL contains it as a literal substring, it's e
 
 ## Output
 
+Whatever happens below, PR or no PR, first write `.broken-links-report.md` at the repo root. The workflow publishes it as the run's summary page, and every Slack post links to that page, so it is the only place a reader can see the per-link detail when no PR is opened. Use the same sections as the PR description (see "PR description contract" below): the links you fixed, if any, then **Upstream-owned pages**, **False positives / not actioned**, **Needs a human**, and **Already tracked**, each listing every link with its source page and one line of reasoning. Don't collapse it in `<details>`: the summary page is the report. Start it with a `# Broken links: <date>` heading and the one-line summary you write to `.broken-links-pr.txt`.
+
 If every confirmed-broken link is a duplicate (see deduplication above), skip all of the below: open no branch or PR, write the "all already tracked" Slack summary to `.broken-links-pr.txt`, and stop.
 
 If nothing is fixable in this repo (every confirmed-broken link is upstream-owned or needs a human), open no PR either. Write a summary to `.broken-links-pr.txt` that counts the upstream-owned links, grouped first-party and third-party with the package names, lists anything that needs a human, and gives the false-positive count, so the Slack post still says what happened.

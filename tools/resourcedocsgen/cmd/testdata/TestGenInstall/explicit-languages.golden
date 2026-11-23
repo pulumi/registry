@@ -3,15 +3,51 @@
 {{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 
+npm:
+
 ```bash
 npm install @pulumi/vault
+```
+
+Yarn:
+
+```bash
+yarn add @pulumi/vault
+```
+
+pnpm:
+
+```bash
+pnpm add @pulumi/vault
+```
+
+Bun:
+
+```bash
+bun add @pulumi/vault
 ```
 
 {{% /choosable %}}
 {{% choosable language python %}}
 
+pip:
+
+Add `pulumi-vault` to `requirements.txt`, then run:
+
 ```bash
-pip install pulumi-vault
+pip install -r requirements.txt
+```
+
+uv:
+
+```bash
+uv add pulumi-vault
+```
+
+Poetry:
+
+```bash
+poetry add pulumi-vault
 ```
 
 {{% /choosable %}}

@@ -2,7 +2,7 @@
 title: Migrating aws-auth ConfigMap entries to access entries
 meta_desc: How to update from the deprecated aws-auth ConfigMap to Access Entries
 layout: package
-weight: 2
+weight: 3
 aliases:
   - /registry/packages/eks/how-to-guides/access-entries-migration/
 ---

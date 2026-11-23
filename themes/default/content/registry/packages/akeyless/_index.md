@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/akeyless-community/akeyless/2.1.0/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/akeyless-community/akeyless/2.2.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Akeyless Provider
@@ -122,7 +122,7 @@ Example currently unavailable in this language
 <a id="nestedblock--api_key_login"></a>
 ### Nested Schema for `apiKeyLogin`
 
-Required:
+Optional:
 
 - `accessId` (String)
 - `accessKey` (String, Sensitive)
@@ -158,10 +158,10 @@ Optional:
 <a id="nestedblock--email_login"></a>
 ### Nested Schema for `emailLogin`
 
-Required:
+Optional:
 
 - `adminEmail` (String)
-- `adminPassword` (String)
+- `adminPassword` (String, Sensitive)
 
 <a id="nestedblock--gcp_login"></a>
 ### Nested Schema for `gcpLogin`
@@ -180,6 +180,9 @@ Optional:
 Required:
 
 - `accessId` (String)
+
+Optional:
+
 - `jwt` (String, Sensitive)
 
 <a id="nestedblock--retry"></a>
@@ -196,17 +199,14 @@ Optional:
 <a id="nestedblock--token_login"></a>
 ### Nested Schema for `tokenLogin`
 
-Required:
+Optional:
 
 - `token` (String, Sensitive)
 
 <a id="nestedblock--uid_login"></a>
 ### Nested Schema for `uidLogin`
 
-Required:
-
-- `uidToken` (String, Sensitive)
-
 Optional:
 
 - `accessId` (String)
+- `uidToken` (String, Sensitive)

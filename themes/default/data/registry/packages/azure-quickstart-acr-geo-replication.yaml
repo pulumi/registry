@@ -1,5 +1,7 @@
 category: Cloud
 component: true
+deprecated: true
+deprecation_reason: It hasn't been updated since its 2021 release and is no longer maintained.
 description: ""
 featured: false
 logo_url: ""

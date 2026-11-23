@@ -50,3 +50,4 @@ __pycache__/
 # Link checker output (check-links.yml / fix-broken-links skill)
 /.broken-links.json
 /.broken-links-pr.txt
+/.broken-links-report.md

@@ -3,7 +3,7 @@
 category: Cloud
 component: false
 deprecated: true
-deprecation_reason: It is no longer maintained.
+deprecation_reason: Ordering dependent stack updates is now built into Pulumi Cloud, so this package is no longer maintained.
 description: ""
 featured: false
 logo_url: ""

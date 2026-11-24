@@ -250,7 +250,7 @@ func deriveInstall(spec *schema.PackageSpec, version, lang string) (*Install, []
 	case LangCSharp:
 		var info dotnet.CSharpPackageInfo
 		decodeLanguageInfo(spec, "csharp", &info)
-		id := info.GetRootNamespace() + "." + pascalCase(spec.Name)
+		id := info.GetRootNamespace() + "." + csharpNamespace(info, spec.Name)
 		return &Install{Language: lang, Package: id, Commands: single("dotnet add package " + id)}, nil
 
 	case LangJava:
@@ -314,6 +314,17 @@ func goPackageName(name string) string {
 		b.WriteRune(r)
 	}
 	return strings.ToLower(b.String())
+}
+
+// csharpNamespace returns the namespace the .NET generator gives the package,
+// which is also the second half of its NuGet package ID. A schema can name it
+// in csharp.namespaces (pulumi-ec maps "ec" to "ElasticCloud"); otherwise the
+// generator derives it from the package name.
+func csharpNamespace(info dotnet.CSharpPackageInfo, name string) string {
+	if ns, ok := info.Namespaces[name]; ok {
+		return strings.ReplaceAll(ns, "-", "")
+	}
+	return pascalCase(name)
 }
 
 // pascalCase renders a package name the way the .NET generator names its

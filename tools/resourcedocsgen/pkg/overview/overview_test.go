@@ -170,6 +170,17 @@ func TestDeriveInstallsPrefersSchemaNames(t *testing.T) {
 	assert.Empty(t, plan.Warnings)
 }
 
+func TestDeriveInstallsUsesCSharpNamespaceForNuGetID(t *testing.T) {
+	t.Parallel()
+
+	plan := DeriveInstalls(
+		spec(t, `{"name":"ec","language":{"csharp":{"namespaces":{"ec":"ElasticCloud"}}}}`),
+		"v0.14.0", []string{LangCSharp})
+
+	require.Len(t, plan.Languages, 1)
+	assert.Equal(t, "dotnet add package Pulumi.ElasticCloud", plan.Languages[0].Commands[0].Command)
+}
+
 func TestDeriveInstallsCoversEverySupportedPackageManager(t *testing.T) {
 	t.Parallel()
 

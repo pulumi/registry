@@ -60,6 +60,70 @@
                 </ul>
             </ul>
         {{ end }}
+        {{- /* Additional resources, opted into per package in
+               data/registry/package_links.yaml. Links to other sites open in a new
+               tab with the "↗" the pulumi/docs sidebar uses for offsite links;
+               pulumi.com pages don't. Same toggle markup as Guides, but the
+               heading toggles the group rather than linking anywhere. */ -}}
+        {{ $resources := slice }}
+        {{ with site.Data.registry.package_links }}
+            {{ $links := . }}
+            {{ with index $links.packages $rawPackageName }}
+                {{ $pkg := . }}
+                {{ with index $links.dev_center ($pkg.dev_center | default "") }}
+                    {{ $browseUrl := printf "/dev/browse/?cloud=%s" .cloud }}
+                    {{ range .sections }}
+                        {{ with index $links.dev_center_sections . }}
+                            {{ $resources = $resources | append (dict "label" .label "url" (printf "%s&type=%s" $browseUrl .type)) }}
+                        {{ end }}
+                    {{ end }}
+                {{ end }}
+                {{ with index $links.esc ($pkg.esc | default "") }}
+                    {{ $resources = $resources | append (dict "label" "Credentials with Pulumi ESC" "url" .) }}
+                {{ end }}
+                {{ range $pkg.links }}
+                    {{ $resources = $resources | append (dict "label" .label "url" .url) }}
+                {{ end }}
+                {{- /* The integration page collects everything else, so it goes last. */ -}}
+                {{ with index $links.integrations ($pkg.integration | default "") }}
+                    {{ $resources = $resources | append (dict "label" (printf "All %s integrations" .name) "url" .url) }}
+                {{ end }}
+            {{ end }}
+        {{ end }}
+        {{ with $resources }}
+            <ul id="toc-expandable-menu-resources" class="toggle">
+                <ul class="collapsed">
+                    <li class="sidenav-topic">
+                        <span class="toggleButton sidenav-group-label">Additional resources</span>
+                        <span class="toggleButton">
+                            <div class="icon icon-14-14 keyboard-arrow-right-gray"></div>
+                        </span>
+                    </li>
+                </ul>
+                <ul class="expanded">
+                    <li class="sidenav-topic sidenav-parent">
+                        <span class="toggleButton sidenav-group-label">Additional resources</span>
+                        <span class="toggleButton">
+                            <div class="icon icon-14-14 keyboard-arrow-down-gray-14-14"></div>
+                        </span>
+                    </li>
+                    <div class="sidenav-subsection">
+                        <ul>
+                            {{ range . }}
+                                {{ $host := (urls.Parse .url).Host }}
+                                <li class="sidenav-topic">
+                                    {{ if and $host (not (in (slice "pulumi.com" "www.pulumi.com") $host)) }}
+                                        <a href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ .label }} ↗</a>
+                                    {{ else }}
+                                        <a href="{{ .url }}">{{ .label }}</a>
+                                    {{ end }}
+                                </li>
+                            {{ end }}
+                        </ul>
+                    </div>
+                </ul>
+            </ul>
+        {{ end }}
         {{ $sidenav_selected = cond (eq .Page.RelPermalink $apiDocsPath) "active" "" }}
         {{ if .GetPage $apiDocsPath }}
             <li class="sidenav-topic {{ $sidenav_selected }}">

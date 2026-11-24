@@ -9,10 +9,10 @@ keywords:
 - incident-io
 logo_url: https://raw.githubusercontent.com/incident-io/pulumi-incident/master/logos/incident.svg
 name: incident
-package_status: public_preview
+package_status: ga
 publisher: incident-io
 repo_url: https://github.com/incident-io/pulumi-incident
-schema_file_url: https://raw.githubusercontent.com/incident-io/pulumi-incident/v0.6.0/provider/cmd/pulumi-resource-incident/schema.json
+schema_file_url: https://raw.githubusercontent.com/incident-io/pulumi-incident/v1.0.0/provider/cmd/pulumi-resource-incident/schema.json
 title: incident.io
-updated_on: 1794284851
-version: v0.6.0
+updated_on: 1795494424
+version: v1.0.0

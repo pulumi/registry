@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/octopusdeploylabs/octopusdeploy/0.43.3/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/octopusdeploy/octopusdeploy/1.22.1/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Octopusdeploy Provider
@@ -12,14 +12,11 @@ layout: package
 The Octopusdeploy provider must be installed as a Local Package by following the [instructions for Any Terraform Provider](https://www.pulumi.com/registry/packages/terraform-provider/):
 
 ```bash
-pulumi package add terraform-provider octopusdeploylabs/octopusdeploy
+pulumi package add terraform-provider octopusdeploy/octopusdeploy
 ```
-## ⚠️ Warning ⚠️
-
-!> Since 1st June 2025, the Octopus Deploy Pulumi Provider has moved to the OctopusDeploy namespace, and this version is no longer being maintained. If you were previously using this version of the provider, please read the guide for Moving to Octopus Deploy Namespace to learn how to upgrade your provider while maintaining state.
 ## Overview
 
-This provider is used to configure resources in Octopus Deploy. The provider must be configured with the proper credentials before it can be used.
+This provider is used to configure resources in Octopus Deploy.
 ## Configuration
 ### Authentication Methods
 The provider supports authenticating to an Octopus Server instance via either:

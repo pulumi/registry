@@ -2,15 +2,14 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Cloud
 component: false
-deprecated: true
 description: A Pulumi provider dynamically bridged from octopusdeploy.
 featured: false
 logo_url: ""
 name: octopusdeploy
-package_status: public_preview
-publisher: octopusdeploylabs
-repo_url: https://github.com/octopusdeploylabs/terraform-provider-octopusdeploy
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/octopusdeploylabs/octopusdeploy/0.43.3/schema.json
+package_status: ga
+publisher: octopusdeploy
+repo_url: https://github.com/octopusdeploy/terraform-provider-octopusdeploy
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/octopusdeploy/octopusdeploy/1.22.1/schema.json
 title: octopusdeploy
-updated_on: 1767872146
-version: 0.43.3
+updated_on: 1795610808
+version: 1.22.1

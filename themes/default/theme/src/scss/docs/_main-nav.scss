@@ -85,9 +85,9 @@ nav.main-nav {
     // "Additional resources" in the package sidebar: a toggle styled like the
     // linked headings beside it.
     .toggleButton.sidenav-group-label {
-        @apply py-1 px-1.5 w-full;
+        @apply py-1 px-1.5 w-full text-left bg-transparent border-0;
         color: var(--color-violet-primary);
-        font-size: inherit;
+        font: inherit;
         top: 0;
     }
 

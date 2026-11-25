@@ -103,6 +103,7 @@ packages:
   awsx:
     esc: aws
     integration: aws
+  # Dev Center's Azure content uses azure-native, so only azure-native opts in.
   azure:
     esc: azure
     integration: azure

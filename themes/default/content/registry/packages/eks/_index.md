@@ -144,3 +144,5 @@ output "kubeconfig" {
 {{% /choosable %}}
 
 {{< /chooser >}}
+
+{{% additional-resources %}}

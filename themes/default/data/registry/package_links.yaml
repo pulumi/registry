@@ -15,6 +15,9 @@
 # The integration link always comes last, since that page collects everything
 # Pulumi has for the cloud.
 #
+# A package's Overview page shows the same links as a section if its source
+# includes the {{% additional-resources %}} shortcode.
+#
 # Hand-maintained, and kept apart from the package YAML because the publish
 # workflow regenerates that.
 

@@ -463,3 +463,5 @@ output "url" {
 {{% /choosable %}}
 
 {{< /chooser >}}
+
+{{% additional-resources %}}

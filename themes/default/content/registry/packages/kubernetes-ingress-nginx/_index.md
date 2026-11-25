@@ -940,3 +940,5 @@ output "controllerStatus" {
 {{% /choosable %}}
 
 {{< /chooser >}}
+
+{{% additional-resources %}}

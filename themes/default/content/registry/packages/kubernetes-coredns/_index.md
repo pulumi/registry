@@ -271,3 +271,5 @@ resource "kubernetes-coredns_coredns" "dns" {
 {{% /choosable %}}
 
 {{< /chooser >}}
+
+{{% additional-resources %}}

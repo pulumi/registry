@@ -218,3 +218,5 @@ resource "kubernetes-cert-manager_cert_manager" "cert-manager" {
 {{% /choosable %}}
 
 {{< /chooser >}}
+
+{{% additional-resources %}}

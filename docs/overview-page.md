@@ -303,6 +303,18 @@ Worked examples as `pulumi config set` commands, with explanatory text and links
 
 Anything else useful goes after the sections above. What existing packages add, most common first: `## Authentication` (when there is enough of it to want its own section instead of living under Configuration), `## Environment Variables`, `## Resources`, `## Requirements` or `## Prerequisites`, `## Troubleshooting`, `## Migration` notes for a major version bump, and links to further reading.
 
+#### `## Additional resources` (optional)
+
+To list the Pulumi resources for the package's cloud, put this shortcode at the end of the page:
+
+```markdown
+{{% additional-resources %}}
+```
+
+It renders an `## Additional resources` section with the same links as the package's sidebar: Dev Center templates, examples, and tutorials, the Pulumi ESC credentials guide, and the cloud's integration page. The links come from [`themes/default/data/registry/package_links.yaml`](../themes/default/data/registry/package_links.yaml) in this repository, so to add or change them, open a PR here. On a package with no entry there, the shortcode renders nothing.
+
+Using it is optional. Write your own links instead if you prefer, but don't do both, or the page lists the same links twice.
+
 ---
 
 ## When the page gets long

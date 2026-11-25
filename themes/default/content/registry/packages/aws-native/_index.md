@@ -466,3 +466,5 @@ resource "aws-native_extension_resource" "myBucket" {
 ```
 
 {{% /choosable %}}
+
+{{% additional-resources %}}

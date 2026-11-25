@@ -1,0 +1,15 @@
+{{- /* Renders a package's "Additional resources" links from
+       data/registry/package_links.yaml as a Markdown section, so the Overview
+       page and its Markdown output carry the same links as the sidebar. Call it
+       with percent delimiters, {{% additional-resources %}}, so the heading goes
+       through Markdown and shows in the page's table of contents. The package
+       comes from the page's path unless `package` is given. */ -}}
+{{- $package := .Get "package" | default (index (split .Page.File.Path "/") 2) -}}
+{{- with partial "registry/package/additional-resources.html" $package }}
+
+## Additional resources
+
+{{ range . -}}
+- [{{ .label }}{{ if .offsite }} ↗{{ end }}]({{ .url }})
+{{ end }}
+{{ end -}}

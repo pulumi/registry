@@ -81,6 +81,16 @@ nav.main-nav {
         margin-left: 16px;
     }
 
+    // The heading of a collapsible group that has no page of its own, such as
+    // "Additional resources" in the package sidebar: a toggle styled like the
+    // linked headings beside it.
+    .toggleButton.sidenav-group-label {
+        @apply py-1 px-1.5 w-full text-left bg-transparent border-0;
+        color: var(--color-violet-primary);
+        font: inherit;
+        top: 0;
+    }
+
     .top-level-container,
     div.sidenav-subsection {
         border-left: map-get($gray, 150) 1px solid;

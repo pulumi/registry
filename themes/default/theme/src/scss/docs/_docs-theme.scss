@@ -423,6 +423,12 @@ html[data-theme="dark"] body.section-registry {
             color: var(--docs-fg-muted);
         }
 
+        // A group heading that is a toggle rather than a link ("Additional
+        // resources") keeps the link color, like the linked headings beside it.
+        .toggleButton.sidenav-group-label {
+            color: var(--color-violet-primary);
+        }
+
         // The chevron icons are near-black SVGs painted as backgrounds, which
         // `color` can't reach, so draw them as masks filled with the muted text color.
         .toggleButton div.keyboard-arrow-right-gray,

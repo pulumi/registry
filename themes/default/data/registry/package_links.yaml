@@ -1,0 +1,147 @@
+# Links grouped under "Additional resources" in a package's sidebar. A package
+# gets none unless it's listed under `packages`, and each kind of link is opted
+# into separately:
+#
+#   dev_center:  a key in `dev_center` below. Opt in only when that content is
+#                about using this package, not just the same cloud.
+#   esc:         a key in `esc` below.
+#   integration: a key in `integrations` below.
+#   links:       any other links, as a list of `label` and `url`, shown in
+#                order after the Dev Center and ESC links. A pulumi.com page
+#                takes a path (/docs/...); a full URL on another site opens in a
+#                new tab and gets the same "↗" the pulumi/docs sidebar puts on
+#                offsite links.
+#
+# The integration link always comes last, since that page collects everything
+# Pulumi has for the cloud.
+#
+# Hand-maintained, and kept apart from the package YAML because the publish
+# workflow regenerates that.
+
+# Dev Center browse pages, pulumi.com/dev/browse/?cloud=<cloud>&type=<type>.
+# `cloud` and `type` are values of the catalog's Cloud and Type filters. List a
+# section for a cloud only when it has more than a couple of items of that type,
+# so the link doesn't land on a near-empty page.
+dev_center_sections:
+  templates:
+    label: Templates
+    type: template
+  examples:
+    label: Examples
+    type: example
+  tutorials:
+    label: Tutorials
+    type: tutorial,post,workshop
+
+dev_center:
+  alicloud:
+    cloud: alicloud
+    sections: [templates]
+  aws:
+    cloud: aws
+    sections: [templates, examples, tutorials]
+  azure:
+    cloud: azure
+    sections: [templates, examples, tutorials]
+  cloudflare:
+    cloud: cloudflare
+    sections: [templates, examples, tutorials]
+  digitalocean:
+    cloud: digitalocean
+    sections: [templates, examples, tutorials]
+  google-cloud:
+    cloud: google-cloud
+    sections: [templates, examples, tutorials]
+  kubernetes:
+    cloud: kubernetes
+    sections: [templates, examples, tutorials]
+  linode:
+    cloud: linode
+    sections: [templates]
+  oci:
+    cloud: oci
+    sections: [templates]
+  ovhcloud:
+    cloud: ovhcloud
+    sections: [templates]
+
+# Pulumi ESC guides for supplying this cloud's credentials to the provider.
+esc:
+  aws: /docs/esc/guides/configuring-oidc/aws/
+  azure: /docs/esc/guides/configuring-oidc/azure/
+  cloudflare: /docs/esc/guides/integrate-with/cloudflare/
+  gcp: /docs/esc/guides/configuring-oidc/gcp/
+  kubernetes: /docs/esc/guides/integrate-with/kubernetes-cluster-access/
+
+integrations:
+  aws:
+    name: AWS
+    url: /docs/integrations/clouds/aws/
+  azure:
+    name: Azure
+    url: /docs/integrations/clouds/azure/
+  gcp:
+    name: Google Cloud
+    url: /docs/integrations/clouds/gcp/
+  kubernetes:
+    name: Kubernetes
+    url: /docs/integrations/clouds/kubernetes/
+
+packages:
+  alicloud:
+    dev_center: alicloud
+  aws:
+    dev_center: aws
+    esc: aws
+    integration: aws
+  aws-apigateway:
+    esc: aws
+    integration: aws
+  aws-native:
+    esc: aws
+    integration: aws
+  awsx:
+    esc: aws
+    integration: aws
+  # Dev Center's Azure content uses azure-native, so only azure-native opts in.
+  azure:
+    esc: azure
+    integration: azure
+  azure-native:
+    dev_center: azure
+    esc: azure
+    integration: azure
+  cloudflare:
+    dev_center: cloudflare
+    esc: cloudflare
+  digitalocean:
+    dev_center: digitalocean
+  eks:
+    esc: aws
+    integration: aws
+  gcp:
+    dev_center: google-cloud
+    esc: gcp
+    integration: gcp
+  kubernetes:
+    dev_center: kubernetes
+    esc: kubernetes
+    integration: kubernetes
+    links:
+      - label: Pulumi Kubernetes Operator
+        url: /docs/integrations/clouds/kubernetes/pulumi-kubernetes-operator/
+  kubernetes-cert-manager:
+    esc: kubernetes
+    integration: kubernetes
+  kubernetes-coredns:
+    esc: kubernetes
+    integration: kubernetes
+  kubernetes-ingress-nginx:
+    esc: kubernetes
+    integration: kubernetes
+  linode:
+    dev_center: linode
+  oci:
+    dev_center: oci
+  ovh:
+    dev_center: ovhcloud

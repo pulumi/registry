@@ -11,7 +11,7 @@ name: descope
 package_status: ga
 publisher: Descope
 repo_url: https://github.com/descope/pulumi-descope
-schema_file_url: https://raw.githubusercontent.com/descope/pulumi-descope/v1.0.1/provider/cmd/pulumi-resource-descope/schema.json
+schema_file_url: https://raw.githubusercontent.com/descope/pulumi-descope/v1.2.0/provider/cmd/pulumi-resource-descope/schema.json
 title: Descope
-updated_on: 1791702223
-version: v1.0.1
+updated_on: 1794974568
+version: v1.2.0

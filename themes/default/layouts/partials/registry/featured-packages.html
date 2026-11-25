@@ -1,6 +1,7 @@
 {{- /* Returns the featured packages in display order. A package needs
-       `featured: true` in its YAML to appear; this list only orders them, since
-       ranging over site.Data sorts by file name. Four per row on wide screens. */ -}}
+       `featured: true` in its YAML to appear; $order only sets their order, since
+       ranging over site.Data sorts by file name. A featured package missing from
+       $order still appears, after the others. Four per row on wide screens. */ -}}
 {{- $order := slice
     "aws" "azure-native" "gcp" "kubernetes"
     "cloudflare" "terraform-provider" "pulumiservice" "delivery"
@@ -11,5 +12,8 @@
     {{- with index $packages . -}}
         {{- if .featured -}}{{- $featured = $featured | append . -}}{{- end -}}
     {{- end -}}
+{{- end -}}
+{{- range $name, $pkg := $packages -}}
+    {{- if and $pkg.featured (not (in $order $name)) -}}{{- $featured = $featured | append $pkg -}}{{- end -}}
 {{- end -}}
 {{- return $featured -}}

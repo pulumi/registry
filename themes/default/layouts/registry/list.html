@@ -6,10 +6,8 @@
                 <nav class="main-nav">
                     {{ partial "docs/search-only.html" . }}
                     <div class="featured-packages">
-                        {{ $featuredPackages := slice }} {{ range
-                        site.Data.registry.packages }} {{ if .featured }} {{
-                        $featuredPackages = $featuredPackages | append . }} {{
-                        end }} {{ end }}
+                        {{ $featuredPackages := partial
+                        "registry/featured-packages.html" . }}
                         <h2 class="no-anchor featured-packages-heading">
                             Featured packages
                         </h2>

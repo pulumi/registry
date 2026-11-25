@@ -3,7 +3,7 @@
 category: Utility
 component: false
 description: Define Delivery pipelines, stages, jobs and sources in a Pulumi program.
-featured: false
+featured: true
 keywords:
 - delivery
 logo_url: ""

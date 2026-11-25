@@ -193,62 +193,83 @@ div.packages {
 div.packages section.featured-packages {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
 
     div.featured-packages-content {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        flex-basis: 100%;
-        gap: 24px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+
+        @media (min-width: 1280px) {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
 
         div.featured-package {
             display: flex;
-            flex-direction: column;
-            flex-basis: 100%;
-            align-items: center;
-            justify-content: stretch;
-            padding: 18px;
+            padding: 0;
+            overflow: hidden;
+            background-color: var(--color-violet-50);
+            border-color: var(--color-violet-100);
+
+            &:hover {
+                border-color: var(--color-violet-300);
+            }
 
             a {
                 display: flex;
-                gap: 12px;
-                flex-direction: column;
-                text-align: center;
                 flex: 1;
+                flex-direction: column;
+                min-width: 0;
             }
 
             .package-logo {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                height: 48px;
+                height: 72px;
+                padding: 20px 16px;
+
+                // icon.html sizes every logo with the h-6 utility, which outranks
+                // this layer, so the larger featured size needs !important.
+                img {
+                    height: 32px !important;
+                    max-width: 100%;
+                    width: auto;
+                }
+            }
+
+            .package-footer {
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 10px 16px;
+                border-top: 1px solid var(--color-gray-200);
             }
 
             .package-title {
-                display: none;
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-size: 14px;
+                font-weight: 600;
+                color: #131314;
             }
 
             .package-version {
-                font-family: var(--font-display);
-                font-weight: 500;
-                font-size: 14px;
-                text-align: center;
-                color: #131314;
+                flex-shrink: 0;
+                font-size: 13px;
+                font-weight: 400;
+                color: var(--color-gray-700);
             }
-        }
-
-        @media (min-width: 768px) {
-            div.featured-package {
-                flex-basis: 48%;
-            }
-        }
-
-        @media (min-width: 1280px) {
-            div.featured-package {
-                flex-basis: 25%;
-            }
-            flex-wrap: nowrap;
         }
     }
+}
+
+// The search component ships its own unlayered style capping the input at 550px,
+// which would beat any rule in this layer, so stretching it to the row's full
+// width needs !important.
+.all-packages pulumi-registry-list-search .input-container {
+    max-width: none !important;
 }

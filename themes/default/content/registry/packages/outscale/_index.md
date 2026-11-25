@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/outscale/outscale/1.8.1/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/outscale/outscale/1.9.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Outscale Provider
@@ -63,6 +63,8 @@ runtime:
 config:
     outscale:accessKeyId:
         value: myaccesskey
+    outscale:region:
+        value: eu-west-2
     outscale:secretKeyId:
         value: mysecretkey
 
@@ -139,21 +141,25 @@ In addition to generic provider arguments, the following arguments are supported
 * `profile` - (Optional) The named profile you want to use in the OSC config file. It can also be sourced from the `OSC_PROFILE` environment variable.
 * `accessKeyId` - (Optional) The ID of the OUTSCALE access key. It must be provided, but it can also be sourced from the `OSC_ACCESS_KEY` environment variable.
 * `secretKeyId` - (Optional) The OUTSCALE secret key. It must be provided, but it can also be sourced from the `OSC_SECRET_KEY` environment variable.
+* `region` - (Optional) The Region to use for OUTSCALE API, OKS API and OOS API operations. It can also be sourced from the `OSC_REGION` environment variable. For more information on available Regions, see [About Regions and Subregions](https://docs.outscale.com/en/userguide/About-Regions-and-Subregions.html).
+* `sanitize` - (Optional, Default: true) Redacts sensitive and personally identifiable information (PII) from provider logs.
 * `api` - (Optional) Configuration elements for OUTSCALE API operations.
   * `endpoint` - (Optional) The server endpoint to use for OUTSCALE API operations. The underlying HTTP client expects a server URL with scheme, and it may include a path prefix. Example: `https://api.eu-west-2.outscale.com/api/v1`. For backward compatibility, the provider also accepts `api.<region>.outscale.com` and `https://api.<region>.outscale.com` and normalizes them to the default `/api/v1` endpoint. It can also be sourced from the `OSC_ENDPOINT_API` environment variable. For more information on available endpoints, see [API Endpoints Reference > OUTSCALE API](https://docs.outscale.com/en/userguide/API-Endpoints-Reference.html#_outscale_api).
   * `region` - (Optional) The Region to use for OUTSCALE API operations. It can also be sourced from the `OSC_REGION` environment variable. For more information on available Regions, see [About Regions and Subregions](https://docs.outscale.com/en/userguide/About-Regions-and-Subregions.html).
-  * `x509CertPath` - (Optional) The path to the x509 Client Certificate. It can also be sourced from the `OSC_X509_CLIENT_CERT` environment variable. For more information on the use of those certificates, see [About API Access Rules](https://docs.outscale.com/en/userguide/About-API-Access-Rules.html).
-  * `x509KeyPath` - (Optional) The path to the private key of the x509 Client Certificate. It can also be sourced from the `OSC_X509_CLIENT_KEY` environment variable. For more information on the use of those certificates, see [About API Access Rules](https://docs.outscale.com/en/userguide/About-API-Access-Rules.html).
+  * `x509CertPath` - (Optional, Deprecated) The path to the x509 Client Certificate. It can also be sourced from the `OSC_X509_CLIENT_CERT` environment variable. For more information on the use of those certificates, see [About API Access Rules](https://docs.outscale.com/en/userguide/About-API-Access-Rules.html).
+  * `x509KeyPath` - (Optional, Deprecated) The path to the private key of the x509 Client Certificate. It can also be sourced from the `OSC_X509_CLIENT_KEY` environment variable. For more information on the use of those certificates, see [About API Access Rules](https://docs.outscale.com/en/userguide/About-API-Access-Rules.html).
   * `insecure` - (Optional) Enables TLS insecure connection.
 * `oks` - (Optional) Configuration elements for OKS API operations.
   * `endpoint` - (Optional) The server endpoint to use for OKS API operations. The underlying HTTP client expects a server URL with scheme, and it may include a path prefix. Example: `https://api.eu-west-2.oks.outscale.com/api/v2`. It can also be sourced from the `OSC_ENDPOINT_OKS` environment variable. For more information on available endpoints, see [API Endpoints Reference > OUTSCALE Kubernetes as a Service (OKS)](https://docs.outscale.com/en/userguide/API-Endpoints-Reference.html#_outscale_kubernetes_as_a_service_oks).
   * `region` - (Optional) The Region to use for OKS API operations. It can also be sourced from the `OSC_REGION` environment variable. For more information on available Regions, see [About Regions and Subregions](https://docs.outscale.com/en/userguide/About-Regions-and-Subregions.html).
+* `oos` - (Optional) Configuration elements for OOS API operations.
+  * `endpoint` - (Optional) The server endpoint to use for OOS API operations. The underlying HTTP client expects a server URL with scheme, and it may include a path prefix. Example: `https://oos.eu-west-2.outscale.com`. It can also be sourced from the `OSC_ENDPOINT_OOS` environment variable. For more information on available endpoints, see [API Endpoints Reference > OUTSCALE Object Storage (OOS)](https://docs.outscale.com/en/userguide/API-Endpoints-Reference.html#_outscale_object_storage_oos).
+  * `region` - (Optional) The Region to use for OOS API operations. It can also be sourced from the `OSC_REGION` environment variable. For more information on available Regions, see [About Regions and Subregions](https://docs.outscale.com/en/userguide/About-Regions-and-Subregions.html).
 
 The following top-level arguments are deprecated but still supported as a fallback:
-* `endpoints` - (Optional, deprecated) The endpoints to use for OUTSCALE API and OKS API operations. For more information on available endpoints, see [Regions, Endpoints and Availability Zones Reference](https://docs.outscale.com/en/userguide/Regions-Endpoints-and-Availability-Zones-Reference.html).
-  * `api` - (Optional, deprecated) For OUTSCALE API.
-  * `oks` - (Optional, deprecated) For OKS API.
-* `region` - (Optional, deprecated) The Region to use for OUTSCALE API and OKS API operations. It can also be sourced from the `OSC_REGION` environment variable. For more information on available Regions, see [About Regions and Subregions](https://docs.outscale.com/en/userguide/About-Regions-and-Subregions.html).
-* `x509CertPath` - (Optional, deprecated) The path to the x509 Client Certificate. It can also be sourced from the `OSC_X509_CLIENT_CERT` environment variable. For more information on the use of those certificates, see [About API Access Rules](https://docs.outscale.com/en/userguide/About-API-Access-Rules.html).
-* `x509KeyPath` - (Optional, deprecated) The path to the private key of the x509 Client Certificate. It can also be sourced from the `OSC_X509_CLIENT_KEY` environment variable. For more information on the use of those certificates, see [About API Access Rules](https://docs.outscale.com/en/userguide/About-API-Access-Rules.html).
-* `insecure` - (Optional, deprecated) Enables TLS insecure connection.
+* `endpoints` - (Optional, Deprecated) The endpoints to use for OUTSCALE API and OKS API operations. For more information on available endpoints, see [Regions, Endpoints and Availability Zones Reference](https://docs.outscale.com/en/userguide/Regions-Endpoints-and-Availability-Zones-Reference.html).
+  * `api` - (Optional, Deprecated) For OUTSCALE API.
+  * `oks` - (Optional, Deprecated) For OKS API.
+* `x509CertPath` - (Optional, Deprecated) The path to the x509 Client Certificate. It can also be sourced from the `OSC_X509_CLIENT_CERT` environment variable. For more information on the use of those certificates, see [About API Access Rules](https://docs.outscale.com/en/userguide/About-API-Access-Rules.html).
+* `x509KeyPath` - (Optional, Deprecated) The path to the private key of the x509 Client Certificate. It can also be sourced from the `OSC_X509_CLIENT_KEY` environment variable. For more information on the use of those certificates, see [About API Access Rules](https://docs.outscale.com/en/userguide/About-API-Access-Rules.html).
+* `insecure` - (Optional, Deprecated) Enables TLS insecure connection.

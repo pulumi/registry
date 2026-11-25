@@ -3,7 +3,7 @@
 category: Infrastructure
 component: false
 description: A native Pulumi package for creating and managing Pulumi Cloud constructs.
-featured: false
+featured: true
 logo_url: ""
 name: pulumiservice
 package_status: ga

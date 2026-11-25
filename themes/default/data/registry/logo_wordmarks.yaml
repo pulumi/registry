@@ -82,7 +82,6 @@ wordmark:
   - port
   - postgresql
   - proxmoxve
-  - pulumiservice
   - rabbitmq
   - rancher2
   - rke

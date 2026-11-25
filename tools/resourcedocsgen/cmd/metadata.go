@@ -48,6 +48,10 @@ var featuredPackages = []string{
 	"azure-native",
 	"gcp",
 	"kubernetes",
+	"cloudflare",
+	"terraform-provider",
+	"pulumiservice",
+	"delivery",
 }
 
 func PackageMetadataCmd(client HTTPDoer) *cobra.Command {

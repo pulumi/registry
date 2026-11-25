@@ -1,7 +1,6 @@
 {{ $allGetStarted := site.Data.registry.getstarted }} {{ $allPackages :=
-site.Data.registry.packages }} {{ $featuredPackages := slice }} {{ range
-$allPackages }} {{ if .featured }} {{ $featuredPackages = $featuredPackages |
-append . }} {{ end }} {{ end }}
+site.Data.registry.packages }} {{ $featuredPackages := partial
+"registry/featured-packages.html" . }}
 
 <div class="packages">
     <section class="featured-packages">
@@ -13,7 +12,7 @@ append . }} {{ end }} {{ end }}
     </section>
 
     <section class="all-packages mt-8">
-        <div class="mb-2 px-4 relative z-10">
+        <div class="mb-2 relative z-10">
             <h4 class="text-lg">Filters</h4>
             <div class="flex flex-col md:flex-row md:items-start">
                 <div class="flex flex-col" style="min-height: 95px">
@@ -111,7 +110,7 @@ append . }} {{ end }} {{ end }}
                 </template>
             </div>
         </div>
-        <div class="flex justify-between flex-col md:flex-row gap-4 items-start md:items-center mb-4 px-4">
+        <div class="flex justify-between flex-col md:flex-row gap-4 items-start md:items-center mb-4">
             <h2 class="flex items-center mt-8 md:mt-0">
                 <span>Packages</span>
                 <span
@@ -127,11 +126,11 @@ append . }} {{ end }} {{ end }}
                 >Contribute your own packages</a
             >
         </div>
-        <div class="flex flex-wrap">
+        <div class="flex flex-wrap -mx-3">
             <!-- Capture the current (i.e., Page) context so it can be passed into the partial, allowing the partial to build proper relrefs. -->
             {{ $page := . }} {{ range (sort $allPackages "title") }} {{ partial
             "registry/package" (dict "package" . "page" $page) }} {{ end }}
-            <div class="no-results w-full px-4">
+            <div class="no-results w-full px-3">
                 <p class="no-results-message">
                     Looks like we don't have any packages that match your
                     filters. Adjust or clear the filters and try again.

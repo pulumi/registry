@@ -983,6 +983,42 @@ html[data-theme="dark"] body.section-registry {
         color: var(--docs-fg-muted);
     }
 
+    div.packages
+        section.featured-packages
+        div.featured-package
+        .package-footer {
+        border-top-color: var(--docs-card-border);
+    }
+
+    div.packages
+        section.featured-packages
+        div.featured-package
+        .package-title {
+        color: var(--docs-fg);
+    }
+
+    // Featured cards carry a light violet tint (violet-50 in light).
+    div.packages section.featured-packages div.featured-package {
+        background-color: color-mix(
+            in oklch,
+            var(--color-violet-300) 8%,
+            var(--docs-card)
+        );
+        border-color: color-mix(
+            in oklch,
+            var(--color-violet-300) 22%,
+            transparent
+        );
+
+        &:hover {
+            border-color: color-mix(
+                in oklch,
+                var(--color-violet-300) 45%,
+                transparent
+            );
+        }
+    }
+
     // Packages count pill (bg-gray-100).
     .all-packages .all-count {
         background-color: var(--docs-surface);

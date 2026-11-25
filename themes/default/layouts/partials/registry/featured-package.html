@@ -2,17 +2,17 @@
 {{ $href := printf "/registry/packages/%s/" $packageName }}
 
 <div class="featured-package card card-hover">
-    <a href="{{ $href }}" title="{{ .package.title }}">
+    <a href="{{ $href }}" title="{{ .package.description | default .package.title }}">
         <div class="package-logo">
             {{ partial "registry/package/icon.html" (dict "package" .package "lazy" false) }}
         </div>
-        <div class="package-title">
-            {{ .package.title }}
-        </div>
-        <div class="package-version">
-            <span title="Published on {{ time .package.updated_on | time.Format "Monday, Jan 2, 2006" }}">
-                {{ .package.version }}
-            </span>
+        <div class="package-footer">
+            <div class="package-title">{{ .package.title }}</div>
+            <div class="package-version">
+                <span title="Published on {{ time .package.updated_on | time.Format "Monday, Jan 2, 2006" }}">
+                    {{ .package.version }}
+                </span>
+            </div>
         </div>
     </a>
 </div>

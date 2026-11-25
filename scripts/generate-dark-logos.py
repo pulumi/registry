@@ -47,8 +47,9 @@ LOGO_DIR = os.path.join(
 
 PACKAGE_DIR = os.path.join(ROOT, "themes", "default", "data", "registry", "packages")
 
-# Dark variants drawn by hand in the brand's dark avatar colors; without this the generator deletes them.
-HAND_DRAWN = {"delivery"}
+# Pulumi's own packages use the official Pulumi logo, whose dark variant comes from
+# the brand assets; without this the generator would overwrite it.
+HAND_DRAWN = {"delivery", "pulumiservice"}
 
 SUFFIX = "-on-dark.svg"
 

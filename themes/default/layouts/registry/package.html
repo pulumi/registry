@@ -1,6 +1,6 @@
 {{ define "main" }} {{ $directories := (split .Page.File.Path "/")}} {{
 $packageName := index $directories 2 }} {{ $packageHome := path.Join
-"registry/packages" $packageName }} {{ $title_tag := .Params.title_tag }}
+"registry/packages" $packageName }} {{ $guidesHome := printf "/%s/guides/" $packageHome }} {{ $title_tag := .Params.title_tag }}
 
 <div class="docs-list-main">
     <div class="docs-main-nav-toggle-wrapper">
@@ -27,19 +27,19 @@ $packageName := index $directories 2 }} {{ $packageHome := path.Join
                         {{ with .GetPage $packageHome }}{{ .Title }}{{ end }}:
                         Installation & Configuration
                     </h1>
-                    {{ else if strings.HasSuffix .Permalink "how-to-guides/" }}
+                    {{ else if eq .RelPermalink $guidesHome }}
                     <h1>
                         {{ with .GetPage $packageHome }}{{ .Title }}{{ end }}:
-                        How-to-Guides
+                        Guides
                     </h1>
                     {{ else if strings.Contains .Permalink "api-docs" }}
                     <!--Don't show the title in the top-most index page.-->
                     {{ if not (in .Page.File.Path "api-docs/_index.md") }} {{ if
                     and (.Params.h1) (not .Params.notitle) }}
-                    <h1>{{ .Params.h1 }}</h1>
+                    <h1 class="wrap-anywhere">{{ .Params.h1 }}</h1>
                     {{ else if and (ne .Title "") (not .Params.notitle) }}
                     <div class="title-ai-menu-container">
-                        <h1 class="break-words">{{ $title_tag }}</h1>
+                        <h1 class="wrap-anywhere">{{ partial "registry/package/breakable-title.html" $title_tag }}</h1>
                         {{ if not (strings.Contains .Params.meta_desc "module")
                         }} {{ .Scratch.Set "title_tag" $title_tag }} {{ partial
                         "registry/package/pulumi-ai.html" . }} {{ end }}
@@ -50,9 +50,8 @@ $packageName := index $directories 2 }} {{ $packageHome := path.Join
                     {{ end }} {{ else }} {{ if and (.Params.h1) (not
                     .Params.notitle) }}
                     <h1>{{ .Params.h1 }}</h1>
-                    {{ else if and (ne .Title "") (not .Params.notitle) (not (in
-                    .Page.File.Path "how-to-guides/_index.md")) }}
-                    <h1>{{ .Title }}</h1>
+                    {{ else if and (ne .Title "") (not .Params.notitle) (ne .RelPermalink $guidesHome) }}
+                    <h1>{{ partial "registry/package/title.html" . }}</h1>
                     {{ end }} {{ end }}
                 </div>
 
@@ -67,52 +66,18 @@ $packageName := index $directories 2 }} {{ $packageHome := path.Join
             </div>
 
             <section class="docs-content">
-                {{ if strings.HasSuffix .Permalink "how-to-guides/" }} {{ if (eq
-                (len .Pages) 0) }} There are no guides yet for this package. {{
-                else }} {{ if not (eq (len (where .Pages "Params.language" "=="
-                nil)) 0) }}
-                <h2>Featured Guides</h2>
-
-                {{ range where .Pages "Params.language" "==" nil }}
-                <div class="pb-4">
-                    <a
-                        class="text-violet-primary hover:underline"
-                        href="{{ relref . .Path }}"
-                        >{{ .Title }}</a
-                    >
-                </div>
+                {{ if eq .RelPermalink $guidesHome }}
+                {{ .Content }}
+                {{ with .Pages }}
+                <ul>
+                    {{ range . }}
+                    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ with .Description }}: {{ . }}{{ end }}</li>
+                    {{ end }}
+                </ul>
+                {{ else }}
+                There are no guides yet for this package.
                 {{ end }}
-
-                <h2>How-to Guides by Language</h2>
-                {{ end }}
-
-                <div>
-                    <pulumi-chooser
-                        type="language"
-                        options="typescript,python,go,csharp"
-                    ></pulumi-chooser>
-                </div>
-
-                <pulumi-choosable type="language" value="typescript">
-                    {{ partial "registry/packages/how-to-language-index" (dict
-                    "package" . "language" "ts") }}
-                </pulumi-choosable>
-
-                <pulumi-choosable type="language" value="python">
-                    {{ partial "registry/packages/how-to-language-index" (dict
-                    "package" . "language" "py") }}
-                </pulumi-choosable>
-
-                <pulumi-choosable type="language" value="go">
-                    {{ partial "registry/packages/how-to-language-index" (dict
-                    "package" . "language" "go") }}
-                </pulumi-choosable>
-
-                <pulumi-choosable type="language" value="csharp">
-                    {{ partial "registry/packages/how-to-language-index" (dict
-                    "package" . "language" "cs") }}
-                </pulumi-choosable>
-                {{ end }} {{ else }} {{ .Content }} {{ end }}
+                {{ else }} {{ .Content }} {{ end }}
             </section>
         </div>
 

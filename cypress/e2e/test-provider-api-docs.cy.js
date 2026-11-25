@@ -11,6 +11,7 @@ describe("Test Provider", () => {
         "C#": "C#",
         "Java": "JAVA",
         "YAML": "YAML",
+        "HCL": "HCL",
     };
 
     [
@@ -94,7 +95,7 @@ describe("Test Provider", () => {
 
                 // Verify that the examples section contains examples for all languages
                 it("contains examples for all languages", () => {
-                    const languages = ["TypeScript", "Python", "Go", "C#", "Java", "YAML"];
+                    const languages = ["TypeScript", "Python", "Go", "C#", "Java", "YAML", "HCL"];
 
                     // First verify the language chooser exists and has all expected languages
                     cy.get("#example-usage + div > pulumi-chooser").should("exist")
@@ -104,7 +105,8 @@ describe("Test Provider", () => {
                         .and('include', 'go')
                         .and('include', 'csharp')
                         .and('include', 'java')
-                        .and('include', 'yaml');
+                        .and('include', 'yaml')
+                        .and('include', 'hcl');
 
                     // Then check each an example exists for each language
                     languages.forEach(language => {
@@ -126,6 +128,54 @@ describe("Test Provider", () => {
                             .and("not.be.empty")
                             .invoke('text')
                             .should('have.length.gt', 0);
+                    });
+                });
+            });
+
+            describe("Look up section", () => {
+                it("shows a lookup signature for every language", () => {
+                    const signatures = {
+                        "TypeScript": ["typescript", "get("],
+                        "Python": ["python", "def get("],
+                        "Go": ["go", "func GetTestResource"],
+                        "C#": ["csharp", "Get("],
+                        "Java": ["java", "get("],
+                        "YAML": ["yaml", "get:"],
+                        "HCL": ["hcl", "import {"],
+                    };
+
+                    cy.get("#look-up").should("exist");
+                    Object.entries(signatures).forEach(([language, [value, expected]]) => {
+                        cy.get("pulumi-chooser li a").contains(languageTabLabel[language]).first().click();
+                        cy.get("#look-up").nextUntil("h2")
+                            .find(`pulumi-choosable[type='language'][values*='${value}'] pre`)
+                            .first()
+                            .invoke("text")
+                            .should("contain", expected);
+                    });
+                });
+
+                it("gives every get parameter a type and description", () => {
+                    const values = {
+                        "TypeScript": "typescript",
+                        "Python": "python",
+                        "Go": "go",
+                        "C#": "csharp",
+                        "Java": "java",
+                    };
+
+                    Object.entries(values).forEach(([language, value]) => {
+                        cy.get("pulumi-chooser li a").contains(languageTabLabel[language]).first().click();
+                        cy.get("#look-up").nextUntil("h2")
+                            .find(`pulumi-choosable[type='language'][values*='${value}'] .resources-properties`)
+                            .first()
+                            .find("dt")
+                            .should("have.length.at.least", 2)
+                            .each(($dt) => {
+                                cy.wrap($dt).find(".property-type").invoke("text")
+                                    .should("have.length.gt", 0, `${language} get parameter ${$dt.find("span").first().text()} has no type`);
+                                cy.wrap($dt).next("dd").invoke("text").should("have.length.gt", 0);
+                            });
                     });
                 });
             });
@@ -164,7 +214,7 @@ describe("Test Provider", () => {
 
                 // Verify that the inputs section contains the properties for all languages
                 it("contains input types for all languages", () => {
-                    const languages = ["TypeScript", "Python", "Go", "C#", "Java", "YAML"];
+                    const languages = ["TypeScript", "Python", "Go", "C#", "Java", "YAML", "HCL"];
 
                     // First verify the inputs section exists and has the language chooser with all languages
                     cy.get("#inputs").should("exist");
@@ -174,25 +224,28 @@ describe("Test Provider", () => {
                         cy.get("pulumi-chooser li a").contains(languageTabLabel[language]).first().click();
 
                         // Get the appropriate pulumi-choosable based on language
-                        let selector;
+                        let value;
                         if (language === "TypeScript") {
-                            selector = "div pulumi-choosable[type='language'][values*='typescript']";
+                            value = "typescript";
                         } else if (language === "C#") {
-                            selector = "div pulumi-choosable[type='language'][values*='csharp']";
+                            value = "csharp";
                         } else {
-                            selector = `div pulumi-choosable[type='language'][values*='${language.toLowerCase()}']`;
+                            value = language.toLowerCase();
                         }
+                        const inputsForLanguage = () =>
+                            cy.get("#inputs").nextUntil("#outputs")
+                                .find(`pulumi-choosable[type='language'][values*='${value}']`);
 
                         // Verify the language section exists
-                        cy.get(`#inputs ~ ${selector}`).should("exist");
+                        inputsForLanguage().should("exist");
 
                         // Verify it contains property definitions
-                        cy.get(`#inputs ~ ${selector} ${propertyLists}`).should("exist")
+                        inputsForLanguage().find(propertyLists).should("exist")
                             .find("dt").should("have.length.at.least", 1)
                             .first().should("exist");
 
                         // Verify each property has a type and description
-                        cy.get(`#inputs ~ ${selector} ${propertyLists} dt`).each(($dt) => {
+                        inputsForLanguage().find(`${propertyLists} dt`).each(($dt) => {
                             cy.wrap($dt)
                                 .find(".property-type").should("exist")
                                 .invoke('text')
@@ -226,64 +279,128 @@ describe("Test Provider", () => {
                 describe("type lists", () => {
                     it("are visible for all languages", () => {
                         cy.get(container).find("section.docs-content h2").as("sections");
-                        let pageHeadings = [];
                         cy.get("@sections").then(headings => {
-                            pageHeadings = headings
+                            const pageHeadings = headings
                                 .map((_, heading) => heading.textContent)
                                 .get();
-                        });
 
-                        if (pageHeadings.includes("Supporting Types")) {
-                            const languages = ["TypeScript", "Python", "Go", "C#", "Java", "YAML"];
+                            if (pageHeadings.includes("Supporting Types")) {
+                                const languages = ["TypeScript", "Python", "Go", "C#", "Java", "YAML", "HCL"];
 
-                            // First verify the language chooser exists and has all languages
-                            cy.get("#supporting-types ~ div > pulumi-chooser").should("exist")
-                                .invoke('attr', 'options')
-                                .should('include', 'typescript')
-                                .and('include', 'python')
-                                .and('include', 'go')
-                                .and('include', 'csharp')
-                                .and('include', 'java')
-                                .and('include', 'yaml');
+                                // First verify the language chooser exists and has all languages
+                                cy.get("#supporting-types ~ div > pulumi-chooser").should("exist")
+                                    .invoke('attr', 'options')
+                                    .should('include', 'typescript')
+                                    .and('include', 'python')
+                                    .and('include', 'go')
+                                    .and('include', 'csharp')
+                                    .and('include', 'java')
+                                    .and('include', 'yaml')
+                                    .and('include', 'hcl');
 
-                            languages.forEach(language => {
-                                cy.get("pulumi-chooser li a").contains(languageTabLabel[language]).first().click();
-                                cy.log(`Checking ${language} supporting types...`);
+                                languages.forEach(language => {
+                                    cy.get("pulumi-chooser li a").contains(languageTabLabel[language]).first().click();
+                                    cy.log(`Checking ${language} supporting types...`);
 
-                                // Get the appropriate pulumi-choosable based on language
-                                let selector;
-                                if (language === "TypeScript") {
-                                    selector = "div pulumi-choosable[type='language'][values*='typescript']";
-                                } else if (language === "C#") {
-                                    selector = "div pulumi-choosable[type='language'][values*='csharp']";
-                                } else {
-                                    selector = `div pulumi-choosable[type='language'][values*='${language.toLowerCase()}']`;
-                                }
+                                    // Get the appropriate pulumi-choosable based on language
+                                    let selector;
+                                    if (language === "TypeScript") {
+                                        selector = "div pulumi-choosable[type='language'][values*='typescript']";
+                                    } else if (language === "C#") {
+                                        selector = "div pulumi-choosable[type='language'][values*='csharp']";
+                                    } else {
+                                        selector = `div pulumi-choosable[type='language'][values*='${language.toLowerCase()}']`;
+                                    }
 
-                                // Verify the language section exists
-                                cy.get(`#supporting-types ~ ${selector}`).should("exist");
+                                    // Verify the language section exists
+                                    cy.get(`#supporting-types ~ ${selector}`).should("exist");
 
-                                // Verify it contains property definitions
-                                cy.get(`#supporting-types ~ ${selector} ${propertyLists}`).should("exist")
-                                    .find("dt").should("have.length.at.least", 1)
-                                    .first().should("exist");
+                                    // Verify it contains property definitions
+                                    cy.get(`#supporting-types ~ ${selector} ${propertyLists}`).should("exist")
+                                        .find("dt").should("have.length.at.least", 1)
+                                        .first().should("exist");
 
-                                // Verify each property has a type and description
-                                cy.get(`#supporting-types ~ ${selector} ${propertyLists} dt`).each(($dt) => {
-                                    cy.wrap($dt)
-                                        .find(".property-type").should("exist")
-                                        .invoke('text')
-                                        .should('have.length.gt', 0);
-                                    cy.wrap($dt)
-                                        .next("dd").should("exist")
-                                        .invoke('text')
-                                        .should('have.length.gt', 0);
+                                    // Verify each property has a type and description
+                                    cy.get(`#supporting-types ~ ${selector} ${propertyLists} dt`).each(($dt) => {
+                                        cy.wrap($dt)
+                                            .find(".property-type").should("exist")
+                                            .invoke('text')
+                                            .should('have.length.gt', 0);
+                                        cy.wrap($dt)
+                                            .next("dd").should("exist")
+                                            .invoke('text')
+                                            .should('have.length.gt', 0);
+                                    });
                                 });
-                            });
-                        }
+                            }
+                        });
                     });
                 });
             });
+        });
+    });
+
+    describe("API docs navigation", () => {
+        const base = "/registry/packages/test-provider/api-docs/";
+        const sidebar = "#docs-main-nav nav.main-nav";
+        const treeLink = page => `pulumi-api-doc-filterable-nav a[href="${base}${page}/"]`;
+
+        // A link's top edge, relative to the top of the sidebar's scroll viewport.
+        const offsetWithin = (nav, link) => link.getBoundingClientRect().top - nav.getBoundingClientRect().top;
+
+        beforeEach(() => {
+            // Wide enough for the desktop sidebar, and short enough that the API tree
+            // overflows it, so where the sidebar is scrolled to actually matters.
+            cy.viewport(1400, 500);
+        });
+
+        it("scrolls the current page's link into view", () => {
+            cy.visit(`${base}testresourceexamplesfence/`);
+            cy.get(sidebar).should($nav => {
+                const nav = $nav[0];
+                const link = nav.querySelector(treeLink("testresourceexamplesfence"));
+                expect(link).to.exist;
+                expect(nav.scrollTop).to.be.greaterThan(0);
+                expect(offsetWithin(nav, link) + link.offsetHeight).to.be.at.most(nav.clientHeight);
+            });
+        });
+
+        it("keeps a clicked link in the same place on the page it opens", () => {
+            cy.visit(`${base}testresourcecommentfence/`);
+
+            // Wait for the sidebar to reveal this page's link, so that doesn't undo
+            // the scroll position set below.
+            cy.get(sidebar).should($nav => {
+                expect($nav[0].querySelector(treeLink("testresourcecommentfence"))).to.exist;
+                expect($nav[0].scrollTop).to.be.greaterThan(0);
+            });
+
+            cy.get(sidebar).then($nav => {
+                const nav = $nav[0];
+                const link = nav.querySelector(treeLink("testresourceexamplesfence"));
+
+                // Park the link on the sidebar's bottom edge. Resetting the sidebar
+                // would push it out of view, and revealing it would center it, so
+                // only keeping it in place passes.
+                nav.scrollTop += offsetWithin(nav, link) + link.offsetHeight - nav.clientHeight;
+                const before = offsetWithin(nav, link);
+
+                cy.wrap(link).click({ scrollBehavior: false });
+                cy.location("pathname").should("eq", `${base}testresourceexamplesfence/`);
+                cy.get(sidebar).should($next => {
+                    const next = $next[0].querySelector(treeLink("testresourceexamplesfence"));
+                    expect(next).to.exist;
+                    expect(offsetWithin($next[0], next)).to.be.closeTo(before, 1);
+                });
+            });
+        });
+    });
+
+    describe("Provider API Docs", () => {
+        it("has no Look up section", () => {
+            cy.visit("/registry/packages/test-provider/api-docs/provider/");
+            cy.get("main div.docs-main-content h1").should("exist");
+            cy.get("#look-up").should("not.exist");
         });
     });
 });

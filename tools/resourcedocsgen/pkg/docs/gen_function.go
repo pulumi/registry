@@ -137,8 +137,6 @@ func (mod *modContext) getFunctionResourceInfo(
 }
 
 func (mod *modContext) genFunctionParamsTS(f *schema.Function, funcName string, outputVersion bool) []formalParam {
-	dctx := mod.context
-
 	argsTypeSuffix := "Args"
 	if outputVersion {
 		argsTypeSuffix = "OutputArgs"
@@ -146,7 +144,11 @@ func (mod *modContext) genFunctionParamsTS(f *schema.Function, funcName string, 
 
 	argsType := title(fmt.Sprintf("%s%s", funcName, argsTypeSuffix), language.NodeJS)
 
-	docLangHelper := dctx.getLanguageDocHelper(language.NodeJS)
+	docLangHelper := mod.context.getLanguageDocHelper(language.NodeJS)
+
+	def, err := mod.pkg.Definition()
+	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
+
 	var params []formalParam
 	if f.Inputs != nil {
 		params = append(params, formalParam{
@@ -157,8 +159,6 @@ func (mod *modContext) genFunctionParamsTS(f *schema.Function, funcName string, 
 			},
 		})
 	}
-	def, err := mod.pkg.Definition()
-	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
 	// The Output version accepts `InvokeOutputOptions`, which extends `InvokeOptions` with `dependsOn`.
 	optsType := "InvokeOptions"
 	if outputVersion {
@@ -443,8 +443,9 @@ func (mod *modContext) genFunctionHeader(f *schema.Function) header {
 
 	baseDescription := summarizeForMetaDescription(f.Comment)
 	if baseDescription == "" {
-		baseDescription = fmt.Sprintf("Use %s with Pulumi. Full API reference with input and output "+
-			"properties and examples in TypeScript, Python, Go, C#, Java, and YAML.", qualifiedName)
+		baseDescription = fmt.Sprintf("Documentation for the %s function "+
+			"with examples, input properties, output properties, "+
+			"and supporting types.", qualifiedName)
 	}
 
 	return header{
@@ -473,15 +474,16 @@ func (mod *modContext) genFunctionOutputVersionMap(f *schema.Function) map[langu
 // the `function.tmpl` doc template.
 func (mod *modContext) genFunction(f *schema.Function) functionDocArgs {
 	dctx := mod.context
+	selfRef := schema.DocRefForFunction(f)
 	inputProps := make(map[language.Language][]property)
 	outputProps := make(map[language.Language][]property)
 	for lang := range language.All() {
 		if f.Inputs != nil {
-			inputProps[lang] = mod.getProperties(f.Inputs.Properties, lang, true, false, false)
+			inputProps[lang] = mod.getProperties(selfRef, f.Inputs.Properties, lang, true, false, false)
 		}
 		if f.ReturnType != nil {
 			if objectObject, ok := f.ReturnType.(*schema.ObjectType); ok {
-				outputProps[lang] = mod.getProperties(objectObject.Properties,
+				outputProps[lang] = mod.getProperties(selfRef, objectObject.Properties,
 					lang, false, false, false)
 			}
 		}
@@ -508,7 +510,8 @@ func (mod *modContext) genFunction(f *schema.Function) functionDocArgs {
 	}
 
 	supportedSnippetLanguages := mod.context.getSupportedSnippetLanguages(f.IsOverlay, f.OverlaySupportedLanguages)
-	docInfo := dctx.decomposeDocstring(SanitizeDescription(f.Comment), supportedSnippetLanguages)
+	docInfo := dctx.decomposeDocstring(
+		schema.DocRefForFunction(f), SanitizeDescription(f.Comment), supportedSnippetLanguages)
 	args := functionDocArgs{
 		Header: mod.genFunctionHeader(f),
 

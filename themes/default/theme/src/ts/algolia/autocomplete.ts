@@ -1,6 +1,7 @@
 import { liteClient as algoliasearch, type LiteClient } from "algoliasearch/lite";
 import { autocomplete, getAlgoliaResults, getAlgoliaFacets } from "@algolia/autocomplete-js";
 import { getTags, getTagsPlugin, setTags, Tag, iconForTag, labelForTag, mapTagsToFilters, groupBy, formatCount, debounce, listenForEvents } from "./utils";
+import { createConsentGatedInsightsClient, createSearchInsightsClient } from "./insights";
 
 // CSS selector of the element to convert into an autocomplete control.
 const autocompleteContainer = "#search";
@@ -301,9 +302,9 @@ function initAutocomplete(el: HTMLElement) {
             return debounce(sources);
         },
 
-        // Enable Algolia insights.
+        // Enable Algolia insights, gated on Performance consent (see ./insights.ts).
         // https://www.algolia.com/doc/guides/building-search-ui/events/js/
-        insights: true,
+        insights: { insightsClient: createConsentGatedInsightsClient(createSearchInsightsClient()) },
 
         // https://www.algolia.com/doc/ui-libraries/autocomplete/core-concepts/plugins/
         plugins: [

@@ -1,12 +1,11 @@
 ---
-title: Equinix Metal (Deprecated)
+title: Equinix Metal
 meta_desc: Provides an overview of the Equinix Metal provider for Pulumi.
 layout: package
 ---
 
 {{% notes type="info" %}}
-This provider has been deprecated as of April 2023. It is recommended to use the [Official Equinix Provider](/registry/packages/equinix) as a replacement.
-Unfortunately, there is no upgrade path from this provider to the Official Equinix provider, but you can take advantage of the [Pulumi Import](/docs/guides/adopting/import) to help achieve the migration.
+This provider has been deprecated since April 2023. There is no replacement provider for the resources it managed.
 {{% /notes %}}
 
 The Equinix Metal provider for Pulumi can be used to provision any of the cloud resources available in [Equinix Metal](https://metal.equinix.com/).

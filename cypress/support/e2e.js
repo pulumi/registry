@@ -18,3 +18,11 @@ import "./commands";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// Every build loads the OneTrust consent banner, which covers controls at the
+// bottom of the page. Block its scripts so the banner never renders: OneTrust
+// picks a banner by the visitor's location, and some of them still showed up
+// for runners that had marked the banner as already dismissed.
+beforeEach(() => {
+    cy.intercept("https://cdn.cookielaw.org/**", { statusCode: 204 });
+});

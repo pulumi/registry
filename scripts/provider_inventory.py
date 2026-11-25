@@ -88,9 +88,9 @@ def analyze_page(path):
 
 
 def analyze_extras(content_dir):
-    # How-to guides are no longer generated; the only ones in the tree are the
-    # hand-committed migration guides under a few packages' how-to-guides/ dirs.
-    extras = {"howto_guides": 0, "migration_dirs": [], "other_files": []}
+    # Guides are hand-committed under a few packages' guides/ dirs, mostly
+    # major-version migration guides.
+    extras = {"guides": 0, "migration_dirs": [], "other_files": []}
     if content_dir.is_dir():
         for child in sorted(content_dir.iterdir()):
             if child.name in ("_index.md", "installation-configuration.md"):
@@ -101,8 +101,8 @@ def analyze_extras(content_dir):
                 if child.name == "api-docs":
                     continue
                 count = len(list(child.rglob("*.md")))
-                if child.name == "how-to-guides":
-                    extras["howto_guides"] = count
+                if child.name == "guides":
+                    extras["guides"] = count
                 else:
                     extras["migration_dirs"].append(f"{child.name} ({count})")
             else:
@@ -179,6 +179,7 @@ def main():
             "category": data.get("category", ""),
             "publisher": data.get("publisher", ""),
             "component": bool(data.get("component", False)),
+            "deprecated": bool(data.get("deprecated", False)),
             "native": bool(data.get("native", False)),
             "package_status": data.get("package_status", ""),
             "featured": bool(data.get("featured", False)),

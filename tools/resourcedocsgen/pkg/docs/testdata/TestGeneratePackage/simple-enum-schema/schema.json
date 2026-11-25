@@ -218,7 +218,8 @@
           "value": "small"
         },
         {
-          "value": "medium"
+          "value": "medium",
+          "description": "\n"
         },
         {
           "value": "large"
@@ -237,6 +238,29 @@
           "value": 12
         }
       ]
+    }
+  },
+  "functions": {
+    "plant:tree/v1:getRubberTree": {
+      "inputs": {
+        "properties": {
+          "type": {
+            "$ref": "#/types/plant:tree/v1:RubberTreeVariety"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type"
+        ]
+      },
+      "outputs": {
+        "properties": {
+          "size": {
+            "$ref": "#/types/plant:tree/v1:TreeSize"
+          }
+        },
+        "type": "object"
+      }
     }
   },
   "language": {

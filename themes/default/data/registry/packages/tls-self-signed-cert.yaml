@@ -1,11 +1,12 @@
 category: Cloud
 component: false
+deprecated: true
 description: ""
 featured: false
 logo_url: ""
 name: tls-self-signed-cert
 package_status: public_preview
-publisher: DEPRECATED
+publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-tls-self-signed-cert
 schema_file_path: schema.json
 title: Self Signed Certificate

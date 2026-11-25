@@ -96,6 +96,8 @@ test("every removed install-config package redirects to its own Overview", () =>
         "gitlab", "hcloud", "keycloak", "kong", "mailgun", "minio",
         "mongodbatlas", "mysql", "newrelic", "ns1", "opsgenie", "pagerduty",
         "rabbitmq", "rancher2", "signalfx", "snowflake", "splunk", "venafi",
+        // Merged into the Overview.
+        "pulumiservice",
     ];
     for (const pkg of packages) {
         const result = handler(request(`/registry/packages/${pkg}/installation-configuration/`));
@@ -172,8 +174,8 @@ test("/foo.md -> internal rewrite to /foo/index.md", () => {
 });
 
 test("nested leaf: .md suffix on a how-to-guide", () => {
-    const result = handler(request("/registry/packages/aws/how-to-guides/6-0-migration.md"));
-    assertPassThrough(result, "/registry/packages/aws/how-to-guides/6-0-migration/index.md");
+    const result = handler(request("/registry/packages/aws/guides/6-0-migration.md"));
+    assertPassThrough(result, "/registry/packages/aws/guides/6-0-migration/index.md");
 });
 
 test("registry root: /registry/ + Accept -> URI rewrite to /registry/index.md", () => {
@@ -249,4 +251,13 @@ test("Accept normalization: missing Accept stays missing", () => {
     const event = request("/registry/packages/aws/");
     handler(event);
     assert.equal(event.request.headers["accept"], undefined);
+});
+
+// index.ts ships this file verbatim as CloudFront Function code. CloudFront
+// rejects functions over 10 KB, but only at `pulumi up`, which runs post-merge
+// after the full site build. 9,000 bytes keeps a margin under the stricter
+// reading of "10 KB" (10,000 bytes).
+test("redirects.js stays under the CloudFront Function size limit", () => {
+    const bytes = Buffer.byteLength(source, "utf8");
+    assert.ok(bytes <= 9000, `redirects.js is ${bytes} bytes; keep it at or under 9,000 (CloudFront caps function code at 10 KB)`);
 });

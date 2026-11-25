@@ -32,6 +32,9 @@ func TestProcessDescription(t *testing.T) {
 	}{
 		{"lambda-description"},
 		{"scaleway-k8s-cluster-description"}, // Repro: https://github.com/pulumi/registry/issues/4202
+		{"ref-shortcode-description"},        // renders {{% ref %}} shortcodes
+		{"ref-and-code-chooser-description"}, // refs interleaved with a PulumiCodeChooser block
+		{"chooser-in-list-description"},
 	}
 
 	for _, tt := range tests {
@@ -48,7 +51,7 @@ func TestProcessDescription(t *testing.T) {
 			require.NoError(t, err, "importing spec")
 
 			dctx := NewContext("test", schemaPkg)
-			actual := dctx.processDescription(input, dctx.getSupportedSnippetLanguages(false, nil)).description
+			actual := dctx.decomposeDocstring(schema.DocRef{}, input, dctx.getSupportedSnippetLanguages(false, nil)).description
 
 			autogold.ExpectFile(t, autogold.Raw(actual))
 		})
@@ -63,6 +66,7 @@ func TestDecomposeDocstringDescription(t *testing.T) {
 	}{
 		{"lambda-description"},                 // renders code choosers
 		{"certificate-validation-description"}, // renders legacy shortcode examples
+		{"ref-shortcode-description"},          // renders {{% ref %}} shortcodes
 	}
 
 	for _, tt := range tests {
@@ -79,7 +83,7 @@ func TestDecomposeDocstringDescription(t *testing.T) {
 			require.NoError(t, err, "importing spec")
 
 			dctx := NewContext("test", schemaPkg)
-			actual := dctx.decomposeDocstring(input, dctx.getSupportedSnippetLanguages(false, nil)).description
+			actual := dctx.decomposeDocstring(schema.DocRef{}, input, dctx.getSupportedSnippetLanguages(false, nil)).description
 
 			autogold.ExpectFile(t, autogold.Raw(actual))
 		})

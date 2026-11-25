@@ -41,9 +41,9 @@ expect "installation and configuration page" \
     "/registry/packages/aws/installation-configuration/" \
     "$(content_path_to_url themes/default/content/registry/packages/aws/installation-configuration.md)"
 
-expect "how-to guide" \
-    "/registry/packages/aws/how-to-guides/7-0-migration/" \
-    "$(content_path_to_url themes/default/content/registry/packages/aws/how-to-guides/7-0-migration.md)"
+expect "guide" \
+    "/registry/packages/aws/guides/7-0-migration/" \
+    "$(content_path_to_url themes/default/content/registry/packages/aws/guides/7-0-migration.md)"
 
 expect "registry section landing page" \
     "/registry/" \
@@ -54,8 +54,8 @@ expect "site root" \
     "$(content_path_to_url themes/default/content/_index.md)"
 
 expect "leaf bundle collapses to its directory" \
-    "/registry/packages/aws/how-to-guides/some-guide/" \
-    "$(content_path_to_url themes/default/content/registry/packages/aws/how-to-guides/some-guide/index.md)"
+    "/registry/packages/aws/guides/some-guide/" \
+    "$(content_path_to_url themes/default/content/registry/packages/aws/guides/some-guide/index.md)"
 
 echo
 echo "== changed_paths_to_urls =="

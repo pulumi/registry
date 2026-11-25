@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-github/v6.15.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-github/v6.15.1/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-github/blob/v6.15.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-github/blob/v6.15.1/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Github Provider
 meta_desc: Provides an overview on how to configure the Pulumi Github provider.
@@ -42,7 +42,7 @@ import * as pulumi from "@pulumi/pulumi";
 import * as github from "@pulumi/github";
 
 const example = github.getRepository({
-    name: "pulumi-provider-github",
+    name: "terraform-provider-github",
 });
 ```
 
@@ -62,7 +62,7 @@ config:
 import pulumi
 import pulumi_github as github
 
-example = github.get_repository(name="pulumi-provider-github")
+example = github.get_repository(name="terraform-provider-github")
 ```
 
 {{% /choosable %}}
@@ -87,7 +87,7 @@ return await Deployment.RunAsync(() =>
 {
     var example = Github.GetRepository.Invoke(new()
     {
-        Name = "pulumi-provider-github",
+        Name = "terraform-provider-github",
     });
 
 });
@@ -117,7 +117,7 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		_, err := github.GetRepository(ctx, &github.LookupRepositoryArgs{
-			Name: pulumi.StringRef("pulumi-provider-github"),
+			Name: pulumi.StringRef("terraform-provider-github"),
 		}, nil)
 		if err != nil {
 			return err
@@ -145,7 +145,7 @@ variables:
     fn::invoke:
       function: github:getRepository
       arguments:
-        name: pulumi-provider-github
+        name: terraform-provider-github
 ```
 
 {{% /choosable %}}
@@ -182,7 +182,7 @@ public class App {
 
     public static void stack(Context ctx) {
         final var example = GithubFunctions.getRepository(GetRepositoryArgs.builder()
-            .name("pulumi-provider-github")
+            .name("terraform-provider-github")
             .build());
 
     }
@@ -192,7 +192,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     github = {
       source = "pulumi/github"
@@ -200,8 +200,8 @@ pulumi {
   }
 }
 
-data "github_getrepository" "example" {
-  name = "pulumi-provider-github"
+data "github_repository" "example" {
+  name = "terraform-provider-github"
 }
 
 ```

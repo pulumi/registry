@@ -20,12 +20,12 @@ html:not([data-theme="dark"]) body {
     }
 
     // Standalone code block → bordered card. A fenced block that isn't already
-    // inside its own frame (a chooser card, an example-program panel, a code-chrome
-    // terminal, or a code-tabbed demo) gets a 1px --chrome-border so it matches the
-    // chooser chrome. The :not() list excludes the surfaces that supply their own
-    // frame; pre.mermaid is excluded so diagram canvases stay unframed. Lives inside
-    // the light gate so the dark half in _docs-theme.scss owns the dark border.
-    .highlight:not(pulumi-chooser *, .example-program *, .code-chrome *, .code-tabbed *) pre:not(.mermaid) {
+    // inside its own frame (a chooser card, a code-chrome terminal, or a code-tabbed
+    // demo) gets a 1px --chrome-border so it matches the chooser chrome. The :not()
+    // list excludes the surfaces that supply their own frame; pre.mermaid is
+    // excluded so diagram canvases stay unframed. Lives inside the light gate so the
+    // dark half in _docs-theme.scss owns the dark border.
+    .highlight:not(pulumi-chooser *, .code-chrome *, .code-tabbed *) pre:not(.mermaid) {
         border: 1px solid var(--chrome-border);
     }
 
@@ -147,19 +147,6 @@ html:not([data-theme="dark"]) body {
 
         &:hover {
             color: var(--color-gray-900);
-        }
-    }
-
-    // example-program footer (the code panel's bottom lip).
-    .example-program .example-program-footer {
-        background: color-mix(in srgb, var(--color-violet-50) 50%, transparent);
-
-        a {
-            color: var(--color-gray-700);
-
-            &:hover {
-                color: var(--color-gray-900);
-            }
         }
     }
 

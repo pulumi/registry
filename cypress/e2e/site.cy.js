@@ -60,6 +60,10 @@ describe("www.pulumi.com/registry", () => {
             cy.get(`.all-packages .package:not(.hidden) [data-name='${name}']`).should("exist");
         };
 
+        const expectHidden = (name) => {
+            cy.get(`.all-packages .package.hidden [data-name='${name}']`).should("exist");
+        };
+
         it("matches the package name", () => {
             filterBy("scm");
             expectShown("scm");
@@ -72,10 +76,17 @@ describe("www.pulumi.com/registry", () => {
             expectShown("scm");
         });
 
-        it("matches the title after the native hack strips the word", () => {
+        it("does not match every package for native alone", () => {
+            filterBy("native");
+            expectShown("aws-native");
+            expectShown("azure-native");
+            expectHidden("aws");
+        });
+
+        it("requires native to match when combined with another word", () => {
             filterBy("native aws");
             expectShown("aws-native");
-            expectShown("aws");
+            expectHidden("aws");
         });
 
         it("treats amazon as a synonym for aws", () => {

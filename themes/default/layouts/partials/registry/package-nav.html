@@ -1,11 +1,7 @@
 {{ $rawPackageName := index (split .Page.File.Path "/") 2 }}
 {{ $packageUrl := printf "%s/" (path.Join "/registry/packages" $rawPackageName) }}
 {{ $installPath := printf "%s/" (path.Join $packageUrl "installation-configuration") }}
-{{ $howToPath := printf "%s/" (path.Join $packageUrl "how-to-guides/") }}
-{{ $versionGuidePath := printf "%s/" (path.Join $packageUrl "version-guide") }}
-{{ $migratePath := printf "%s/" (path.Join $packageUrl "from-classic") }}
-{{ $upgradeV2Path := printf "%s/" (path.Join $packageUrl "from-v1-to-v2") }}
-{{ $upgradeV3Path := printf "%s/" (path.Join $packageUrl "from-v2-to-v3") }}
+{{ $guidesPath := printf "%s/" (path.Join $packageUrl "guides") }}
 {{ $apiDocsPath := printf "%s/" (path.Join $packageUrl "api-docs") }}
 
 <nav class="main-nav">
@@ -29,45 +25,40 @@
                 <a href="{{ $installPath }}">Install & config</a>
             </li>
         {{ end }}
-        {{ $sidenav_selected = cond (eq .Page.RelPermalink $howToPath) "active" "" }}
-        {{ if .GetPage $howToPath }}
-            <li class="sidenav-topic {{ $sidenav_selected }}">
-                    {{ $guidesCount := 0 }}
-                    {{ with .GetPage $howToPath }}
-                        {{ $guidesCount = len .Pages }}
-                    {{ end }}
-
-                    <a href="{{ $howToPath }}">
-                        How-to guides
-                        {{ if ge $guidesCount 1 }}
-                            <span class="count-badge">{{ $guidesCount }}</span>
-                        {{ end }}
-                    </a>
-            </li>
-        {{ end }}
-        {{ $sidenav_selected = cond (eq .Page.RelPermalink $versionGuidePath) "active" "" }}
-        {{ if .GetPage $versionGuidePath }}
-            <li class="sidenav-topic {{ $sidenav_selected }}">
-                <a href="{{ $versionGuidePath }}">Version guide</a>
-            </li>
-        {{ end }}
-        {{ $sidenav_selected = cond (eq .Page.RelPermalink $migratePath) "active" "" }}
-        {{ if .GetPage $migratePath }}
-            <li class="sidenav-topic {{ $sidenav_selected }}">
-                <a href="{{ $migratePath }}">Migrate from classic</a>
-            </li>
-        {{ end }}
-        {{ $sidenav_selected = cond (eq .Page.RelPermalink $upgradeV2Path) "active" "" }}
-        {{ if .GetPage $upgradeV2Path }}
-            <li class="sidenav-topic {{ $sidenav_selected }}">
-                <a href="{{ $upgradeV2Path }}">Upgrade to v2</a>
-            </li>
-        {{ end }}
-        {{ $sidenav_selected = cond (eq .Page.RelPermalink $upgradeV3Path) "active" "" }}
-        {{ if .GetPage $upgradeV3Path }}
-            <li class="sidenav-topic {{ $sidenav_selected }}">
-                <a href="{{ $upgradeV3Path }}">Upgrade to v3</a>
-            </li>
+        {{ with .GetPage $guidesPath }}
+            {{- /* Same expandable markup as the docs sidebar (partials/docs/main-nav.html),
+                   so it shares that sidebar's styles, dark-mode overrides, and the
+                   toggle behavior in theme/src/ts/misc.ts. Collapsed unless the reader
+                   is already in the Guides section. */ -}}
+            {{ $inGuides := hasPrefix $.Page.RelPermalink $guidesPath }}
+            {{ $sidenav_selected = cond (eq $.Page.RelPermalink $guidesPath) "active" "" }}
+            <ul id="toc-expandable-menu-guides" class="{{ cond $inGuides "toggleVisible" "toggle" }}">
+                <ul class="collapsed">
+                    <li class="sidenav-topic {{ $sidenav_selected }}">
+                        <a href="{{ $guidesPath }}">Guides</a>
+                        <span class="toggleButton">
+                            <div class="icon icon-14-14 keyboard-arrow-right-gray"></div>
+                        </span>
+                    </li>
+                </ul>
+                <ul class="expanded">
+                    <li class="sidenav-topic sidenav-parent {{ $sidenav_selected }}">
+                        <a href="{{ $guidesPath }}">Guides</a>
+                        <span class="toggleButton">
+                            <div class="icon icon-14-14 keyboard-arrow-down-gray-14-14"></div>
+                        </span>
+                    </li>
+                    <div class="sidenav-subsection">
+                        <ul>
+                            {{ range .Pages }}
+                                <li class="sidenav-topic {{ cond (hasPrefix $.Page.RelPermalink .RelPermalink) "active" "" }}">
+                                    <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+                                </li>
+                            {{ end }}
+                        </ul>
+                    </div>
+                </ul>
+            </ul>
         {{ end }}
         {{ $sidenav_selected = cond (eq .Page.RelPermalink $apiDocsPath) "active" "" }}
         {{ if .GetPage $apiDocsPath }}

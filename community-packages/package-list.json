@@ -1,6 +1,10 @@
 {
   "include": [
     {
+      "repoSlug": "dimeskigj/pulumi-dokploy",
+      "schemaFile": "provider/cmd/pulumi-resource-dokploy/schema.json"
+    },
+    {
       "repoSlug": "koyeb/pulumi-koyeb",
       "schemaFile": "provider/cmd/pulumi-resource-koyeb/schema.json"
     },
@@ -9,20 +13,16 @@
       "schemaFile": "provider/cmd/pulumi-resource-time/schema.json"
     },
     {
-      "repoSlug": "pulumiverse/pulumi-doppler",
+      "repoSlug": "DopplerHQ/pulumi-doppler",
       "schemaFile": "provider/cmd/pulumi-resource-doppler/schema.json"
-    },
-    {
-      "repoSlug": "pgEdge/pulumi-pgedge",
-      "schemaFile": "provider/cmd/pulumi-resource-pgedge/schema.json"
     },
     {
       "repoSlug": "checkly/pulumi-checkly",
       "schemaFile": "provider/cmd/pulumi-resource-checkly/schema.json"
     },
     {
-      "repoSlug": "EventStore/pulumi-eventstorecloud",
-      "schemaFile": "provider/cmd/pulumi-resource-eventstorecloud/schema.json"
+      "repoSlug": "kurrent-io/pulumi-kurrentcloud",
+      "schemaFile": "provider/cmd/pulumi-resource-kurrentcloud/schema.json"
     },
     {
       "repoSlug": "pulumiverse/pulumi-buildkite",
@@ -83,10 +83,6 @@
     {
       "repoSlug": "pulumiverse/pulumi-grafana",
       "schemaFile": "provider/cmd/pulumi-resource-grafana/schema.json"
-    },
-    {
-      "repoSlug": "lbrlabs/pulumi-harness",
-      "schemaFile": "provider/cmd/pulumi-resource-harness/schema.json"
     },
     {
       "repoSlug": "pulumi/pulumi-synced-folder",
@@ -181,10 +177,6 @@
       "schemaFile": "provider/cmd/pulumi-resource-matchbox/schema.json"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-lbrlabs-eks",
-      "schemaFile": "schema.yaml"
-    },
-    {
       "repoSlug": "pulumiverse/pulumi-cockroach",
       "schemaFile": "provider/cmd/pulumi-resource-cockroach/schema.json"
     },
@@ -221,24 +213,12 @@
       "schemaFile": "provider/cmd/pulumi-resource-esxi-native/schema.json"
     },
     {
-      "repoSlug": "lbrlabs/pulumi-iosxe",
-      "schemaFile": "provider/cmd/pulumi-resource-iosxe/schema.json"
-    },
-    {
-      "repoSlug": "lbrlabs/pulumi-nxos",
-      "schemaFile": "provider/cmd/pulumi-resource-nxos/schema.json"
-    },
-    {
       "repoSlug": "pulumiverse/pulumi-acme",
       "schemaFile": "provider/cmd/pulumi-resource-acme/schema.json"
     },
     {
-      "repoSlug": "threefoldtech/pulumi-threefold",
+      "repoSlug": "threefoldtech/grid_pulumi",
       "schemaFile": "provider/cmd/pulumi-resource-threefold/schema.json"
-    },
-    {
-      "repoSlug": "lbrlabs/pulumi-awscontroltower",
-      "schemaFile": "provider/cmd/pulumi-resource-awscontroltower/schema.json"
     },
     {
       "repoSlug": "pulumiverse/pulumi-talos",
@@ -255,10 +235,6 @@
     {
       "repoSlug": "pulumiverse/pulumi-cpln",
       "schemaFile": "provider/cmd/pulumi-resource-cpln/schema.json"
-    },
-    {
-      "repoSlug": "runpod/pulumi-runpod-native",
-      "schemaFile": "provider/schema.json"
     },
     {
       "repoSlug": "zscaler/pulumi-zpa",
@@ -311,10 +287,6 @@
     {
       "repoSlug": "wttech/pulumi-aem",
       "schemaFile": "provider/cmd/pulumi-resource-aem/schema.json"
-    },
-    {
-      "repoSlug": "crowdstrike/pulumi-crowdstrike",
-      "schemaFile": "provider/cmd/pulumi-resource-crowdstrike/schema.json"
     },
     {
       "repoSlug": "azaurus1/pulumi-kafka-connect",
@@ -397,6 +369,10 @@
       "schemaFile": "provider/cmd/pulumi-resource-defang-azure/schema.json"
     },
     {
+      "repoSlug": "DefangLabs/pulumi-defang",
+      "schemaFile": "provider/cmd/pulumi-resource-defang-scaleway/schema.json"
+    },
+    {
       "repoSlug": "atensecurity/pulumi-thoth",
       "schemaFile": "provider/cmd/pulumi-resource-thoth/schema.json"
     },
@@ -409,8 +385,20 @@
       "schemaFile": "schema.json"
     },
     {
+      "repoSlug": "incsteps/pulumi-provider-multipass",
+      "schemaFile": "schema.json"
+    },
+    {
       "repoSlug": "jschady/pulumi-filescom",
       "schemaFile": "provider/cmd/pulumi-resource-filescom/schema.json"
+    },
+    {
+      "repoSlug": "incident-io/pulumi-incident",
+      "schemaFile": "provider/cmd/pulumi-resource-incident/schema.json"
+    },
+    {
+      "repoSlug": "htmlcsstoimage/pulumi-html-css-to-image",
+      "schemaFile": "internal/provider/schema.json"
     }
   ]
 }

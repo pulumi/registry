@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import base64
+import http.client
 import json
 import os
+import sys
+import time
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -10,9 +13,36 @@ from typing import Any
 
 FACT_SHEET_MARKER = "<!-- community-package-fact-sheet -->"
 
+TIMEOUT_SECONDS = 30
+ATTEMPTS = 4
+TRANSIENT_STATUSES = frozenset({500, 502, 503, 504})
+NOT_FOUND = 404
+
 
 def repo() -> str:
     return os.environ.get("REPO") or os.environ["GITHUB_REPOSITORY"]
+
+
+def _retryable(req: urllib.request.Request, error: OSError | http.client.HTTPException) -> bool:
+    if req.get_method() != "GET":
+        return False
+    if isinstance(error, urllib.error.HTTPError):
+        return error.code in TRANSIENT_STATUSES
+    return isinstance(error, (TimeoutError, ConnectionError, urllib.error.URLError,
+                              http.client.HTTPException))
+
+
+def _read(req: urllib.request.Request) -> bytes:
+    for attempt in range(ATTEMPTS):
+        try:
+            with urllib.request.urlopen(req, timeout=TIMEOUT_SECONDS) as resp:
+                return bytes(resp.read())
+        except (OSError, http.client.HTTPException) as e:
+            if attempt == ATTEMPTS - 1 or not _retryable(req, e):
+                raise
+            print(f"{req.full_url}: {e}; retrying", file=sys.stderr)
+            time.sleep(2 ** attempt)
+    raise AssertionError("the last attempt returns or raises")
 
 
 def request(path: str, method: str = "GET", body: dict[str, Any] | None = None) -> Any:
@@ -24,28 +54,25 @@ def request(path: str, method: str = "GET", body: dict[str, Any] | None = None) 
     req.add_header("Accept", "application/vnd.github+json")
     if encoded is not None:
         req.add_header("Content-Type", "application/json")
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        payload = resp.read()
+    payload = _read(req)
     return json.loads(payload) if payload else None
 
 
 def raw_file(slug: str, ref: str, path: str) -> bytes | None:
     url = f"https://raw.githubusercontent.com/{slug}/{ref}/{path}"
     try:
-        with urllib.request.urlopen(urllib.request.Request(url), timeout=30) as resp:
-            return bytes(resp.read())
-    except urllib.error.HTTPError:
-        return None
-
-
-NO_LATEST_RELEASE = 404
+        return _read(urllib.request.Request(url))
+    except urllib.error.HTTPError as e:
+        if e.code == NOT_FOUND:
+            return None
+        raise
 
 
 def latest_release_tag(slug: str) -> str | None:
     try:
         return str(request(f"/repos/{slug}/releases/latest")["tag_name"])
     except urllib.error.HTTPError as e:
-        if e.code == NO_LATEST_RELEASE:
+        if e.code == NOT_FOUND:
             return None
         raise
 
@@ -74,26 +101,17 @@ def pull_request_head(pr: int) -> tuple[str, str]:
     return str(pull["user"]["login"]), str(pull["head"]["sha"])
 
 
-def pull_request_is_first_party(pr: int) -> bool:
-    pull = pull_request(pr)
+def is_first_party(pull: dict[str, Any]) -> bool:
     head_repo = (pull["head"].get("repo") or {}).get("full_name")
     return bool(head_repo) and head_repo == pull["base"]["repo"]["full_name"]
 
 
+def pull_request_is_first_party(pr: int) -> bool:
+    return is_first_party(pull_request(pr))
+
+
 def open_pull_requests() -> list[dict[str, Any]]:
     return list(request(f"/repos/{repo()}/pulls?state=open&per_page=100"))
-
-
-def open_issue_with_marker(marker: str, label: str) -> dict[str, Any] | None:
-    listed = request(f"/repos/{repo()}/issues?state=open&labels={label}&per_page=100")
-    for issue in listed:
-        if "pull_request" not in issue and marker in (issue.get("body") or ""):
-            return dict(issue)
-    return None
-
-
-def create_issue(title: str, body: str, labels: list[str]) -> None:
-    request(f"/repos/{repo()}/issues", "POST", {"title": title, "body": body, "labels": labels})
 
 
 def add_reaction(comment_id: str, content: str) -> None:
@@ -127,6 +145,17 @@ def fact_sheet_comment(pr: int) -> dict[str, Any] | None:
         if FACT_SHEET_MARKER in (comment.get("body") or ""):
             return comment
     return None
+
+
+def checked_marker(sha: str) -> str:
+    return f"<!-- community-package-checked: {_short(sha)} -->"
+
+
+def fact_sheet_reports(pr: int, sha: str) -> bool:
+    comment = fact_sheet_comment(pr)
+    if comment is None:
+        return False
+    return checked_marker(sha) in str(comment.get("body") or "")
 
 
 def _minutes_since(timestamp: str) -> int:
@@ -164,10 +193,6 @@ def _dispatched_runs(workflow_file: str) -> list[dict[str, Any]]:
 
 def _run_title(run: dict[str, Any]) -> str:
     return str(run.get("display_title") or run.get("name") or "")
-
-
-def dispatch_exists(workflow_file: str, label: str) -> bool:
-    return any(_run_title(run) == label for run in _dispatched_runs(workflow_file))
 
 
 def minutes_since_dispatch(workflow_file: str, pr: int) -> int | None:

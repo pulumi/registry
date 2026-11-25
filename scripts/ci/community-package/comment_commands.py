@@ -14,8 +14,6 @@ def _authorized(mode: str, commenter: str, author: str, association: str) -> boo
 
 
 CHECK_WORKFLOW = "community-package-check.yml"
-SWEEP_FAILURE_MARKER = "<!-- community-package-sweep-failure -->"
-SWEEP_FAILURE_LABEL = "p1"
 PACKAGE_LIST = str(package_list.PATH)
 VERDICT_FILE = "verdict.txt"
 
@@ -65,12 +63,15 @@ def check_command() -> int:
 
 def sweep() -> int:
     for pull in github_api.open_pull_requests():
+        if github_api.is_first_party(pull):
+            continue
         pr, sha = int(pull["number"]), str(pull["head"]["sha"])
         if PACKAGE_LIST not in github_api.pull_request_files(pr):
             continue
-        if github_api.dispatch_exists(CHECK_WORKFLOW, github_api.dispatch_run_label(pr, sha)):
+        if github_api.fact_sheet_reports(pr, sha):
             continue
         github_api.dispatch_check(CHECK_WORKFLOW, pr, sha)
+        _upsert_fact_sheet(pr, fact_sheet_body([_pending_sheet(sha[:12])], sha))
         print(f"dispatched a check for PR #{pr} at {sha[:12]}")
     return 0
 
@@ -108,21 +109,6 @@ def _run_url() -> str:
     return f"{server}/{repo}/actions/runs/{os.environ.get('GITHUB_RUN_ID', '')}"
 
 
-def sweep_failed() -> int:
-    open_already = github_api.open_issue_with_marker(SWEEP_FAILURE_MARKER, SWEEP_FAILURE_LABEL)
-    if open_already:
-        print(f"issue #{open_already['number']} is already open")
-        return 0
-    github_api.create_issue(
-        "The community package sweep is failing",
-        f"{SWEEP_FAILURE_MARKER}\n\nNo community package pull request is being checked while "
-        f"this is broken, and a contributor sees no fact-sheet. See the [run log]({_run_url()}).\n\n"
-        "Close this once a sweep run succeeds.",
-        [SWEEP_FAILURE_LABEL])
-    print("opened a failure issue")
-    return 0
-
-
 def preview_failed() -> int:
     pr = int(os.environ["PR"])
     github_api.post_comment(pr, f"❌ The preview build failed. See the [run log]({_run_url()}) for details.")
@@ -138,8 +124,22 @@ def _unfinished_sheet() -> str:
             f"check, not in the package. A maintainer has to read the [run log]({_run_url()}).")
 
 
-def fact_sheet_body(sheets: list[str]) -> str:
-    return github_api.FACT_SHEET_MARKER + "\n\n" + "\n\n".join(sheets or [_unfinished_sheet()]) + "\n"
+def _pending_sheet(head: str) -> str:
+    return (f"## ⏳ Checking `{head}`\n\nThe fact-sheet replaces this when the check finishes. "
+            "If it does not, comment `/check` to run it again.")
+
+
+def _upsert_fact_sheet(pr: int, body: str) -> str:
+    existing = github_api.fact_sheet_comment(pr)
+    if existing:
+        github_api.edit_comment(int(existing["id"]), body)
+        return str(existing.get("html_url", ""))
+    return str(github_api.post_comment(pr, body).get("html_url", ""))
+
+
+def fact_sheet_body(sheets: list[str], head: str) -> str:
+    header = github_api.FACT_SHEET_MARKER + "\n" + github_api.checked_marker(head)
+    return header + "\n\n" + "\n\n".join(sheets or [_unfinished_sheet()]) + "\n"
 
 
 _VERDICT_NOTICE = {
@@ -167,17 +167,11 @@ def _verdict_notice(verdict: str, head: str, sheet_url: str) -> str:
 
 
 def report() -> int:
-    pr = int(os.environ["PR"])
+    pr, head = int(os.environ["PR"]), os.environ.get("HEAD_SHA", "")
     sheets = [f.read_text() for f in sorted(Path(".").glob("*.factsheet.md"))]
-    body = fact_sheet_body(sheets)
-    existing = github_api.fact_sheet_comment(pr)
-    if existing:
-        github_api.edit_comment(int(existing["id"]), body)
-        sheet_url = str(existing.get("html_url", ""))
-    else:
-        sheet_url = str(github_api.post_comment(pr, body).get("html_url", ""))
+    sheet_url = _upsert_fact_sheet(pr, fact_sheet_body(sheets, head))
     print(f"posted fact-sheet to PR #{pr}")
 
     verdict = Path(VERDICT_FILE).read_text().strip() if Path(VERDICT_FILE).exists() else ""
-    github_api.post_comment(pr, _verdict_notice(verdict, os.environ.get("HEAD_SHA", "")[:12], sheet_url))
+    github_api.post_comment(pr, _verdict_notice(verdict, head[:12], sheet_url))
     return 0

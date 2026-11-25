@@ -396,3 +396,62 @@ func TestReadRemoteFileNotFound(t *testing.T) {
 		})
 	}
 }
+
+func TestMetadataSkipsDelistedPackage(t *testing.T) {
+	// Not parallel: t.Setenv.
+	t.Setenv("GITHUB_ACTIONS", "true")
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case "/schema.json":
+			schema := &schema.Package{
+				Name:       "test",
+				Version:    ref(semver.MustParse("2.0.0")),
+				Repository: "https://github.com/pulumi/pulumi-test",
+				Publisher:  "example",
+				Provider:   &schema.Resource{},
+			}
+			bytes, err := schema.MarshalJSON()
+			require.NoError(t, err)
+			_, err = w.Write(bytes)
+			require.NoError(t, err)
+		case "/docs/_index.md":
+			_, err := w.Write([]byte("---\nlayout: package\n---\n\n# new docs"))
+			require.NoError(t, err)
+		default:
+			assert.Failf(t, "unknown path %s", r.URL.Path)
+			w.WriteHeader(http.StatusNotFound)
+		}
+	}))
+	defer server.Close()
+
+	metadataDir := t.TempDir()
+	packageDocsDir := t.TempDir()
+	existing := []byte("deprecated: true\nname: test\npublisher: example\nversion: v1.0.0\n")
+	require.NoError(t, os.WriteFile(filepath.Join(metadataDir, "test.yaml"), existing, 0o600))
+
+	cmd := PackageMetadataCmd(pkg.NewHTTPClient())
+	cmd.SetArgs([]string{
+		"from-urls",
+		"--providerName", "test",
+		"--schemaFileURL", server.URL + "/schema.json",
+		"--indexFileURL", server.URL + "/docs/_index.md",
+		"--metadataDir", metadataDir,
+		"--packageDocsDir", packageDocsDir,
+	})
+	var stdout bytes.Buffer
+	cmd.SetOut(&stdout)
+	cmd.SetErr(&stdout)
+
+	require.NoError(t, cmd.Execute())
+
+	actual, err := os.ReadFile(filepath.Join(metadataDir, "test.yaml"))
+	require.NoError(t, err)
+	assert.Equal(t, string(existing), string(actual), "the delisted package's metadata should be untouched")
+
+	docs, err := os.ReadDir(packageDocsDir)
+	require.NoError(t, err)
+	assert.Empty(t, docs, "no docs should be written for a delisted package")
+
+	assert.Contains(t, stdout.String(), "::warning title=Delisted package::test is delisted")
+}

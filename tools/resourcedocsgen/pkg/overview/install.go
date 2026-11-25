@@ -64,12 +64,54 @@ type Install struct {
 	// Package is the published artifact's identifier -- the npm name, the PyPI
 	// project, the Go import path, the NuGet id, or the Maven coordinate.
 	Package string
-	// Command is the shell one-liner that installs it. Empty for Java, which
-	// has no one-line install and uses Maven/Gradle instead.
-	Command string
+	// Commands install it, one per package manager the Pulumi docs support for
+	// the language. Empty for Java, which has no one-line install and uses
+	// Maven/Gradle instead.
+	Commands []PackageManagerCommand
 	// Maven and Gradle are set for Java only.
 	Maven  string
 	Gradle string
+}
+
+// PackageManagerCommand installs a package with one package manager.
+type PackageManagerCommand struct {
+	// Tool names the package manager. The rendered section labels each command
+	// with it when a language has more than one.
+	Tool string
+	// Note precedes the command when running it alone does not add the package.
+	Note string
+	// Command is the shell one-liner.
+	Command string
+}
+
+// nodeCommands lists the package managers the Node.js runtime supports, in the
+// order the Pulumi docs list them, with npm, the default, first.
+func nodeCommands(name string) []PackageManagerCommand {
+	return []PackageManagerCommand{
+		{Tool: "npm", Command: "npm install " + name},
+		{Tool: "Yarn", Command: "yarn add " + name},
+		{Tool: "pnpm", Command: "pnpm add " + name},
+		{Tool: "Bun", Command: "bun add " + name},
+	}
+}
+
+// pythonCommands lists the Python toolchains Pulumi supports. With pip, a
+// project's dependencies live in requirements.txt, which `pulumi install`
+// reads, so a bare `pip install` would leave the package out of the project.
+func pythonCommands(name string) []PackageManagerCommand {
+	return []PackageManagerCommand{
+		{
+			Tool:    "pip",
+			Note:    fmt.Sprintf("Add `%s` to `requirements.txt`, then run:", name),
+			Command: "pip install -r requirements.txt",
+		},
+		{Tool: "uv", Command: "uv add " + name},
+		{Tool: "Poetry", Command: "poetry add " + name},
+	}
+}
+
+func single(command string) []PackageManagerCommand {
+	return []PackageManagerCommand{{Command: command}}
 }
 
 // InstallPlan is everything the ## Installation section needs.
@@ -177,7 +219,7 @@ func deriveInstall(spec *schema.PackageSpec, version, lang string) (*Install, []
 		if name == "" {
 			name = "@pulumi/" + spec.Name
 		}
-		return &Install{Language: lang, Package: name, Command: "npm install " + name}, nil
+		return &Install{Language: lang, Package: name, Commands: nodeCommands(name)}, nil
 
 	case LangPython:
 		var info python.PackageInfo
@@ -189,7 +231,7 @@ func deriveInstall(spec *schema.PackageSpec, version, lang string) (*Install, []
 		// PyPI treats underscores and hyphens as the same project. Every
 		// published Overview page spells the install with hyphens.
 		name = strings.ReplaceAll(name, "_", "-")
-		return &Install{Language: lang, Package: name, Command: "pip install " + name}, nil
+		return &Install{Language: lang, Package: name, Commands: pythonCommands(name)}, nil
 
 	case LangGo:
 		var info go_gen.GoPackageInfo
@@ -198,18 +240,18 @@ func deriveInstall(spec *schema.PackageSpec, version, lang string) (*Install, []
 		if path == "" {
 			var warnings []string
 			path, warnings = fallbackGoImportPath(spec)
-			return &Install{Language: lang, Package: path, Command: "go get " + path}, warnings
+			return &Install{Language: lang, Package: path, Commands: single("go get " + path)}, warnings
 		}
 		// Never synthesize the /vN major-version element: a schema that needs
 		// one already carries it (pulumi-vault's is .../sdk/v7/go/vault), and
 		// guessing produces an import path that does not resolve.
-		return &Install{Language: lang, Package: path, Command: "go get " + path}, nil
+		return &Install{Language: lang, Package: path, Commands: single("go get " + path)}, nil
 
 	case LangCSharp:
 		var info dotnet.CSharpPackageInfo
 		decodeLanguageInfo(spec, "csharp", &info)
-		id := info.GetRootNamespace() + "." + pascalCase(spec.Name)
-		return &Install{Language: lang, Package: id, Command: "dotnet add package " + id}, nil
+		id := info.GetRootNamespace() + "." + csharpNamespace(info, spec.Name)
+		return &Install{Language: lang, Package: id, Commands: single("dotnet add package " + id)}, nil
 
 	case LangJava:
 		var info java.PackageInfo
@@ -272,6 +314,17 @@ func goPackageName(name string) string {
 		b.WriteRune(r)
 	}
 	return strings.ToLower(b.String())
+}
+
+// csharpNamespace returns the namespace the .NET generator gives the package,
+// which is also the second half of its NuGet package ID. A schema can name it
+// in csharp.namespaces (pulumi-ec maps "ec" to "ElasticCloud"); otherwise the
+// generator derives it from the package name.
+func csharpNamespace(info dotnet.CSharpPackageInfo, name string) string {
+	if ns, ok := info.Namespaces[name]; ok {
+		return strings.ReplaceAll(ns, "-", "")
+	}
+	return pascalCase(name)
 }
 
 // pascalCase renders a package name the way the .NET generator names its

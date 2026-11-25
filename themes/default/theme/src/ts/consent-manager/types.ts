@@ -1,11 +1,6 @@
 export interface ConsentManagerConfig {
     writeKey: string;
     cdnHost: string;
-    container: string;
-    privacyPolicyUrl: string;
-    bannerText: string;
-    preferencesDialogTitle: string;
-    preferencesDialogContent: string;
 }
 
 export interface Destination {
@@ -14,24 +9,26 @@ export interface Destination {
     category?: string;
 }
 
-export interface TrackingPreferences {
-    version: number;
-    destinations: Record<string, boolean>;
-    custom?: Record<string, boolean | null>;
-}
-
 declare global {
     interface Window {
         consentManagerConfig?: ConsentManagerConfig;
         consentManager?: { openConsentManager: () => void };
         analytics?: SegmentAnalytics;
+        // OneTrust bridge (see consent-manager/onetrust.ts). The inline
+        // bootstrap in head.html installs runWithPulumiConsent before the
+        // bundle loads; the bundle replaces it with the full engine.
+        runWithPulumiConsent?: (category: string, callback: () => void) => void;
+        __pulumiConsentQueue?: { category: string; callback: () => void }[];
+        OnetrustActiveGroups?: string;
+        OptanonActiveGroups?: string;
+        OptanonWrapper?: () => void;
+        OneTrust?: { ToggleInfoDisplay?: () => void };
     }
 }
 
 export interface SegmentAnalytics {
     load: (writeKey: string, options?: { integrations?: Record<string, boolean> }) => void;
     addSourceMiddleware: (middleware: (args: MiddlewareArgs) => void) => void;
-    identify: (traits: Record<string, unknown>) => void;
     initialized?: boolean;
 }
 

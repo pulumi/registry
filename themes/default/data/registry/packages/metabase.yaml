@@ -1,11 +1,12 @@
 category: Cloud
 component: true
+deprecated: true
 description: "A Pulumi component for deploying Metabase."
 featured: false
 logo_url: ""
 name: metabase
 package_status: public_preview
-publisher: DEPRECATED
+publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-metabase
 schema_file_path: schema.yaml
 title: Metabase (AWS)

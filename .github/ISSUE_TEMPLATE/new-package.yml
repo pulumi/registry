@@ -2,8 +2,7 @@ name: New Package
 description: Request to add a new package to the registry.
 type: Task
 labels:
-  - needs-triage
-  - kind/package
+  - area/new-package
 body:
   - type: markdown
     attributes:
@@ -35,6 +34,12 @@ body:
       label: Repository URL
       description: URL of the repository where the package can be found.
       placeholder: https://github.com/pulumi/pulumi-xyz
+  - type: input
+    id: LogoUrl
+    attributes:
+      label: Logo URL
+      description: Link to a web-accessible SVG of the logo, used as the package's logo in the Registry. A wordmark is preferred, with surrounding whitespace removed.
+      placeholder: https://raw.githubusercontent.com/<org>/<repo>/<commit>/logo.svg
   - type: input
     id: Connection
     attributes:

@@ -156,6 +156,10 @@ export namespace Components {
         "userId": string;
     }
 }
+export interface PulumiApiDocFilterableNavCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLPulumiApiDocFilterableNavElement;
+}
 export interface PulumiFilterSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLPulumiFilterSelectElement;
@@ -173,7 +177,18 @@ export interface PulumiRootCustomEvent<T> extends CustomEvent<T> {
     target: HTMLPulumiRootElement;
 }
 declare global {
+    interface HTMLPulumiApiDocFilterableNavElementEventMap {
+        "apiDocNavReady": void;
+    }
     interface HTMLPulumiApiDocFilterableNavElement extends Components.PulumiApiDocFilterableNav, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLPulumiApiDocFilterableNavElementEventMap>(type: K, listener: (this: HTMLPulumiApiDocFilterableNavElement, ev: PulumiApiDocFilterableNavCustomEvent<HTMLPulumiApiDocFilterableNavElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLPulumiApiDocFilterableNavElementEventMap>(type: K, listener: (this: HTMLPulumiApiDocFilterableNavElement, ev: PulumiApiDocFilterableNavCustomEvent<HTMLPulumiApiDocFilterableNavElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLPulumiApiDocFilterableNavElement: {
         prototype: HTMLPulumiApiDocFilterableNavElement;
@@ -399,6 +414,7 @@ declare global {
 declare namespace LocalJSX {
     interface PulumiApiDocFilterableNav {
         "baseDirectory"?: string;
+        "onApiDocNavReady"?: (event: PulumiApiDocFilterableNavCustomEvent<void>) => void;
         "packageName"?: string;
     }
     interface PulumiApiDocNavNode {

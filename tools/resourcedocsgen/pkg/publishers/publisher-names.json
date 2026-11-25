@@ -20,6 +20,7 @@
     "Impart Security": "impart_security",
     "Kotaicode GmbH": "kotaicode",
     "Koyeb": "koyeb",
+    "Kurrent": "eventstore",
     "Lee Zen": "lee_zen",
     "Matthias Hamacher": "matthias_hamacher",
     "Nuage-Studio": "nuage_studio",
@@ -59,6 +60,7 @@
     "checkpointsw": "checkpointsw",
     "ciscodevnet": "ciscodevnet",
     "civo": "civo",
+    "cloudfoundry": "cloudfoundry",
     "cloudfoundry-community": "cloudfoundry-community",
     "coder": "coder",
     "constellix": "constellix",
@@ -68,6 +70,7 @@
     "datadrivers": "datadrivers",
     "dell": "dell",
     "denouche": "denouche",
+    "dimeskigj": "dimeskigj",
     "dirien": "dirien",
     "dmacvicar": "dmacvicar",
     "dome9": "dome9",
@@ -87,6 +90,7 @@
     "hashicorp": "hashicorp",
     "honeycombio": "honeycomb",
     "hpe": "hpe",
+    "htmlcsstoimage": "htmlcsstoimage",
     "ibm-cloud": "ibm-cloud",
     "imperva": "imperva",
     "incident-io": "incident_io",
@@ -165,5 +169,6 @@
     "volcenginecc": "volcenginecc",
     "vmware": "vmware",
     "wavefront": "wavefront",
-    "zenduty": "zenduty"
+    "zenduty": "zenduty",
+    "incsteps": "incsteps"
 }

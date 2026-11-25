@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-coreweave/v1.0.2/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-coreweave/v1.0.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-coreweave/blob/v1.0.2/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-coreweave/blob/v1.0.3/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: CoreWeave Provider
 meta_desc: Provides an overview on how to configure the Pulumi CoreWeave provider.
@@ -289,7 +289,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     coreweave = {
       source = "pulumi/coreweave"
@@ -297,7 +297,10 @@ pulumi {
   }
 }
 
-resource "coreweave_networkingvpc" "default" {
+resource "coreweave_networking_vpc" "default" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name = "default"
   zone = "US-EAST-04A"
   vpc_prefixes {
@@ -313,11 +316,14 @@ resource "coreweave_networkingvpc" "default" {
     value = "10.32.4.0/22"
   }
 }
-resource "coreweave_ckscluster" "default" {
+resource "coreweave_cks_cluster" "default" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name                   = "default"
   version                = "v1.35"
   zone                   = "US-EAST-04A"
-  vpc_id                 = coreweave_networkingvpc.default.id
+  vpc_id                 = coreweave_networking_vpc.default.id
   public                 = true
   pod_cidr_name          = "pod cidr"
   service_cidr_name      = "service cidr"

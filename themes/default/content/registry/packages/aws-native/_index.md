@@ -23,31 +23,36 @@ AWS Cloud Control must be configured with credentials to deploy and update resou
 
 Create an Object Lambda access point that transforms object requests to a bucket:
 
-{{< chooser language "typescript,python,csharp,go,java,yaml" >}}
+{{< chooser language "typescript,python,csharp,go,java,yaml,hcl" >}}
 
 {{% choosable language typescript %}}
 
 ```typescript
+import * as pulumi from "@pulumi/pulumi";
 import * as awsnative from "@pulumi/aws-native";
 
-const bucket = new awsnative.s3.Bucket("source");
+// The ARN of the Lambda function that transforms objects.
+const config = new pulumi.Config();
+const functionArn = config.require("functionArn");
 
-const accessPoint = new awsnative.s3.AccessPoint("ap", {
-   bucket: bucket.id,
+const myBucket = new awsnative.s3.Bucket("myBucket");
+
+const ap = new awsnative.s3.AccessPoint("ap", {
+    bucket: myBucket.id,
 });
 
-const objectlambda = new awsnative.s3objectlambda.AccessPoint("objectlambda-ap", {
-   objectLambdaConfiguration: {
-       supportingAccessPoint: accessPoint.arn,
-       transformationConfigurations: [{
-           actions: ["GetObject"],
-           contentTransformation: {
-               AwsLambda: {
-                   FunctionArn: fn.arn,
-               },
-           },
-       }]
-   }
+const objectLambdaAp = new awsnative.s3objectlambda.AccessPoint("objectLambdaAp", {
+    objectLambdaConfiguration: {
+        supportingAccessPoint: ap.arn,
+        transformationConfigurations: [{
+            actions: ["GetObject"],
+            contentTransformation: {
+                awsLambda: {
+                    functionArn: functionArn,
+                },
+            },
+        }],
+    },
 });
 ```
 
@@ -59,21 +64,25 @@ const objectlambda = new awsnative.s3objectlambda.AccessPoint("objectlambda-ap",
 import pulumi
 import pulumi_aws_native as aws_native
 
+# The ARN of the Lambda function that transforms objects.
+config = pulumi.Config()
+function_arn = config.require("functionArn")
+
 my_bucket = aws_native.s3.Bucket("myBucket")
 
 ap = aws_native.s3.AccessPoint("ap", bucket=my_bucket.id)
 
-objectlambdaap = aws_native.s3objectlambda.AccessPoint("objectlambdaap", object_lambda_configuration=aws_native.s3objectlambda.AccessPointObjectLambdaConfigurationArgs(
-    supporting_access_point=ap.arn,
-    transformation_configurations=[aws_native.s3objectlambda.AccessPointTransformationConfigurationArgs(
-        actions=["GetObject"],
-        content_transformation={
-            "AwsLambda": {
-                "FunctionArn": fn.arn,
+object_lambda_ap = aws_native.s3objectlambda.AccessPoint("objectLambdaAp", object_lambda_configuration={
+    "supporting_access_point": ap.arn,
+    "transformation_configurations": [{
+        "actions": ["GetObject"],
+        "content_transformation": {
+            "aws_lambda": {
+                "function_arn": function_arn,
             },
         },
-    )],
-))
+    }],
+})
 ```
 
 {{% /choosable %}}
@@ -81,33 +90,43 @@ objectlambdaap = aws_native.s3objectlambda.AccessPoint("objectlambdaap", object_
 {{% choosable language csharp %}}
 
 ```csharp
-var bucket = new AwsNative.S3.Bucket("my-bucket");
+using Pulumi;
+using AwsNative = Pulumi.AwsNative;
 
-var accessPoint = new AwsNative.S3.AccessPoint("ap", new AwsNative.S3.AccessPointArgs
+return await Deployment.RunAsync(() =>
 {
-    Bucket = bucket.Id
-});
+    // The ARN of the Lambda function that transforms objects.
+    var config = new Config();
+    var functionArn = config.Require("functionArn");
 
-var objectLambda = new AwsNative.S3ObjectLambda.AccessPoint("objectlambda-ap", new AwsNative.S3ObjectLambda.AccessPointArgs
-{
-    ObjectLambdaConfiguration = new AwsNative.S3ObjectLambda.Inputs.AccessPointObjectLambdaConfigurationArgs
+    var myBucket = new AwsNative.S3.Bucket("myBucket");
+
+    var ap = new AwsNative.S3.AccessPoint("ap", new()
     {
-        SupportingAccessPoint = accessPoint.Arn,
-        TransformationConfigurations =
+        Bucket = myBucket.Id,
+    });
+
+    var objectLambdaAp = new AwsNative.S3ObjectLambda.AccessPoint("objectLambdaAp", new()
+    {
+        ObjectLambdaConfiguration = new AwsNative.S3ObjectLambda.Inputs.AccessPointObjectLambdaConfigurationArgs
         {
-            new AwsNative.S3ObjectLambda.Inputs.AccessPointTransformationConfigurationArgs
+            SupportingAccessPoint = ap.Arn,
+            TransformationConfigurations =
             {
-                Actions = { "GetObject" },
-                ContentTransformation = fn.Arn.Apply(arn => new Dictionary<string, object>
+                new AwsNative.S3ObjectLambda.Inputs.AccessPointTransformationConfigurationArgs
                 {
-                    ["AwsLambda"] = new Dictionary<string, object>
+                    Actions = { "GetObject" },
+                    ContentTransformation = new AwsNative.S3ObjectLambda.Inputs.AccessPointTransformationConfigurationContentTransformationPropertiesArgs
                     {
-                        ["FunctionArn"] = arn
-                    }
-                }
-            }
-        }
-    }
+                        AwsLambda = new AwsNative.S3ObjectLambda.Inputs.AccessPointAwsLambdaArgs
+                        {
+                            FunctionArn = functionArn,
+                        },
+                    },
+                },
+            },
+        },
+    });
 });
 ```
 
@@ -116,41 +135,52 @@ var objectLambda = new AwsNative.S3ObjectLambda.AccessPoint("objectlambda-ap", n
 {{% choosable language go %}}
 
 ```go
-func main() {
-    pulumi.Run(func(ctx *pulumi.Context) error {
-        myBucket, err := s3.NewBucket(ctx, "myBucket", nil)
-        if err != nil {
-            return err
-        }
-        ap, err := s3.NewAccessPoint(ctx, "ap", &s3.AccessPointArgs{
-            Bucket: myBucket.ID(),
-        })
-        if err != nil {
-            return err
-        }
+package main
 
-        _, err = s3objectlambda.NewAccessPoint(ctx, "objectlambdaap", &s3objectlambda.AccessPointArgs{
-            ObjectLambdaConfiguration: &s3objectlambda.AccessPointObjectLambdaConfigurationArgs{
-                SupportingAccessPoint: ap.Arn,
-                TransformationConfigurations: s3objectlambda.AccessPointTransformationConfigurationArray{
-                    &s3objectlambda.AccessPointTransformationConfigurationArgs{
-                        Actions: pulumi.StringArray{
-                            pulumi.String("GetObject"),
-                        },
-                        ContentTransformation: pulumi.Map{
-                            "AwsLambda": pulumi.Map{
-                                "FunctionArn": fn.Arn,
-                            },
-                        },
-                    },
-                },
-            },
-        })
-        if err != nil {
-            return err
-        }
-        return nil
-    })
+import (
+	"github.com/pulumi/pulumi-aws-native/sdk/go/aws/s3"
+	"github.com/pulumi/pulumi-aws-native/sdk/go/aws/s3objectlambda"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		// The ARN of the Lambda function that transforms objects.
+		cfg := config.New(ctx, "")
+		functionArn := cfg.Require("functionArn")
+
+		myBucket, err := s3.NewBucket(ctx, "myBucket", nil)
+		if err != nil {
+			return err
+		}
+
+		ap, err := s3.NewAccessPoint(ctx, "ap", &s3.AccessPointArgs{
+			Bucket: myBucket.ID().ToStringOutput(),
+		})
+		if err != nil {
+			return err
+		}
+
+		_, err = s3objectlambda.NewAccessPoint(ctx, "objectLambdaAp", &s3objectlambda.AccessPointArgs{
+			ObjectLambdaConfiguration: &s3objectlambda.AccessPointObjectLambdaConfigurationArgs{
+				SupportingAccessPoint: ap.Arn,
+				TransformationConfigurations: s3objectlambda.AccessPointTransformationConfigurationArray{
+					&s3objectlambda.AccessPointTransformationConfigurationArgs{
+						Actions: pulumi.StringArray{
+							pulumi.String("GetObject"),
+						},
+						ContentTransformation: &s3objectlambda.AccessPointTransformationConfigurationContentTransformationPropertiesArgs{
+							AwsLambda: &s3objectlambda.AccessPointAwsLambdaArgs{
+								FunctionArn: pulumi.String(functionArn),
+							},
+						},
+					},
+				},
+			},
+		})
+		return err
+	})
 }
 ```
 
@@ -159,58 +189,45 @@ func main() {
 {{% choosable language java %}}
 
 ```java
-import java.util.Map;
-
 import com.pulumi.Context;
-import com.pulumi.Exports;
 import com.pulumi.Pulumi;
-import com.pulumi.core.Output;
-
-import com.pulumi.awsnative.s3.Bucket;
 import com.pulumi.awsnative.s3.AccessPoint;
 import com.pulumi.awsnative.s3.AccessPointArgs;
+import com.pulumi.awsnative.s3.Bucket;
+import com.pulumi.awsnative.s3objectlambda.inputs.AccessPointAwsLambdaArgs;
 import com.pulumi.awsnative.s3objectlambda.inputs.AccessPointObjectLambdaConfigurationArgs;
 import com.pulumi.awsnative.s3objectlambda.inputs.AccessPointTransformationConfigurationArgs;
-
+import com.pulumi.awsnative.s3objectlambda.inputs.AccessPointTransformationConfigurationContentTransformationPropertiesArgs;
 
 public class App {
     public static void main(String[] args) {
         Pulumi.run(App::stack);
     }
 
-    private static void stack(Context ctx) {
+    public static void stack(Context ctx) {
+        // The ARN of the Lambda function that transforms objects.
+        final var functionArn = ctx.config().require("functionArn");
 
-        final var bucket = new Bucket("source");
+        var myBucket = new Bucket("myBucket");
 
-        final var accessPoint = new AccessPoint("ap", AccessPointArgs.builder()
-            .bucket(bucket.getId())
+        var ap = new AccessPoint("ap", AccessPointArgs.builder()
+            .bucket(myBucket.id())
             .build());
 
-        final Output<String> functionArn = /* your function arn */;
-
-        final var contentTransform = functionArn.applyValue(arn ->
-            Map.of("AwsLambda", Map.of("FunctionArn", arn))
-        );
-
-        final var objectLambdaConfig = AccessPointObjectLambdaConfigurationArgs
-            .builder()
-            .supportingAccessPoint(accessPoint.arn())
-            .transformationConfigurations(
-                AccessPointTransformationConfigurationArgs
-                    .builder()
-                    .actions("GetObject")
-                    .contentTransformation(contentTransform)
-                    .build()
-            )
-            .build();
-
-        final var objectLambdaArgs = com.pulumi.awsnative.s3objectlambda.AccessPointArgs
-            .builder()
-            .objectLambdaConfiguration(objectLambdaConfig)
-            .build();
-
-        final var objectLambda = new com.pulumi.awsnative.s3objectlambda.AccessPoint("objectlambda-ap", objectLambdaArgs);
-        ctx.export("objectLambdaArn", objectLambda.arn());
+        var objectLambdaAp = new com.pulumi.awsnative.s3objectlambda.AccessPoint("objectLambdaAp",
+            com.pulumi.awsnative.s3objectlambda.AccessPointArgs.builder()
+                .objectLambdaConfiguration(AccessPointObjectLambdaConfigurationArgs.builder()
+                    .supportingAccessPoint(ap.arn())
+                    .transformationConfigurations(AccessPointTransformationConfigurationArgs.builder()
+                        .actions("GetObject")
+                        .contentTransformation(AccessPointTransformationConfigurationContentTransformationPropertiesArgs.builder()
+                            .awsLambda(AccessPointAwsLambdaArgs.builder()
+                                .functionArn(functionArn)
+                                .build())
+                            .build())
+                        .build())
+                    .build())
+                .build());
     }
 }
 ```
@@ -220,24 +237,68 @@ public class App {
 {{% choosable language yaml %}}
 
 ```yaml
+config:
+  # The ARN of the Lambda function that transforms objects.
+  functionArn:
+    type: string
 resources:
   myBucket:
-    type: 'aws-native:s3:Bucket'
+    type: aws-native:s3:Bucket
   ap:
-    type: 'aws-native:s3:AccessPoint'
+    type: aws-native:s3:AccessPoint
     properties:
-      bucket: '${myBucket}'
-  action:
-    type: 'aws-native:s3objectlambda:AccessPoint'
+      bucket: ${myBucket}
+  objectLambdaAp:
+    type: aws-native:s3objectlambda:AccessPoint
     properties:
       objectLambdaConfiguration:
-        supportingAccessPoint: '${ap.Arn}'
+        supportingAccessPoint: ${ap.arn}
         transformationConfigurations:
           - actions:
               - GetObject
             contentTransformation:
-              AwsLambda:
-                FunctionArn: '${fn.Arn}'
+              awsLambda:
+                functionArn: ${functionArn}
+```
+
+{{% /choosable %}}
+
+{{% choosable language hcl %}}
+
+```hcl
+terraform {
+  required_providers {
+    aws-native = {
+      source = "pulumi/aws-native"
+    }
+  }
+}
+
+# The ARN of the Lambda function that transforms objects.
+variable "function_arn" {
+  type = string
+}
+
+resource "aws-native_s3_bucket" "myBucket" {
+}
+
+resource "aws-native_s3_access_point" "ap" {
+  bucket = aws-native_s3_bucket.myBucket.id
+}
+
+resource "aws-native_s3objectlambda_access_point" "objectLambdaAp" {
+  object_lambda_configuration = {
+    supporting_access_point = aws-native_s3_access_point.ap.arn
+    transformation_configurations = [{
+      actions = ["GetObject"]
+      content_transformation = {
+        aws_lambda = {
+          function_arn = var.function_arn
+        }
+      }
+    }]
+  }
+}
 ```
 
 {{% /choosable %}}
@@ -252,7 +313,7 @@ If you want to manage resources using Pulumi's AWS Cloud Control Provider which 
 
 Here's a very simple demonstration of using the ExtensionResource to create an S3 bucket:
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" / >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" / >}}
 
 {{% choosable language "typescript" %}}
 
@@ -381,6 +442,27 @@ resources:
       type: 'AWS::S3::Bucket'
       properties:
         BucketName: my-bucket
+```
+
+{{% /choosable %}}
+
+{{% choosable language hcl %}}
+
+```hcl
+terraform {
+  required_providers {
+    aws-native = {
+      source = "pulumi/aws-native"
+    }
+  }
+}
+
+resource "aws-native_extension_resource" "myBucket" {
+  type = "AWS::S3::Bucket"
+  properties = {
+    BucketName = "my-bucket"
+  }
+}
 ```
 
 {{% /choosable %}}

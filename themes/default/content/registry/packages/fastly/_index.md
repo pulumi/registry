@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-fastly/v12.6.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-fastly/v13.0.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-fastly/blob/v12.6.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-fastly/blob/v13.0.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Fastly Provider
 meta_desc: Provides an overview on how to configure the Pulumi Fastly provider.
@@ -14,7 +14,7 @@ The Fastly provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/fastly`](https://www.npmjs.com/package/@pulumi/fastly)
 * Python: [`pulumi-fastly`](https://pypi.org/project/pulumi-fastly/)
-* Go: [`github.com/pulumi/pulumi-fastly/sdk/v12/go/fastly`](https://github.com/pulumi/pulumi-fastly)
+* Go: [`github.com/pulumi/pulumi-fastly/sdk/v13/go/fastly`](https://github.com/pulumi/pulumi-fastly)
 * .NET: [`Pulumi.Fastly`](https://www.nuget.org/packages/Pulumi.Fastly)
 * Java: [`com.pulumi/fastly`](https://central.sonatype.com/artifact/com.pulumi/fastly)
 
@@ -115,7 +115,7 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-fastly/sdk/v12/go/fastly"
+	"github.com/pulumi/pulumi-fastly/sdk/v13/go/fastly"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -199,7 +199,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     fastly = {
       source = "pulumi/fastly"
@@ -208,7 +208,10 @@ pulumi {
 }
 
 # Create a Service
-resource "fastly_servicevcl" "myservice" {
+resource "fastly_service_vcl" "myservice" {
+  lifecycle {
+    create_before_destroy = true
+  }
   name = "myawesometestservice"
 }
 ```
@@ -312,7 +315,7 @@ config:
 package main
 
 import (
-	"github.com/pulumi/pulumi-fastly/sdk/v12/go/fastly"
+	"github.com/pulumi/pulumi-fastly/sdk/v13/go/fastly"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -386,7 +389,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     fastly = {
       source = "pulumi/fastly"
@@ -394,7 +397,10 @@ pulumi {
   }
 }
 
-resource "fastly_servicevcl" "myservice" {
+resource "fastly_service_vcl" "myservice" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 
@@ -447,7 +453,7 @@ return await Deployment.RunAsync(() =>
 package main
 
 import (
-	"github.com/pulumi/pulumi-fastly/sdk/v12/go/fastly"
+	"github.com/pulumi/pulumi-fastly/sdk/v13/go/fastly"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -501,7 +507,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     fastly = {
       source = "pulumi/fastly"
@@ -509,7 +515,10 @@ pulumi {
   }
 }
 
-resource "fastly_servicevcl" "myservice" {
+resource "fastly_service_vcl" "myservice" {
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 ```
 

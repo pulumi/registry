@@ -13,8 +13,9 @@ This document describes the build, test, and deployment system for the `pulumi/r
    - [4.1 Makefile Targets](#41-makefile-targets)
    - [4.2 Hugo Build](#42-hugo-build)
    - [4.3 resourcedocsgen Tool](#43-resourcedocsgen-tool)
-   - [4.4 CI Build Script](#44-ci-build-script-scriptscibuilds)
+   - [4.4 CI Build Script](#44-ci-build-script-scriptscibuildsh)
    - [4.5 Versioned Documentation](#45-versioned-documentation)
+   - [4.7 Build Caching](#47-build-caching)
 5. [GitHub Actions Workflows](#github-actions-workflows)
    - [5.1 pull-request.yml — PR Validation + Preview Deploy](#51-pull-requestyml--pr-validation--preview-deploy)
    - [5.2 push.yml — Production Build + Deploy](#52-pushyml--production-build--deploy)
@@ -34,6 +35,7 @@ This document describes the build, test, and deployment system for the `pulumi/r
    - [8.5 Dark Logo Variants](#85-dark-logo-variants)
    - [8.6 Provider API Docs Tests](#86-provider-api-docs-tests)
    - [8.7 Browser Tests (Cypress)](#87-browser-tests-cypress)
+     - [8.7.1 API Docs Crawl (mocha)](#871-api-docs-crawl-mocha)
    - [8.8 Link Checking](#88-link-checking)
 9. [Environment & Secret Management](#environment--secret-management)
    - [9.1 Pulumi ESC](#91-pulumi-esc)
@@ -59,7 +61,7 @@ This document describes the build, test, and deployment system for the `pulumi/r
 | Local development server | `make serve` |
 | Full local dev (Hugo + asset watch) | `make serve-all` |
 | Generate API docs for one provider | `make api-docs/<package>` |
-| Run Go tests | `make test` |
+| Run Go, infrastructure, preview-comment, and theme unit tests (needs `make ensure` first) | `make test` |
 | Run all linters | `make lint` |
 | Run Markdown linter | `make lint-markdown` |
 | Run Go linter | `make lint-go` |
@@ -84,12 +86,14 @@ The canonical tool versions are tracked in `mise.toml`:
 
 | Tool | Version |
 |---|---|
-| Go | 1.26 |
-| Node.js | 20 |
+| Go | 1.26.10 |
+| Node.js | 24.22.1 |
 | Yarn | 1.22.22 |
-| Hugo | 0.157 (extended) |
-| golangci-lint | 2.1.6 |
+| Hugo | 0.169 (extended) |
+| golangci-lint | 2.10.1 |
 | yq | latest |
+
+Go and Node.js are pinned to exact patch releases, in `mise.toml` and in every `setup-go` / `setup-node` step, since the eMudhra CA incident (#13055). Dependabot does not bump these, so when either upstream ships a security release, bump the pin by hand; `setup-go` reads the `toolchain` line in `tools/resourcedocsgen/go.mod`, and the `registry-mirror-*` binary caches are keyed on the resolved Go version so they rebuild with it.
 
 Install and manage all tools via [mise](https://mise.jdx.dev/):
 
@@ -153,17 +157,23 @@ mise trust && mise install
 
 | Component | Role |
 |---|---|
-| Hugo 0.157 (extended) | Static site generation from templates and content |
+| Hugo 0.169 (extended) | Static site generation from templates and content |
 | resourcedocsgen | Generates provider API reference docs from Pulumi schemas |
 | Pulumi IaC | Manages AWS resources; reads metadata file to update CloudFront origin |
-| Algolia | Search index; updated as part of production deploys via `scripts/search/main.js` |
+| Algolia | Search index; production deploys build `search-index.json` with `scripts/search/main.js` and upload it to the origin bucket (`scripts/generate-search-index.sh`) for the search index update job to load |
 | AWS S3 | Hosts built site content as a static website origin |
 | AWS CloudFront | CDN serving the site; origin pointed at S3 bucket by Pulumi IaC |
 | AWS SSM Parameter Store | Maps commit SHAs to their corresponding S3 origin buckets |
 
 ### Multi-Repo Touchpoints
 
-- **`pulumi/pulumi-*` provider repos**: Trigger `publish-provider-update.yml` via `repository_dispatch` when a new provider version is released.
+- **`pulumi/pulumi-*` provider repos**: Trigger `publish-provider-update.yml` via a `resource-provider` `repository_dispatch` when a new provider version is released. Most get that step from `pulumi/ci-mgmt` templates.
+- **`pulumi/terraform-to-pulumi-registry-pipeline`** (internal): Watches dynamically bridged Terraform providers, stores their generated schemas in S3, and triggers `publish-provider-update.yml` via a `push-provider-update` `repository_dispatch`.
+- **Partner and community package repos**: Listed in `community-packages/package-list.json`. `generate-package-metadata.yml` reads their latest GitHub release, schema, and `docs/`.
+- **`pulumi/ci-mgmt`**: Provider CI templates that send the `resource-provider` dispatch, and the source of `provider-ci/providers.json`, which `scripts/generate-versioned-docs.sh` reads.
+- **`pulumi/registry-mirror-tools`**: Tools used by `scripts/generate-versioned-docs.sh` and `scripts/ci/publish_to_registry.py`.
+
+See [docs/architecture.md](./docs/architecture.md) for how these fit together.
 
 ---
 
@@ -458,6 +468,7 @@ The `resourcedocsgen` tool skips unchanged packages using sentinel files. Each g
 - **SHA-256 of the package YAML metadata** — changes when the package version or config is updated.
 - **Go toolchain version** — changes on Go upgrades.
 - **Source hash** — a SHA-256 of all `.go`, `.tmpl`, and `go.sum` files in `tools/resourcedocsgen/`, injected at build time via `-ldflags`. Changes when the doc generation logic or templates change.
+- **SHA-256 of the schema**, only when the schema URL isn't pinned. A URL is pinned when one of its path segments is the package version (with or without a leading `v`) or a full commit SHA, which is true of every package in the registry. Pinned packages are checked before any download. An unpinned URL, such as a branch used to preview unreleased docs, can serve a new schema while the YAML stays the same, so `resourcedocsgen` downloads it first and adds its hash to the key.
 
 On each run, `resourcedocsgen` compares the computed cache key against the sentinel. If they match and the expected output files (api-docs, nav JSON, schema JSON) all exist, the package is skipped. Otherwise it regenerates.
 
@@ -500,6 +511,7 @@ All workflow files live in `.github/workflows/`.
 |---|---|---|
 | `pull-request.yml` | Pull request | PR to `master` |
 | `push.yml` | Build and deploy | Push to `master` |
+| `publish.yml` | Publish to registry | Push to `master` |
 | `testing-deploy.yml` | Build and deploy - test environment | `workflow_dispatch` |
 | `pull-request-closed.yml` | Close pull request | PR closed |
 | `check-go.yml` | Check Go | `workflow_call` (reusable) |
@@ -513,10 +525,8 @@ All workflow files live in `.github/workflows/`.
 | `community-package-policy.yml` | Community package pipeline policy | PR touching the pipeline sources |
 | `publish-provider-update.yml` | provider docs build | `repository_dispatch` |
 | `bucket-cleanup.yml` | Scheduled jobs: Bucket cleanup | Daily 3:00 PM UTC |
-| `priority-digest.yml` | Scheduled jobs: Priority digest | Daily 3:00 PM UTC |
+| `repo-url-audit.yml` | Scheduled jobs: Repo URL audit | Every Monday 2:00 PM UTC |
 | `export-repo-secrets.yml` | Export secrets to ESC | `workflow_dispatch` |
-| `add-triage-label.yml` | Add triage label to new issues | Issue opened / reopened |
-| `add-to-project.yml` | Add issues to project | Issue opened / reopened |
 
 ### 5.1 `pull-request.yml` — PR Validation + Preview Deploy
 
@@ -537,7 +547,7 @@ PR opened / committed
         │       └── yarn install → make lint-markdown
         │
         ├── lint-scripts
-        │       └── yarn install → yarn run lint
+        │       └── yarn install → yarn run lint → make test-preview-comment → theme yarn install → make test-theme
         │
         ├── lint-dark-logos
         │       └── make lint-dark-logos
@@ -548,9 +558,15 @@ PR opened / committed
         ├── test-provider-api-docs
         │       └── make ensure build-assets → make test_provider_api_docs
         │
+        ├── test-infra
+        │       └── make test-infra
+        │
+        ├── check-publish
+        │       └── python3 scripts/ci/community-package/cli.py check-publish → post fact-sheet
+        │
         ├── preview  (skipped for fork PRs; skipped for automation/tfgen-provider-docs label)
         │       ├── Fetch ESC secrets
-        │       ├── Install Node 22, Go 1.26, Hugo 0.157
+        │       ├── Install Node 24, Go 1.26, Hugo 0.169
         │       ├── Validate community-packages/package-list.json
         │       ├── Configure AWS credentials → assume testing account role
         │       ├── Install s5cmd v2.3.0
@@ -572,7 +588,7 @@ PR opened / committed
 
 **Skipping preview for fork PRs**: Fork PRs are excluded at the workflow level. The `preview` job has an `if:` condition that only allows it to run when `github.event.pull_request.head.repo.full_name == github.repository`, so the job is never scheduled for PRs from forks. `pull-request.sh` also contains a defensive credential check (for `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `PULUMI_ACCESS_TOKEN`) as a fallback, but this code path is not expected to be reached in practice.
 
-**The `sentinel` job**: The sentinel job creates a GitHub status check called `"Sentinel"` only after all required jobs pass. This single required check simplifies branch protection rules. The sentinel job runs for non-fork PRs and for `repository_dispatch` events (condition: `github.event_name == 'repository_dispatch' || github.event.pull_request.head.repo.full_name == github.repository`).
+**The `sentinel` job**: The sentinel job creates a GitHub status check called `"Sentinel"` only after all required jobs pass. This single required check simplifies branch protection rules. The sentinel job runs only for PRs from branches in this repository (condition: `github.event.pull_request.head.repo.full_name == github.repository`).
 
 **Key environment variables in `preview` job**:
 
@@ -591,6 +607,8 @@ PR opened / committed
 
 **Trigger**: Push to `master`
 
+**Concurrency**: `registry-production-deploy`, `cancel-in-progress: false`. One deploy runs at a time; while it runs, GitHub keeps only the newest pending run and cancels older pending ones. Each deploy builds the whole site from `master`, so the newest commit covers the skipped ones. Package publishing is in `publish.yml`, which is not in this group.
+
 **ESC environment**: `github-secrets/pulumi-registry` (OIDC via `id-token: write`)
 
 **Flow**:
@@ -600,7 +618,7 @@ Push to master
         │
         └── build job
                 ├── Fetch ESC secrets (OIDC)
-                ├── Install Node 22, Go 1.26, Hugo 0.157
+                ├── Install Node 24, Go 1.26, Hugo 0.169
                 ├── Checkout (using PULUMI_BOT_TOKEN for private module access)
                 ├── Configure AWS credentials
                 │       └── Assume arn:aws:iam::388588623842:role/ContinuousDelivery
@@ -619,17 +637,14 @@ Push to master
                 │       │       └── Write origin-bucket-metadata.json
                 │       ├── scripts/generate-search-index.sh
                 │       │       └── Upload search-index.json to S3
-                │       ├── node scripts/await-in-progress.js
                 │       ├── scripts/ci/run-pulumi.sh update
                 │       │       └── pulumi -C infrastructure update --yes
                 │       │           (reads origin-bucket-metadata.json, updates CloudFront)
+                │       ├── scripts/ci/invalidate-docs-cdn.sh
+                │       │       └── Invalidate /registry/* on the www.pulumi.com CloudFront distribution
                 │       └── scripts/ci/make-s3-redirects.sh
                 │               └── Apply 301 redirects from scripts/redirects/
-                ├── Archive origin-bucket-metadata.json as artifact
-                ├── uv run publish_to_registry.py
-                │       └── Publish new provider versions to registry service
-                └── uv run push-registry.py   (only if the above failed)
-                        └── Legacy fallback publisher
+                └── Archive origin-bucket-metadata.json as artifact
 ```
 
 **Runner**: `pulumi-service-ubuntu-24.04-16core`
@@ -652,7 +667,9 @@ Push to master
 
 #### `testing-deploy.yml` — Manual Test Environment Deploy
 
-Identical to `push.yml` but triggered manually via `workflow_dispatch` and deploys to the testing environment (account `571684982431`, role `arn:aws:iam::571684982431:role/ContinuousDelivery`). Uses Go 1.21.x (note: older than production).
+Identical to `push.yml` but triggered manually via `workflow_dispatch` and deploys to the testing environment (account `571684982431`, role `arn:aws:iam::571684982431:role/ContinuousDelivery`). Reads its Go version from `tools/resourcedocsgen/go.mod`, like production.
+
+Both this deploy and production build with `hugo -e production`, and both load OneTrust, but the output differs in one way: production uses the pulumi.com domain script id from `config/production/config.yaml`, while for `DEPLOYMENT_ENVIRONMENT=testing` `scripts/ci/build.sh` exports `HUGO_PARAMS_ONETRUSTDOMAINSCRIPT` (the OneTrust test domain script id, ending in `-test`), so www.pulumi-test.io loads the test script. PR previews (`-e preview`) and local builds use the test id from `config/_default/config.yml`. `layouts/partials/head.html` fails the build if no domain script id is set.
 
 #### `pull-request-closed.yml` — PR Preview Cleanup
 
@@ -673,16 +690,20 @@ A reusable `workflow_call` workflow. Called by `pull-request.yml` for `tools/res
 
 Jobs:
 
-- **lint**: Sparse checkout → golangci-lint v2.1.6 with `--config .golangci.yml`
+- **lint**: Sparse checkout → golangci-lint v2.10.1 with `--config .golangci.yml`
 - **test**: Sparse checkout → `go test ./... -v`
 
 #### `check-links.yml` — Link Validation
 
 **Trigger**: Every Monday at 3:00 PM UTC (cron: `0 15 * * MON`); also `workflow_dispatch`
 
-Runs `make check_links` which calls `yarn run check-links`, which runs `node scripts/link-checker/check-links.js "https://www.pulumi.com/registry" 2` (2 retries on failure). Broken links are reported to the `#registry-ops` Slack channel.
+Runs `make check_links` which calls `yarn run check-links`, which runs `node scripts/link-checker/check-links.js "https://www.pulumi.com/registry" 2` (2 retries on failure). The checker writes its filtered results to `.broken-links.json` (git-ignored; `internal` and `external` lists) and no longer posts to Slack itself.
 
-Node version: 22.x; Hugo 0.157.0 installed but not explicitly used.
+If that file lists anything, the workflow hands it to `anthropics/claude-code-action`, which follows `.claude/commands/fix-broken-links/SKILL.md`: re-verify each link (the crawler has false positives), skip anything already covered by an open PR, then triage the rest -- source edit (for pages maintained in this repo), S3 redirect, or exclusion-list entry -- and open a ready PR on `fix/broken-links-<date>` whose description audits every decision. Breakage on pages fetched from a provider repo is listed in the PR, grouped by first-party and third-party packages, but never filed as an issue: those links can't be fixed from here, and a weekly issue per provider would only pile up. The action writes the PR link to `.broken-links-pr.txt`, and the last step posts that to `#registry-ops`. If the fix step fails, the Slack step still posts the broken-link count and a link to the run, and a checker that fails outright gets its own warning, so a failed week is never silent. On a clean run both steps are skipped, so nothing is posted.
+
+The ESC step runs before checkout and the checkout and Claude steps use `PULUMI_BOT_TOKEN`, so the PR is opened by `pulumi-bot` and triggers `pull-request.yml` like a human-authored PR would.
+
+Node version: 24.x; Hugo 0.169.0 installed (required by `scripts/ensure.sh`, which `make check_links` depends on).
 
 #### `run-browser-tests.yml` — Scheduled Browser Tests
 
@@ -690,26 +711,26 @@ Node version: 22.x; Hugo 0.157.0 installed but not explicitly used.
 
 Runs `make run-browser-tests` on a `pulumi-ubuntu-8core` runner. Assumes the production AWS role (`388588623842:role/ContinuousDelivery`) to be able to reach the live site.
 
-Node version: 22.x; Hugo 0.157.0 installed.
+Node version: 24.x; Hugo 0.169.0 installed.
 
-#### `generate-package-metadata.yml` — Nightly Community Package Check
+#### `generate-package-metadata.yml` — Scheduled Community Package Check
 
-**Trigger**: Daily at 5:30 AM UTC and 5:30 PM UTC; also `workflow_dispatch`
+**Trigger**: Daily at 5:30 AM UTC and 5:30 PM UTC; also `workflow_dispatch`, and a push to `master` that changes `community-packages/package-list.json`
 
 **Flow**:
 
 1. `generate-packages-list` job: Runs `python generate_package_list.py` in `community-packages/` to build a matrix of community provider repos to check.
-2. `check-for-package-update` job (matrix, max-parallel: 1): For each provider, runs `resourcedocsgen pkgversion` to check if a new version is available. If so, runs `resourcedocsgen metadata from-github` to generate updated metadata and opens a PR via `.github/actions/new-provider-version-pr`.
-3. PRs are skipped if an open PR already exists for that provider (deduplication check via `list_pull_requests` in `scripts/common.sh`).
+2. `check-for-package-update` job (matrix, max-parallel: 8): For each provider, runs `resourcedocsgen pkgversion` to check if a new version is available. If so, runs `resourcedocsgen metadata from-github` to generate updated metadata and opens a PR via `.github/actions/new-provider-version-pr`.
+3. Each provider publishes from a stable `<name>/publish-metadata` branch, so a provider with an open update PR gets that PR updated in place rather than a second one opened.
 
 #### `community-package-*.yml` — Community Package Verified Check
 
 The check pipeline gives a contributor who adds one entry to `community-packages/package-list.json` an automated, security-reviewed fact-sheet before a maintainer approves. It runs in two planes that never share a job: a secret-free plane that touches contributor input, and a privileged plane that never runs contributor code. `community-package-policy.yml` fails CI if any workflow mixes the two (`SecretCodeSeparationTests`).
 
 - **`community-package-check.yml`** (`workflow_dispatch`, two jobs): its `check` job is the secret-free plane. It fetches the PR's file list with a read-only token, refuses the PR outright if it touches anything outside the allowlist, then reads the package's schema and docs at its latest GitHub release and probes without executing the package's code — installs the plugin (blocking), resolves the npm/PyPI/Go SDKs and lints the docs (advisory). It writes a fact-sheet artifact and a one-word verdict. The plugin install is the only blocking check, alongside successful docs generation and a present `docs/_index.md`.
-- Its `report` job (write token, no secrets, no contributor code) downloads that artifact and does two things: it edits the pinned fact-sheet comment in place, and it posts the verdict as a new comment. Editing notifies nobody, so without that second comment a contributor has to keep refreshing the page to learn the result.
+- Its `report` job (write token, no secrets, no contributor code) downloads that artifact and does two things: it edits the pinned fact-sheet comment in place, stamping it with the head it checked, and it posts the verdict as a new comment. Editing notifies nobody, so without that second comment a contributor has to keep refreshing the page to learn the result.
 - **`community-package-check-command.yml`** (`issue_comment`): dispatches a fresh check run when the author or a maintainer comments `/check` on its own line, authorized and rate-limited. It dispatches rather than re-runs, so the check also reaches a pull request whose own run GitHub parked.
-- **`community-package-sweep.yml`** (schedule, every 5 minutes): the check has no `pull_request` trigger, because a fork PR from a first-time contributor parks such a run in `action_required` until a maintainer approves it, leaving the contributor with no fact-sheet and nothing for `/check` to re-run. The sweep is the automatic trigger instead: it dispatches a check for every open package-list PR, once per head commit. A dispatched run starts in the base repo, so GitHub does not gate it. The sweep only dispatches: it never runs a contributor's code. If the sweep itself fails, it opens a `p1` issue that the daily priority digest surfaces, and leaves the existing one alone if there already is one.
+- **`community-package-sweep.yml`** (schedule, every 5 minutes): the check has no `pull_request` trigger, because a fork PR from a first-time contributor parks such a run in `action_required` until a maintainer approves it, leaving the contributor with no fact-sheet and nothing for `/check` to re-run. The sweep is the automatic trigger instead: it dispatches a check for every open fork PR that changes the package list, once per head commit. It skips a PR whose branch lives in this repo: those are maintainer changes, such as a rename or a delist, that hand-edit package YAML the check would reject as generated, and a maintainer who wants the check on one can still run `/check`. It claims a head the moment it dispatches, by stamping the fact-sheet comment with it and leaving `⏳ Checking <head>` there until the check reports, and it skips a head that is already stamped. The claim lives on the pull request, which answers consistently. The Actions run list does not: while the sweep used that list as its record, matched by run title, it dropped a dispatched run often enough to re-check the same head hours later and post a second and third verdict comment. A dispatched run starts in the base repo, so GitHub does not gate it. The sweep only dispatches: it never runs a contributor's code. If the sweep itself fails, no community package pull request is checked and contributors get no fact-sheet until it recovers; the failed run is filed in Linear as a workflow failure like any other.
 - **`community-package-preview-command.yml`** (`issue_comment`): builds an on-demand site preview when a maintainer comments `/preview`. A fork's own `pull_request` build gets no secrets, so this maintainer-triggered run stands in for it: it materializes the fork's entry as data and reuses the `build-and-deploy-preview` action, never running the fork's code.
 - **`community-package-policy.yml`**: runs the toolchain's unit tests and `mypy --strict`, including the plane-separation test, on any PR touching the pipeline sources. It is not among `Sentinel Tower`'s `needs`, so it does not gate a merge today.
 
@@ -719,14 +740,14 @@ After merge, `generate-package-metadata.yml` (above) generates and publishes the
 
 **Trigger**: `repository_dispatch` with event types `resource-provider` or `push-provider-update`
 
-Used by first-party Pulumi provider repos to trigger documentation regeneration when a new provider version is released.
+Used by first-party Pulumi provider repos, and by `pulumi/terraform-to-pulumi-registry-pipeline` for dynamically bridged Terraform providers, to trigger documentation regeneration when a new provider version is released.
 
-| Event type | Use case | Required inputs |
-|---|---|---|
-| `resource-provider` | GitHub-hosted provider (Pulumi repo) | `project-shortname`, `ref` (version tag) |
-| `push-provider-update` | Opaque provider (no assumed GitHub structure) | `project-shortname`, `schema-url`, `index-url` |
+| Event type | Use case | Required inputs | Optional inputs |
+|---|---|---|---|
+| `resource-provider` | GitHub-hosted provider (Pulumi repo) | `project-shortname`, `ref` (version tag) | `schema-path` |
+| `push-provider-update` | Opaque provider (no assumed GitHub structure) | `project-shortname`, `schema-url`, `index-url` | — |
 
-For `resource-provider`: Calls `resourcedocsgen metadata from-github` → creates a PR. For `push-provider-update`: Downloads schema from `schema-url`, extracts version from schema, calls `resourcedocsgen metadata from-urls` → creates a PR.
+For `resource-provider`: Calls `resourcedocsgen metadata from-github` → creates a PR. For `push-provider-update`: Downloads schema from `schema-url`, extracts version from schema, checks the schema's publisher is in `publisher-names.json`, calls `resourcedocsgen metadata from-urls` → creates a PR.
 
 #### `bucket-cleanup.yml` — Remove Stale S3 Preview Buckets
 
@@ -743,31 +764,19 @@ For each deletable bucket (associated with a closed PR):
 
 Runs in the production environment (`388588623842:role/ContinuousDelivery`). Node 18.x / Go 1.20.x (older versions pinned in this workflow).
 
-#### `priority-digest.yml` — Post Open P0 and P1 Issues to Slack
+#### `repo-url-audit.yml` — Track Package Repo URL Drift
 
-**Trigger**: Daily at 3:00 PM UTC; also `workflow_dispatch` with a `dry-run` input
+**Trigger**: Every Monday at 2:00 PM UTC; also `workflow_dispatch` with a `dry-run` input
 
-Runs `scripts/ci/priority_digest.py`, which searches GitHub for open issues labelled `p0` or `p1` across `pulumi/registry` and `pulumi/terraform-to-pulumi-registry-pipeline`, then posts them to Slack, oldest first, with each issue's age and assignee.
+Runs `scripts/ci/repo_url_audit.py`, which asks the GitHub API about every listed (non-`DEPRECATED`) package's `repo_url`. The API follows renames and transfers, and a package is reported when its repo has moved to a new owner or name, been archived, or returns 404. Case-only differences are ignored, since GitHub slugs are case-insensitive. The report is kept in a single open issue of type `Task`, found by the `<!-- repo-url-audit -->` marker in its body (not by label or type, which triage may change): the job rewrites the issue on each run, and closes it once nothing is left to fix. Each row says where the fix goes: the package YAML, the YAML plus `repoSlug` in `community-packages/package-list.json` (which `metadata from-github` rebuilds `repo_url` from), or `pulumi/terraform-to-pulumi-registry-pipeline` for dynamically bridged providers.
 
-Replaces a Metabase subscription that posted the same query as a screenshot. Uses `PULUMI_BOT_TOKEN` and `SLACK_ACCESS_TOKEN` from ESC and posts via `chat.postMessage` to the channel ID in the `SLACK_TEAM_CHANNEL` repository variable; the bot must be a member of that channel. `--dry-run` prints the message to the job log instead of posting.
+Uses the workflow's own `GITHUB_TOKEN` with `issues: write`. `--dry-run` prints the report to the job log instead of filing it.
 
 #### `export-repo-secrets.yml` — Sync GitHub Secrets → ESC
 
 **Trigger**: `workflow_dispatch` only
 
 Exports all GitHub repository secrets (except `EXPORT_SECRETS_PRIVATE_KEY`) to the `github-secrets/pulumi-registry` ESC environment using the `pulumi/esc-export-secrets-action`.
-
-#### `add-triage-label.yml` — Auto-label New Issues
-
-**Trigger**: Issue opened or reopened
-
-Adds the `needs-triage` label to all new issues automatically.
-
-#### `add-to-project.yml` — Add Issues to GitHub Project
-
-**Trigger**: Issue opened or reopened
-
-Adds new issues to the Pulumi Docs GitHub project (project #79) using `PULUMI_BOT_GHA_MARKETING` token from ESC.
 
 ---
 
@@ -898,13 +907,14 @@ There are two publishers, a primary and a fallback.
 
 **Invoked**:
 
-- On every push to `master` (in `push.yml`, `Publish to registry (primary)`, after the build+deploy completes). `continue-on-error: true`, so its failure hands off to the fallback rather than failing the job.
+- On every push to `master` (in `publish.yml`, `Publish to registry (primary)`). That workflow runs separately from `push.yml` and has no concurrency group, so every commit publishes its own package even when deploys are queued. `continue-on-error: true`, so its failure hands off to the fallback rather than failing the job.
+- On demand, by running `publish.yml` from the Actions tab with a space-separated `specs` input (e.g. `pulumi/pulumi/meraki@0.5.3 pulumi/pulumi/sdwan@0.9.5`) and optionally `dry-run`. Use this to backfill versions a failed run never published. The legacy fallback does not run for a manual dispatch, because it would republish every package rather than the requested specs.
 - In `--validate-all` mode on every PR (in `pull-request.yml`, `test-live-publish` job). That mode only turns every package YAML into a publish spec and reports the ones it cannot; it publishes nothing.
 
 **What it does**:
 
-1. Reads the package YAMLs changed in the last commit (`git diff --name-only HEAD~1` against `themes/default/data/registry/packages/*.yaml`).
-2. Turns each into a `{source}/{publisher}/{name}@{version}` spec, skipping `DEPRECATED` publishers and the `azure-native-v*` / `aws-v<N>` legacy aliases.
+1. Reads the package YAMLs changed by the push (`git diff --name-only <before> HEAD` against `themes/default/data/registry/packages/*.yaml`, where `<before>` is `github.event.before`). This covers every commit in a multi-commit push. A manual dispatch has no `before` and diffs against `HEAD~1`. If the `before` commit is missing from the clone (e.g. after a force push), the publisher fails rather than diff a narrower range and silently skip packages; publish the missed packages with a manual dispatch that names them in `specs`. Master's ruleset blocks force pushes, so this only happens through a ruleset bypass.
+2. Turns each into a `{source}/{publisher}/{name}@{version}` spec, skipping packages with `deprecated: true` and the `azure-native-v*` / `aws-v<N>` legacy aliases.
 3. Pipes those specs through `registry-mirror-discover | registry-mirror-publish`, both installed with `go install` from `github.com/pulumi/registry-mirror-tools` at the commit pinned in `REGISTRY_MIRROR_TOOLS_COMMIT`. Retries up to 3 times with exponential backoff (10s to 30s).
 
 ### Fallback: `push-registry.py`
@@ -913,13 +923,13 @@ There are two publishers, a primary and a fallback.
 
 **Runtime**: Python 3 (via `uv run --with requests,pyyaml`)
 
-**Invoked**: only when the primary publisher fails — `push.yml`'s `Push to the Live Registry (legacy fallback)` step is gated on `steps.mirror-publish.outcome == 'failure'`. It is also `continue-on-error: true`; if both publishers fail, a Slack notification goes to `#registry-ops`. Nothing runs it on a PR.
+**Invoked**: only when the primary publisher fails on a `push` — `publish.yml`'s `Push to the Live Registry (legacy fallback)` step never runs for a manual dispatch. It is also `continue-on-error: true`; when the primary fails and the fallback doesn't succeed, a Slack notification goes to `#registry-ops` (except on a dry run), and the job-level `notify` alerts if the publish job fails, is cancelled or times out. Nothing runs it on a PR.
 
 **What it does**:
 
 1. Reads all YAML files from `themes/default/data/registry/packages/*.yaml`.
 2. For each package:
-   - Skips packages where `publisher == "DEPRECATED"`.
+   - Skips packages with `deprecated: true`.
    - Skips packages whose name matches `azure-native-v*` (except `azure-native` itself) — these are aliases.
    - Skips packages whose name matches `aws-v<N>` — these are legacy versioned packages.
    - Calls the registry API above to check if this version already exists.
@@ -948,10 +958,12 @@ There are two publishers, a primary and a fallback.
 
 ```bash
 make test
-# Runs: cd tools/resourcedocsgen && go test ./...
+# Runs: make test-infra test-preview-comment test-theme, then cd tools/resourcedocsgen && go test ./...
 ```
 
-Also run in CI via `check-go.yml` for `tools/resourcedocsgen/`.
+`test-theme` runs the theme's TypeScript unit tests (the OneTrust consent bridge, consent-gated YouTube embeds, and the Algolia insights gate). It needs both the root `yarn install` (for `jsdom`) and the theme `yarn install` (for `tsc`), so run `make ensure` before `make test`.
+
+The Go tests also run in CI via `check-go.yml` for `tools/resourcedocsgen/`; `test-preview-comment` and `test-theme` run in the `lint-scripts` PR job.
 
 ### 8.2 Go Linting
 
@@ -1020,21 +1032,28 @@ Node version in CI: 23.x. Go version: stable (latest).
 
 ### 8.7 Browser Tests (Cypress)
 
+**Config**: `cypress.config.js` — default base URL is `http://localhost:1313`. Specs live in `cypress/e2e/`.
+
+**Reporters**: `cypress-multi-reporters` (config in `reporter-config.json`).
+
+`scripts/run-browser-tests.sh <base-url> <specs> [retries]` runs one spec, or a comma-separated list, relative to `cypress/e2e/`. Every spec runs somewhere in CI:
+
+| Spec | Runs in | Against |
+|---|---|---|
+| `site.cy.js`, `structured-data.cy.js` | The smoke test in `scripts/ci/sync.sh`, after each preview and production S3 deploy | The deployed S3 website URL |
+| `test-provider-api-docs.cy.js` | The `test-provider-api-docs` PR job (`make test_provider_api_docs`, see 8.6) | A local Hugo server |
+| `opentofu-contract.cy.js` | `run-browser-tests.yml`, daily at 2:00 PM UTC | The live OpenTofu search API (the specs in `site.cy.js` stub it) |
+
+Don't point a large spec at `https://www.pulumi.com`. The CloudFront WAF blocks an IP after 500 requests in 5 minutes, and the distribution serves that block as the site's 404 page, so it looks like missing pages rather than rate limiting.
+
+#### 8.7.1 API Docs Crawl (mocha)
+
 ```bash
 make run-browser-tests
 # Runs: scripts/run-api-docs-tests.sh
 ```
 
-**Config**: `cypress.config.js` — default base URL is `http://localhost:1313`.
-
-**Test location**: `cypress/` directory.
-
-**Reporters**: `cypress-multi-reporters` (config in `reporter-config.json`).
-
-Browser tests are run:
-
-1. **As a smoke test inside `scripts/ci/sync.sh`** after each S3 deploy (both preview and production), using the deployed S3 website URL.
-2. **Daily at 2:00 PM UTC** via `run-browser-tests.yml` against the live production site.
+Despite the target name, this is not Cypress. It downloads the current production registry bucket to `public/` and runs the mocha suite in `scripts/tests/` over every package's API docs. It runs daily in `run-browser-tests.yml`, after the Cypress step, and takes roughly 40–60 minutes.
 
 ### 8.8 Link Checking
 
@@ -1048,7 +1067,8 @@ make check_links
 - Excludes API docs pages, SDK reference pages, and install/versions pages.
 - Uses `broken-link-checker` with `filterLevel: 1` and GET requests.
 - Up to 2 retries if broken links are found.
-- Reports broken links to the `#registry-ops` Slack channel via `SLACK_ACCESS_TOKEN`.
+- Filters transient and bot-protection failures (`excludeAcceptable()`): all `429`s, `502`/`503`, and `401`/`403` on external hosts, among others. Known-noisy hosts (Maven Central, npm, Docker Hub, status pages, GitHub's own chrome on `github.com/pulumi/pulumi`) are in `getDefaultExcludedKeywords()`.
+- Writes `.broken-links.json` (`{ generated, internal, external }`) at the repo root. In CI, `check-links.yml` feeds that file to the `fix-broken-links` skill, which opens a fix PR; see the workflow section above.
 - Many known-flaky domains are excluded (LinkedIn, YouTube, Twitter, etc.).
 
 Runs every Monday at 3:00 PM UTC in CI.
@@ -1059,19 +1079,35 @@ Runs every Monday at 3:00 PM UTC in CI.
 
 ### 9.1 Pulumi ESC
 
-**Organization**: `pulumi` **Environment**: `github-secrets/pulumi-registry`
+**Environment**: `pulumi/github-secrets/pulumi-registry`
 
 All workflows use OIDC token exchange to authenticate with Pulumi ESC — no long-lived secrets are stored in GitHub Actions secrets directly (except for `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` used in the testing environment for PR preview deploys).
 
-The ESC action is configured via workflow-level environment variables:
+Each job that reads secrets runs `pulumi/auth-actions` to exchange its OIDC token for a Pulumi organization token, then passes that token to `pulumi/esc-action`. The job needs `id-token: write`. The auth step sets `export-environment-variables: false` so the token is available only to the ESC step, not to later steps in the job:
 
 ```yaml
-ESC_ACTION_OIDC_AUTH: true
-ESC_ACTION_OIDC_ORGANIZATION: pulumi
-ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
-ESC_ACTION_ENVIRONMENT: github-secrets/pulumi-registry
+- name: Authenticate to Pulumi Cloud
+  id: pulumi-auth
+  uses: pulumi/auth-actions@<sha> # v2.x.y
+  with:
+    organization: pulumi
+    requested-token-type: urn:pulumi:token-type:access_token:organization
+    export-environment-variables: false
+- name: Fetch secrets from ESC
+  id: esc-secrets
+  uses: pulumi/esc-action@<sha> # v4.x.y
+  with:
+    pulumi-access-token: ${{ steps.pulumi-auth.outputs.pulumi-access-token }}
+```
+
+The environment and the variables to export come from workflow-level environment variables. `pulumi/esc-action` v4 requires the full `<org>/<project>/<environment>` name:
+
+```yaml
+ESC_ACTION_ENVIRONMENT: pulumi/github-secrets/pulumi-registry
 ESC_ACTION_EXPORT_ENVIRONMENT_VARIABLES: false  # (or a specific mapping)
 ```
+
+`pulumi/esc-action` v4 doesn't install the Pulumi CLI. Jobs that run `pulumi` (`push.yml`, `testing-deploy.yml`, `publish.yml`) install it with `pulumi/actions`.
 
 The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync GitHub repository secrets into ESC.
 
@@ -1092,9 +1128,8 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 | `PULUMI_DOCS_STACK_NAME` | GitHub var | build | Pulumi docs stack reference |
 | `DEPLOYMENT_ENVIRONMENT` | GitHub var | build, cleanup | e.g., `testing` or `production` |
 | `NODE_OPTIONS` | Hardcoded | build, browser tests | `--max_old_space_size=8192` |
-| `SLACK_ACCESS_TOKEN` | ESC | link check, cleanup, priority digest | Slack Web API token for posting messages |
+| `SLACK_ACCESS_TOKEN` | ESC | link check, cleanup | Slack Web API token for posting messages |
 | `SLACK_WEBHOOK_URL` | ESC | notify jobs | Slack incoming webhook for failure alerts |
-| `SLACK_TEAM_CHANNEL` | GitHub var | priority digest | Slack channel ID the digest posts to |
 | `ASSET_BUNDLE_ID` | `build.sh` (computed) | Hugo templates | Unique suffix for CSS/JS cache-busting |
 | `CSS_BUNDLE` / `JS_BUNDLE` | `build.sh` (computed) | Hugo templates | Paths to versioned asset bundles |
 
@@ -1102,13 +1137,13 @@ The `export-repo-secrets.yml` workflow provides a manual escape hatch to sync Gi
 
 | Tool | `mise.toml` | `pull-request.yml` (preview) | `push.yml` (production) | `testing-deploy.yml` |
 |---|---|---|---|---|
-| Node.js | 20 | 22.x | 22.x | 22.x |
-| Go | 1.26 | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` |
-| Hugo | 0.157 | 0.157.0 | 0.157.0 | 0.157.0 |
-| golangci-lint | 2.1.6 | v2.1.6 (check-go.yml) | — | — |
+| Node.js | 24.22.1 | 24.22.1 | 24.22.1 | 24.22.1 |
+| Go | 1.26.10 | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` | `tools/resourcedocsgen/go.mod` |
+| Hugo | 0.169 | 0.169.0 | 0.169.0 | 0.169.0 |
+| golangci-lint | 2.10.1 | v2.10.1 (check-go.yml) | — | — |
 | s5cmd | — | v2.3.0 | v2.3.0 | v2.3.0 |
 
-Note: `mise.toml` specifies Node 20 for local development, while CI workflows use Node 22. The `lint-markdown` and `lint-scripts` jobs in `pull-request.yml` use Node 23.x. The `bucket-cleanup.yml` workflow uses Node 18.x.
+Note: `mise.toml` and the CI workflows use Node 24, including `bucket-cleanup.yml` and every job in `pull-request.yml`. The exception is `community-package-check.yml`, which pins Node 20.
 
 ---
 
@@ -1120,7 +1155,7 @@ Note: `mise.toml` specifies Node 20 for local development, while CI workflows us
 | Link check | 3:00 PM every Monday | `check-links.yml` | `make check_links` |
 | Browser tests (scheduled) | 2:00 PM daily | `run-browser-tests.yml` | `make run-browser-tests` |
 | Stale bucket cleanup | 3:00 PM daily | `bucket-cleanup.yml` | `make ci_bucket_cleanup` |
-| Open P0 and P1 issue digest | 3:00 PM daily | `priority-digest.yml` | `scripts/ci/priority_digest.py` |
+| Package repo URL drift | 2:00 PM every Monday | `repo-url-audit.yml` | `scripts/ci/repo_url_audit.py` |
 
 ---
 
@@ -1130,7 +1165,7 @@ Note: `mise.toml` specifies Node 20 for local development, while CI workflows us
 
 **Symptom**: Build fails with template errors or unexpected output.
 
-**Fix**: Ensure you are using Hugo 0.157 extended. Check with `hugo version`. If using mise: `mise install` will install the correct version. Ensure you have the **extended** variant (required for SCSS processing).
+**Fix**: Ensure you are using Hugo 0.169 extended. Check with `hugo version`. If using mise: `mise install` will install the correct version. Ensure you have the **extended** variant (required for SCSS processing).
 
 ### Node out-of-memory error
 
@@ -1200,7 +1235,7 @@ The Pulumi Registry is actually **two separate but tightly coupled systems** tha
 
 These two systems are **not the same thing and do not share a data store**. The static site is rebuilt from YAML files on every push to `master`; it does not query the Pulumi Cloud API at runtime. The Pulumi Cloud API is a live service that stores package metadata independently.
 
-The bridge between them is the publish step that runs after every production build: `scripts/ci/publish_to_registry.py` primarily, with `scripts/ci/push-registry.py` as a fallback if that fails. Either one publishes new package versions to the Pulumi Cloud API.
+The bridge between them is the publish workflow (`publish.yml`) that runs on every push to `master`: `scripts/ci/publish_to_registry.py` primarily, with `scripts/ci/push-registry.py` as a fallback if that fails. Either one publishes new package versions to the Pulumi Cloud API.
 
 ```
 YAML files in repo                            Pulumi Cloud Registry API
@@ -1222,7 +1257,7 @@ YAML files in repo                            Pulumi Cloud Registry API
 
 ### 12.2 How the Publishers Bridge Them
 
-On every push to `master`, after the Hugo site is built and deployed, `scripts/ci/publish_to_registry.py` reads the package YAMLs changed in the last commit, turns each into a `{source}/{publisher}/{name}@{version}` spec, and pipes those through `registry-mirror-discover | registry-mirror-publish`.
+On every push to `master`, `publish.yml` runs `scripts/ci/publish_to_registry.py`, which reads the package YAMLs changed by the push, turns each into a `{source}/{publisher}/{name}@{version}` spec, and pipes those through `registry-mirror-discover | registry-mirror-publish`.
 
 If that step fails, `scripts/ci/push-registry.py` runs as the legacy fallback. It sweeps every package rather than just the changed ones:
 

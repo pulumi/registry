@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.110.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-databricks/v1.119.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-databricks/blob/v1.110.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-databricks/blob/v1.119.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Databricks Provider
 meta_desc: Provides an overview on how to configure the Pulumi Databricks provider.
@@ -382,7 +382,7 @@ display(spark.range(10))
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     databricks = {
       source = "pulumi/databricks"
@@ -393,32 +393,40 @@ pulumi {
   }
 }
 
-data "databricks_getcurrentuser" "me" {
+data "databricks_current_user" "me" {
 }
-data "databricks_getsparkversion" "latest" {
+data "databricks_spark_version" "latest" {
 }
-data "databricks_getnodetype" "smallest" {
+data "databricks_node_type" "smallest" {
   local_disk = true
 }
 
 resource "databricks_notebook" "this" {
-  path           ="${data.databricks_getcurrentuser.me.home}/Pulumi"
+  lifecycle {
+    create_before_destroy = true
+  }
+  path           ="${data.databricks_current_user.me.home}/Pulumi"
   language       = "PYTHON"
-  content_base64 = base64encode("# created from ${abspath(notImplemented("path.module"))}
+  content_base64 = base64encode(<<-EOT
+# created from ${abspath(notImplemented("path.module"))}
 display(spark.range(10))
-")
+EOT
+)
 }
 resource "databricks_job" "this" {
-  name ="Pulumi Demo (${data.databricks_getcurrentuser.me.alphanumeric})"
-  tasks {
+  lifecycle {
+    create_before_destroy = true
+  }
+  name ="Pulumi Demo (${data.databricks_current_user.me.alphanumeric})"
+  task {
     task_key = "task1"
-    notebook_task = {
+    notebook_task {
       notebook_path = databricks_notebook.this.path
     }
-    new_cluster = {
+    new_cluster {
       num_workers   = 1
-      spark_version = data.databricks_getsparkversion.latest.id
-      node_type_id  = data.databricks_getnodetype.smallest.id
+      spark_version = data.databricks_spark_version.latest.id
+      node_type_id  = data.databricks_node_type.smallest.id
     }
   }
 }
@@ -471,16 +479,16 @@ The provider supports additional configuration parameters not related to authent
 
 The `host` argument configures the endpoint that the Pulumi Provider for Databricks interacts with. This must be configured according to the following table:
 
-|              Environment               |                   `host`                    |
-|----------------------------------------|---------------------------------------------|
-| Databricks Account on AWS              | `https://accounts.cloud.databricks.com`     |
-| Databricks Account on AWS GovCloud     | `https://accounts.cloud.databricks.us`      |
-| Databricks Account on AWS GovCloud DOD | `https://accounts-dod.cloud.databricks.mil` |
-| Azure Databricks Account               | `https://accounts.azuredatabricks.net`      |
-| Azure Databricks Account (US Gov)      | `https://accounts.azuredatabricks.us`       |
-| Azure Databricks Account (China)       | `https://accounts.azuredatabricks.cn`       |
-| Databricks Account on GCP              | `https://accounts.gcp.databricks.com`       |
-| Databricks Workspace (any cloud)       | `https://<workspace hostname>`              |
+|              Environment               |                    `host`                    |
+|----------------------------------------|----------------------------------------------|
+| Databricks Account on AWS              | `https://accounts.cloud.databricks.com`      |
+| Databricks Account on AWS GovCloud     | `https://accounts.cloud.databricks.us`       |
+| Databricks Account on AWS GovCloud DOD | `https://accounts-dod.cloud.databricks.mil`  |
+| Azure Databricks Account               | `https://accounts.azuredatabricks.net`       |
+| Azure Databricks Account (US Gov)      | `https://accounts.usgov.databricks.azure.us` |
+| Azure Databricks Account (China)       | `https://accounts.azuredatabricks.cn`        |
+| Databricks Account on GCP              | `https://accounts.gcp.databricks.com`        |
+| Databricks Workspace (any cloud)       | `https://<workspace hostname>`               |
 ## Authentication
 
 There are currently a number of supported methods to [authenticate](https://docs.databricks.com/dev-tools/api/latest/authentication.html) into the Databricks platform to create resources:
@@ -668,7 +676,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     databricks = {
       source = "pulumi/databricks"
@@ -677,6 +685,9 @@ pulumi {
 }
 
 resource "databricks_group" "cluster_admin" {
+  lifecycle {
+    create_before_destroy = true
+  }
   display_name               = "cluster_admin"
   allow_cluster_create       = true
   allow_instance_pool_create = false
@@ -1043,7 +1054,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     azure = {
       source = "pulumi/azure"
@@ -1055,12 +1066,18 @@ pulumi {
 }
 
 resource "azure_databricks_workspace" "this" {
+  lifecycle {
+    create_before_destroy = true
+  }
   location            = "centralus"
   name                = "my-workspace-name"
   resource_group_name = resourceGroup
   sku                 = "premium"
 }
 resource "databricks_user" "my-user" {
+  lifecycle {
+    create_before_destroy = true
+  }
   user_name = "test-user@databricks.com"
 }
 ```
@@ -1298,7 +1315,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     azure = {
       source = "pulumi/azure"
@@ -1310,12 +1327,18 @@ pulumi {
 }
 
 resource "azure_databricks_workspace" "this" {
+  lifecycle {
+    create_before_destroy = true
+  }
   location            = "centralus"
   name                = "my-workspace-name"
   resource_group_name = resourceGroup
   sku                 = "premium"
 }
 resource "databricks_user" "my-user" {
+  lifecycle {
+    create_before_destroy = true
+  }
   user_name    = "test-user@databricks.com"
   display_name = "Test User"
 }
@@ -1633,7 +1656,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     azure = {
       source = "pulumi/azure"
@@ -1645,12 +1668,18 @@ pulumi {
 }
 
 resource "azure_databricks_workspace" "this" {
+  lifecycle {
+    create_before_destroy = true
+  }
   location            = "centralus"
   name                = "my-workspace-name"
   resource_group_name = resourceGroup
   sku                 = "premium"
 }
 resource "databricks_user" "my-user" {
+  lifecycle {
+    create_before_destroy = true
+  }
   user_name = "test-user@databricks.com"
 }
 ```

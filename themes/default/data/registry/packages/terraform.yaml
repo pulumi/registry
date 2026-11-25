@@ -12,7 +12,7 @@ name: terraform
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-terraform
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-terraform/v6.1.0/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-terraform/v6.2.0/schema.json
 title: Terraform
-updated_on: 1784560922
-version: v6.1.0
+updated_on: 1793199398
+version: v6.2.0

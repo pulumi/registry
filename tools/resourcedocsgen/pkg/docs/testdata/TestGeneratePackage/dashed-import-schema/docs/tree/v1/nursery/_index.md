@@ -2,7 +2,7 @@
 ---
 title: "Nursery"
 title_tag: "plant.tree/v1.Nursery"
-meta_desc: "Create and manage plant.tree/v1.Nursery with Pulumi. Full API reference with input and output properties, lookup functions, and examples in TypeScript, Python, Go, C#, Java, and YAML."
+meta_desc: "Documentation for the plant.tree/v1.Nursery resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
 outputs:
@@ -29,7 +29,7 @@ Resources are created with functions called constructors. To learn more about de
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="k">new </span><span class="nx">Nursery</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">args</span><span class="p">:</span> <span class="nx"><a href="#inputs">NurseryArgs</a></span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#CustomResourceOptions">CustomResourceOptions</a></span><span class="p">);</span></code></pre></div>
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="k">new </span><span class="nx">Nursery</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">args</span><span class="p">:</span> <span class="nx"><a href="#inputs">NurseryArgs</a></span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/CustomResourceOptions.html">CustomResourceOptions</a></span><span class="p">);</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -108,7 +108,7 @@ Resources are created with functions called constructors. To learn more about de
         class="property-optional" title="Optional">
         <span>opts</span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#CustomResourceOptions">CustomResourceOptions</a></span>
+        <span class="property-type"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/CustomResourceOptions.html">CustomResourceOptions</a></span>
     </dt>
     <dd>Bag of options to control resource&#39;s behavior.</dd></dl>
 
@@ -632,6 +632,215 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 
 
+## Look up Existing Nursery Resource {#look-up}
+
+Get an existing Nursery resource's state with the given name, ID, and optional extra properties used to qualify the lookup.
+<div>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="javascript,typescript">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="k">public static </span><span class="nf">get</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">id</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/types/ID.html">Input&lt;ID&gt;</a></span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/CustomResourceOptions.html">CustomResourceOptions</a></span><span class="p">): </span><span class="nx">Nursery</span></code></pre></div>
+</div></pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="python">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class=nd>@staticmethod</span>
+<span class="k">def </span><span class="nf">get</span><span class="p">(</span><span class="nx">resource_name</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
+        <span class="nx">id</span><span class="p">:</span> <span class="nx">str</span><span class="p">,</span>
+        <span class="nx">opts</span><span class="p">:</span> <span class="nx"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">Optional[ResourceOptions]</a></span> = None<span class="p">) -&gt;</span> Nursery</code></pre></div>
+</div></pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="go">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="k">func </span>GetNursery<span class="p">(</span><span class="nx">ctx</span><span class="p"> *</span><span class="nx"><a href="https://pkg.go.dev/github.com/pulumi/pulumi/sdk/v3/go/pulumi?tab=doc#Context">Context</a></span><span class="p">,</span> <span class="nx">name</span><span class="p"> </span><span class="nx">string</span><span class="p">,</span> <span class="nx">id</span><span class="p"> </span><span class="nx"><a href="https://pkg.go.dev/github.com/pulumi/pulumi/sdk/v3/go/pulumi?tab=doc#IDInput">IDInput</a></span><span class="p">,</span> <span class="nx">state</span><span class="p"> *</span><span class="nx">NurseryState</span><span class="p">,</span> <span class="nx">opts</span><span class="p"> ...</span><span class="nx"><a href="https://pkg.go.dev/github.com/pulumi/pulumi/sdk/v3/go/pulumi?tab=doc#ResourceOption">ResourceOption</a></span><span class="p">) (*<span class="nx">Nursery</span>, error)</span></code></pre></div>
+</div></pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="csharp">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="k">public static </span><span class="nx">Nursery</span><span class="nf"> Get</span><span class="p">(</span><span class="nx">string</span><span class="p"> </span><span class="nx">name<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.Input-1.html">Input&lt;string&gt;</a></span><span class="p"> </span><span class="nx">id<span class="p">,</span> <span class="nx"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.CustomResourceOptions.html">CustomResourceOptions</a></span><span class="p">? </span><span class="nx">opts = null<span class="p">)</span></code></pre></div>
+</div></pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="java">
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="k">public static </span><span class="nx">Nursery</span><span class="nf"> get</span><span class="p">(</span><span class="nx">String</span><span class="p"> </span><span class="nx">name<span class="p">,</span> <span class="nx">Output&lt;String&gt;</span><span class="p"> </span><span class="nx">id<span class="p">,</span> <span class="nx">CustomResourceOptions</span><span class="p"> </span><span class="nx">options<span class="p">)</span></code></pre></div>
+</div></pulumi-choosable>
+</div>
+
+<div>
+  <pulumi-choosable type="language" values="yaml">
+    <div class="no-copy">
+      <div class="highlight">
+        <pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">resources</span><span class="p">:</span><span class="w"></span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">existingNursery</span><span class="p">:</span><span class="w"></span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l"><span class="nx">plant:tree/v1:Nursery</span></span><span class="w"></span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">get</span><span class="p">:</span><span class="w"></span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">${id}</span><span class="w"></span></span></span></code></pre>
+      </div>
+    </div>
+  </pulumi-choosable>
+</div>
+
+<div>
+  <pulumi-choosable type="language" values="hcl">
+    <div class="no-copy">
+      <div class="highlight">
+        <pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="line"><span class="cl"><span class="k">import</span> {
+</span></span><span class="line"><span class="cl">  <span class="n">to</span> <span class="o">=</span> <span class="nx">plant_tree_v1_nursery</span>.<span class="n">example</span>
+</span></span><span class="line"><span class="cl">  <span class="n">id</span> <span class="o">=</span> <span class="s2">&#34;${id}&#34;</span>
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre>
+      </div>
+    </div>
+  </pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="javascript,typescript">
+
+<dl class="resources-properties"><dt
+        class="property-required" title="Required">
+        <span>name</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The unique name of the resulting resource.</dd><dt
+        class="property-required" title="Required">
+        <span>id</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/types/ID.html">Input&lt;ID&gt;</a></span>
+    </dt>
+    <dd>The unique provider ID of the resource to look up.</dd><dt
+        class="property-optional" title="Optional">
+        <span>opts</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/CustomResourceOptions.html">CustomResourceOptions</a></span>
+    </dt>
+    <dd>Bag of options to control resource&#39;s behavior.</dd></dl>
+
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="python">
+
+<dl class="resources-properties"><dt
+        class="property-required" title="Required">
+        <span>resource_name</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">str</span>
+    </dt>
+    <dd>The unique name of the resulting resource.</dd><dt
+        class="property-required" title="Required">
+        <span>id</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">str</span>
+    </dt>
+    <dd>The unique provider ID of the resource to look up.</dd><dt
+        class="property-optional" title="Optional">
+        <span>opts</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions">ResourceOptions</a></span>
+    </dt>
+    <dd>Bag of options to control resource&#39;s behavior.</dd></dl>
+
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="go">
+
+<dl class="resources-properties"><dt
+        class="property-optional" title="Optional">
+        <span>ctx</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="https://pkg.go.dev/github.com/pulumi/pulumi/sdk/v3/go/pulumi?tab=doc#Context">Context</a></span>
+    </dt>
+    <dd>Context object for the current deployment.</dd><dt
+        class="property-required" title="Required">
+        <span>name</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The unique name of the resulting resource.</dd><dt
+        class="property-required" title="Required">
+        <span>id</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="https://pkg.go.dev/github.com/pulumi/pulumi/sdk/v3/go/pulumi?tab=doc#IDInput">IDInput</a></span>
+    </dt>
+    <dd>The unique provider ID of the resource to look up.</dd><dt
+        class="property-optional" title="Optional">
+        <span>state</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">NurseryState</span>
+    </dt>
+    <dd>Pass nil. This resource has no state arguments.</dd><dt
+        class="property-optional" title="Optional">
+        <span>opts</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="https://pkg.go.dev/github.com/pulumi/pulumi/sdk/v3/go/pulumi?tab=doc#ResourceOption">ResourceOption</a></span>
+    </dt>
+    <dd>Bag of options to control resource&#39;s behavior.</dd></dl>
+
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="csharp">
+
+<dl class="resources-properties"><dt
+        class="property-required" title="Required">
+        <span>name</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">string</span>
+    </dt>
+    <dd>The unique name of the resulting resource.</dd><dt
+        class="property-required" title="Required">
+        <span>id</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.Input-1.html">Input&lt;string&gt;</a></span>
+    </dt>
+    <dd>The unique provider ID of the resource to look up.</dd><dt
+        class="property-optional" title="Optional">
+        <span>opts</span>
+        <span class="property-indicator"></span>
+        <span class="property-type"><a href="/docs/reference/pkg/dotnet/Pulumi/Pulumi.CustomResourceOptions.html">CustomResourceOptions</a></span>
+    </dt>
+    <dd>Bag of options to control resource&#39;s behavior.</dd></dl>
+
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="java">
+
+<dl class="resources-properties"><dt
+        class="property-required" title="Required">
+        <span>name</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">String</span>
+    </dt>
+    <dd>The unique name of the resulting resource.</dd><dt
+        class="property-required" title="Required">
+        <span>id</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">Output&lt;String&gt;</span>
+    </dt>
+    <dd>The unique provider ID of the resource to look up.</dd><dt
+        class="property-optional" title="Optional">
+        <span>options</span>
+        <span class="property-indicator"></span>
+        <span class="property-type">CustomResourceOptions</span>
+    </dt>
+    <dd>Bag of options to control resource&#39;s behavior.</dd></dl>
+
+</pulumi-choosable>
+</div>
+
+
+
+
 
 
 
@@ -641,136 +850,222 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 
 <h4 id="rubbertreevariety">
-Rubber<wbr>Tree<wbr>Variety<pulumi-choosable type="language" values="python,go" class="inline">, Rubber<wbr>Tree<wbr>Variety<wbr>Args</pulumi-choosable>
+Rubber<wbr>Tree<wbr>Variety
 </h4>
+<p>types of rubber trees</p>
+
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>Burgundy</dt>
-    <dd><code>Burgundy</code> A burgundy rubber tree.</dd><dt>Ruby</dt>
-    <dd><code>Ruby</code> A ruby rubber tree.</dd><dt>Tineke</dt>
-    <dd><code>Tineke</code> A tineke rubber tree.</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Burgundy</td><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>Ruby</td><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>Tineke</td><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Rubber<wbr>Tree<wbr>Variety<wbr>Burgundy</dt>
-    <dd><code>Burgundy</code> A burgundy rubber tree.</dd><dt>Rubber<wbr>Tree<wbr>Variety<wbr>Ruby</dt>
-    <dd><code>Ruby</code> A ruby rubber tree.</dd><dt>Rubber<wbr>Tree<wbr>Variety<wbr>Tineke</dt>
-    <dd><code>Tineke</code> A tineke rubber tree.</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Burgundy</td><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Ruby</td><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>Rubber<wbr>Tree<wbr>Variety<wbr>Tineke</td><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"Burgundy"</dt>
-    <dd><code>Burgundy</code> A burgundy rubber tree.</dd><dt>"Ruby"</dt>
-    <dd><code>Ruby</code> A ruby rubber tree.</dd><dt>"Tineke"</dt>
-    <dd><code>Tineke</code> A tineke rubber tree.</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>Burgundy</dt>
-    <dd><code>Burgundy</code> A burgundy rubber tree.</dd><dt>Ruby</dt>
-    <dd><code>Ruby</code> A ruby rubber tree.</dd><dt>Tineke</dt>
-    <dd><code>Tineke</code> A tineke rubber tree.</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Burgundy</td><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>Ruby</td><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>Tineke</td><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>Burgundy</dt>
-    <dd><code>Burgundy</code> A burgundy rubber tree.</dd><dt>Ruby</dt>
-    <dd><code>Ruby</code> A ruby rubber tree.</dd><dt>Tineke</dt>
-    <dd><code>Tineke</code> A tineke rubber tree.</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Burgundy</td><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>Ruby</td><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>Tineke</td><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>BURGUNDY</dt>
-    <dd><code>Burgundy</code> A burgundy rubber tree.</dd><dt>RUBY</dt>
-    <dd><code>Ruby</code> A ruby rubber tree.</dd><dt>TINEKE</dt>
-    <dd><code>Tineke</code> A tineke rubber tree.</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>BURGUNDY</td><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td>RUBY</td><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td>TINEKE</td><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"Burgundy"</dt>
-    <dd><code>Burgundy</code> A burgundy rubber tree.</dd><dt>"Ruby"</dt>
-    <dd><code>Ruby</code> A ruby rubber tree.</dd><dt>"Tineke"</dt>
-    <dd><code>Tineke</code> A tineke rubber tree.</dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>Burgundy</code></td><td>A burgundy rubber tree.</td></tr>
+<tr><td class="enum-value"><code>Ruby</code></td><td>A ruby rubber tree.</td></tr>
+<tr><td class="enum-value"><code>Tineke</code></td><td>A tineke rubber tree.</td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <h4 id="treesize">
-Tree<wbr>Size<pulumi-choosable type="language" values="python,go" class="inline">, Tree<wbr>Size<wbr>Args</pulumi-choosable>
+Tree<wbr>Size
 </h4>
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>Small</dt>
-    <dd><code>small</code></dd><dt>Medium</dt>
-    <dd><code>medium</code></dd><dt>Large</dt>
-    <dd><code>large</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Small</td><td class="enum-value"><code>small</code></td></tr>
+<tr><td>Medium</td><td class="enum-value"><code>medium</code></td></tr>
+<tr><td>Large</td><td class="enum-value"><code>large</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Tree<wbr>Size<wbr>Small</dt>
-    <dd><code>small</code></dd><dt>Tree<wbr>Size<wbr>Medium</dt>
-    <dd><code>medium</code></dd><dt>Tree<wbr>Size<wbr>Large</dt>
-    <dd><code>large</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Tree<wbr>Size<wbr>Small</td><td class="enum-value"><code>small</code></td></tr>
+<tr><td>Tree<wbr>Size<wbr>Medium</td><td class="enum-value"><code>medium</code></td></tr>
+<tr><td>Tree<wbr>Size<wbr>Large</td><td class="enum-value"><code>large</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"small"</dt>
-    <dd><code>small</code></dd><dt>"medium"</dt>
-    <dd><code>medium</code></dd><dt>"large"</dt>
-    <dd><code>large</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>small</code></td></tr>
+<tr><td class="enum-value"><code>medium</code></td></tr>
+<tr><td class="enum-value"><code>large</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>Small</dt>
-    <dd><code>small</code></dd><dt>Medium</dt>
-    <dd><code>medium</code></dd><dt>Large</dt>
-    <dd><code>large</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Small</td><td class="enum-value"><code>small</code></td></tr>
+<tr><td>Medium</td><td class="enum-value"><code>medium</code></td></tr>
+<tr><td>Large</td><td class="enum-value"><code>large</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>Small</dt>
-    <dd><code>small</code></dd><dt>Medium</dt>
-    <dd><code>medium</code></dd><dt>Large</dt>
-    <dd><code>large</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Small</td><td class="enum-value"><code>small</code></td></tr>
+<tr><td>Medium</td><td class="enum-value"><code>medium</code></td></tr>
+<tr><td>Large</td><td class="enum-value"><code>large</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>SMALL</dt>
-    <dd><code>small</code></dd><dt>MEDIUM</dt>
-    <dd><code>medium</code></dd><dt>LARGE</dt>
-    <dd><code>large</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>SMALL</td><td class="enum-value"><code>small</code></td></tr>
+<tr><td>MEDIUM</td><td class="enum-value"><code>medium</code></td></tr>
+<tr><td>LARGE</td><td class="enum-value"><code>large</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"small"</dt>
-    <dd><code>small</code></dd><dt>"medium"</dt>
-    <dd><code>medium</code></dd><dt>"large"</dt>
-    <dd><code>large</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>small</code></td></tr>
+<tr><td class="enum-value"><code>medium</code></td></tr>
+<tr><td class="enum-value"><code>large</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 

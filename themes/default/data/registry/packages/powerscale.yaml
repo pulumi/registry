@@ -9,7 +9,7 @@ name: powerscale
 package_status: ga
 publisher: dell
 repo_url: https://github.com/dell/terraform-provider-powerscale
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/dell/powerscale/1.8.2/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/dell/powerscale/1.8.3/schema.json
 title: powerscale
-updated_on: 1782344154
-version: 1.8.2
+updated_on: 1790681724
+version: 1.8.3

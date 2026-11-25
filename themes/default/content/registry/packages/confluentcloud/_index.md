@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-confluentcloud/v2.82.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-confluentcloud/v2.92.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-confluentcloud/blob/v2.82.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-confluentcloud/blob/v2.92.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Confluent Provider
 meta_desc: Provides an overview on how to configure the Pulumi Confluent provider.
@@ -290,3 +290,30 @@ Complete examples (with Okta and Microsoft Azure Entra ID as identity provider) 
 > **Note:** To switch your Pulumi configuration from API key/secret authentication to OAuth, update your provider configuration by removing any references to variables such as `cloudApiKey`, `flinkApiKey`, `kafkaApiKey`, `schemaRegistryApiKey`, and similar variables. Also, remove any `credentials` blocks from resources like `confluentcloud.KafkaTopic`, `confluentcloud.Schema`, and `confluentcloud.FlinkStatement`. Instead, specify your authentication details within the `oauth {}` block. After making these changes, apply your configuration to start using OAuth.
 
 > **Warning:** Without proper Identity Provider setup, Identity Pool creation and RBAC roles assignment, the OAuth credentials will not work with Confluent Pulumi Provider.
+## Retries and Rate Limits
+
+Confluent Cloud APIs are rate-limited. When a request is rate-limited (`429 Too Many Requests`) or fails with a server or network error, the provider retries it before failing the operation. Set `maxRetries` (or the `TF_PROVIDER_CONFLUENT_MAX_RETRIES` environment variable) to change the number of retries:
+
+```yaml
+# Pulumi.yaml provider configuration file
+name: configuration-example
+runtime:
+config:
+    confluent:maxRetries:
+        value: 20
+
+```
+
+Requests to the Connect, IAM, API keys and RBAC APIs, where large configurations are most often rate-limited, always retry at least 12 times. These requests are made by the `confluentcloud.Connector`, `confluentcloud.ServiceAccount`, `confluentcloud.ApiKey`, `confluentcloud.RoleBinding`, `confluentcloud.Invitation` and `confluentcloud.TfImporter` resources, and by the `confluentcloud.ServiceAccount`, `confluentcloud.getUser`, `confluentcloud.getUsers`, `confluentcloud.RoleBinding` and `confluentcloud.Invitation` functions.
+
+|     `maxRetries`     | Connect, IAM, API keys and RBAC requests |  All other requests   |
+|-----------------------|------------------------------------------|-----------------------|
+| Not set (default `4`) | 12 retries                               | 4 retries             |
+| `4` to `12`           | 12 retries                               | `maxRetries` retries |
+| Above `12`            | `maxRetries` retries                    | `maxRetries` retries |
+
+> **Note:** `maxRetries` must be at least `4`.
+
+> **Note:** If a large `pulumi preview` or `pulumi up` still fails with `429 Too Many Requests`, lower Pulumi's `-parallelism` (the default is 10) or raise `maxRetries`. Each extra retry can wait about 30 seconds, so with `maxRetries = 20` the provider can take about 8 minutes to report an API that stays rate-limited.
+
+> **Note:** Before each retry the provider waits a random time (jitter), so that requests that failed at the same time don't all retry at the same moment. A request that gets `429 Too Many Requests` or `503 Service Unavailable` waits a random 1–2 seconds before the first retry. Each later wait is about 1.6 times longer, up to 15–30 seconds, and never shorter than the `Retry-After` response header asks. A `Retry-After` of 30 seconds or more gets up to 20% extra. Other server and network errors wait about 1 second before the first retry, then each wait is 1.6 times longer, up to 30 seconds, plus up to 20%.

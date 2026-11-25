@@ -18,6 +18,7 @@ package docs
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"go/format"
@@ -32,9 +33,10 @@ import (
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/docs/templates"
 	"github.com/pulumi/registry/tools/resourcedocsgen/pkg/util/language"
 
-	hcl_codegen "github.com/pulumi-labs/pulumi-hcl/pkg/codegen"
-	hcl_docs "github.com/pulumi-labs/pulumi-hcl/pkg/docs"
 	dotnet "github.com/pulumi/pulumi-dotnet/pulumi-language-dotnet/v3/codegen"
+	hcl_codegen "github.com/pulumi/pulumi-hcl/pkg/codegen"
+	hcl_docs "github.com/pulumi/pulumi-hcl/pkg/docs"
+	hcl_packages "github.com/pulumi/pulumi-hcl/pkg/hcl/packages"
 	"github.com/pulumi/pulumi-java/pkg/codegen/java"
 	yaml "github.com/pulumi/pulumi-yaml/pkg/pulumiyaml/codegen"
 	"github.com/pulumi/pulumi/pkg/v3/codegen"
@@ -95,7 +97,7 @@ func titleLookup(shortName string) (string, bool) {
 		"equinix-metal":                        "Equinix Metal",
 		"f5bigip":                              "f5 BIG-IP",
 		"fastly":                               "Fastly",
-		"gcp":                                  "Google Cloud (GCP) Classic",
+		"gcp":                                  "Google Cloud (GCP)",
 		"gcp-global-cloudrun":                  "Google Global Cloud Run",
 		"gcp-project-scaffold":                 "Google Project Scaffolding",
 		"google-native":                        "Google Cloud Native",
@@ -192,6 +194,10 @@ func newConstructorSyntaxData() *constructorSyntaxData {
 type Context struct {
 	internalModMap map[string]*modContext
 
+	// pkg is the schema package these docs are being generated for. It is used
+	// for `{{% ref %}}` shortcode resolution via schema.InterpretPulumiRefs.
+	pkg *schema.Package
+
 	docHelpers map[language.Language]codegen.DocLanguageHelper
 
 	// The language-specific info objects for a certain package (provider).
@@ -224,23 +230,9 @@ func (dctx *Context) setModules(modules map[string]*modContext) {
 	dctx.internalModMap = m
 }
 
-// hclDocLanguageHelper adds the ResolveDocRef method that codegen.DocLanguageHelper gained in
-// pulumi/pulumi v3.254.0 to pulumi-hcl's helper. Drop this wrapper once pulumi-labs/pulumi-hcl
-// implements the method itself.
-type hclDocLanguageHelper struct {
-	hcl_docs.DocLanguageHelper
-}
-
-// ResolveDocRef is not implemented for HCL; returning false makes the caller fall back to the
-// default rendering, matching what the .NET and Java helpers do.
-func (hclDocLanguageHelper) ResolveDocRef(
-	pkg schema.PackageReference, selfRef, ref schema.DocRef,
-) (string, bool, error) {
-	return "", false, nil
-}
-
 func NewContext(tool string, pkg *schema.Package) *Context {
 	dctx := &Context{
+		pkg: pkg,
 		docHelpers: map[language.Language]codegen.DocLanguageHelper{
 			language.CSharp: &dotnet.DocLanguageHelper{},
 			language.Go:     &go_gen.DocLanguageHelper{},
@@ -248,7 +240,7 @@ func NewContext(tool string, pkg *schema.Package) *Context {
 			language.Python: &python.DocLanguageHelper{},
 			language.YAML:   &yaml.DocLanguageHelper{},
 			language.Java:   &java.DocLanguageHelper{},
-			language.HCL:    &hclDocLanguageHelper{},
+			language.HCL:    &hcl_docs.DocLanguageHelper{},
 		},
 		moduleConflictLinkMap: map[interface{}]string{},
 		constructorSyntaxData: generateConstructorSyntaxData(pkg),
@@ -306,10 +298,12 @@ type enum struct {
 type docNestedType struct {
 	Name        string
 	Description string
-	Input       bool
-	AnchorID    string
-	Properties  map[language.Language][]property
-	EnumValues  map[language.Language][]enum
+	// Input reports whether the page uses this type as an input. Python and Go only generate a FooArgs type for
+	// object types that are used as inputs somewhere, so the heading names FooArgs only when this is true.
+	Input      bool
+	AnchorID   string
+	Properties map[language.Language][]property
+	EnumValues map[language.Language][]enum
 }
 
 // propertyType represents the type of a property.
@@ -392,6 +386,8 @@ type resourceDocArgs struct {
 
 	// LookupParams is a map of the param string to be rendered per language for looking-up a resource.
 	LookupParams map[language.Language]string
+	// LookupParamsTyped is the typed set of parameters for looking up a resource, in order, per language.
+	LookupParamsTyped map[language.Language][]formalParam
 	// StateInputs is a map per language and the corresponding slice of state input properties required while looking-up
 	// an existing resource.
 	StateInputs map[language.Language][]property
@@ -782,11 +778,22 @@ const (
 	ctorNameArgComment = "The unique name of the resource."
 	ctorArgsArgComment = "The arguments to resource properties."
 	ctorOptsArgComment = "Bag of options to control resource's behavior."
+
+	lookupNameComment = "The unique name of the resulting resource."
+	lookupIDComment   = "The unique provider ID of the resource to look up."
 )
+
+// lookupStateComment describes the state parameter of a resource's get method. Go generates the parameter even when the
+// state type has no fields, so the comment tells the reader what to pass in that case.
+func lookupStateComment(r *schema.Resource) string {
+	if r.StateInputs == nil {
+		return "Pass nil. This resource has no state arguments."
+	}
+	return "Known property values the provider needs, along with the ID, to find the resource. Usually not required."
+}
 
 func (mod *modContext) genConstructorTS(r *schema.Resource, argsOptional bool) []formalParam {
 	name := resourceName(r)
-	docLangHelper := mod.context.getLanguageDocHelper(language.NodeJS)
 
 	var argsType string
 
@@ -816,6 +823,8 @@ func (mod *modContext) genConstructorTS(r *schema.Resource, argsOptional bool) [
 	if argsOptional {
 		argsFlag = "?"
 	}
+
+	docLangHelper := mod.context.getLanguageDocHelper(language.NodeJS)
 
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
@@ -1126,65 +1135,71 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 
 	var typs []docNestedType
 	for _, token := range sortedTokens {
-		for iter := mod.pkg.Types().Range(); iter.Next(); {
-			t, err := iter.Type()
-			contract.AssertNoErrorf(err, "error iterating types")
-			switch typ := t.(type) {
-			case *schema.ObjectType:
-				if typ.Token != token || len(typ.Properties) == 0 || typ.IsInputShape() {
-					continue
-				}
-
-				// Create a map to hold the per-language properties of this object.
-				props := make(map[language.Language][]property)
-				for lang := range language.All() {
-					props[lang] = mod.getProperties(typ.Properties, lang, true, true, isProvider)
-				}
-
-				//nolint:staticcheck
-				name := strings.Title(tokenToName(typ.Token))
-				typs = append(typs, docNestedType{
-					Name:        wbr(name),
-					AnchorID:    strings.ToLower(name),
-					Description: SanitizeDescription(typ.Comment),
-					Properties:  props,
-				})
-			case *schema.EnumType:
-				if typ.Token != token || len(typ.Elements) == 0 {
-					continue
-				}
-				//nolint:staticcheck
-				name := strings.Title(tokenToName(typ.Token))
-
-				enums := make(map[language.Language][]enum)
-				for lang := range language.All() {
-					docLangHelper := dctx.getLanguageDocHelper(lang)
-
-					var langEnumValues []enum
-					for _, e := range typ.Elements {
-						enumName, err := docLangHelper.GetEnumName(e, name)
-						if err != nil {
-							panic(err)
-						}
-						enumID := strings.ToLower(name + propertyLangSeparator + lang.String())
-						langEnumValues = append(langEnumValues, enum{
-							ID:                 enumID,
-							DisplayName:        wbr(enumName),
-							Name:               enumName,
-							Value:              fmt.Sprintf("%v", e.Value),
-							Comment:            SanitizeDescription(e.Comment),
-							DeprecationMessage: SanitizeDescription(e.DeprecationMessage),
-						})
-					}
-					enums[lang] = langEnumValues
-				}
-
-				typs = append(typs, docNestedType{
-					Name:       wbr(name),
-					AnchorID:   strings.ToLower(name),
-					EnumValues: enums,
-				})
+		t, ok, err := mod.pkg.Types().Get(token)
+		contract.AssertNoErrorf(err, "error looking up type %q", token)
+		if !ok {
+			continue
+		}
+		switch typ := t.(type) {
+		case *schema.ObjectType:
+			if typ.Token != token || len(typ.Properties) == 0 || typ.IsInputShape() {
+				continue
 			}
+
+			selfRef := schema.DocRefForType(typ)
+			// Create a map to hold the per-language properties of this object.
+			props := make(map[language.Language][]property)
+			for lang := range language.All() {
+				props[lang] = mod.getProperties(selfRef, typ.Properties, lang, true, true, isProvider)
+			}
+
+			//nolint:staticcheck
+			name := strings.Title(tokenToName(typ.Token))
+			typs = append(typs, docNestedType{
+				Name:        wbr(name),
+				AnchorID:    strings.ToLower(name),
+				Description: dctx.resolveRefs(selfRef, SanitizeDescription(typ.Comment)),
+				Input:       tokens[token].Input,
+				Properties:  props,
+			})
+		case *schema.EnumType:
+			if typ.Token != token || len(typ.Elements) == 0 {
+				continue
+			}
+			//nolint:staticcheck
+			name := strings.Title(tokenToName(typ.Token))
+			selfRef := schema.DocRefForType(typ)
+
+			enums := make(map[language.Language][]enum)
+			for lang := range language.All() {
+				docLangHelper := dctx.getLanguageDocHelper(lang)
+
+				var langEnumValues []enum
+				for _, e := range typ.Elements {
+					enumName, err := docLangHelper.GetEnumName(e, name)
+					if err != nil {
+						panic(err)
+					}
+					enumID := strings.ToLower(name + propertyLangSeparator + lang.String())
+					comment := dctx.resolveRefsForLanguage(selfRef, SanitizeDescription(e.Comment), lang)
+					langEnumValues = append(langEnumValues, enum{
+						ID:                 enumID,
+						DisplayName:        wbr(enumName),
+						Name:               enumName,
+						Value:              fmt.Sprintf("%v", e.Value),
+						Comment:            strings.TrimSpace(comment),
+						DeprecationMessage: strings.TrimSpace(SanitizeDescription(e.DeprecationMessage)),
+					})
+				}
+				enums[lang] = langEnumValues
+			}
+
+			typs = append(typs, docNestedType{
+				Name:        wbr(name),
+				AnchorID:    strings.ToLower(name),
+				Description: dctx.resolveRefs(selfRef, SanitizeDescription(typ.Comment)),
+				EnumValues:  enums,
+			})
 		}
 	}
 
@@ -1198,12 +1213,14 @@ func (mod *modContext) genNestedTypes(member interface{}, resourceType, isProvid
 // getProperties returns a slice of properties that can be rendered for docs for the provided slice of properties in the
 // schema.
 func (mod *modContext) getProperties(
+	selfRef schema.DocRef,
 	properties []*schema.Property, lang language.Language, input, nested, isProvider bool,
 ) []property {
-	return mod.getPropertiesWithIDPrefixAndExclude(properties, lang, input, nested, isProvider, "", nil)
+	return mod.getPropertiesWithIDPrefixAndExclude(selfRef, properties, lang, input, nested, isProvider, "", nil)
 }
 
 func (mod *modContext) getPropertiesWithIDPrefixAndExclude(
+	selfRef schema.DocRef,
 	properties []*schema.Property, lang language.Language, input, nested, isProvider bool,
 	idPrefix string, exclude func(name string) bool,
 ) []property {
@@ -1248,7 +1265,7 @@ func (mod *modContext) getPropertiesWithIDPrefixAndExclude(
 			propTypes = append(propTypes, mod.typeString(prop.Type, lang, characteristics, true))
 		}
 
-		comment := SanitizeDescription(prop.Comment)
+		comment := dctx.resolveRefsForLanguage(selfRef, SanitizeDescription(prop.Comment), lang)
 		link := "#" + propID
 
 		// Check if type is defined in a package external to the current package. If it is external, update comment to
@@ -1465,42 +1482,51 @@ func (mod *modContext) getConstructorResourceInfo(resourceTypeName, tok string) 
 }
 
 func (mod *modContext) getTSLookupParams(r *schema.Resource, stateParam string) []formalParam {
-	dctx := mod.context
-	docLangHelper := dctx.getLanguageDocHelper(language.NodeJS)
+	docLangHelper := mod.context.getLanguageDocHelper(language.NodeJS)
+
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
 
-	return []formalParam{
+	params := []formalParam{
 		{
 			Name: "name",
-
 			Type: propertyType{
 				Name: "string",
 			},
+			Comment: lookupNameComment,
 		},
 		{
 			Name: "id",
 			Type: propertyType{
 				Name: "Input<ID>",
-				Link: docLangHelper.GetDocLinkForPulumiType(def, "ID"),
+				// The typed parameter list renders DescriptionName as HTML, so the angle brackets are escaped.
+				DescriptionName: "Input&lt;ID&gt;",
+				Link:            docLangHelper.GetDocLinkForPulumiType(def, "ID"),
 			},
+			Comment: lookupIDComment,
 		},
-		{
+	}
+	if r.StateInputs != nil {
+		params = append(params, formalParam{
 			Name:         "state",
 			OptionalFlag: "?",
 			Type: propertyType{
 				Name: stateParam,
 			},
-		},
-		{
+			Comment: lookupStateComment(r),
+		})
+	}
+	return append(params,
+		formalParam{
 			Name:         "opts",
 			OptionalFlag: "?",
 			Type: propertyType{
 				Name: "CustomResourceOptions",
 				Link: docLangHelper.GetDocLinkForPulumiType(def, "CustomResourceOptions"),
 			},
+			Comment: ctorOptsArgComment,
 		},
-	}
+	)
 }
 
 func (mod *modContext) getGoLookupParams(r *schema.Resource, stateParam string) []formalParam {
@@ -1518,12 +1544,14 @@ func (mod *modContext) getGoLookupParams(r *schema.Resource, stateParam string) 
 				Name: "Context",
 				Link: docLangHelper.GetDocLinkForPulumiType(def, "Context"),
 			},
+			Comment: "Context object for the current deployment.",
 		},
 		{
 			Name: "name",
 			Type: propertyType{
 				Name: "string",
 			},
+			Comment: lookupNameComment,
 		},
 		{
 			Name: "id",
@@ -1531,6 +1559,7 @@ func (mod *modContext) getGoLookupParams(r *schema.Resource, stateParam string) 
 				Name: "IDInput",
 				Link: docLangHelper.GetDocLinkForPulumiType(def, "IDInput"),
 			},
+			Comment: lookupIDComment,
 		},
 		{
 			Name:         "state",
@@ -1538,6 +1567,7 @@ func (mod *modContext) getGoLookupParams(r *schema.Resource, stateParam string) 
 			Type: propertyType{
 				Name: stateParam,
 			},
+			Comment: lookupStateComment(r),
 		},
 		{
 			Name:         "opts",
@@ -1546,6 +1576,7 @@ func (mod *modContext) getGoLookupParams(r *schema.Resource, stateParam string) 
 				Name: "ResourceOption",
 				Link: docLangHelper.GetDocLinkForPulumiType(def, "ResourceOption"),
 			},
+			Comment: ctorOptsArgComment,
 		},
 	}
 }
@@ -1557,37 +1588,44 @@ func (mod *modContext) getCSLookupParams(r *schema.Resource, stateParam string) 
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
 
-	return []formalParam{
+	params := []formalParam{
 		{
 			Name: "name",
 			Type: propertyType{
 				Name: "string",
 			},
+			Comment: lookupNameComment,
 		},
 		{
 			Name: "id",
 			Type: propertyType{
-				Name: "Input<string>",
-				Link: docLangHelper.GetDocLinkForPulumiType(def, "Pulumi.Input"),
+				Name:            "Input<string>",
+				DescriptionName: "Input&lt;string&gt;",
+				Link:            docLangHelper.GetDocLinkForPulumiType(def, "Pulumi.Input"),
 			},
+			Comment: lookupIDComment,
 		},
-		{
+	}
+	if r.StateInputs != nil {
+		params = append(params, formalParam{
 			Name:         "state",
 			OptionalFlag: "?",
 			Type: propertyType{
 				Name: stateParam,
 			},
-		},
-		{
-			Name:         "opts",
-			OptionalFlag: "?",
-			DefaultValue: " = null",
-			Type: propertyType{
-				Name: "CustomResourceOptions",
-				Link: docLangHelper.GetDocLinkForPulumiType(def, "Pulumi.CustomResourceOptions"),
-			},
-		},
+			Comment: lookupStateComment(r),
+		})
 	}
+	return append(params, formalParam{
+		Name:         "opts",
+		OptionalFlag: "?",
+		DefaultValue: " = null",
+		Type: propertyType{
+			Name: "CustomResourceOptions",
+			Link: docLangHelper.GetDocLinkForPulumiType(def, "Pulumi.CustomResourceOptions"),
+		},
+		Comment: ctorOptsArgComment,
+	})
 }
 
 func (mod *modContext) getJavaLookupParams(r *schema.Resource, stateParam string) []formalParam {
@@ -1596,40 +1634,53 @@ func (mod *modContext) getJavaLookupParams(r *schema.Resource, stateParam string
 	def, err := mod.pkg.Definition()
 	contract.AssertNoErrorf(err, "failed to get definition for package %q", mod.pkg.Name())
 
-	return []formalParam{
+	params := []formalParam{
 		{
 			Name: "name",
 			Type: propertyType{
 				Name: "String",
 			},
+			Comment: lookupNameComment,
 		},
 		{
 			Name: "id",
 			Type: propertyType{
-				Name: "Output<String>",
-				Link: docLangHelper.GetDocLinkForPulumiType(def, "Output"),
+				Name:            "Output<String>",
+				DescriptionName: "Output&lt;String&gt;",
+				Link:            docLangHelper.GetDocLinkForPulumiType(def, "Output"),
 			},
+			Comment: lookupIDComment,
 		},
-		{
-			Name: "state",
+	}
+	// The Java formal parameter template ignores OptionalFlag, so @Nullable only marks these optional in the typed list.
+	if r.StateInputs != nil {
+		params = append(params, formalParam{
+			Name:         "state",
+			OptionalFlag: "@Nullable",
 			Type: propertyType{
 				Name: stateParam,
 			},
-		},
-		{
-			Name: "options",
-			Type: propertyType{
-				Name: "CustomResourceOptions",
-				Link: docLangHelper.GetDocLinkForPulumiType(def, "CustomResourceOptions"),
-			},
-		},
+			Comment: lookupStateComment(r),
+		})
 	}
+	return append(params, formalParam{
+		Name:         "options",
+		OptionalFlag: "@Nullable",
+		Type: propertyType{
+			Name: "CustomResourceOptions",
+			Link: docLangHelper.GetDocLinkForPulumiType(def, "CustomResourceOptions"),
+		},
+		Comment: ctorOptsArgComment,
+	})
 }
 
 func (mod *modContext) getPythonLookupParams(r *schema.Resource, stateParam string) []formalParam {
 	dctx := mod.context
 	// The input properties for a resource needs to be exploded as individual constructor params.
 	docLanguageHelper := dctx.getLanguageDocHelper(language.Python)
+	if r.StateInputs == nil {
+		return nil
+	}
 	params := slice.Prealloc[formalParam](len(r.StateInputs.Properties))
 	for _, p := range r.StateInputs.Properties {
 		typ := docLanguageHelper.GetTypeName(
@@ -1649,12 +1700,17 @@ func (mod *modContext) getPythonLookupParams(r *schema.Resource, stateParam stri
 	return params
 }
 
-// genLookupParams generates a map of per-language way of rendering the formal parameters of the lookup function used to
-// lookup an existing resource.
-func (mod *modContext) genLookupParams(r *schema.Resource, stateParam string) map[language.Language]string {
+// genLookupParams generates, per language, the rendered signature parameters of the lookup function used to look up an
+// existing resource, and the typed parameters listed beneath the signature. Every SDK generates a static get method for
+// custom resources, so this returns parameters for any resource that is neither a provider nor a component, whether or
+// not the schema declares stateInputs.
+func (mod *modContext) genLookupParams(
+	r *schema.Resource, stateParam string,
+) (map[language.Language]string, map[language.Language][]formalParam) {
 	lookupParams := make(map[language.Language]string)
-	if r.StateInputs == nil {
-		return lookupParams
+	typedParams := make(map[language.Language][]formalParam)
+	if r.IsProvider || r.IsComponent {
+		return lookupParams, typedParams
 	}
 
 	pyIndent := strings.Repeat(" ", len("def get("))
@@ -1662,8 +1718,36 @@ func (mod *modContext) genLookupParams(r *schema.Resource, stateParam string) ma
 	for lang := range language.All() {
 		params := mod.getLookupParams(lang, r, stateParam)
 		lookupParams[lang] = renderParams(lang, params, pyIndent)
+		typedParams[lang] = params
 	}
-	return lookupParams
+	// The Python signature hard-codes resource_name, id, and opts in the template and explodes the state into keyword
+	// arguments, which are documented with the other state arguments.
+	typedParams[language.Python] = pythonLookupLeadingParams
+	return lookupParams, typedParams
+}
+
+var pythonLookupLeadingParams = []formalParam{
+	{
+		Name:    "resource_name",
+		Type:    propertyType{Name: "str"},
+		Comment: lookupNameComment,
+	},
+	{
+		Name:    "id",
+		Type:    propertyType{Name: "str"},
+		Comment: lookupIDComment,
+	},
+	{
+		Name:         "opts",
+		OptionalFlag: "optional",
+		DefaultValue: " = None",
+		Type: propertyType{
+			Name:            "Optional[ResourceOptions]",
+			DescriptionName: "ResourceOptions",
+			Link:            "/docs/reference/pkg/python/pulumi/#pulumi.ResourceOptions",
+		},
+		Comment: ctorOptsArgComment,
+	},
 }
 
 func (mod *modContext) getLookupParams(lang language.Language, r *schema.Resource, stateParam string) []formalParam {
@@ -1716,9 +1800,9 @@ func (mod *modContext) genResourceHeader(r *schema.Resource) header {
 
 	metaDescription := summarizeForMetaDescription(r.Comment)
 	if metaDescription == "" {
-		metaDescription = fmt.Sprintf("Create and manage %s with Pulumi. Full API reference with "+
-			"input and output properties, lookup functions, and examples in TypeScript, Python, Go, "+
-			"C#, Java, and YAML.", qualifiedName)
+		metaDescription = fmt.Sprintf("Documentation for the %s resource "+
+			"with examples, input properties, output properties, "+
+			"lookup functions, and supporting types.", qualifiedName)
 	}
 
 	return header{
@@ -1764,14 +1848,15 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 		})
 	}
 
+	selfRef := schema.DocRefForResource(r)
 	for lang := range language.All() {
-		inputProps[lang] = mod.getProperties(r.InputProperties, lang, true, false, r.IsProvider)
-		outputProps[lang] = mod.getProperties(filteredOutputProps, lang, false, false, r.IsProvider)
+		inputProps[lang] = mod.getProperties(selfRef, r.InputProperties, lang, true, false, r.IsProvider)
+		outputProps[lang] = mod.getProperties(selfRef, filteredOutputProps, lang, false, false, r.IsProvider)
 		if r.IsProvider {
 			continue
 		}
 		if r.StateInputs != nil {
-			stateProps := mod.getProperties(r.StateInputs.Properties, lang, true, false, r.IsProvider)
+			stateProps := mod.getProperties(selfRef, r.StateInputs.Properties, lang, true, false, r.IsProvider)
 			for i := 0; i < len(stateProps); i++ {
 				id := "state_" + stateProps[i].ID
 				stateProps[i].ID = id
@@ -1863,7 +1948,8 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 	}
 
 	supportedSnippetLanguages := mod.context.getSupportedSnippetLanguages(r.IsOverlay, r.OverlaySupportedLanguages)
-	docInfo := dctx.decomposeDocstring(SanitizeDescription(r.Comment), supportedSnippetLanguages)
+	docInfo := dctx.decomposeDocstring(selfRef, SanitizeDescription(r.Comment), supportedSnippetLanguages)
+	lookupParams, typedLookupParams := mod.genLookupParams(r, stateParam)
 	data := resourceDocArgs{
 		Header: mod.genResourceHeader(r),
 
@@ -1883,13 +1969,14 @@ func (mod *modContext) genResource(r *schema.Resource) resourceDocArgs {
 		ConstructorResource: mod.getConstructorResourceInfo(name, r.Token),
 		ArgsRequired:        !allOptionalInputs,
 
-		InputProperties:  inputProps,
-		OutputProperties: outputProps,
-		LookupParams:     mod.genLookupParams(r, stateParam),
-		StateInputs:      stateInputs,
-		StateParam:       stateParam,
-		NestedTypes:      mod.genNestedTypes(r, true /*resourceType*/, r.IsProvider),
-		MaxNestedTypes:   maxNestedTypes,
+		InputProperties:   inputProps,
+		OutputProperties:  outputProps,
+		LookupParams:      lookupParams,
+		LookupParamsTyped: typedLookupParams,
+		StateInputs:       stateInputs,
+		StateParam:        stateParam,
+		NestedTypes:       mod.genNestedTypes(r, true /*resourceType*/, r.IsProvider),
+		MaxNestedTypes:    maxNestedTypes,
 
 		Methods: mod.genMethods(r),
 
@@ -1942,6 +2029,12 @@ func (mod *modContext) getTypes(member interface{}, types nestedTypeUsageInfo) {
 		}
 		for _, p := range t.InputProperties {
 			mod.getNestedTypes(p.Type, types, true)
+		}
+		// The get section's state arguments use the input form of these types (FooArgs in Python and Go).
+		if t.StateInputs != nil {
+			for _, p := range t.StateInputs.Properties {
+				mod.getNestedTypes(p.Type, types, true)
+			}
 		}
 		for _, m := range t.Methods {
 			mod.getTypes(m.Function, types)
@@ -2584,7 +2677,11 @@ func generateConstructorSyntaxData(pkg *schema.Package) *constructorSyntaxData {
 			}
 		case language.HCL:
 			files, diags, err := safeExtract(func(program *pcl.Program) (map[string][]byte, hcl.Diagnostics, error) {
-				return hcl_codegen.GenerateProgram(program, hcl_codegen.SkipRequiredProvidersVersion())
+				// Without the provider's bridge mapping, pulumi-hcl guesses Terraform field
+				// names and block shapes from the Pulumi schema, which is wrong for bridged
+				// providers. See https://github.com/pulumi/registry/issues/13321.
+				return hcl_codegen.GenerateProgram(context.Background(), program,
+					hcl_packages.NewResolver(nil, nil, nil, nil), hcl_codegen.SkipRequiredProvidersVersion())
 			})
 			if !diags.HasErrors() && err == nil {
 				program := string(files["main.tf"])

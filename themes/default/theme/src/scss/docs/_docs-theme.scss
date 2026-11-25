@@ -113,9 +113,8 @@ html[data-theme="dark"] body.section-registry {
 // bare `border` / `border-t` utilities render. Flip that default to the dark
 // hairline — but do it INSIDE @layer base, which is the one rule in this file that
 // must NOT be unlayered. Unlayered, `*` outranks @layer utilities as well, so it
-// flattens every *colored* border a template authored: the blue-600 ring on the
-// github-buttons shortcode (live on the committed how-to guides), the
-// purple-700 tab underlines in partials/carousel.html.
+// flattens every *colored* border a template authored, such as the purple-700 tab
+// underlines in partials/carousel.html.
 // In @layer base it still beats the gray-200 default it means to replace (same
 // layer, higher specificity) while anything layered that declares its own border
 // color — component styles, `dark:` variants, colored utilities — keeps it.
@@ -423,6 +422,25 @@ html[data-theme="dark"] body.section-registry {
         .toggleButton-topLevel {
             color: var(--docs-fg-muted);
         }
+
+        // The chevron icons are near-black SVGs painted as backgrounds, which
+        // `color` can't reach, so draw them as masks filled with the muted text color.
+        .toggleButton div.keyboard-arrow-right-gray,
+        .toggleButton div.keyboard-arrow-down-gray-14-14 {
+            background: var(--docs-fg-muted);
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+        }
+
+        .toggleButton div.keyboard-arrow-right-gray {
+            -webkit-mask-image: url(/images/docs/icons/keyboard-arrow-right-gray.svg);
+            mask-image: url(/images/docs/icons/keyboard-arrow-right-gray.svg);
+        }
+
+        .toggleButton div.keyboard-arrow-down-gray-14-14 {
+            -webkit-mask-image: url(/images/docs/icons/keyboard-arrow-down-gray-14-14.svg);
+            mask-image: url(/images/docs/icons/keyboard-arrow-down-gray-14-14.svg);
+        }
     }
 }
 
@@ -527,6 +545,21 @@ html[data-theme="dark"] body.section-registry {
 
         td {
             background-color: var(--docs-bg);
+        }
+    }
+
+    // Deprecation callout in an enum value table (_tables.scss); matches the
+    // property-table callout below.
+    .enum-values .property-message {
+        background-color: var(--color-orange-950);
+        color: var(--color-orange-300);
+
+        code {
+            background-color: color-mix(
+                in oklch,
+                var(--color-orange-300) 22%,
+                transparent
+            );
         }
     }
 
@@ -697,7 +730,6 @@ html[data-theme="dark"] body.section-registry {
         );
     }
 
-    .example-program .example-program-footer,
     .code-tabbed .code-tabbed-tabs,
     .code-tabbed .code-tabbed-content,
     .code-tabbed .code-tabbed-status {
@@ -708,12 +740,7 @@ html[data-theme="dark"] body.section-registry {
         );
     }
 
-    .highlight:not(
-            pulumi-chooser *,
-            .example-program *,
-            .code-chrome *,
-            .code-tabbed *
-        )
+    .highlight:not(pulumi-chooser *, .code-chrome *, .code-tabbed *)
         pre:not(.mermaid) {
         border: 1px solid var(--chrome-border);
     }
@@ -1059,6 +1086,7 @@ html[data-theme="dark"] body.section-registry {
         background: var(--docs-card);
 
         div.version-info,
+        span.package-title,
         .note {
             color: var(--docs-fg);
         }
@@ -1352,80 +1380,6 @@ html[data-theme="dark"] body.section-registry {
         border-radius: 4px;
         padding: 2px 4px;
         box-sizing: content-box;
-    }
-}
-
-// ---------------------------------------------------------------------------
-// Cookie consent banner + preferences dialog. Both are global components skinned
-// with Tailwind @apply (bg-white, text-black), so their surfaces don't carry a
-// literal utility class and never flip. On a dark page the global `p { color }` /
-// `* { border-color }` overrides above bleed in while the backgrounds stay white —
-// light-on-light, unreadable. Give both dark surfaces here.
-// ---------------------------------------------------------------------------
-html[data-theme="dark"] body.section-registry {
-    #segment-consent-manager {
-        background-color: var(--docs-card);
-        border-color: var(--color-violet-400);
-        color: var(--docs-fg);
-
-        div {
-            background-color: var(--docs-card);
-        }
-
-        p {
-            color: var(--docs-fg);
-
-            a {
-                color: var(--color-blue-300);
-            }
-        }
-    }
-
-    .consent-dialog {
-        background-color: var(--docs-card);
-        color: var(--docs-fg);
-    }
-
-    .consent-dialog-close {
-        color: var(--docs-fg-muted);
-
-        &:hover {
-            color: var(--docs-fg);
-        }
-    }
-
-    .consent-dialog-desc,
-    .consent-table-purpose,
-    .consent-table-tools,
-    .consent-table-na {
-        color: var(--docs-fg-muted);
-    }
-
-    .consent-dialog-table {
-        th {
-            color: var(--docs-fg-muted);
-            border-bottom-color: var(--docs-border);
-        }
-
-        td {
-            border-bottom-color: var(--docs-border);
-        }
-    }
-
-    .consent-btn-secondary {
-        background-color: transparent;
-        color: var(--color-violet-300);
-        border-color: var(--color-violet-300);
-
-        &:hover,
-        &:focus-visible {
-            background-color: color-mix(
-                in oklch,
-                var(--color-violet-300) 16%,
-                transparent
-            );
-            color: var(--docs-fg);
-        }
     }
 }
 

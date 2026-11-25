@@ -389,15 +389,15 @@ func TestFunctionHeaders(t *testing.T) {
 			ExpectedTitleTag: "prov.getPackageResource",
 			// The schema description is too short to stand alone as a meta description, so
 			// this falls back to the generic template.
-			ExpectedMetaDesc: "Use prov.getPackageResource with Pulumi. Full API reference with input" +
-				" and output properties and examples in TypeScript, Python, Go, C#, Java, and YAML.",
+			ExpectedMetaDesc: "Documentation for the prov.getPackageResource function with examples," +
+				" input properties, output properties, and supporting types.",
 		},
 		{
 			FunctionName:     "getModuleResource",
 			ModuleName:       "module",
 			ExpectedTitleTag: "prov.module.getModuleResource",
-			ExpectedMetaDesc: "Use prov.module.getModuleResource with Pulumi. Full API reference with" +
-				" input and output properties and examples in TypeScript, Python, Go, C#, Java, and YAML.",
+			ExpectedMetaDesc: "Documentation for the prov.module.getModuleResource function with examples," +
+				" input properties, output properties, and supporting types.",
 		},
 	}
 
@@ -450,9 +450,8 @@ func TestResourceDocHeader(t *testing.T) {
 			ExpectedTitleTag: "prov.PackageLevelResource",
 			// The schema description is too short to stand alone as a meta description, so
 			// this falls back to the generic template.
-			ExpectedMetaDesc: "Create and manage prov.PackageLevelResource with Pulumi. Full API reference" +
-				" with input and output properties, lookup functions, and examples in TypeScript, Python," +
-				" Go, C#, Java, and YAML.",
+			ExpectedMetaDesc: "Documentation for the prov.PackageLevelResource resource with examples," +
+				" input properties, output properties, lookup functions, and supporting types.",
 		},
 		{
 			Name:             "ModuleLevelResourceHeader",
@@ -499,7 +498,7 @@ func TestExamplesProcessing(t *testing.T) {
 	dctx := NewContext("test", schemaPkg)
 
 	description := testPackageSpec.Resources["prov:module/resource:Resource"].Description
-	docInfo := dctx.decomposeDocstring(description, dctx.getSupportedSnippetLanguages(false, nil))
+	docInfo := dctx.decomposeDocstring(schema.DocRef{}, description, dctx.getSupportedSnippetLanguages(false, nil))
 	examplesSection := docInfo.examples
 	importSection := docInfo.importDetails
 
@@ -611,7 +610,7 @@ func TestDecomposeDocstring(t *testing.T) {
 	assert.NoError(t, err, "importing spec")
 	dctx := NewContext("test", schemaPkg)
 
-	info := dctx.decomposeDocstring(awsVpcDocs, dctx.getSupportedSnippetLanguages(false, nil))
+	info := dctx.decomposeDocstring(schema.DocRef{}, awsVpcDocs, dctx.getSupportedSnippetLanguages(false, nil))
 	assert.Equal(t, docInfo{
 		description: "Provides a VPC resource.\n",
 		examples: []exampleSection{
@@ -1007,4 +1006,73 @@ func TestFunctionInvokeOptionsTypes(t *testing.T) {
 		assert.NotContains(t, args.FunctionArgsOutputOptions, language.Python)
 		assert.NotContains(t, args.FunctionArgsOutputOptions, language.Go)
 	})
+}
+
+func TestNestedTypeInputUsage(t *testing.T) {
+	t.Parallel()
+
+	objectType := func() schema.ComplexTypeSpec {
+		return schema.ComplexTypeSpec{
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Type:       "object",
+				Properties: map[string]schema.PropertySpec{"value": {TypeSpec: schema.TypeSpec{Type: "string"}}},
+			},
+		}
+	}
+	ref := func(name string) schema.PropertySpec {
+		return schema.PropertySpec{TypeSpec: schema.TypeSpec{Ref: "#/types/prov:module/" + name + ":" + name}}
+	}
+
+	spec := newTestPackageSpec()
+	spec.Types["prov:module/InputOnly:InputOnly"] = objectType()
+	spec.Types["prov:module/OutputOnly:OutputOnly"] = objectType()
+	spec.Types["prov:module/StateOnly:StateOnly"] = objectType()
+	spec.Types["prov:module/Kind:Kind"] = schema.ComplexTypeSpec{
+		ObjectTypeSpec: schema.ObjectTypeSpec{Type: "string"},
+		Enum:           []schema.EnumValueSpec{{Value: "a"}, {Value: "b"}},
+	}
+	spec.Resources["prov:module/usage:Usage"] = schema.ResourceSpec{
+		ObjectTypeSpec: schema.ObjectTypeSpec{
+			Properties: map[string]schema.PropertySpec{
+				"outputOnly": ref("OutputOnly"),
+				"stateOnly":  ref("StateOnly"),
+				"kind":       ref("Kind"),
+			},
+		},
+		InputProperties: map[string]schema.PropertySpec{
+			"inputOnly": ref("InputOnly"),
+			"kind":      ref("Kind"),
+		},
+		StateInputs: &schema.ObjectTypeSpec{
+			Properties: map[string]schema.PropertySpec{"stateOnly": ref("StateOnly")},
+		},
+	}
+
+	schemaPkg, err := schema.ImportSpec(spec, nil, schema.NewNullLoader(), schema.ValidationOptions{
+		AllowDanglingReferences: true,
+	})
+	require.NoError(t, err)
+	mod := NewContext("test", schemaPkg).generateModulesFromSchemaPackage("test", schemaPkg)["module"]
+	require.NotNil(t, mod, "module 'module' not generated")
+	r := getResourceFromModule("Usage", mod)
+	require.NotNil(t, r, "resource Usage not found")
+
+	got := map[string]bool{}
+	for _, nt := range mod.genNestedTypes(r, true, false) {
+		got[nt.AnchorID] = nt.Input
+	}
+
+	for anchor, want := range map[string]bool{
+		"inputonly":  true,
+		"stateonly":  true,
+		"outputonly": false,
+		"kind":       false,
+	} {
+		t.Run(anchor, func(t *testing.T) {
+			t.Parallel()
+			gotInput, ok := got[anchor]
+			require.True(t, ok, "nested type %q missing from %v", anchor, got)
+			assert.Equal(t, want, gotInput, "Input for nested type %q", anchor)
+		})
+	}
 }

@@ -1,13 +1,20 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
+import email.message
+import http.client
+import io
 import json
 import os
 import re
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
+import urllib.error
+import urllib.request
 from pathlib import Path
 from typing import Any
 from unittest.mock import patch
@@ -371,18 +378,36 @@ class FactSheetTests(unittest.TestCase):
 
 
 class SweepTests(unittest.TestCase):
-    def _sweep(self, files: list[str] | None = None,
-               already: bool = False) -> list[tuple[str, dict[str, str]]]:
+    def _run(self, files: list[str] | None = None, reported: bool = False,
+             first_party: bool = False) -> tuple[list[tuple[str, dict[str, str]]], list[str]]:
         dispatched: list[tuple[str, dict[str, str]]] = []
+        claimed: list[str] = []
+
+        def claim(pr: int, body: str) -> dict[str, Any]:
+            claimed.append(body)
+            return {}
+
         with patch.object(github_api, "open_pull_requests",
-                          lambda: [{"number": 7, "head": {"sha": "a" * 40}}]), \
+                          lambda: [self._pull(first_party)]), \
              patch.object(github_api, "pull_request_files",
                           lambda pr: files if files is not None else [comment_commands.PACKAGE_LIST]), \
-             patch.object(github_api, "dispatch_exists", lambda w, label: already), \
+             patch.object(github_api, "fact_sheet_reports", lambda pr, sha: reported), \
+             patch.object(github_api, "fact_sheet_comment", lambda pr: None), \
+             patch.object(github_api, "post_comment", claim), \
              patch.object(github_api, "dispatch_workflow",
                           lambda w, inputs: dispatched.append((w, inputs))):
             comment_commands.sweep()
-        return dispatched
+        return dispatched, claimed
+
+    @staticmethod
+    def _pull(first_party: bool) -> dict[str, Any]:
+        head_repo = "pulumi/registry" if first_party else "contributor/registry"
+        return {"number": 7, "head": {"sha": "a" * 40, "repo": {"full_name": head_repo}},
+                "base": {"repo": {"full_name": "pulumi/registry"}}}
+
+    def _sweep(self, files: list[str] | None = None, reported: bool = False,
+               first_party: bool = False) -> list[tuple[str, dict[str, str]]]:
+        return self._run(files=files, reported=reported, first_party=first_party)[0]
 
     def test_dispatches_a_check_for_a_package_pr(self) -> None:
         self.assertEqual(self._sweep(),
@@ -391,8 +416,29 @@ class SweepTests(unittest.TestCase):
     def test_skips_a_pr_that_does_not_touch_the_package_list(self) -> None:
         self.assertEqual(self._sweep(files=["README.md"]), [])
 
-    def test_dispatches_each_head_once(self) -> None:
-        self.assertEqual(self._sweep(already=True), [])
+    def test_skips_a_pr_whose_branch_is_in_this_repo(self) -> None:
+        self.assertEqual(self._sweep(first_party=True), [])
+
+    def test_a_pr_from_a_deleted_fork_is_not_first_party(self) -> None:
+        pull = self._pull(first_party=False)
+        pull["head"]["repo"] = None
+        self.assertFalse(github_api.is_first_party(pull))
+
+    def test_a_head_already_claimed_is_not_dispatched_again(self) -> None:
+        self.assertEqual(self._sweep(reported=True), [])
+
+    def test_a_dispatched_head_is_claimed_before_the_check_reports(self) -> None:
+        dispatched, claimed = self._run()
+        self.assertEqual(len(dispatched), 1)
+        self.assertEqual(len(claimed), 1)
+        with patch.object(github_api, "fact_sheet_comment", lambda pr: {"id": 1, "body": claimed[0]}):
+            self.assertTrue(github_api.fact_sheet_reports(7, "a" * 40))
+            self.assertFalse(github_api.fact_sheet_reports(7, "b" * 40))
+
+    def test_the_claim_tells_the_contributor_what_to_wait_for(self) -> None:
+        claim = self._run()[1][0]
+        self.assertIn("a" * 12, claim)
+        self.assertIn("/check", claim)
 
     def test_run_label_is_stable_per_head(self) -> None:
         self.assertEqual(github_api.dispatch_run_label(7, "a" * 40),
@@ -415,18 +461,16 @@ class DispatchLabelTests(unittest.TestCase):
             template = template.replace("${{ inputs.%s }}" % field, value)
         self.assertEqual(template, github_api.dispatch_run_label(7, "a" * 40))
 
-    def test_a_run_is_matched_by_its_display_title(self) -> None:
+    def test_a_run_is_found_by_its_display_title(self) -> None:
         label = github_api.dispatch_run_label(7, "a" * 40)
         runs = [{"name": "Community package check", "display_title": label,
                  "created_at": "2020-01-01T00:00:00Z"}]
         with patch.object(github_api, "_dispatched_runs", lambda w: runs):
-            self.assertTrue(github_api.dispatch_exists("w.yml", label))
             self.assertIsNotNone(github_api.minutes_since_dispatch("w.yml", 7))
 
-    def test_a_run_for_another_pr_is_not_matched(self) -> None:
+    def test_a_run_for_another_pr_is_not_found(self) -> None:
         runs = [{"display_title": github_api.dispatch_run_label(8, "a" * 40)}]
         with patch.object(github_api, "_dispatched_runs", lambda w: runs):
-            self.assertFalse(github_api.dispatch_exists("w.yml", github_api.dispatch_run_label(7, "a" * 40)))
             self.assertIsNone(github_api.minutes_since_dispatch("w.yml", 7))
 
 
@@ -514,7 +558,7 @@ class CheckAllowlistTests(unittest.TestCase):
 
     def test_the_check_refuses_a_file_the_gate_would_have_refused(self) -> None:
         code, sheet = self._check("community-packages/package-list.json\nREADME.md\n")
-        self.assertEqual(code, 1)
+        self.assertEqual(code, 0, "a rejection is a verdict, so the run must not fail")
         self.assertIn("outside the community package allowlist", sheet)
         self.assertIn("README.md", sheet)
 
@@ -635,7 +679,7 @@ class AllowlistGateTests(unittest.TestCase):
 
     def test_any_other_file_stops_before_the_package_is_touched(self) -> None:
         code, written, sheet = self._fetch([str(package_list.PATH), ".github/workflows/push.yml"])
-        self.assertEqual(code, 1)
+        self.assertEqual(code, 0, "a rejection is a verdict, so the run must not fail")
         self.assertEqual(written, [])
         self.assertIn("outside the community package allowlist", sheet)
         self.assertIn("push.yml", sheet)
@@ -713,7 +757,7 @@ class VerifyPackageYamlTests(unittest.TestCase):
         self.assertTrue(manifest.docLint)
 
     def test_delisted_package_is_skipped(self) -> None:
-        manifest = self._verify({"name": "stripe", "publisher": "DEPRECATED", "version": "0.4.0"},
+        manifest = self._verify({"name": "stripe", "publisher": "stripe", "version": "0.4.0", "deprecated": True},
                                 index=None, publishers={})
         self.assertTrue(manifest.delisted)
         self.assertTrue(manifest.green)
@@ -843,12 +887,6 @@ class CheckCrashTests(unittest.TestCase):
         self.assertIn("could not run", sheet)
         self.assertIn("the network went away", sheet)
 
-    def test_a_red_package_keeps_its_own_exit_code(self) -> None:
-        with tempfile.TemporaryDirectory() as scratch:
-            args = argparse.Namespace(diff="origin/master", changed_files=None, out=scratch)
-            with patch.object(cli, "_check", lambda a: 1):
-                self.assertEqual(cli.run_check(args), 1)
-
 
 def _run_report(sheets: dict[str, str], existing: dict[str, Any] | None = None,
                 posted: dict[str, Any] | None = None) -> list[str]:
@@ -943,6 +981,28 @@ class VerdictNoticeTests(unittest.TestCase):
         self.assertIn("https://c/9", written[-1])
 
 
+class CheckedHeadTests(unittest.TestCase):
+    def _sheet(self) -> dict[str, Any]:
+        return {"id": 1, "body": _run_report({"000.factsheet.md": "## ✅ ready"})[0]}
+
+    def test_the_sweep_reads_the_head_the_report_recorded(self) -> None:
+        sheet = self._sheet()
+        with patch.object(github_api, "fact_sheet_comment", lambda pr: sheet):
+            self.assertTrue(github_api.fact_sheet_reports(7, "d" * 40))
+
+    def test_another_head_is_not_taken_as_checked(self) -> None:
+        sheet = self._sheet()
+        with patch.object(github_api, "fact_sheet_comment", lambda pr: sheet):
+            self.assertFalse(github_api.fact_sheet_reports(7, "e" * 40))
+
+    def test_a_pr_without_a_fact_sheet_has_nothing_checked(self) -> None:
+        with patch.object(github_api, "fact_sheet_comment", lambda pr: None):
+            self.assertFalse(github_api.fact_sheet_reports(7, "d" * 40))
+
+    def test_the_sheet_is_still_found_by_its_own_marker(self) -> None:
+        self.assertIn(github_api.FACT_SHEET_MARKER, self._sheet()["body"])
+
+
 class VerdictFileTests(unittest.TestCase):
     def _verdict(self, manifests: list[Manifest]) -> str:
         entries = [Entry("x/pulumi-demo", "s.json")] * len(manifests)
@@ -955,8 +1015,8 @@ class VerdictFileTests(unittest.TestCase):
                  patch.object(package_list, "added_entries", lambda base, head: entries), \
                  patch.object(resourcedocsgen, "ensure_built", lambda: None), \
                  patch.object(verify_entry, "verify", lambda e: pending.pop(0)):
-                cli._check(argparse.Namespace(diff="origin/master", out=scratch,
-                                              changed_files=str(changed)))
+                self.exit_code = cli._check(argparse.Namespace(diff="origin/master", out=scratch,
+                                                               changed_files=str(changed)))
             return Path(scratch, comment_commands.VERDICT_FILE).read_text()
 
     def test_a_green_package_writes_pass(self) -> None:
@@ -967,6 +1027,10 @@ class VerdictFileTests(unittest.TestCase):
 
     def test_a_red_package_writes_fail(self) -> None:
         self.assertEqual(self._verdict([_manifest(green=False)]), "fail")
+
+    def test_a_red_package_does_not_fail_the_run(self) -> None:
+        self._verdict([_manifest(green=False)])
+        self.assertEqual(self.exit_code, 0)
 
     def test_one_red_package_outweighs_a_green_one(self) -> None:
         self.assertEqual(self._verdict([_manifest(green=True), _manifest(green=False)]), "fail")
@@ -1007,34 +1071,50 @@ class CommentPaginationTests(unittest.TestCase):
         self.assertEqual([c["id"] for c in found], [249])
 
 
-class SweepFailureIssueTests(unittest.TestCase):
-    def _alert(self, listed: list[dict[str, Any]]) -> list[dict[str, Any]]:
-        created: list[dict[str, Any]] = []
-        os.environ.update(REPO="x/y", GITHUB_RUN_ID="42", GITHUB_REPOSITORY="x/y")
-        with patch.object(github_api, "request", lambda p, *a, **k: listed), \
-             patch.object(github_api, "create_issue",
-                          lambda title, body, labels: created.append(
-                              {"title": title, "body": body, "labels": labels})):
-            comment_commands.sweep_failed()
-        return created
+class TransientFailureTests(unittest.TestCase):
+    def _http_error(self, code: int) -> urllib.error.HTTPError:
+        return urllib.error.HTTPError("https://api.github.com/x", code, "boom",
+                                      email.message.Message(), None)
 
-    def _issue(self, body: str) -> dict[str, Any]:
-        return {"number": 5, "body": body}
+    def _call(self, outcomes: list[Any], method: str = "GET") -> Any:
+        attempts = iter(outcomes)
 
-    def test_the_first_failure_opens_one_issue(self) -> None:
-        created = self._alert([])
-        self.assertEqual(len(created), 1)
-        self.assertEqual(created[0]["labels"], [comment_commands.SWEEP_FAILURE_LABEL])
-        self.assertIn(comment_commands.SWEEP_FAILURE_MARKER, created[0]["body"])
-        self.assertIn("/actions/runs/42", created[0]["body"])
+        def urlopen(req: Any, timeout: int = 0) -> Any:
+            outcome = next(attempts)
+            if isinstance(outcome, Exception):
+                raise outcome
+            return contextlib.closing(io.BytesIO(outcome))
 
-    def test_every_later_failure_opens_nothing(self) -> None:
-        marked = self._issue(comment_commands.SWEEP_FAILURE_MARKER + "\nstill broken")
-        self.assertEqual(self._alert([marked]), [])
+        with patch.object(urllib.request, "urlopen", urlopen), \
+             patch.object(time, "sleep", lambda seconds: None):
+            return github_api.request("/x", method, {"body": "hi"} if method == "POST" else None)
 
-    def test_an_unrelated_p1_issue_does_not_suppress_the_alert(self) -> None:
-        self.assertEqual(len(self._alert([self._issue("some other p1 problem")])), 1)
+    def test_a_gateway_timeout_is_retried_until_it_succeeds(self) -> None:
+        self.assertEqual(self._call([self._http_error(504), b'{"ok": true}']), {"ok": True})
 
-    def test_a_pull_request_is_never_mistaken_for_the_issue(self) -> None:
-        pr = {"number": 6, "body": comment_commands.SWEEP_FAILURE_MARKER, "pull_request": {}}
-        self.assertEqual(len(self._alert([pr])), 1)
+    def test_a_dropped_connection_is_retried(self) -> None:
+        self.assertEqual(self._call([ConnectionResetError("reset"), b'{"ok": true}']), {"ok": True})
+
+    def test_a_body_cut_off_mid_read_is_retried(self) -> None:
+        self.assertEqual(self._call([http.client.IncompleteRead(b"{"), b'{"ok": true}']), {"ok": True})
+
+    def test_a_transient_failure_that_never_clears_is_raised(self) -> None:
+        with self.assertRaises(urllib.error.HTTPError):
+            self._call([self._http_error(503)] * github_api.ATTEMPTS)
+
+    def test_a_rejection_is_not_retried(self) -> None:
+        with self.assertRaises(urllib.error.HTTPError):
+            self._call([self._http_error(422), b"{}"])
+
+    def test_a_write_is_never_retried(self) -> None:
+        with self.assertRaises(urllib.error.HTTPError):
+            self._call([self._http_error(504), b"{}"], "POST")
+
+    def test_a_missing_raw_file_reads_as_missing(self) -> None:
+        with patch.object(github_api, "_read", side_effect=self._http_error(404)):
+            self.assertIsNone(github_api.raw_file("o/r", "sha", "schema.json"))
+
+    def test_an_unfetchable_raw_file_is_not_reported_as_missing(self) -> None:
+        with patch.object(github_api, "_read", side_effect=self._http_error(500)):
+            with self.assertRaises(urllib.error.HTTPError):
+                github_api.raw_file("o/r", "sha", "schema.json")

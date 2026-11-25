@@ -47,6 +47,7 @@ body.section-registry {
             font-family: Inter;
             line-height: 1.1em;
             scroll-margin-top: 60px;
+            overflow-wrap: anywhere;
         }
 
         h2,
@@ -547,7 +548,17 @@ body.section-registry {
             .docs-table-of-contents {
                 margin-top: 38px;
                 padding: 16px 0 16px 0;
+                // The rail scrolls on its own when the TOC, related resources, and
+                // ad outgrow the viewport, but a permanent second scrollbar beside
+                // the page's reads as broken. Keep a thin bar's gutter reserved (so
+                // nothing shifts) and only paint it while the pointer is over the
+                // rail, which is when it can be used.
                 overflow-y: auto;
+                scrollbar-width: thin;
+                scrollbar-color: transparent transparent;
+                &:hover {
+                    scrollbar-color: var(--docs-border) transparent;
+                }
                 height: 90vh;
                 position: sticky;
                 top: 94px;
@@ -620,6 +631,30 @@ body.section-registry {
 
         img {
             height: 24px;
+        }
+
+        div.package-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+
+            // Only leave room for the title when there is one; a wordmark logo
+            // shown alone keeps the full width it had before.
+            &:has(.package-title) img {
+                flex-shrink: 0;
+                max-width: 60%;
+                object-fit: contain;
+                object-position: left;
+            }
+        }
+
+        span.package-title {
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 14px;
+            color: #131314;
+            overflow-wrap: anywhere;
         }
 
         .note {

@@ -2,7 +2,7 @@
 ---
 title: "Provider"
 title_tag: "configstation.Provider"
-meta_desc: "Create and manage configstation.Provider with Pulumi. Full API reference with input and output properties, lookup functions, and examples in TypeScript, Python, Go, C#, Java, and YAML."
+meta_desc: "Documentation for the configstation.Provider resource with examples, input properties, output properties, lookup functions, and supporting types."
 layout: api
 no_edit_this_page: true
 outputs:
@@ -29,7 +29,7 @@ Resources are created with functions called constructors. To learn more about de
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="k">new </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">args</span><span class="p">?:</span> <span class="nx"><a href="#inputs">ProviderArgs</a></span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#CustomResourceOptions">CustomResourceOptions</a></span><span class="p">);</span></code></pre></div>
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="k">new </span><span class="nx">Provider</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">args</span><span class="p">?:</span> <span class="nx"><a href="#inputs">ProviderArgs</a></span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/CustomResourceOptions.html">CustomResourceOptions</a></span><span class="p">);</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -108,7 +108,7 @@ Resources are created with functions called constructors. To learn more about de
         class="property-optional" title="Optional">
         <span>opts</span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#CustomResourceOptions">CustomResourceOptions</a></span>
+        <span class="property-type"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/CustomResourceOptions.html">CustomResourceOptions</a></span>
     </dt>
     <dd>Bag of options to control resource&#39;s behavior.</dd></dl>
 
@@ -513,62 +513,104 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 
 <h4 id="color">
-Color<pulumi-choosable type="language" values="python,go" class="inline">, Color<wbr>Args</pulumi-choosable>
+Color
 </h4>
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>Blue</dt>
-    <dd><code>blue</code></dd><dt>Red</dt>
-    <dd><code>red</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Blue</td><td class="enum-value"><code>blue</code></td></tr>
+<tr><td>Red</td><td class="enum-value"><code>red</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Color<wbr>Blue</dt>
-    <dd><code>blue</code></dd><dt>Color<wbr>Red</dt>
-    <dd><code>red</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Color<wbr>Blue</td><td class="enum-value"><code>blue</code></td></tr>
+<tr><td>Color<wbr>Red</td><td class="enum-value"><code>red</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"blue"</dt>
-    <dd><code>blue</code></dd><dt>"red"</dt>
-    <dd><code>red</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>blue</code></td></tr>
+<tr><td class="enum-value"><code>red</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>Blue</dt>
-    <dd><code>blue</code></dd><dt>Red</dt>
-    <dd><code>red</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Blue</td><td class="enum-value"><code>blue</code></td></tr>
+<tr><td>Red</td><td class="enum-value"><code>red</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>Blue</dt>
-    <dd><code>blue</code></dd><dt>Red</dt>
-    <dd><code>red</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Blue</td><td class="enum-value"><code>blue</code></td></tr>
+<tr><td>Red</td><td class="enum-value"><code>red</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>BLUE</dt>
-    <dd><code>blue</code></dd><dt>RED</dt>
-    <dd><code>red</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>BLUE</td><td class="enum-value"><code>blue</code></td></tr>
+<tr><td>RED</td><td class="enum-value"><code>red</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"blue"</dt>
-    <dd><code>blue</code></dd><dt>"red"</dt>
-    <dd><code>red</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>blue</code></td></tr>
+<tr><td class="enum-value"><code>red</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 

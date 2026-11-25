@@ -35,9 +35,9 @@ Input-wrapped arguments and returns an Output-wrapped result.
 <pulumi-choosable type="language" values="javascript,typescript">
 <div class="highlight"
 ><pre class="chroma"><code class="language-typescript" data-lang="typescript"
-><span class="k">function </span>listConfigurations<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">ListConfigurationsArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOptions">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">ListConfigurationsResult</a></span>></span
+><span class="k">function </span>listConfigurations<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">ListConfigurationsArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/InvokeOptions.html">InvokeOptions</a></span><span class="p">): Promise&lt;<span class="nx"><a href="#result">ListConfigurationsResult</a></span>></span
 ><span class="k">
-function </span>listConfigurationsOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">ListConfigurationsOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#InvokeOutputOptions">InvokeOutputOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">ListConfigurationsResult</a></span>></span
+function </span>listConfigurationsOutput<span class="p">(</span><span class="nx">args</span><span class="p">:</span> <span class="nx">ListConfigurationsOutputArgs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/InvokeOutputOptions.html">InvokeOutputOptions</a></span><span class="p">): Output&lt;<span class="nx"><a href="#result">ListConfigurationsResult</a></span>></span
 ></code></pre></div>
 </pulumi-choosable>
 </div>
@@ -4913,6 +4913,104 @@ The following output properties are available:
 <h4 id="supportedfiltertypes">Supported<wbr>Filter<wbr>Types</h4>
 
 
+
+<div>
+<pulumi-choosable type="language" values="csharp">
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Ship<wbr>To<wbr>Countries</td><td class="enum-value"><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td>Double<wbr>Encryption<wbr>Status</td><td class="enum-value"><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+</tbody>
+</table>
+</div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="go">
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Supported<wbr>Filter<wbr>Types<wbr>Ship<wbr>To<wbr>Countries</td><td class="enum-value"><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td>Supported<wbr>Filter<wbr>Types<wbr>Double<wbr>Encryption<wbr>Status</td><td class="enum-value"><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+</tbody>
+</table>
+</div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="hcl">
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td class="enum-value"><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+</tbody>
+</table>
+</div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="java">
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Ship<wbr>To<wbr>Countries</td><td class="enum-value"><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td>Double<wbr>Encryption<wbr>Status</td><td class="enum-value"><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+</tbody>
+</table>
+</div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="javascript,typescript">
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Ship<wbr>To<wbr>Countries</td><td class="enum-value"><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td>Double<wbr>Encryption<wbr>Status</td><td class="enum-value"><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+</tbody>
+</table>
+</div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="python">
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>SHIP_TO_COUNTRIES</td><td class="enum-value"><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td>DOUBLE_ENCRYPTION_STATUS</td><td class="enum-value"><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+</tbody>
+</table>
+</div>
+</pulumi-choosable>
+</div>
+
+<div>
+<pulumi-choosable type="language" values="yaml">
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>ShipToCountries</code></td><td>Ship to country</td></tr>
+<tr><td class="enum-value"><code>DoubleEncryptionStatus</code></td><td>Double encryption status</td></tr>
+</tbody>
+</table>
+</div>
+</pulumi-choosable>
+</div>
 
 
 

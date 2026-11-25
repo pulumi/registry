@@ -60,15 +60,51 @@ Wrap them in the site's language chooser so a reader sees only the language they
 {{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 {{% choosable language typescript %}}
 
+npm:
+
 ```bash
 npm install @your-org/your-package
+```
+
+Yarn:
+
+```bash
+yarn add @your-org/your-package
+```
+
+pnpm:
+
+```bash
+pnpm add @your-org/your-package
+```
+
+Bun:
+
+```bash
+bun add @your-org/your-package
 ```
 
 {{% /choosable %}}
 {{% choosable language python %}}
 
+pip:
+
+Add `your-org-your-package` to `requirements.txt`, then run:
+
 ```bash
-pip install your_org_your_package
+pip install -r requirements.txt
+```
+
+uv:
+
+```bash
+uv add your-org-your-package
+```
+
+Poetry:
+
+```bash
+poetry add your-org-your-package
 ```
 
 {{% /choosable %}}
@@ -145,6 +181,7 @@ Notes:
 - **HCL does not use `pulumi package add` at all.** An HCL program names the provider in its own `required_providers` block and `pulumi install` fetches it. A source prefixed with `pulumi/` resolves to the native Pulumi provider and must be pinned to an **exact** semver version, not a constraint; any other source is bridged from its Terraform provider, so a package that wraps one (`pulumi package add terraform-provider <ns>/<name>` elsewhere) uses that same upstream address here. See the [Pulumi HCL reference](https://www.pulumi.com/docs/iac/languages-sdks/hcl/hcl-language-reference/).
 - **If you publish no SDKs at all**, every tab still earns its place: the SDK languages and YAML share one `pulumi package add` command, and HCL differs. Many bridged providers currently title this section "Generate Provider"; `## Installation` is the preferred heading.
 - **Local SDK generation needs a `version` in your schema.** Without one, `pulumi package add` fails outright with `version must be provided when package supports packing`.
+- **Cover every package manager Pulumi supports for the language.** A Pulumi project's dependencies are installed by the package manager the project uses: npm, Yarn, pnpm, or Bun for Node.js ([package managers](https://www.pulumi.com/docs/iac/languages-sdks/javascript/#package-managers)), and pip, uv, or Poetry for Python ([toolchains](https://www.pulumi.com/docs/iac/languages-sdks/python/)). Label one command per package manager, as the Java tab does for Maven and Gradle. With pip, add the package to `requirements.txt` rather than running a bare `pip install`, because `pulumi install` installs from that file. Go and .NET have one command each.
 - **Java has no one-line install command**, so give the Maven and Gradle dependency coordinates, as above.
 - **Links to package feeds** (npm, PyPI, NuGet, pkg.go.dev, Maven Central) are accepted, and many existing packages use them instead. Prefer commands; add links alongside them if you like.
 - **You almost certainly do not need a `pulumi plugin install` command.** If your schema sets `pluginDownloadURL`, that value is compiled into every SDK you publish and the engine downloads the plugin binary on first use. Give the `pulumi plugin install resource <name> <version> --server <url>` command only if you know a reader must run it by hand.

@@ -30,13 +30,13 @@ Common commands (all defined in the root `Makefile`):
 | Dev server + asset hot reload | `make serve-all` |
 | Generate API docs for one provider | `make api-docs/<package>` |
 | Full local build (all providers) | `make build` |
-| Run Go unit tests | `make test` |
+| Run Go, infrastructure, preview-comment, and theme unit tests (needs `make ensure` first) | `make test` |
 | Run all linters | `make lint` |
 | Run Go linter only | `make lint-go` |
 | Run Markdown linter only | `make lint-markdown` |
 | Check the generated dark logo variants | `make lint-dark-logos` |
 | Run provider API docs tests | `make test_provider_api_docs` |
-| Run browser tests | `make run-browser-tests` |
+| Run the API docs crawl (mocha, not Cypress) | `make run-browser-tests` |
 
 `make lint` must pass before merging. `make build` requires 32 GB+ RAM for a complete build; for single-provider work, use `make api-docs/<package>` instead.
 
@@ -64,7 +64,7 @@ Every package in the registry is described by a YAML file at `themes/default/dat
 
 - API doc generation (`resourcedocsgen`)
 - Registry publication (`scripts/ci/publish_to_registry.py`, with `scripts/ci/push-registry.py` as a fallback)
-- The nightly community package update workflow
+- The scheduled community package update workflow
 
 ### Go Tools
 
@@ -80,7 +80,7 @@ Every package in the registry is described by a YAML file at `themes/default/dat
 
 The CI build script (`scripts/ci/build.sh`) writes to **`themes/default/content/registry/packages/`**.
 
-This difference is intentional — local API doc generation stays out of the Hugo theme tree. Within `themes/default/content/registry/packages/<pkg>/`, the `api-docs/` subdirectory is regenerated on every build and is git-ignored, so never commit it. The landing pages are different: `_index.md` — plus `installation-configuration.md` for the packages that have one, which is optional, since only `_index.md` is required — is committed and maintained by the `generate-package-metadata.yml` publish workflow, and bundled when onboarding a package so it renders before the next nightly run. Do not hand-edit any of these files; regenerate them with `resourcedocsgen`.
+This difference is intentional — local API doc generation stays out of the Hugo theme tree. Within `themes/default/content/registry/packages/<pkg>/`, the `api-docs/` subdirectory is regenerated on every build and is git-ignored, so never commit it. The landing pages are different: `_index.md` — plus `installation-configuration.md` for the packages that have one, which is optional, since only `_index.md` is required — is committed and maintained by the `generate-package-metadata.yml` publish workflow, and bundled when onboarding a package so it renders before the next scheduled run. Do not hand-edit any of these files; regenerate them with `resourcedocsgen`. The exception is a short list of Pulumi packages whose landing pages live only in this repository and are edited here directly — see [Overview pages kept in this repository](docs/architecture.md#overview-pages-kept-in-this-repository).
 
 Additionally, `resourcedocsgen` writes **LLM docs** to **`llm-docs-out/registry/packages/`** (repo root, git-ignored). These are terminal-friendly markdown bundles (`llm-docs.json`) uploaded to S3 separately from the Hugo site. The LLM docs format is specified in `docs/llm-markdown-spec.md`.
 
@@ -99,8 +99,19 @@ Each CI build syncs to a uniquely named S3 bucket. A Pulumi IaC program in `infr
 To add or update a community provider package:
 
 1. Edit (or create) its YAML file in `themes/default/data/registry/packages/`.
-2. The nightly `generate-package-metadata.yml` workflow handles version bumps automatically for community packages tracked in `community-packages/package-list.json`.
+2. The scheduled `generate-package-metadata.yml` workflow handles version bumps automatically for community packages tracked in `community-packages/package-list.json`.
 3. First-party Pulumi provider repos trigger `publish-provider-update.yml` via `repository_dispatch`.
+
+**Dynamically bridged Terraform providers are not managed here.** These are the packages consumed with `pulumi package add terraform-provider <name>`; their YAML has a `schema_file_url` containing `registry.opentofu.org` and a `description` of the form `A Pulumi provider dynamically bridged from <name>.` They come from the internal `pulumi/terraform-to-pulumi-registry-pipeline` repo, which watches the providers listed under `watched-providers` in its `Pulumi.yaml` and sends a `push-provider-update` event whenever one ships a new version, regenerating the package YAML here. Adding, removing, or re-pointing one — for example, when an upstream provider moves to a new namespace — is an edit to that list, so file the issue or PR in `pulumi/terraform-to-pulumi-registry-pipeline`, not in this repo and not in `pulumi/pulumi-terraform-provider` (the Any Terraform Provider plugin itself). When you delist one here with `deprecated: true`, also take it off `watched-providers`. `resourcedocsgen metadata` won't overwrite a delisted package's YAML, but it posts a warning every time the pipeline pushes a new version. See [`docs/architecture.md`](docs/architecture.md#terraform-providers) for the full flow.
+
+### Writing or rewriting a landing page
+
+When you write or substantially rewrite a package's Overview or Install & config page — the hand-maintained ones listed in [`docs/architecture.md`](docs/architecture.md#overview-pages-kept-in-this-repository), or a draft for a provider repository's `docs/` — follow [`docs/overview-page.md`](docs/overview-page.md), and generate the installation and configuration sections rather than writing them by hand:
+
+- `bin/resourcedocsgen gen-install --schemaFile <schema.json> --version <x.y.z>` writes the `## Installation` chooser. Pass `--version` so the Java and HCL tabs get a real version instead of a `VERSION` placeholder, and `--languages` if the package doesn't publish every SDK the schema declares. The TypeScript and Python tabs list a command for every package manager the Pulumi docs support (npm, Yarn, pnpm, and Bun; pip, uv, and Poetry). If you add one to the generator, also update the template in `docs/overview-page.md`, and regenerate rather than hand-edit an existing page's tabs.
+- `bin/resourcedocsgen gen-config --schemaFile <schema.json>` writes the configuration parameter list. Its descriptions are the raw schema text, so edit them for readability, drop obsolete options, and fill in the two `TODO` comments it ends with: environment-variable fallbacks the schema doesn't mention (search the provider source for the variables it reads) and options that interact.
+
+Build the tool with `make bin/resourcedocsgen`. Both commands are experimental and print to stdout, so paste the output into the page.
 
 On every push to `master`, `publish_to_registry.py` publishes packages to the live Pulumi registry service — the Pulumi Cloud store behind `pulumi package add`, which is separate from the rendered site. `push-registry.py` runs only if that step fails.
 
@@ -131,8 +142,8 @@ When something needs dark-mode work, prefer the existing levers over hand-writte
   - *A layered file often can't opt in at all.* Almost everything under `theme/src/scss/` is inside `@layer components`, and `_docs-theme.scss` is unlayered, so its blanket dark rules — `p { color: var(--docs-fg) }`, the per-surface overrides — win regardless of specificity. Pointing a layered rule at a token therefore changes light and does nothing in dark. Declare the dark value in `_docs-theme.scss` and leave the layered file's light value alone.
 - **Use Tailwind `dark:` variants.** The `dark:` variant is wired to `data-theme` (`@custom-variant dark` in `theme/src/scss/main.scss`), so `dark:bg-gray-900`, `dark:text-white`, etc. work directly in templates. `bg-docs-bg` / `text-docs-fg` / `border-docs-border` utilities are generated too.
 - **Lean on the automatic flips.** Brand violet (`--color-violet-primary` and every `text-violet-primary` / `bg-violet-primary` / `border-violet-primary` utility) and the default border color are already remapped in the dark block, so markup authored with those gets dark mode for free. Surfaces styled via `@apply` (the `.btn-*` variants, for example) carry no literal utility class and need their own override in `_docs-theme.scss`.
-- **Package logos** are handled in two tiers by `layouts/partials/registry/package/icon.html`, and neither tier is hand-maintained:
-  - *Local marks.* The partial looks for `themes/default/assets/fingerprinted/logos/pkg/<name>-on-dark.svg` and, when it finds one, emits both images with the `docs-logo-light` / `docs-logo-dark` classes the theme swaps. Run `python3 scripts/generate-dark-logos.py` after adding or replacing a local mark; it lightens only the paints that are too dark for the dark page, skips full-color marks entirely, and skips any package whose YAML declares a `logo_url` (`icon.html` short-circuits on that before it ever looks for a local variant). `make lint-dark-logos` runs `--check`, which reports staleness without writing; it's a PR-CI job, so a stale variant fails the build.
+- **Package logos** are handled in two tiers by `layouts/partials/registry/package/icon.html`, and apart from the exception below, neither tier is hand-maintained:
+  - *Local marks.* The partial looks for `themes/default/assets/fingerprinted/logos/pkg/<name>-on-dark.svg` and, when it finds one, emits both images with the `docs-logo-light` / `docs-logo-dark` classes the theme swaps. Run `python3 scripts/generate-dark-logos.py` after adding or replacing a local mark; it lightens only the paints that are too dark for the dark page, skips full-color marks entirely, and skips any package whose YAML declares a `logo_url` (`icon.html` short-circuits on that before it ever looks for a local variant). Pulumi product icons, like `delivery`, are the exception: both files follow the brand's avatar colors, drawn by hand, and the package is listed in the script's `HAND_DRAWN` set so the generator leaves its variant alone. `make lint-dark-logos` runs `--check`, which reports staleness without writing; it's a PR-CI job, so a stale variant fails the build.
   - *External `logo_url` marks.* These can't be recolored, so the ones that would disappear get a near-white chip instead. Which ones those are is measured by `python3 scripts/classify-external-logos.py`, which downloads each logo, samples it, and writes `themes/default/data/registry/external_logo_treatment.yaml`. Re-run it when you add a package with a `logo_url` or when a vendor changes their logo (`--check` in CI-style mode). It needs the network — and macOS `sips` for non-PNG rasters — so it is deliberately *not* in CI; `--check` exits 2 rather than reporting staleness if any logo couldn't be measured. Don't apply the chip by hand or across the board — it hides light marks and boxes in full-color ones.
 - **Masked icons** in `docs/_icons.scss` tint with `background: var(--docs-fg-muted)`; `background: url()` colored marks do not and need a per-asset variant.
 
@@ -146,6 +157,6 @@ The one deliberate exception is the dark default border color, which sits in `@l
 
 - **Package manager**: Yarn only. Do not use npm or pnpm.
 - **Go modules**: `tools/resourcedocsgen/` is a separate Go module. Run `go test ./...` and `golangci-lint run` from within that directory (or use the Makefile targets).
-- **Generated content**: Files under `themes/default/content/registry/packages/` are generated — regenerate with `resourcedocsgen`, never hand-edit. The `api-docs/` subdirectories are git-ignored build output (never committed); the `_index.md` page — and `installation-configuration.md`, when the package has one — is committed metadata maintained by the publish workflow. Only `_index.md` is required; a package with just an overview is complete.
+- **Generated content**: Files under `themes/default/content/registry/packages/` are generated — regenerate with `resourcedocsgen`, never hand-edit. The `api-docs/` subdirectories are git-ignored build output (never committed); the `_index.md` page — and `installation-configuration.md`, when the package has one — is committed metadata maintained by the publish workflow. Only `_index.md` is required; a package with just an overview is complete. A few Pulumi packages' landing pages are hand-maintained here on purpose; they're listed in [`docs/architecture.md`](docs/architecture.md#overview-pages-kept-in-this-repository).
 - **Markdown line wrapping**: Put each paragraph and each list item on a **single line**. Do not hard-wrap prose to a column — let the editor soft-wrap it. A hard-wrapped paragraph re-flows when you change a word in the middle, so a one-word edit shows up as a multi-line diff and reviewers can't see what actually changed. This applies to every hand-written Markdown file in the repo: `README.md`, `AGENTS.md`, `BUILD-AND-DEPLOY.md`, everything under `docs/`, the PR and issue templates, and the skill files under `.claude/commands/`. Code inside fences, tables, and front matter keep whatever line structure they need; `CODE-OF-CONDUCT.md` is imported upstream and is left as-is.
 - **Branch naming**: Use `<GitHub Username>/<descriptive-name>` for branches in this repository.

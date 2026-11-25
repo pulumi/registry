@@ -298,7 +298,7 @@ resource "plant_tree_v1_nursery" "nurseryResource" {
 
 ```java
 var nurseryResource = new Nursery("nurseryResource", NurseryArgs.builder()
-    .varieties("Burgundy")
+    .varieties(com.pulumi.plant.tree_v1.enums.RubberTreeVariety.Burgundy)
     .sizes(Map.of("string", "small"))
     .build());
 ```

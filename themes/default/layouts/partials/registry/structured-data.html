@@ -23,11 +23,16 @@
       - BreadcrumbList, for every registry page.
 
     Conditionally includes:
+      - CollectionPage for the registry landing page (/registry/), so it has
+        a page-level node like the WebPage node docs pages carry.
       - SoftwareSourceCode for the package overview page. Matches npmjs.com's
         convention for a provider library / SDK consumed by Pulumi.
       - HowTo for installation-configuration pages.
       - TechArticle / APIReference for individual API doc pages (not the
         api-docs section index, which only gets a BreadcrumbList).
+      - TechArticle for individual guide pages (not the guides section
+        index). These guides are written by Pulumi, so author and publisher
+        are both the Pulumi Organization node rather than $pkg.publisher.
       - FAQPage for pages whose front matter sets `faq: true`.
 
     Note: "author" fields on SoftwareSourceCode/TechArticle name the
@@ -75,7 +80,11 @@
             {{ $kind = "api-docs-leaf" }}
         {{ end }}
     {{ else if eq (index $segments 3) "guides" }}
-        {{ $kind = "guides" }}
+        {{ if eq $segCount 4 }}
+            {{ $kind = "guides-root" }}
+        {{ else }}
+            {{ $kind = "guides-leaf" }}
+        {{ end }}
     {{ end }}
 {{ end }}
 
@@ -174,12 +183,44 @@
         {{ end }}
     {{ else if eq $kind "install" }}
         {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 4 "name" "Installation & Configuration" "item" (printf "%sregistry/packages/%s/installation-configuration/" (absURL "") $packageName)) }}
-    {{ else if eq $kind "guides" }}
+    {{ else if or (eq $kind "guides-root") (eq $kind "guides-leaf") }}
         {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 4 "name" "Guides" "item" (printf "%sregistry/packages/%s/guides/" (absURL "") $packageName)) }}
+        {{ if eq $kind "guides-leaf" }}
+            {{ $guidesRoot := printf "/registry/packages/%s/guides/" $packageName }}
+            {{ $extra := slice . }}
+            {{ range .Ancestors }}
+                {{ if eq .RelPermalink $guidesRoot }}
+                    {{ break }}
+                {{ end }}
+                {{ $extra = $extra | append . }}
+            {{ end }}
+            {{ $extra = $extra | collections.Reverse }}
+            {{ $pos := add (len $crumbs) 1 }}
+            {{ range $extra }}
+                {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" $pos "name" .LinkTitle "item" .Permalink) }}
+                {{ $pos = add $pos 1 }}
+            {{ end }}
+        {{ end }}
     {{ end }}
 {{ end }}
 {{ $breadcrumb := dict "@type" "BreadcrumbList" "@id" (printf "%s#breadcrumb" .Permalink) "itemListElement" $crumbs }}
 {{ $graph = $graph | append $breadcrumb }}
+
+{{/* ---------- CollectionPage (registry landing page only) ---------- */}}
+{{ if eq $rel "/registry/" }}
+    {{ $landing := dict
+        "@type" "CollectionPage"
+        "@id" (printf "%s#webpage" .Permalink)
+        "url" .Permalink
+        "name" "Pulumi Registry"
+        "description" .Params.meta_desc
+        "inLanguage" "en-US"
+        "isPartOf" (dict "@id" "https://www.pulumi.com/#website")
+        "publisher" $orgRef
+        "breadcrumb" (dict "@id" (printf "%s#breadcrumb" .Permalink))
+    }}
+    {{ $graph = $graph | append $landing }}
+{{ end }}
 
 {{ if $pkg }}
 
@@ -265,6 +306,31 @@
     {{ with $pkg.updated_on }}{{ $article = merge $article (dict "dateModified" (time . | time.Format "2006-01-02T15:04:05Z")) }}{{ end }}
     {{ if not $.PublishDate.IsZero }}{{ $article = merge $article (dict "datePublished" (time.Format "2006-01-02T15:04:05Z" $.PublishDate)) }}{{ end }}
     {{ $graph = $graph | append $article }}
+{{ end }}
+
+{{/* ---------- TechArticle (individual guide pages only) ---------- */}}
+{{ if eq $kind "guides-leaf" }}
+    {{ $guideArticle := dict
+        "@type" "TechArticle"
+        "@id" (printf "%s#article" .Permalink)
+        "headline" .Title
+        "name" .Title
+        "url" .Permalink
+        "mainEntityOfPage" .Permalink
+        "inLanguage" "en-US"
+        "articleSection" "Guides"
+        "about" (dict
+            "@type" "SoftwareSourceCode"
+            "name" (printf "%s Pulumi Provider" $pkg.title)
+            "url" (printf "%sregistry/packages/%s/" (absURL "") $packageName)
+        )
+        "author" $orgRef
+        "publisher" $orgRef
+    }}
+    {{ with .Params.meta_desc }}{{ $guideArticle = merge $guideArticle (dict "description" .) }}{{ end }}
+    {{ with $pkg.updated_on }}{{ $guideArticle = merge $guideArticle (dict "dateModified" (time . | time.Format "2006-01-02T15:04:05Z")) }}{{ end }}
+    {{ if not $.PublishDate.IsZero }}{{ $guideArticle = merge $guideArticle (dict "datePublished" (time.Format "2006-01-02T15:04:05Z" $.PublishDate)) }}{{ end }}
+    {{ $graph = $graph | append $guideArticle }}
 {{ end }}
 
 {{/* ---------- FAQPage (pages with faq: true in front matter) ---------- */}}

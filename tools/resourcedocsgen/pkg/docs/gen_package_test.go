@@ -334,7 +334,7 @@ func TestGeneratePackage(t *testing.T) {
 
 			// Create a test host/loader that offers schema for the providers/packages defined in testCaseProviders.
 			host := newHostWithTestProviders(schemaDir, testCaseProviders)
-			pctx, err := plugin.NewContextWithHost(context.Background(), nil, nil, host, "", "", nil)
+			pctx, err := plugin.NewContextWithHost(context.Background(), nil, nil, host, "", "", nil, nil)
 			require.NoErrorf(t, err, "creating plugin context for schema %s", testCaseSchema)
 			loader := schema.NewPluginLoader(pctx)
 

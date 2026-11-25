@@ -101,7 +101,7 @@ func newSchemaLoader(ctx context.Context) (pschema.ReferenceLoader, func() error
 	if err != nil {
 		return nil, nil, stderrors.Join(err, host.Close())
 	}
-	pctx, err := plugin.NewContext(ctx, sink, sink, host, nil, cwd, nil, false, nil)
+	pctx, err := plugin.NewContext(ctx, sink, sink, host, nil, cwd, nil, false, nil, nil)
 	if err != nil {
 		return nil, nil, stderrors.Join(err, host.Close())
 	}

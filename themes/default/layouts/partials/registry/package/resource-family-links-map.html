@@ -1,0 +1,14 @@
+{{- /*
+  Builds a map of family-base -> list of sibling leaf pages for one api-docs module.
+  Input: the module section page. Cached per module via partialCached.
+*/ -}}
+{{- $map := dict -}}
+{{- range .Sections -}}
+  {{- $base := lower (path.Base (strings.TrimSuffix "/" .RelPermalink)) -}}
+  {{- if and (strings.HasPrefix $base "get") (gt (len $base) 3) -}}{{- $base = strings.TrimPrefix "get" $base -}}{{- end -}}
+  {{- $base = replaceRE "(iambinding|iammember|iampolicy)$" "" $base -}}
+  {{- if and (strings.HasSuffix $base "v2") (gt (len $base) 2) -}}{{- $base = strings.TrimSuffix "v2" $base -}}{{- end -}}
+  {{- $existing := index $map $base | default slice -}}
+  {{- $map = merge $map (dict $base ($existing | append .)) -}}
+{{- end -}}
+{{- return $map -}}

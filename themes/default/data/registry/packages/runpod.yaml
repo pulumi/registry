@@ -2,6 +2,8 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Cloud
 component: false
+deprecated: true
+deprecation_reason: Runpod no longer maintains it; the Runpod Terraform provider replaces it.
 description: The Runpod Pulumi provider provides resources to interact with Runpod's
   native APIs.
 featured: false

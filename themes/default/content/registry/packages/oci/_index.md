@@ -202,3 +202,5 @@ resource "oci_identity_user" "testUser" {
 {{% /choosable %}}
 
 {{< /chooser >}}
+
+{{% additional-resources %}}

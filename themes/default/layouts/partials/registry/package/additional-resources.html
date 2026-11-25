@@ -1,0 +1,37 @@
+{{- /* Returns the "Additional resources" links a package opts into in
+       data/registry/package_links.yaml, as a slice of dicts with `label`, `url`
+       and `offsite`. Takes the package's raw name. Shared by the sidebar and the
+       additional-resources shortcode so both show the same links. */ -}}
+{{- $resources := slice -}}
+{{- with site.Data.registry.package_links -}}
+    {{- $links := . -}}
+    {{- with index $links.packages $ -}}
+        {{- $pkg := . -}}
+        {{- with index $links.dev_center ($pkg.dev_center | default "") -}}
+            {{- $browseUrl := printf "/dev/browse/?cloud=%s" .cloud -}}
+            {{- range .sections -}}
+                {{- with index $links.dev_center_sections . -}}
+                    {{- $resources = $resources | append (dict "label" .label "url" (printf "%s&type=%s" $browseUrl .type)) -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- with index $links.esc ($pkg.esc | default "") -}}
+            {{- $resources = $resources | append (dict "label" "Credentials with Pulumi ESC" "url" .) -}}
+        {{- end -}}
+        {{- range $pkg.links -}}
+            {{- $resources = $resources | append (dict "label" .label "url" .url) -}}
+        {{- end -}}
+        {{- /* The integration page collects everything else, so it goes last. */ -}}
+        {{- with index $links.integrations ($pkg.integration | default "") -}}
+            {{- $resources = $resources | append (dict "label" (printf "All %s integrations" .name) "url" .url) -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- /* A link is offsite when it names a host other than pulumi.com. */ -}}
+{{- $out := slice -}}
+{{- range $resources -}}
+    {{- $host := (urls.Parse .url).Host -}}
+    {{- $offsite := and $host (not (in (slice "pulumi.com" "www.pulumi.com") $host)) -}}
+    {{- $out = $out | append (merge . (dict "offsite" $offsite)) -}}
+{{- end -}}
+{{- return $out -}}

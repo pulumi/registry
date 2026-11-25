@@ -286,7 +286,6 @@ The [Kubernetes templates](/dev/templates/kubernetes/) start a new project that 
 
 ## Learn more
 
-- [Pulumi and Kubernetes](/docs/integrations/clouds/kubernetes/) lists everything Pulumi offers for Kubernetes, including ESC integrations and policy packs.
-- [Dev Center tutorials](/dev/tutorials/) walk through complete scenarios, such as deploying Helm charts and managing resources with Server-Side Apply.
-- The [Pulumi Kubernetes Operator](/docs/integrations/clouds/kubernetes/pulumi-kubernetes-operator/) runs Pulumi stacks from inside a cluster, driven by `Stack` custom resources.
-- [Migrating from Kubernetes YAML](/docs/iac/guides/migration/migrating-to-pulumi/from-kubernetes/) shows how to bring existing manifests and Helm charts into Pulumi.
+[Migrating from Kubernetes YAML](/docs/iac/guides/migration/migrating-to-pulumi/from-kubernetes/) shows how to bring existing manifests and Helm charts into Pulumi.
+
+{{% additional-resources %}}

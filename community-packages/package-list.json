@@ -403,6 +403,10 @@
     {
       "repoSlug": "pulumi-labs/pulumi-openai",
       "schemaFile": "provider/cmd/pulumi-resource-openai/schema.json"
+    },
+    {
+      "repoSlug": "noderings/pulumi-noderings",
+      "schemaFile": "provider/cmd/pulumi-resource-noderings/schema.json"
     }
   ]
 }

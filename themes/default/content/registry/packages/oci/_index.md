@@ -9,7 +9,7 @@ The OCI provider must be configured with credentials to deploy and update resour
 
 ## Example
 
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 
 {{% choosable language typescript %}}
 
@@ -159,6 +159,46 @@ resources:
       freeformTags:
         Department: Finance
 ```
+{{% /choosable %}}
+
+{{% choosable language hcl %}}
+
+```hcl
+terraform {
+  required_providers {
+    oci = {
+      source = "pulumi/oci"
+    }
+  }
+}
+
+variable "tenancy_ocid" {
+  type = string
+}
+
+variable "user_description" {
+  type = string
+}
+
+variable "user_email" {
+  type = string
+}
+
+resource "oci_identity_user" "testUser" {
+  # Required
+  compartment_id = var.tenancy_ocid
+  description    = var.user_description
+  # Optional
+  defined_tags = {
+    "Operations.CostCenter" = "42"
+  }
+  email = var.user_email
+  freeform_tags = {
+    "Department" = "Finance"
+  }
+}
+```
+
 {{% /choosable %}}
 
 {{< /chooser >}}

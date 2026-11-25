@@ -20,6 +20,11 @@ Explore the resources and functions of the plant.tree/v1 module.
     <li><a href="rubbertree/" title="RubberTree">RubberTree</a></li>
 </ul>
 
+<h2 id="functions">Functions</h2>
+<ul class="api">
+    <li><a href="getrubbertree/" title="GetRubberTree">GetRubberTree</a></li>
+</ul>
+
 <h2 id="package-details">Package Details</h2>
 <dl class="package-details">
 	<dt>Repository</dt>

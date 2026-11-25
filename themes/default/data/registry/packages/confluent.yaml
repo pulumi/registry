@@ -2,14 +2,17 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Infrastructure
 component: false
+deprecated: true
+deprecation_reason: Confluent now maintains its own provider.
 description: A Pulumi package for creating and managing confluent cloud resources.
 featured: false
 logo_url: ""
 name: confluent
 package_status: public_preview
-publisher: DEPRECATED
+publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-confluent
 schema_file_path: /provider/cmd/pulumi-resource-confluent/schema.json
+superseded_by: confluentcloud
 title: Confluent Cloud
 updated_on: 1639155544
 version: v0.2.2

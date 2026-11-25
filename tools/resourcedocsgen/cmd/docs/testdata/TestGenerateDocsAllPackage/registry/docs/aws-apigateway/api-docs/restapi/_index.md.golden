@@ -34,7 +34,7 @@ Resources are created with functions called constructors. To learn more about de
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="k">new </span><span class="nx">RestAPI</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">args</span><span class="p">?:</span> <span class="nx"><a href="#inputs">RestAPIArgs</a></span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#ComponentResourceOptions">ComponentResourceOptions</a></span><span class="p">);</span></code></pre></div>
+<div class="no-copy"><div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="k">new </span><span class="nx">RestAPI</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">args</span><span class="p">?:</span> <span class="nx"><a href="#inputs">RestAPIArgs</a></span><span class="p">,</span> <span class="nx">opts</span><span class="p">?:</span> <span class="nx"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/ComponentResourceOptions.html">ComponentResourceOptions</a></span><span class="p">);</span></code></pre></div>
 </div></pulumi-choosable>
 </div>
 
@@ -122,7 +122,7 @@ Resources are created with functions called constructors. To learn more about de
         class="property-optional" title="Optional">
         <span>opts</span>
         <span class="property-indicator"></span>
-        <span class="property-type"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/#ComponentResourceOptions">ComponentResourceOptions</a></span>
+        <span class="property-type"><a href="/docs/reference/pkg/nodejs/pulumi/pulumi/interfaces/ComponentResourceOptions.html">ComponentResourceOptions</a></span>
     </dt>
     <dd>Bag of options to control resource&#39;s behavior.</dd></dl>
 
@@ -515,7 +515,7 @@ resource "aws-apigateway_rest_a_p_i" "restAPIResource" {
 
 ```java
 var restAPIResource = new RestAPI("restAPIResource", RestAPIArgs.builder()
-    .apiKeySource("HEADER")
+    .apiKeySource(com.pulumi.awsapigateway.enums.APIKeySource.HEADER)
     .binaryMediaTypes("string")
     .description("string")
     .disableExecuteApiEndpoint(false)
@@ -524,7 +524,7 @@ var restAPIResource = new RestAPI("restAPIResource", RestAPIArgs.builder()
         .responseTemplates(Map.of("string", "string"))
         .statusCode(0.0)
         .build()))
-    .requestValidator("ALL")
+    .requestValidator(com.pulumi.awsapigateway.enums.RequestValidator.ALL)
     .routes(RouteArgs.builder()
         .path("string")
         .data("any")
@@ -534,7 +534,7 @@ var restAPIResource = new RestAPI("restAPIResource", RestAPIArgs.builder()
         .iamAuthEnabled(false)
         .index("string")
         .localPath("string")
-        .method("ANY")
+        .method(com.pulumi.awsapigateway.enums.Method.ANY)
         .authorizers(AuthorizerArgs.builder()
             .parameterName("string")
             .authType("string")
@@ -548,19 +548,18 @@ var restAPIResource = new RestAPI("restAPIResource", RestAPIArgs.builder()
             .providerARNs("string")
             .type("string")
             .build())
-        .requestValidator("ALL")
+        .requestValidator(com.pulumi.awsapigateway.enums.RequestValidator.ALL)
         .requiredParameters(RequiredParameterArgs.builder()
             .in("string")
             .name("string")
             .build())
-        .target(Map.ofEntries(
-            Map.entry("type", "aws"),
-            Map.entry("connectionId", "string"),
-            Map.entry("connectionType", "INTERNET"),
-            Map.entry("httpMethod", "ANY"),
-            Map.entry("passthroughBehaviour", "when_no_match"),
-            Map.entry("uri", "string")
-        ))
+        .target(TargetArgs.builder()
+            .type(com.pulumi.awsapigateway.enums.IntegrationType.Aws)
+            .connectionId("string")
+            .connectionType(com.pulumi.awsapigateway.enums.IntegrationConnectionType.INTERNET)
+            .passthroughBehaviour(com.pulumi.awsapigateway.enums.IntegrationPassthroughBehavior.When_no_match)
+            .uri("string")
+            .build())
         .build())
     .stageName("string")
     .staticRoutesBucket(bucket)
@@ -1977,69 +1976,111 @@ All [input](#inputs) properties are implicitly available as output properties. A
 
 
 <h4 id="apikeysource">
-APIKey<wbr>Source<pulumi-choosable type="language" values="python,go" class="inline">, APIKey<wbr>Source<wbr>Args</pulumi-choosable>
+APIKey<wbr>Source
 </h4>
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>HEADER</dt>
-    <dd><code>HEADER</code></dd><dt>AUTHORIZER</dt>
-    <dd><code>AUTHORIZER</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>HEADER</td><td class="enum-value"><code>HEADER</code></td></tr>
+<tr><td>AUTHORIZER</td><td class="enum-value"><code>AUTHORIZER</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>APIKey<wbr>Source<wbr>HEADER</dt>
-    <dd><code>HEADER</code></dd><dt>APIKey<wbr>Source<wbr>AUTHORIZER</dt>
-    <dd><code>AUTHORIZER</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>APIKey<wbr>Source<wbr>HEADER</td><td class="enum-value"><code>HEADER</code></td></tr>
+<tr><td>APIKey<wbr>Source<wbr>AUTHORIZER</td><td class="enum-value"><code>AUTHORIZER</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"HEADER"</dt>
-    <dd><code>HEADER</code></dd><dt>"AUTHORIZER"</dt>
-    <dd><code>AUTHORIZER</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>HEADER</code></td></tr>
+<tr><td class="enum-value"><code>AUTHORIZER</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>HEADER</dt>
-    <dd><code>HEADER</code></dd><dt>AUTHORIZER</dt>
-    <dd><code>AUTHORIZER</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>HEADER</td><td class="enum-value"><code>HEADER</code></td></tr>
+<tr><td>AUTHORIZER</td><td class="enum-value"><code>AUTHORIZER</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>HEADER</dt>
-    <dd><code>HEADER</code></dd><dt>AUTHORIZER</dt>
-    <dd><code>AUTHORIZER</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>HEADER</td><td class="enum-value"><code>HEADER</code></td></tr>
+<tr><td>AUTHORIZER</td><td class="enum-value"><code>AUTHORIZER</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>HEADER</dt>
-    <dd><code>HEADER</code></dd><dt>AUTHORIZER</dt>
-    <dd><code>AUTHORIZER</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>HEADER</td><td class="enum-value"><code>HEADER</code></td></tr>
+<tr><td>AUTHORIZER</td><td class="enum-value"><code>AUTHORIZER</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"HEADER"</dt>
-    <dd><code>HEADER</code></dd><dt>"AUTHORIZER"</dt>
-    <dd><code>AUTHORIZER</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>HEADER</code></td></tr>
+<tr><td class="enum-value"><code>AUTHORIZER</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <h4 id="authorizer">
 Authorizer<pulumi-choosable type="language" values="python,go" class="inline">, Authorizer<wbr>Args</pulumi-choosable>
 </h4>
-LambdaAuthorizer provides the definition for a custom Authorizer for API Gateway.
+<p>LambdaAuthorizer provides the definition for a custom Authorizer for API Gateway.</p>
 
 
 <div>
@@ -2124,7 +2165,7 @@ REQUEST Lambda Authorizers. Example: &quot;^x-[a-z]+&quot;.</dd><dt class="prope
 &quot;resource-server/scope&quot;. e.g. [&quot;com.hamuta.movies/drama.view&quot;,
 &quot;http://my.resource.com/file.read&quot;] For more information on resource servers and custom
 scopes visit the AWS documentation -
-https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</dd><dt class="property-optional"
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</a></dd><dt class="property-optional"
             title="Optional">
         <span id="parameterlocation_csharp">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameterlocation_csharp" style="color: inherit; text-decoration: inherit;">Parameter<wbr>Location</a>
@@ -2239,7 +2280,7 @@ REQUEST Lambda Authorizers. Example: &quot;^x-[a-z]+&quot;.</dd><dt class="prope
 &quot;resource-server/scope&quot;. e.g. [&quot;com.hamuta.movies/drama.view&quot;,
 &quot;http://my.resource.com/file.read&quot;] For more information on resource servers and custom
 scopes visit the AWS documentation -
-https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</dd><dt class="property-optional"
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</a></dd><dt class="property-optional"
             title="Optional">
         <span id="parameterlocation_go">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameterlocation_go" style="color: inherit; text-decoration: inherit;">Parameter<wbr>Location</a>
@@ -2354,7 +2395,7 @@ REQUEST Lambda Authorizers. Example: &quot;^x-[a-z]+&quot;.</dd><dt class="prope
 &quot;resource-server/scope&quot;. e.g. [&quot;com.hamuta.movies/drama.view&quot;,
 &quot;http://my.resource.com/file.read&quot;] For more information on resource servers and custom
 scopes visit the AWS documentation -
-https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</dd><dt class="property-optional"
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</a></dd><dt class="property-optional"
             title="Optional">
         <span id="parameter_location_hcl">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameter_location_hcl" style="color: inherit; text-decoration: inherit;">parameter_<wbr>location</a>
@@ -2469,7 +2510,7 @@ REQUEST Lambda Authorizers. Example: &quot;^x-[a-z]+&quot;.</dd><dt class="prope
 &quot;resource-server/scope&quot;. e.g. [&quot;com.hamuta.movies/drama.view&quot;,
 &quot;http://my.resource.com/file.read&quot;] For more information on resource servers and custom
 scopes visit the AWS documentation -
-https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</dd><dt class="property-optional"
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</a></dd><dt class="property-optional"
             title="Optional">
         <span id="parameterlocation_java">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameterlocation_java" style="color: inherit; text-decoration: inherit;">parameter<wbr>Location</a>
@@ -2584,7 +2625,7 @@ REQUEST Lambda Authorizers. Example: &quot;^x-[a-z]+&quot;.</dd><dt class="prope
 &quot;resource-server/scope&quot;. e.g. [&quot;com.hamuta.movies/drama.view&quot;,
 &quot;http://my.resource.com/file.read&quot;] For more information on resource servers and custom
 scopes visit the AWS documentation -
-https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</dd><dt class="property-optional"
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</a></dd><dt class="property-optional"
             title="Optional">
         <span id="parameterlocation_nodejs">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameterlocation_nodejs" style="color: inherit; text-decoration: inherit;">parameter<wbr>Location</a>
@@ -2699,7 +2740,7 @@ REQUEST Lambda Authorizers. Example: &quot;^x-[a-z]+&quot;.</dd><dt class="prope
 &quot;resource-server/scope&quot;. e.g. [&quot;com.hamuta.movies/drama.view&quot;,
 &quot;http://my.resource.com/file.read&quot;] For more information on resource servers and custom
 scopes visit the AWS documentation -
-https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</dd><dt class="property-optional"
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</a></dd><dt class="property-optional"
             title="Optional">
         <span id="parameter_location_python">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameter_location_python" style="color: inherit; text-decoration: inherit;">parameter_<wbr>location</a>
@@ -2814,7 +2855,7 @@ REQUEST Lambda Authorizers. Example: &quot;^x-[a-z]+&quot;.</dd><dt class="prope
 &quot;resource-server/scope&quot;. e.g. [&quot;com.hamuta.movies/drama.view&quot;,
 &quot;http://my.resource.com/file.read&quot;] For more information on resource servers and custom
 scopes visit the AWS documentation -
-https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</dd><dt class="property-optional"
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html</a></dd><dt class="property-optional"
             title="Optional">
         <span id="parameterlocation_yaml">
 <a data-swiftype-name="resource-property" data-swiftype-type="text" href="#parameterlocation_yaml" style="color: inherit; text-decoration: inherit;">parameter<wbr>Location</a>
@@ -2848,379 +2889,589 @@ be &quot;header&quot; or &quot;query&quot;. If there are multiple identity sourc
 </div>
 
 <h4 id="integrationconnectiontype">
-Integration<wbr>Connection<wbr>Type<pulumi-choosable type="language" values="python,go" class="inline">, Integration<wbr>Connection<wbr>Type<wbr>Args</pulumi-choosable>
+Integration<wbr>Connection<wbr>Type
 </h4>
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>INTERNET</dt>
-    <dd><code>INTERNET</code></dd><dt>VPC_LINK</dt>
-    <dd><code>VPC_LINK</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>INTERNET</td><td class="enum-value"><code>INTERNET</code></td></tr>
+<tr><td>VPC_LINK</td><td class="enum-value"><code>VPC_LINK</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Integration<wbr>Connection<wbr>Type<wbr>INTERNET</dt>
-    <dd><code>INTERNET</code></dd><dt>Integration<wbr>Connection<wbr>Type_VPC_LINK</dt>
-    <dd><code>VPC_LINK</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Integration<wbr>Connection<wbr>Type<wbr>INTERNET</td><td class="enum-value"><code>INTERNET</code></td></tr>
+<tr><td>Integration<wbr>Connection<wbr>Type_VPC_LINK</td><td class="enum-value"><code>VPC_LINK</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"INTERNET"</dt>
-    <dd><code>INTERNET</code></dd><dt>"VPC_LINK"</dt>
-    <dd><code>VPC_LINK</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>INTERNET</code></td></tr>
+<tr><td class="enum-value"><code>VPC_LINK</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>INTERNET</dt>
-    <dd><code>INTERNET</code></dd><dt>VPC_LINK</dt>
-    <dd><code>VPC_LINK</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>INTERNET</td><td class="enum-value"><code>INTERNET</code></td></tr>
+<tr><td>VPC_LINK</td><td class="enum-value"><code>VPC_LINK</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>INTERNET</dt>
-    <dd><code>INTERNET</code></dd><dt>VPC_LINK</dt>
-    <dd><code>VPC_LINK</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>INTERNET</td><td class="enum-value"><code>INTERNET</code></td></tr>
+<tr><td>VPC_LINK</td><td class="enum-value"><code>VPC_LINK</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>INTERNET</dt>
-    <dd><code>INTERNET</code></dd><dt>VP_C_LINK</dt>
-    <dd><code>VPC_LINK</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>INTERNET</td><td class="enum-value"><code>INTERNET</code></td></tr>
+<tr><td>VP_C_LINK</td><td class="enum-value"><code>VPC_LINK</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"INTERNET"</dt>
-    <dd><code>INTERNET</code></dd><dt>"VPC_LINK"</dt>
-    <dd><code>VPC_LINK</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>INTERNET</code></td></tr>
+<tr><td class="enum-value"><code>VPC_LINK</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <h4 id="integrationpassthroughbehavior">
-Integration<wbr>Passthrough<wbr>Behavior<pulumi-choosable type="language" values="python,go" class="inline">, Integration<wbr>Passthrough<wbr>Behavior<wbr>Args</pulumi-choosable>
+Integration<wbr>Passthrough<wbr>Behavior
 </h4>
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>When_<wbr>no_<wbr>match</dt>
-    <dd><code>when_no_match</code></dd><dt>When_<wbr>no_<wbr>templates</dt>
-    <dd><code>when_no_templates</code></dd><dt>Never</dt>
-    <dd><code>never</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>When_<wbr>no_<wbr>match</td><td class="enum-value"><code>when_no_match</code></td></tr>
+<tr><td>When_<wbr>no_<wbr>templates</td><td class="enum-value"><code>when_no_templates</code></td></tr>
+<tr><td>Never</td><td class="enum-value"><code>never</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Integration<wbr>Passthrough<wbr>Behavior_When_<wbr>no_<wbr>match</dt>
-    <dd><code>when_no_match</code></dd><dt>Integration<wbr>Passthrough<wbr>Behavior_When_<wbr>no_<wbr>templates</dt>
-    <dd><code>when_no_templates</code></dd><dt>Integration<wbr>Passthrough<wbr>Behavior<wbr>Never</dt>
-    <dd><code>never</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Integration<wbr>Passthrough<wbr>Behavior_When_<wbr>no_<wbr>match</td><td class="enum-value"><code>when_no_match</code></td></tr>
+<tr><td>Integration<wbr>Passthrough<wbr>Behavior_When_<wbr>no_<wbr>templates</td><td class="enum-value"><code>when_no_templates</code></td></tr>
+<tr><td>Integration<wbr>Passthrough<wbr>Behavior<wbr>Never</td><td class="enum-value"><code>never</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"when_<wbr>no_<wbr>match"</dt>
-    <dd><code>when_no_match</code></dd><dt>"when_<wbr>no_<wbr>templates"</dt>
-    <dd><code>when_no_templates</code></dd><dt>"never"</dt>
-    <dd><code>never</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>when_no_match</code></td></tr>
+<tr><td class="enum-value"><code>when_no_templates</code></td></tr>
+<tr><td class="enum-value"><code>never</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>When_<wbr>no_<wbr>match</dt>
-    <dd><code>when_no_match</code></dd><dt>When_<wbr>no_<wbr>templates</dt>
-    <dd><code>when_no_templates</code></dd><dt>Never</dt>
-    <dd><code>never</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>When_<wbr>no_<wbr>match</td><td class="enum-value"><code>when_no_match</code></td></tr>
+<tr><td>When_<wbr>no_<wbr>templates</td><td class="enum-value"><code>when_no_templates</code></td></tr>
+<tr><td>Never</td><td class="enum-value"><code>never</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>When_<wbr>no_<wbr>match</dt>
-    <dd><code>when_no_match</code></dd><dt>When_<wbr>no_<wbr>templates</dt>
-    <dd><code>when_no_templates</code></dd><dt>Never</dt>
-    <dd><code>never</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>When_<wbr>no_<wbr>match</td><td class="enum-value"><code>when_no_match</code></td></tr>
+<tr><td>When_<wbr>no_<wbr>templates</td><td class="enum-value"><code>when_no_templates</code></td></tr>
+<tr><td>Never</td><td class="enum-value"><code>never</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>WHEN_NO_MATCH</dt>
-    <dd><code>when_no_match</code></dd><dt>WHEN_NO_TEMPLATES</dt>
-    <dd><code>when_no_templates</code></dd><dt>NEVER</dt>
-    <dd><code>never</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>WHEN_NO_MATCH</td><td class="enum-value"><code>when_no_match</code></td></tr>
+<tr><td>WHEN_NO_TEMPLATES</td><td class="enum-value"><code>when_no_templates</code></td></tr>
+<tr><td>NEVER</td><td class="enum-value"><code>never</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"when_<wbr>no_<wbr>match"</dt>
-    <dd><code>when_no_match</code></dd><dt>"when_<wbr>no_<wbr>templates"</dt>
-    <dd><code>when_no_templates</code></dd><dt>"never"</dt>
-    <dd><code>never</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>when_no_match</code></td></tr>
+<tr><td class="enum-value"><code>when_no_templates</code></td></tr>
+<tr><td class="enum-value"><code>never</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <h4 id="integrationtype">
-Integration<wbr>Type<pulumi-choosable type="language" values="python,go" class="inline">, Integration<wbr>Type<wbr>Args</pulumi-choosable>
+Integration<wbr>Type
 </h4>
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>Aws</dt>
-    <dd><code>aws</code></dd><dt>Aws_<wbr>proxy</dt>
-    <dd><code>aws_proxy</code></dd><dt>Http</dt>
-    <dd><code>http</code></dd><dt>Http_<wbr>proxy</dt>
-    <dd><code>http_proxy</code></dd><dt>Mock</dt>
-    <dd><code>mock</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Aws</td><td class="enum-value"><code>aws</code></td></tr>
+<tr><td>Aws_<wbr>proxy</td><td class="enum-value"><code>aws_proxy</code></td></tr>
+<tr><td>Http</td><td class="enum-value"><code>http</code></td></tr>
+<tr><td>Http_<wbr>proxy</td><td class="enum-value"><code>http_proxy</code></td></tr>
+<tr><td>Mock</td><td class="enum-value"><code>mock</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Integration<wbr>Type<wbr>Aws</dt>
-    <dd><code>aws</code></dd><dt>Integration<wbr>Type_Aws_<wbr>proxy</dt>
-    <dd><code>aws_proxy</code></dd><dt>Integration<wbr>Type<wbr>Http</dt>
-    <dd><code>http</code></dd><dt>Integration<wbr>Type_Http_<wbr>proxy</dt>
-    <dd><code>http_proxy</code></dd><dt>Integration<wbr>Type<wbr>Mock</dt>
-    <dd><code>mock</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Integration<wbr>Type<wbr>Aws</td><td class="enum-value"><code>aws</code></td></tr>
+<tr><td>Integration<wbr>Type_Aws_<wbr>proxy</td><td class="enum-value"><code>aws_proxy</code></td></tr>
+<tr><td>Integration<wbr>Type<wbr>Http</td><td class="enum-value"><code>http</code></td></tr>
+<tr><td>Integration<wbr>Type_Http_<wbr>proxy</td><td class="enum-value"><code>http_proxy</code></td></tr>
+<tr><td>Integration<wbr>Type<wbr>Mock</td><td class="enum-value"><code>mock</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"aws"</dt>
-    <dd><code>aws</code></dd><dt>"aws_<wbr>proxy"</dt>
-    <dd><code>aws_proxy</code></dd><dt>"http"</dt>
-    <dd><code>http</code></dd><dt>"http_<wbr>proxy"</dt>
-    <dd><code>http_proxy</code></dd><dt>"mock"</dt>
-    <dd><code>mock</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>aws</code></td></tr>
+<tr><td class="enum-value"><code>aws_proxy</code></td></tr>
+<tr><td class="enum-value"><code>http</code></td></tr>
+<tr><td class="enum-value"><code>http_proxy</code></td></tr>
+<tr><td class="enum-value"><code>mock</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>Aws</dt>
-    <dd><code>aws</code></dd><dt>Aws_<wbr>proxy</dt>
-    <dd><code>aws_proxy</code></dd><dt>Http</dt>
-    <dd><code>http</code></dd><dt>Http_<wbr>proxy</dt>
-    <dd><code>http_proxy</code></dd><dt>Mock</dt>
-    <dd><code>mock</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Aws</td><td class="enum-value"><code>aws</code></td></tr>
+<tr><td>Aws_<wbr>proxy</td><td class="enum-value"><code>aws_proxy</code></td></tr>
+<tr><td>Http</td><td class="enum-value"><code>http</code></td></tr>
+<tr><td>Http_<wbr>proxy</td><td class="enum-value"><code>http_proxy</code></td></tr>
+<tr><td>Mock</td><td class="enum-value"><code>mock</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>Aws</dt>
-    <dd><code>aws</code></dd><dt>Aws_<wbr>proxy</dt>
-    <dd><code>aws_proxy</code></dd><dt>Http</dt>
-    <dd><code>http</code></dd><dt>Http_<wbr>proxy</dt>
-    <dd><code>http_proxy</code></dd><dt>Mock</dt>
-    <dd><code>mock</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Aws</td><td class="enum-value"><code>aws</code></td></tr>
+<tr><td>Aws_<wbr>proxy</td><td class="enum-value"><code>aws_proxy</code></td></tr>
+<tr><td>Http</td><td class="enum-value"><code>http</code></td></tr>
+<tr><td>Http_<wbr>proxy</td><td class="enum-value"><code>http_proxy</code></td></tr>
+<tr><td>Mock</td><td class="enum-value"><code>mock</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>AWS</dt>
-    <dd><code>aws</code></dd><dt>AWS_PROXY</dt>
-    <dd><code>aws_proxy</code></dd><dt>HTTP</dt>
-    <dd><code>http</code></dd><dt>HTTP_PROXY</dt>
-    <dd><code>http_proxy</code></dd><dt>MOCK</dt>
-    <dd><code>mock</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>AWS</td><td class="enum-value"><code>aws</code></td></tr>
+<tr><td>AWS_PROXY</td><td class="enum-value"><code>aws_proxy</code></td></tr>
+<tr><td>HTTP</td><td class="enum-value"><code>http</code></td></tr>
+<tr><td>HTTP_PROXY</td><td class="enum-value"><code>http_proxy</code></td></tr>
+<tr><td>MOCK</td><td class="enum-value"><code>mock</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"aws"</dt>
-    <dd><code>aws</code></dd><dt>"aws_<wbr>proxy"</dt>
-    <dd><code>aws_proxy</code></dd><dt>"http"</dt>
-    <dd><code>http</code></dd><dt>"http_<wbr>proxy"</dt>
-    <dd><code>http_proxy</code></dd><dt>"mock"</dt>
-    <dd><code>mock</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>aws</code></td></tr>
+<tr><td class="enum-value"><code>aws_proxy</code></td></tr>
+<tr><td class="enum-value"><code>http</code></td></tr>
+<tr><td class="enum-value"><code>http_proxy</code></td></tr>
+<tr><td class="enum-value"><code>mock</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <h4 id="method">
-Method<pulumi-choosable type="language" values="python,go" class="inline">, Method<wbr>Args</pulumi-choosable>
+Method
 </h4>
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>ANY</dt>
-    <dd><code>ANY</code></dd><dt>GET</dt>
-    <dd><code>GET</code></dd><dt>PUT</dt>
-    <dd><code>PUT</code></dd><dt>POST</dt>
-    <dd><code>POST</code></dd><dt>DELETE</dt>
-    <dd><code>DELETE</code></dd><dt>PATCH</dt>
-    <dd><code>PATCH</code></dd><dt>OPTIONS</dt>
-    <dd><code>OPTIONS</code></dd><dt>HEAD</dt>
-    <dd><code>HEAD</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ANY</td><td class="enum-value"><code>ANY</code></td></tr>
+<tr><td>GET</td><td class="enum-value"><code>GET</code></td></tr>
+<tr><td>PUT</td><td class="enum-value"><code>PUT</code></td></tr>
+<tr><td>POST</td><td class="enum-value"><code>POST</code></td></tr>
+<tr><td>DELETE</td><td class="enum-value"><code>DELETE</code></td></tr>
+<tr><td>PATCH</td><td class="enum-value"><code>PATCH</code></td></tr>
+<tr><td>OPTIONS</td><td class="enum-value"><code>OPTIONS</code></td></tr>
+<tr><td>HEAD</td><td class="enum-value"><code>HEAD</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Method<wbr>ANY</dt>
-    <dd><code>ANY</code></dd><dt>Method<wbr>GET</dt>
-    <dd><code>GET</code></dd><dt>Method<wbr>PUT</dt>
-    <dd><code>PUT</code></dd><dt>Method<wbr>POST</dt>
-    <dd><code>POST</code></dd><dt>Method<wbr>DELETE</dt>
-    <dd><code>DELETE</code></dd><dt>Method<wbr>PATCH</dt>
-    <dd><code>PATCH</code></dd><dt>Method<wbr>OPTIONS</dt>
-    <dd><code>OPTIONS</code></dd><dt>Method<wbr>HEAD</dt>
-    <dd><code>HEAD</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Method<wbr>ANY</td><td class="enum-value"><code>ANY</code></td></tr>
+<tr><td>Method<wbr>GET</td><td class="enum-value"><code>GET</code></td></tr>
+<tr><td>Method<wbr>PUT</td><td class="enum-value"><code>PUT</code></td></tr>
+<tr><td>Method<wbr>POST</td><td class="enum-value"><code>POST</code></td></tr>
+<tr><td>Method<wbr>DELETE</td><td class="enum-value"><code>DELETE</code></td></tr>
+<tr><td>Method<wbr>PATCH</td><td class="enum-value"><code>PATCH</code></td></tr>
+<tr><td>Method<wbr>OPTIONS</td><td class="enum-value"><code>OPTIONS</code></td></tr>
+<tr><td>Method<wbr>HEAD</td><td class="enum-value"><code>HEAD</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"ANY"</dt>
-    <dd><code>ANY</code></dd><dt>"GET"</dt>
-    <dd><code>GET</code></dd><dt>"PUT"</dt>
-    <dd><code>PUT</code></dd><dt>"POST"</dt>
-    <dd><code>POST</code></dd><dt>"DELETE"</dt>
-    <dd><code>DELETE</code></dd><dt>"PATCH"</dt>
-    <dd><code>PATCH</code></dd><dt>"OPTIONS"</dt>
-    <dd><code>OPTIONS</code></dd><dt>"HEAD"</dt>
-    <dd><code>HEAD</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>ANY</code></td></tr>
+<tr><td class="enum-value"><code>GET</code></td></tr>
+<tr><td class="enum-value"><code>PUT</code></td></tr>
+<tr><td class="enum-value"><code>POST</code></td></tr>
+<tr><td class="enum-value"><code>DELETE</code></td></tr>
+<tr><td class="enum-value"><code>PATCH</code></td></tr>
+<tr><td class="enum-value"><code>OPTIONS</code></td></tr>
+<tr><td class="enum-value"><code>HEAD</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>ANY</dt>
-    <dd><code>ANY</code></dd><dt>GET</dt>
-    <dd><code>GET</code></dd><dt>PUT</dt>
-    <dd><code>PUT</code></dd><dt>POST</dt>
-    <dd><code>POST</code></dd><dt>DELETE</dt>
-    <dd><code>DELETE</code></dd><dt>PATCH</dt>
-    <dd><code>PATCH</code></dd><dt>OPTIONS</dt>
-    <dd><code>OPTIONS</code></dd><dt>HEAD</dt>
-    <dd><code>HEAD</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ANY</td><td class="enum-value"><code>ANY</code></td></tr>
+<tr><td>GET</td><td class="enum-value"><code>GET</code></td></tr>
+<tr><td>PUT</td><td class="enum-value"><code>PUT</code></td></tr>
+<tr><td>POST</td><td class="enum-value"><code>POST</code></td></tr>
+<tr><td>DELETE</td><td class="enum-value"><code>DELETE</code></td></tr>
+<tr><td>PATCH</td><td class="enum-value"><code>PATCH</code></td></tr>
+<tr><td>OPTIONS</td><td class="enum-value"><code>OPTIONS</code></td></tr>
+<tr><td>HEAD</td><td class="enum-value"><code>HEAD</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>ANY</dt>
-    <dd><code>ANY</code></dd><dt>GET</dt>
-    <dd><code>GET</code></dd><dt>PUT</dt>
-    <dd><code>PUT</code></dd><dt>POST</dt>
-    <dd><code>POST</code></dd><dt>DELETE</dt>
-    <dd><code>DELETE</code></dd><dt>PATCH</dt>
-    <dd><code>PATCH</code></dd><dt>OPTIONS</dt>
-    <dd><code>OPTIONS</code></dd><dt>HEAD</dt>
-    <dd><code>HEAD</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ANY</td><td class="enum-value"><code>ANY</code></td></tr>
+<tr><td>GET</td><td class="enum-value"><code>GET</code></td></tr>
+<tr><td>PUT</td><td class="enum-value"><code>PUT</code></td></tr>
+<tr><td>POST</td><td class="enum-value"><code>POST</code></td></tr>
+<tr><td>DELETE</td><td class="enum-value"><code>DELETE</code></td></tr>
+<tr><td>PATCH</td><td class="enum-value"><code>PATCH</code></td></tr>
+<tr><td>OPTIONS</td><td class="enum-value"><code>OPTIONS</code></td></tr>
+<tr><td>HEAD</td><td class="enum-value"><code>HEAD</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>ANY</dt>
-    <dd><code>ANY</code></dd><dt>GET</dt>
-    <dd><code>GET</code></dd><dt>PUT</dt>
-    <dd><code>PUT</code></dd><dt>POST</dt>
-    <dd><code>POST</code></dd><dt>DELETE</dt>
-    <dd><code>DELETE</code></dd><dt>PATCH</dt>
-    <dd><code>PATCH</code></dd><dt>OPTIONS</dt>
-    <dd><code>OPTIONS</code></dd><dt>HEAD</dt>
-    <dd><code>HEAD</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ANY</td><td class="enum-value"><code>ANY</code></td></tr>
+<tr><td>GET</td><td class="enum-value"><code>GET</code></td></tr>
+<tr><td>PUT</td><td class="enum-value"><code>PUT</code></td></tr>
+<tr><td>POST</td><td class="enum-value"><code>POST</code></td></tr>
+<tr><td>DELETE</td><td class="enum-value"><code>DELETE</code></td></tr>
+<tr><td>PATCH</td><td class="enum-value"><code>PATCH</code></td></tr>
+<tr><td>OPTIONS</td><td class="enum-value"><code>OPTIONS</code></td></tr>
+<tr><td>HEAD</td><td class="enum-value"><code>HEAD</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"ANY"</dt>
-    <dd><code>ANY</code></dd><dt>"GET"</dt>
-    <dd><code>GET</code></dd><dt>"PUT"</dt>
-    <dd><code>PUT</code></dd><dt>"POST"</dt>
-    <dd><code>POST</code></dd><dt>"DELETE"</dt>
-    <dd><code>DELETE</code></dd><dt>"PATCH"</dt>
-    <dd><code>PATCH</code></dd><dt>"OPTIONS"</dt>
-    <dd><code>OPTIONS</code></dd><dt>"HEAD"</dt>
-    <dd><code>HEAD</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>ANY</code></td></tr>
+<tr><td class="enum-value"><code>GET</code></td></tr>
+<tr><td class="enum-value"><code>PUT</code></td></tr>
+<tr><td class="enum-value"><code>POST</code></td></tr>
+<tr><td class="enum-value"><code>DELETE</code></td></tr>
+<tr><td class="enum-value"><code>PATCH</code></td></tr>
+<tr><td class="enum-value"><code>OPTIONS</code></td></tr>
+<tr><td class="enum-value"><code>HEAD</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <h4 id="requestvalidator">
-Request<wbr>Validator<pulumi-choosable type="language" values="python,go" class="inline">, Request<wbr>Validator<wbr>Args</pulumi-choosable>
+Request<wbr>Validator
 </h4>
 
 <div>
 <pulumi-choosable type="language" values="csharp">
-<dl class="tabular"><dt>ALL</dt>
-    <dd><code>ALL</code></dd><dt>PARAMS_ONLY</dt>
-    <dd><code>PARAMS_ONLY</code></dd><dt>BODY_ONLY</dt>
-    <dd><code>BODY_ONLY</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ALL</td><td class="enum-value"><code>ALL</code></td></tr>
+<tr><td>PARAMS_ONLY</td><td class="enum-value"><code>PARAMS_ONLY</code></td></tr>
+<tr><td>BODY_ONLY</td><td class="enum-value"><code>BODY_ONLY</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="go">
-<dl class="tabular"><dt>Request<wbr>Validator<wbr>ALL</dt>
-    <dd><code>ALL</code></dd><dt>Request<wbr>Validator_PARAMS_ONLY</dt>
-    <dd><code>PARAMS_ONLY</code></dd><dt>Request<wbr>Validator_BODY_ONLY</dt>
-    <dd><code>BODY_ONLY</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Request<wbr>Validator<wbr>ALL</td><td class="enum-value"><code>ALL</code></td></tr>
+<tr><td>Request<wbr>Validator_PARAMS_ONLY</td><td class="enum-value"><code>PARAMS_ONLY</code></td></tr>
+<tr><td>Request<wbr>Validator_BODY_ONLY</td><td class="enum-value"><code>BODY_ONLY</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="hcl">
-<dl class="tabular"><dt>"ALL"</dt>
-    <dd><code>ALL</code></dd><dt>"PARAMS_ONLY"</dt>
-    <dd><code>PARAMS_ONLY</code></dd><dt>"BODY_ONLY"</dt>
-    <dd><code>BODY_ONLY</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>ALL</code></td></tr>
+<tr><td class="enum-value"><code>PARAMS_ONLY</code></td></tr>
+<tr><td class="enum-value"><code>BODY_ONLY</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="java">
-<dl class="tabular"><dt>ALL</dt>
-    <dd><code>ALL</code></dd><dt>PARAMS_ONLY</dt>
-    <dd><code>PARAMS_ONLY</code></dd><dt>BODY_ONLY</dt>
-    <dd><code>BODY_ONLY</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ALL</td><td class="enum-value"><code>ALL</code></td></tr>
+<tr><td>PARAMS_ONLY</td><td class="enum-value"><code>PARAMS_ONLY</code></td></tr>
+<tr><td>BODY_ONLY</td><td class="enum-value"><code>BODY_ONLY</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="javascript,typescript">
-<dl class="tabular"><dt>ALL</dt>
-    <dd><code>ALL</code></dd><dt>PARAMS_ONLY</dt>
-    <dd><code>PARAMS_ONLY</code></dd><dt>BODY_ONLY</dt>
-    <dd><code>BODY_ONLY</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ALL</td><td class="enum-value"><code>ALL</code></td></tr>
+<tr><td>PARAMS_ONLY</td><td class="enum-value"><code>PARAMS_ONLY</code></td></tr>
+<tr><td>BODY_ONLY</td><td class="enum-value"><code>BODY_ONLY</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="python">
-<dl class="tabular"><dt>ALL</dt>
-    <dd><code>ALL</code></dd><dt>PARAM_S_ONLY</dt>
-    <dd><code>PARAMS_ONLY</code></dd><dt>BOD_Y_ONLY</dt>
-    <dd><code>BODY_ONLY</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Name</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ALL</td><td class="enum-value"><code>ALL</code></td></tr>
+<tr><td>PARAM_S_ONLY</td><td class="enum-value"><code>PARAMS_ONLY</code></td></tr>
+<tr><td>BOD_Y_ONLY</td><td class="enum-value"><code>BODY_ONLY</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
 <div>
 <pulumi-choosable type="language" values="yaml">
-<dl class="tabular"><dt>"ALL"</dt>
-    <dd><code>ALL</code></dd><dt>"PARAMS_ONLY"</dt>
-    <dd><code>PARAMS_ONLY</code></dd><dt>"BODY_ONLY"</dt>
-    <dd><code>BODY_ONLY</code></dd></dl>
+<div class="enum-values">
+<table>
+<thead><tr><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="enum-value"><code>ALL</code></td></tr>
+<tr><td class="enum-value"><code>PARAMS_ONLY</code></td></tr>
+<tr><td class="enum-value"><code>BODY_ONLY</code></td></tr>
+</tbody>
+</table>
+</div>
 </pulumi-choosable>
 </div>
 
@@ -3385,9 +3636,9 @@ Required<wbr>Parameter<pulumi-choosable type="language" values="python,go" class
 <h4 id="route">
 Route<pulumi-choosable type="language" values="python,go" class="inline">, Route<wbr>Args</pulumi-choosable>
 </h4>
-A route that that APIGateway should accept and forward to some type of destination. All routes
+<p>A route that that APIGateway should accept and forward to some type of destination. All routes
 have an incoming path that they match against.  However, destinations are determined by the kind
-of the route.
+of the route.</p>
 
 
 <div>
@@ -3507,7 +3758,7 @@ gateway will validate these before sending traffic to the event handler.</dd><dt
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#target">Pulumi.<wbr>Aws<wbr>Api<wbr>Gateway.<wbr>Inputs.<wbr>Target</a></span>
     </dt>
-    <dd>The target for an integration route (see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html).</dd></dl>
+    <dd>The target for an integration route (see <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html</a>).</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -3628,7 +3879,7 @@ gateway will validate these before sending traffic to the event handler.</dd><dt
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#target">Target</a></span>
     </dt>
-    <dd>The target for an integration route (see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html).</dd></dl>
+    <dd>The target for an integration route (see <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html</a>).</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -3749,7 +4000,7 @@ gateway will validate these before sending traffic to the event handler.</dd><dt
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#target">object</a></span>
     </dt>
-    <dd>The target for an integration route (see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html).</dd></dl>
+    <dd>The target for an integration route (see <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html</a>).</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -3870,7 +4121,7 @@ gateway will validate these before sending traffic to the event handler.</dd><dt
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#target">Target</a></span>
     </dt>
-    <dd>The target for an integration route (see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html).</dd></dl>
+    <dd>The target for an integration route (see <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html</a>).</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -3991,7 +4242,7 @@ gateway will validate these before sending traffic to the event handler.</dd><dt
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#target">Target</a></span>
     </dt>
-    <dd>The target for an integration route (see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html).</dd></dl>
+    <dd>The target for an integration route (see <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html</a>).</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -4112,7 +4363,7 @@ gateway will validate these before sending traffic to the event handler.</dd><dt
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#target">Target</a></span>
     </dt>
-    <dd>The target for an integration route (see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html).</dd></dl>
+    <dd>The target for an integration route (see <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html</a>).</dd></dl>
 </pulumi-choosable>
 </div>
 
@@ -4233,7 +4484,7 @@ gateway will validate these before sending traffic to the event handler.</dd><dt
         <span class="property-indicator"></span>
         <span class="property-type"><a href="#target">Property Map</a></span>
     </dt>
-    <dd>The target for an integration route (see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html).</dd></dl>
+    <dd>The target for an integration route (see <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-integration-types.html</a>).</dd></dl>
 </pulumi-choosable>
 </div>
 

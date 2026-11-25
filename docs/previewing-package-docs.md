@@ -5,12 +5,12 @@ Your package's section of the Pulumi Registry is assembled from the following so
 - **Your provider's schema** becomes the API docs — a page per resource and function, plus the nav tree beside them.
 - **`docs/_index.md` in your provider repo** becomes the Overview page at `/registry/packages/<package>/`. See [The Overview page](./overview-page.md) for what belongs in it.
 - **`docs/installation-configuration.md` in your provider repo**, if you have one, becomes the Install & config page. It's optional: most packages keep this material in the Overview instead.
-- **Guides committed to this repository**, under `themes/default/content/registry/packages/<package>/how-to-guides/`, become the How-to guides section. You can add as many as you like, and this is where anything longer-form goes — the AWS [6.0](https://www.pulumi.com/registry/packages/aws/how-to-guides/6-0-migration/) and [7.0](https://www.pulumi.com/registry/packages/aws/how-to-guides/7-0-migration/) migration guides are two of these.
+- **Guides committed to this repository**, under `themes/default/content/registry/packages/<package>/guides/`, become the Guides section. You can add as many as you like, and this is where anything longer-form goes — the AWS [6.0](https://www.pulumi.com/registry/packages/aws/guides/6-0-migration/) and [7.0](https://www.pulumi.com/registry/packages/aws/guides/7-0-migration/) migration guides are two of these.
 - **The package's metadata**, at `themes/default/data/registry/packages/<package>.yaml`, records the version to render, the URL to fetch the schema from, and the title, publisher, logo, and category the site displays.
 
-The sidebar links a fixed set of paths, so where a page lands decides whether readers can find it. It shows Overview, then Install & config if `installation-configuration.md` exists, then How-to guides if the `how-to-guides/` directory exists — with a count of the guides in it — then API Docs. (Four more paths are hardcoded for packages that predate this arrangement: `version-guide`, `from-classic`, `from-v1-to-v2`, and `from-v2-to-v3`, all used by Azure Native.) A Markdown file anywhere else under the package still renders at its own URL, but nothing links to it: `gcp/service-account.md` is one of those, reachable only from links in the GCP Install & config page.
+The sidebar links a fixed set of paths, so where a page lands decides whether readers can find it. It shows Overview, then Install & config if `installation-configuration.md` exists, then Guides if the `guides/` directory exists, then API Docs. Guides expands to list every page directly inside `guides/`, ordered by their `weight` front matter (lowest first; we put the newest major version first). A Markdown file anywhere else under the package still renders at its own URL, but nothing links to it: `gcp/service-account.md` is one of those, reachable only from links in the GCP Install & config page.
 
-Guides are the one part of a package's docs contributed directly to `pulumi/registry`, and you don't have to work at Pulumi or own the provider to add one. Open a pull request adding your page under `themes/default/content/registry/packages/<package>/how-to-guides/` — many of the guides there were written by people outside Pulumi. Nothing in the publish pipeline touches that directory, since `resourcedocsgen` only ever rewrites `_index.md` and `installation-configuration.md`, so a merged guide survives your next release. Working from a fork changes one thing: CI won't build a preview for you, so preview the guide locally and ask a maintainer to comment `/preview` on the pull request if you want a URL to share.
+Guides are the one part of a package's docs contributed directly to `pulumi/registry`, and you don't have to work at Pulumi or own the provider to add one. Open a pull request adding your page under `themes/default/content/registry/packages/<package>/guides/` — many of the guides there were written by people outside Pulumi. Nothing in the publish pipeline touches that directory, since `resourcedocsgen` only ever rewrites `_index.md` and `installation-configuration.md`, so a merged guide survives your next release. Working from a fork changes one thing: CI won't build a preview for you, so preview the guide locally and ask a maintainer to comment `/preview` on the pull request if you want a URL to share.
 
 None of this renders when you tag a release. Your version is picked up later — by a `repository_dispatch` from your release workflow, or one of the twice-daily polls for community packages — which opens a pull request here updating your package's metadata, and the site rebuilds when that merges. So by default, the first time you see your docs rendered is after they're live for everyone. The rest of this document is how to see them sooner. If you're changing the registry itself rather than publishing a package, see [Previewing registry changes](./previewing-registry-changes.md) instead.
 
@@ -82,21 +82,21 @@ VERSION=v9.9.9                         # the version to render as; any valid sem
     cp "$PROVIDER_REPO/docs/installation-configuration.md" "content/registry/packages/$PKG/"   # if you have one
     ```
 
-    A migration guide or any other long-form page goes under `how-to-guides/`. That directory needs its own `_index.md`: without one, your guide still renders at its URL, but the section page doesn't exist and nothing appears in the sidebar. Create it if the package has no guides yet:
+    A migration guide or any other long-form page goes under `guides/`. That directory needs its own `_index.md`: without one, your guide still renders at its URL, but the section page doesn't exist and nothing appears in the sidebar. Create it if the package has no guides yet:
 
     ```bash
-    mkdir -p "content/registry/packages/$PKG/how-to-guides"
-    cat > "content/registry/packages/$PKG/how-to-guides/_index.md" <<EOF
+    mkdir -p "content/registry/packages/$PKG/guides"
+    cat > "content/registry/packages/$PKG/guides/_index.md" <<EOF
     ---
-    title: $PKG How-to Guides
+    title: $PKG Guides
     meta_desc: Guides for the Pulumi $PKG package.
     layout: package
     ---
     EOF
-    cp ~/my-migration-guide.md "content/registry/packages/$PKG/how-to-guides/"
+    cp ~/my-migration-guide.md "content/registry/packages/$PKG/guides/"
     ```
 
-    Guides need front matter with `title`, `meta_desc`, and `layout: package`; copy the shape from [an existing one](https://github.com/pulumi/registry/blob/master/themes/default/content/registry/packages/aws/how-to-guides/7-0-migration.md). These copies are local stand-ins. When the release is real, the Overview and Install & config pages are fetched from your release tag automatically, and guides are contributed to `pulumi/registry` by pull request.
+    Guides need front matter with `title`, `meta_desc`, `layout: package`, and `weight`; copy the shape from [an existing one](https://github.com/pulumi/registry/blob/master/themes/default/content/registry/packages/aws/guides/7-0-migration.md). These copies are local stand-ins. When the release is real, the Overview and Install & config pages are fetched from your release tag automatically, and guides are contributed to `pulumi/registry` by pull request.
 
 1. Start the site locally:
 
@@ -104,7 +104,7 @@ VERSION=v9.9.9                         # the version to render as; any valid sem
     make serve
     ```
 
-Your package is at `http://localhost:1313/registry/packages/$PKG/`, with the sidebar linking the Overview, Install & config, How-to guides, and API docs pages you just assembled. Re-run the generator after each schema change, and re-copy after editing a page; the running Hugo server picks up both.
+Your package is at `http://localhost:1313/registry/packages/$PKG/`, with the sidebar linking the Overview, Install & config, Guides, and API docs pages you just assembled. Re-run the generator after each schema change, and re-copy after editing a page; the running Hugo server picks up both.
 
 To remove the generated package preview, delete `content/registry/packages/$PKG/`.
 
@@ -138,14 +138,13 @@ git checkout -- "themes/default/data/registry/packages/$PKG.yaml"
 
 ### Picking up a new commit on your branch
 
-`resourcedocsgen` won't regenerate output it believes is current. It records what it generated from in a `.generated` file next to the pages — the contents of the package YAML, plus the generator's own build — and skips the package when neither has changed, logging `Skipping (output is fresh)`. Push a new commit to your branch and the schema behind `schema_file_url` changes while the YAML doesn't, so it skips and you keep reading the old docs.
-
-`make -B` doesn't fix this. The target's sentinel is an intermediate file that Make deletes after each run, so the recipe already re-runs every time; the skip happens inside the generator. Delete the `.generated` file instead:
+Push the commit and re-run the same command:
 
 ```bash
-rm "content/registry/packages/$PKG/api-docs/.generated"
 make SKIP_VERSIONED_DOCS=1 "api-docs/$PKG"
 ```
+
+`resourcedocsgen` normally skips a package whose YAML hasn't changed, logging `Skipping (output is fresh)`. A branch URL isn't pinned to a version, though, so it downloads the schema on every run and regenerates the pages whenever the schema differs from the one they were built from. The same applies to a preview pull request: re-run its build after pushing to your branch and the preview picks up the new schema. `raw.githubusercontent.com` caches files for about five minutes, so a run immediately after a push can still see the previous schema.
 
 ## Share a preview
 
@@ -153,7 +152,7 @@ To send someone a rendered preview of unreleased docs, open a pull request again
 
 Close that pull request when you're done rather than merging it — it exists to produce a URL, not to change the registry. Your real version lands through the [normal publish pipeline](./architecture.md#registry-package-updates) when you tag a release.
 
-A pull request that adds a how-to guide is the opposite case: that one you do merge, and its preview shows the guide in place.
+A pull request that adds a guide is the opposite case: that one you do merge, and its preview shows the guide in place.
 
 Neither kind of pull request gets a preview from a fork, because the preview job only runs for branches pushed to this repository. Ask a Pulumi maintainer to build you one by commenting `/preview` on the pull request.
 
@@ -161,13 +160,13 @@ Neither kind of pull request gets a preview from a fork, because the preview job
 
 **Your Overview page is missing, though the API docs render.** Nothing generates the Overview page from your schema. Copy `docs/_index.md` into `content/registry/packages/<package>/`, as described in [Preview a release locally](#preview-a-release-locally).
 
-**A page you added doesn't appear in the sidebar.** The sidebar only links a fixed set of paths. Long-form pages belong in `how-to-guides/`, and that directory needs an `_index.md` of its own before the sidebar shows the section at all. The paths the sidebar links are listed at the top of this document.
+**A page you added doesn't appear in the sidebar.** The sidebar only links a fixed set of paths. Long-form pages belong in `guides/`, and that directory needs an `_index.md` of its own before the sidebar shows the section at all. The paths the sidebar links are listed at the top of this document.
 
 **The API docs render, but the nav on the left is empty.** That nav is fetched in the browser from `/registry/packages/navs/<package>.json`, and it fails quietly when the file is missing. Confirm `static/registry/packages/navs/<package>.json` exists — that's what `--packageTreeJSONOutDir` writes.
 
 **`make api-docs/<package>` fails with `registry-mirror-discover ... Repository not found`.** The build tried to generate versioned docs, which uses a tool that lives in a Pulumi-internal repository. Re-run with `SKIP_VERSIONED_DOCS=1`.
 
-**The generator logs `Skipping (output is fresh)` and your changes don't appear.** Its output cache thinks the pages are current. See [Picking up a new commit on your branch](#picking-up-a-new-commit-on-your-branch).
+**The generator logs `Skipping (output is fresh)` and your changes don't appear.** The schema it downloaded is the one the pages were already built from. Check that your commit is pushed, and that `schema_file_url` names your branch rather than a release tag: a URL containing the package version is treated as immutable and isn't downloaded again. If you need to force a rebuild anyway, see [Forcing a rebuild](./previewing-registry-changes.md#forcing-a-rebuild).
 
 **Hugo isn't on port 1313.** `make serve` doesn't pass `--port`, so Hugo binds a random free port when 1313 is already taken. Read the port off the server's own startup output rather than assuming it.
 

@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-consul/v3.15.1/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-consul/v3.15.3/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-consul/blob/v3.15.1/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-consul/blob/v3.15.3/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Consul Provider
 meta_desc: Provides an overview on how to configure the Pulumi Consul provider.
@@ -279,7 +279,7 @@ public class App {
 {{% /choosable %}}
 {{% choosable language hcl %}}
 ```hcl
-pulumi {
+terraform {
   required_providers {
     aws = {
       source = "pulumi/aws"
@@ -290,8 +290,8 @@ pulumi {
   }
 }
 
-data "consul_getkeys" "app" {
-  keys {
+data "consul_keys" "app" {
+  key {
     name    = "ami"
     path    = "service/app/launch_ami"
     default = "ami-1234"
@@ -300,7 +300,10 @@ data "consul_getkeys" "app" {
 
 # Use our variable from Consul
 resource "aws_ec2_instance" "app" {
-  ami = data.consul_getkeys.app.var.ami
+  lifecycle {
+    create_before_destroy = true
+  }
+  ami = data.consul_keys.app.var.ami
 }
 # Access a key in Consul
 ```

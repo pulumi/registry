@@ -2,12 +2,14 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Cloud
 component: false
+deprecated: true
+deprecation_reason: Equinix has shut down the Equinix Metal service.
 description: A Pulumi package for creating and managing equinix-metal cloud resources.
 featured: false
 logo_url: ""
 name: equinix-metal
 package_status: ga
-publisher: DEPRECATED
+publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-equinix-metal
 schema_file_path: /provider/cmd/pulumi-resource-equinix-metal/schema.json
 title: Equinix Metal

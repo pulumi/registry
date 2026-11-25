@@ -1,9 +1,6 @@
 permissions: write-all # Equivalent to default permissions plus id-token: write
 env:
-  ESC_ACTION_OIDC_AUTH: true
-  ESC_ACTION_OIDC_ORGANIZATION: pulumi
-  ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
-  ESC_ACTION_ENVIRONMENT: github-secrets/pulumi-registry
+  ESC_ACTION_ENVIRONMENT: pulumi/github-secrets/pulumi-registry
   ESC_ACTION_EXPORT_ENVIRONMENT_VARIABLES: false
 name: Pull request
 on:
@@ -105,7 +102,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v7
         with:
-          node-version: "24.x"
+          node-version: "24.22.1"
           cache: 'yarn'
 
       - name: Yarn Install
@@ -125,7 +122,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v7
         with:
-          node-version: "24.x"
+          node-version: "24.22.1"
           cache: 'yarn'
 
       - name: Yarn Install
@@ -134,6 +131,10 @@ jobs:
         run: yarn run lint
       - name: Test preview comment
         run: make test-preview-comment
+      - name: Test consent scripts
+        run: |
+          yarn --cwd themes/default/theme install --frozen-lockfile --network-timeout 300000
+          make test-theme
 
   lint-dark-logos:
     name: Lint Dark Logo Variants
@@ -161,7 +162,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v7
         with:
-          node-version: "24.x"
+          node-version: "24.22.1"
 
       - name: Run tests
         run: make test-infra
@@ -188,7 +189,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v7
         with:
-          node-version: "24.x"
+          node-version: "24.22.1"
           cache: 'yarn'
           cache-dependency-path: |
             yarn.lock
@@ -206,7 +207,7 @@ jobs:
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: "0.157.0"
+          hugo-version: "0.169.0"
           extended: true
 
       - name: Prepare
@@ -252,9 +253,18 @@ jobs:
     timeout-minutes: 5
     needs: [preview]
     steps:
+      - name: Authenticate to Pulumi Cloud
+        id: pulumi-auth
+        uses: pulumi/auth-actions@273044cc19e63ea565285da8edd4e059126a0bdb # v2.1.2
+        with:
+          organization: pulumi
+          requested-token-type: urn:pulumi:token-type:access_token:organization
+          export-environment-variables: false
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
+        uses: pulumi/esc-action@eec71a90d9989af7ff14bd700b83fc72fae36119 # v4.0.0
+        with:
+          pulumi-access-token: ${{ steps.pulumi-auth.outputs.pulumi-access-token }}
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0
         env:

@@ -1,0 +1,131 @@
+### TLS Termination and Passthrough
+
+- **TLS termination** — set `protocol = "https"` and attach one or more
+  `certificates`.
+
+  <div>
+  <pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
+  </div>
+  <div>
+  <pulumi-choosable type="language" values="javascript,typescript">
+
+  ```typescript
+  const tlsTermination = new hcloud.LoadBalancerService("tls_termination", {
+      protocol: "https",
+  });
+  ```
+  </pulumi-choosable>
+  </div>
+  <div>
+  <pulumi-choosable type="language" values="python">
+
+  ```
+  Example coming soon!
+  ```
+  </pulumi-choosable>
+  </div>
+  <div>
+  <pulumi-choosable type="language" values="go">
+
+  ```
+  Example coming soon!
+  ```
+  </pulumi-choosable>
+  </div>
+  <div>
+  <pulumi-choosable type="language" values="csharp">
+
+  ```
+  Example coming soon!
+  ```
+  </pulumi-choosable>
+  </div>
+  <div>
+  <pulumi-choosable type="language" values="java">
+
+  ```
+  Example coming soon!
+  ```
+  </pulumi-choosable>
+  </div>
+  <div>
+  <pulumi-choosable type="language" values="yaml">
+
+  ```
+  Example coming soon!
+  ```
+  </pulumi-choosable>
+  </div>
+  <div>
+  <pulumi-choosable type="language" values="hcl">
+
+  ```
+  Example coming soon!
+  ```
+  </pulumi-choosable>
+  </div>
+
+
+- **TLS passthrough** — set `protocol = "tcp"` and forward the TLS port.
+
+  <div>
+  <pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
+  </div>
+  <div>
+  <pulumi-choosable type="language" values="javascript,typescript">
+
+  ```
+  Example coming soon!
+  ```
+  </pulumi-choosable>
+  </div>
+  <div>
+  <pulumi-choosable type="language" values="python">
+
+  ```python
+  tls_passthrough = hcloud.LoadBalancerService("tls_passthrough",
+      protocol="tcp")
+  ```
+  </pulumi-choosable>
+  </div>
+  <div>
+  <pulumi-choosable type="language" values="go">
+
+  ```
+  Example coming soon!
+  ```
+  </pulumi-choosable>
+  </div>
+  <div>
+  <pulumi-choosable type="language" values="csharp">
+
+  ```
+  Example coming soon!
+  ```
+  </pulumi-choosable>
+  </div>
+  <div>
+  <pulumi-choosable type="language" values="java">
+
+  ```
+  Example coming soon!
+  ```
+  </pulumi-choosable>
+  </div>
+  <div>
+  <pulumi-choosable type="language" values="yaml">
+
+  ```
+  Example coming soon!
+  ```
+  </pulumi-choosable>
+  </div>
+  <div>
+  <pulumi-choosable type="language" values="hcl">
+
+  ```
+  Example coming soon!
+  ```
+  </pulumi-choosable>
+  </div>
+

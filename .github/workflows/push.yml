@@ -6,36 +6,45 @@ on:
 permissions:
   id-token: write # This is required for requesting the JWT
   contents: read # This is required for actions/checkout
+concurrency:
+  group: registry-production-deploy
+  cancel-in-progress: false
 jobs:
   build:
     name: Build
     env:
       GOPATH: ${{ github.workspace }}/go
-      ESC_ACTION_OIDC_AUTH: true
-      ESC_ACTION_OIDC_ORGANIZATION: pulumi
-      ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
     runs-on: pulumi-service-ubuntu-24.04-16core
     timeout-minutes: 90
     environment: production
     steps:
+      - name: Authenticate to Pulumi Cloud
+        id: pulumi-auth
+        uses: pulumi/auth-actions@273044cc19e63ea565285da8edd4e059126a0bdb # v2.1.2
+        with:
+          organization: pulumi
+          requested-token-type: urn:pulumi:token-type:access_token:organization
+          export-environment-variables: false
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
+        uses: pulumi/esc-action@eec71a90d9989af7ff14bd700b83fc72fae36119 # v4.0.0
         with:
-          # Note: This authenticates using OIDC token
-          environment: github-secrets/pulumi-registry
+          pulumi-access-token: ${{ steps.pulumi-auth.outputs.pulumi-access-token }}
+          environment: pulumi/github-secrets/pulumi-registry
           export-environment-variables: false
       - name: Check out branch
         uses: actions/checkout@v7
         with:
           token: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
+          # A re-run of an older commit can take the pending concurrency slot, so deploy the tip.
+          ref: master
           # Full history needed for registry-mirror-discover to find package versions
           fetch-depth: 0
 
       - name: Install Node
         uses: actions/setup-node@v7
         with:
-          node-version: "24.x"
+          node-version: "24.22.1"
           cache: 'yarn'
           cache-dependency-path: |
             yarn.lock
@@ -46,6 +55,7 @@ jobs:
 
       - name: Install Go
         uses: actions/setup-go@v7
+        id: setup-go
         with:
           go-version-file: tools/resourcedocsgen/go.mod
           cache-dependency-path: tools/resourcedocsgen/go.sum
@@ -53,7 +63,7 @@ jobs:
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: "0.157.0"
+          hugo-version: "0.169.0"
           extended: true
 
       - name: Configure AWS Credentials
@@ -73,7 +83,7 @@ jobs:
           sudo tar -xz -C /usr/local/bin s5cmd < /tmp/s5cmd.tar.gz
 
       - name: Install Pulumi CLI
-        uses: pulumi/actions@8e5e406f4007fca908480587cb9893c07090f58d # v7
+        uses: pulumi/actions@96c7761824268174e0d2a4e8c7d75671eebd24a7 # v7
 
       - name: Configure git for private Go modules
         run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
@@ -96,7 +106,7 @@ jobs:
         uses: actions/cache@v6
         with:
           path: bin/registry-mirror-discover
-          key: registry-mirror-discover-${{ steps.mirror-version.outputs.hash }}
+          key: registry-mirror-discover-${{ steps.mirror-version.outputs.hash }}-go${{ steps.setup-go.outputs.go-version }}
 
       - name: Build and deploy
         run: make ci_push
@@ -116,41 +126,6 @@ jobs:
         with:
           name: origin-bucket-metadata
           path: origin-bucket-metadata.json
-      - name: Install uv for publish
-        uses: astral-sh/setup-uv@v7
-      - name: Publish to registry (primary)
-        id: mirror-publish
-        continue-on-error: true
-        run: uv run --with pyyaml scripts/ci/publish_to_registry.py
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
-          PULUMI_API_URL: https://api.pulumi.com
-          GITHUB_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}
-
-      - name: Push to the Live Registry (legacy fallback)
-        id: legacy-publish
-        if: steps.mirror-publish.outcome == 'failure'
-        continue-on-error: true
-        run: uv run --with requests,pyyaml ./scripts/ci/push-registry.py
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ steps.esc-secrets.outputs.PULUMI_ACCESS_TOKEN }}
-
-      - name: Notify on publish failure
-        if: steps.mirror-publish.outcome == 'failure' && steps.legacy-publish.outcome == 'failure'
-        uses: docker://sholung/action-slack-notify:v2.3.0
-        env:
-          SLACK_CHANNEL: registry-ops
-          SLACK_COLOR: "#F54242"
-          SLACK_MESSAGE: |
-            Registry publish failed (both primary and fallback) for ${{ github.sha }}
-
-            To manually publish, see https://github.com/pulumi/registry-mirror-tools#examples
-            ```
-            echo 'pulumi/pulumi/aws@6.50.0' | ./bin/registry-mirror-discover ./registry | ./bin/registry-mirror-publish
-            ```
-          SLACK_USERNAME: registrybot
-          SLACK_WEBHOOK: ${{ steps.esc-secrets.outputs.SLACK_WEBHOOK_URL }}
-          SLACK_ICON: https://www.pulumi.com/logos/brand/avatar-on-white.png
 
   notify:
     if: failure()
@@ -160,16 +135,20 @@ jobs:
     needs: [build]
     permissions:
       id-token: write
-    env:
-      ESC_ACTION_OIDC_AUTH: true
-      ESC_ACTION_OIDC_ORGANIZATION: pulumi
-      ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
     steps:
+      - name: Authenticate to Pulumi Cloud
+        id: pulumi-auth
+        uses: pulumi/auth-actions@273044cc19e63ea565285da8edd4e059126a0bdb # v2.1.2
+        with:
+          organization: pulumi
+          requested-token-type: urn:pulumi:token-type:access_token:organization
+          export-environment-variables: false
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
+        uses: pulumi/esc-action@eec71a90d9989af7ff14bd700b83fc72fae36119 # v4.0.0
         with:
-          environment: github-secrets/pulumi-registry
+          pulumi-access-token: ${{ steps.pulumi-auth.outputs.pulumi-access-token }}
+          environment: pulumi/github-secrets/pulumi-registry
           export-environment-variables: false
       - name: Slack Notification
         uses: docker://sholung/action-slack-notify:v2.3.0

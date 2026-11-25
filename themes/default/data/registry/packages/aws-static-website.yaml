@@ -2,12 +2,13 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Cloud
 component: true
+deprecated: true
 description: A Pulumi component to deploy a static website to AWS
 featured: false
 logo_url: ""
 name: aws-static-website
 package_status: public_preview
-publisher: DEPRECATED
+publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-aws-static-website
 schema_file_path: schema.json
 title: AWS Static Website

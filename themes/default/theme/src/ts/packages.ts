@@ -41,15 +41,7 @@ const filterByTextAndTags = (filters, filterText) => {
                 el.getAttribute("data-name"),
                 el.getAttribute("data-keywords"),
             ].join(" ").toLowerCase();
-            let downcasedFilterText = filterText?.trim().toLowerCase();
-
-            // Searching for "native aws" should still turn up both aws and aws-native.
-            // The "kind/native" schema tag is stripped out of data-keywords by
-            // resourcedocsgen, so drop the word from the query rather than fail to
-            // match it. See https://github.com/pulumi/registry/issues/5715.
-            if (downcasedFilterText.includes("native")) {
-                downcasedFilterText = downcasedFilterText.replace(/native/g, "");
-            }
+            const downcasedFilterText = filterText?.trim().toLowerCase();
 
             let packageIsAMatch;
             if (downcasedFilterText === AMAZON_STRING || downcasedFilterText === AWS_STRING){

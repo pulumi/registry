@@ -1,0 +1,69 @@
+Provides a demonstration of refs alongside code chooser blocks.
+
+See also <pulumi-choosable type="language" values="csharp">Resource</pulumi-choosable><pulumi-choosable type="language" values="go">module.Resource</pulumi-choosable><pulumi-choosable type="language" values="javascript,typescript">Resource</pulumi-choosable><pulumi-choosable type="language" values="python">_module.Resource</pulumi-choosable><pulumi-choosable type="language" values="yaml">prov:module:Resource</pulumi-choosable><pulumi-choosable type="language" values="java">Resource</pulumi-choosable><pulumi-choosable type="language" values="hcl">Resource</pulumi-choosable> for the primary resource.
+
+<div>
+<pulumi-chooser type="language" options="csharp,go,typescript,python,yaml,java,hcl"></pulumi-chooser>
+</div>
+<div>
+<pulumi-choosable type="language" values="javascript,typescript">
+
+```typescript
+import * as prov from "@pulumi/prov";
+const example = new prov.module.Resource("example", {});
+```
+</pulumi-choosable>
+</div>
+<div>
+<pulumi-choosable type="language" values="python">
+
+```python
+import pulumi_prov as prov
+example = prov.module.Resource("example")
+```
+</pulumi-choosable>
+</div>
+<div>
+<pulumi-choosable type="language" values="go">
+
+```go
+example, err := module.NewResource(ctx, "example", nil)
+```
+</pulumi-choosable>
+</div>
+<div>
+<pulumi-choosable type="language" values="csharp">
+
+```csharp
+var example = new Prov.Module.Resource("example");
+```
+</pulumi-choosable>
+</div>
+<div>
+<pulumi-choosable type="language" values="java">
+
+```
+Example coming soon!
+```
+</pulumi-choosable>
+</div>
+<div>
+<pulumi-choosable type="language" values="yaml">
+
+```
+Example coming soon!
+```
+</pulumi-choosable>
+</div>
+<div>
+<pulumi-choosable type="language" values="hcl">
+
+```
+Example coming soon!
+```
+</pulumi-choosable>
+</div>
+
+
+The <pulumi-choosable type="language" values="csharp">integerProp</pulumi-choosable><pulumi-choosable type="language" values="go">module.ResourceArgs.IntegerProp</pulumi-choosable><pulumi-choosable type="language" values="javascript,typescript">ResourceArgs.integerProp</pulumi-choosable><pulumi-choosable type="language" values="python">_module.ResourceArgs.integer_prop</pulumi-choosable><pulumi-choosable type="language" values="yaml">integerProp</pulumi-choosable><pulumi-choosable type="language" values="java">integerProp</pulumi-choosable><pulumi-choosable type="language" values="hcl">integerProp</pulumi-choosable> property
+controls the integer value.

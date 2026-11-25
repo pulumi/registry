@@ -2,6 +2,7 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Infrastructure
 component: false
+deprecated: true
 description: A Pulumi package for creating and managing minio cloud resources.
 featured: false
 keywords:

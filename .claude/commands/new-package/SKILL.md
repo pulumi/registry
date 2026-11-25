@@ -19,7 +19,7 @@ Walks through a guided process to create the package YAML metadata, validate the
 
 ## Process
 
-**CRITICAL SUCCESS CRITERIA**: Complete all 7 steps in sequence. Every step is mandatory. **DO NOT SKIP ANY STEP OR END THE WORKFLOW PREMATURELY!**
+**CRITICAL SUCCESS CRITERIA**: Complete all 7 steps in sequence. Every step is mandatory. **DO NOT SKIP ANY STEP OR END THE WORKFLOW PREMATURELY!** The only exception is a dynamically bridged Terraform provider (see Step 1), which is out of scope for this repo.
 
 **Step Counter**: Display progress before each step as: **[Step X/7]** followed by the step heading.
 
@@ -32,7 +32,9 @@ Walks through a guided process to create the package YAML metadata, validate the
 
 ## **[Step 1/7] Determine Package Type**
 
-Use `AskUserQuestion` to ask:
+If the request is for a **dynamically bridged** Terraform provider (consumed with `pulumi package add terraform-provider <name>`, with no Pulumi provider repo or committed Pulumi schema, only an upstream `terraform-provider-*` repo), stop: it can't be added in this repo. It is added to `watched-providers` in the internal `pulumi/terraform-to-pulumi-registry-pipeline` repo, so file the request there.
+
+Otherwise, use `AskUserQuestion` to ask:
 
 **Question**: "What type of package are you adding?"
 

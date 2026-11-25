@@ -74,8 +74,8 @@
         {{ else }}
             {{ $kind = "api-docs-leaf" }}
         {{ end }}
-    {{ else if eq (index $segments 3) "how-to-guides" }}
-        {{ $kind = "how-to" }}
+    {{ else if eq (index $segments 3) "guides" }}
+        {{ $kind = "guides" }}
     {{ end }}
 {{ end }}
 
@@ -174,8 +174,8 @@
         {{ end }}
     {{ else if eq $kind "install" }}
         {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 4 "name" "Installation & Configuration" "item" (printf "%sregistry/packages/%s/installation-configuration/" (absURL "") $packageName)) }}
-    {{ else if eq $kind "how-to" }}
-        {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 4 "name" "How-to Guides" "item" (printf "%sregistry/packages/%s/how-to-guides/" (absURL "") $packageName)) }}
+    {{ else if eq $kind "guides" }}
+        {{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 4 "name" "Guides" "item" (printf "%sregistry/packages/%s/guides/" (absURL "") $packageName)) }}
     {{ end }}
 {{ end }}
 {{ $breadcrumb := dict "@type" "BreadcrumbList" "@id" (printf "%s#breadcrumb" .Permalink) "itemListElement" $crumbs }}
@@ -194,7 +194,7 @@
         "mainEntityOfPage" .Permalink
         "description" $pkg.description
         "inLanguage" "en-US"
-        "programmingLanguage" (slice "TypeScript" "Python" "Go" "C#" "Java" "YAML")
+        "programmingLanguage" (slice "TypeScript" "Python" "Go" "C#" "Java" "YAML" "HCL")
         "runtimePlatform" "Pulumi"
         "isPartOf" (dict "@id" "https://www.pulumi.com/#website")
         "author" (dict "@type" "Organization" "name" $pkg.publisher)

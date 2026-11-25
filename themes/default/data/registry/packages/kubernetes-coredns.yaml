@@ -12,7 +12,7 @@ name: kubernetes-coredns
 package_status: public_preview
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-kubernetes-coredns
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-kubernetes-coredns/v0.1.0/provider/cmd/pulumi-resource-kubernetes-coredns/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-kubernetes-coredns/v0.2.0/provider/cmd/pulumi-resource-kubernetes-coredns/schema.json
 title: Kubernetes CoreDNS
-updated_on: 1736270309
-version: v0.1.0
+updated_on: 1793209541
+version: v0.2.0

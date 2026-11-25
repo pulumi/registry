@@ -4,7 +4,7 @@ meta_desc: Learn how you can use Pulumi's Amazon EKS component to set up an AWS 
 layout: package
 ---
 
-Amazon EKS is a Pulumi Component that creates and manages the resources necessary to run an [EKS Kubernetes cluster](https://aws.amazon.com/eks/) in AWS. Use this component to quickly set up an EKS cluster in just a few lines of code. This component provides higher-level abstractions documented in the [Pulumi Amazon EKS guide](/docs/clouds/aws/guides/eks/).
+Amazon EKS is a Pulumi Component that creates and manages the resources necessary to run an [EKS Kubernetes cluster](https://aws.amazon.com/eks/) in AWS. Use this component to quickly set up an EKS cluster in just a few lines of code. This component provides higher-level abstractions documented in the [Amazon EKS tutorial](/dev/tutorials/aws-eks/).
 
 Amazon EKS must be configured with credentials to deploy and update resources in AWS; see [Installation & Configuration](./installation-configuration) for instructions.
 
@@ -13,7 +13,7 @@ Amazon EKS must be configured with credentials to deploy and update resources in
 <!---
 javascript removed
 --->
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 
 {{% choosable language typescript %}}
 
@@ -48,7 +48,7 @@ pulumi.export("kubeconfig", cluster.kubeconfig)
 package main
 
 import (
-	"github.com/pulumi/pulumi-eks/sdk/go/eks"
+	"github.com/pulumi/pulumi-eks/sdk/v4/go/eks"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -117,7 +117,28 @@ resources:
   eks-cluster:
     type: eks:Cluster
 outputs:
-  kubeconfig: ${cluster.kubeconfig}
+  kubeconfig: ${eks-cluster.kubeconfig}
+```
+
+{{% /choosable %}}
+
+{{% choosable language hcl %}}
+
+```hcl
+terraform {
+  required_providers {
+    eks = {
+      source = "pulumi/eks"
+    }
+  }
+}
+
+resource "eks_cluster" "eks-cluster" {
+}
+
+output "kubeconfig" {
+  value = eks_cluster.eks-cluster.kubeconfig
+}
 ```
 
 {{% /choosable %}}

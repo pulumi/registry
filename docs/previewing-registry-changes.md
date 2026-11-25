@@ -4,7 +4,7 @@ Every package page under `pulumi.com/registry` is assembled at build time from t
 
 - **Provider schemas**, downloaded during the build, which become the API docs — a page per resource and function, plus the nav tree beside them.
 - **`docs/_index.md` from each provider's repo**, fetched at publish time and committed here under `themes/default/content/registry/packages/<package>/`, which becomes the package's Overview page. An `installation-configuration.md` beside it, where a package has one, becomes the Install & config page.
-- **Guides written directly in this repository**, under that same directory's `how-to-guides/`, which become the How-to guides section — the AWS migration guides, the Kubernetes FAQ, and so on.
+- **Guides written directly in this repository**, under that same directory's `guides/`, which become the Guides section — the AWS and GCP migration guides, for example.
 - **Per-package metadata**, at `themes/default/data/registry/packages/<package>.yaml`, which records each package's version, schema URL, title, publisher, logo, and category.
 - **This repository's layouts, templates, and theme**, which render every one of those into the pages readers see.
 
@@ -45,7 +45,7 @@ If you're changing CSS or JavaScript under `themes/default/theme`, use `make ser
 
 ### Forcing a rebuild
 
-`resourcedocsgen` won't regenerate output it believes is current. It records what it generated from in a `.generated` file next to the pages — the contents of the package YAML, plus the generator's own build — and skips the package when neither has changed, logging `Skipping (output is fresh)`. Editing the generator invalidates that, but editing a schema behind an unchanged URL doesn't.
+`resourcedocsgen` won't regenerate output it believes is current. It records what it generated from in a `.generated` file next to the pages — the contents of the package YAML, plus the generator's own build — and skips the package when neither has changed, logging `Skipping (output is fresh)`. When `schema_file_url` isn't pinned to a version (a branch, for example), the record also includes the schema itself, which is downloaded on every run, so pushing a new schema is enough to regenerate. The case it can't detect is a schema replaced at a URL that does contain the version, such as a re-uploaded file on a versioned S3 path.
 
 `make -B` doesn't fix this. The target's sentinel is an intermediate file that Make deletes after each run, so the recipe already re-runs every time; the skip happens inside the generator. Delete the `.generated` file instead:
 

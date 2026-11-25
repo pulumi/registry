@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/zscaler/pulumi-zia/v1.4.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/zscaler/pulumi-zia/v1.4.2/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/zscaler/pulumi-zia/blob/v1.4.0/docs/installation-configuration.md
+edit_url: https://github.com/zscaler/pulumi-zia/blob/v1.4.2/docs/installation-configuration.md
 title: ZIA Setup
 meta_desc: Information on how to install the ZIA provider.
 layout: installation
@@ -9,12 +9,13 @@ layout: installation
 
 ## Installation
 
-The Pulumi ZIA provider is available as a package in all Pulumi languages:
+The Pulumi ZIA provider is available as a package in the following Pulumi languages:
 
 * JavaScript/TypeScript: [`@bdzscaler/pulumi-zia`](https://www.npmjs.com/package/@zscaler/pulumi-zia)
 * Python: [`zscaler_pulumi_zia`](https://pypi.org/project/zscaler-pulumi-zia/)
 * Go: [`github.com/zscaler/pulumi-zia/sdk/go/zia`](https://pkg.go.dev/github.com/zscaler/pulumi-zia/sdk)
-* .NET: [`zscaler.PulumiPackage.Zia`](https://www.nuget.org/packages/zscaler.PulumiPackage.Zia)
+
+The .NET SDK is temporarily unavailable: new versions are not being published to NuGet while the publishing account is migrated.
 
 ### Provider Binary
 

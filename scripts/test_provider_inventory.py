@@ -92,23 +92,23 @@ class TestAnalyzeExtras(unittest.TestCase):
             pkg = Path(tmp) / "aws"
             (pkg / "api-docs" / "s3").mkdir(parents=True)
             (pkg / "api-docs" / "s3" / "bucket.md").write_text("generated")
-            (pkg / "how-to-guides").mkdir()
-            (pkg / "how-to-guides" / "guide.md").write_text("guide")
+            (pkg / "guides").mkdir()
+            (pkg / "guides" / "guide.md").write_text("guide")
             extras = analyze_extras(pkg)
         self.assertEqual(extras["migration_dirs"], [])
-        self.assertEqual(extras["howto_guides"], 1)
+        self.assertEqual(extras["guides"], 1)
 
-    def test_counts_migration_guides_under_how_to_guides(self):
+    def test_counts_migration_guides_under_guides(self):
         with tempfile.TemporaryDirectory() as tmp:
             pkg = Path(tmp) / "eks"
-            (pkg / "how-to-guides").mkdir(parents=True)
-            (pkg / "how-to-guides" / "guide.md").write_text("guide")
+            (pkg / "guides").mkdir(parents=True)
+            (pkg / "guides" / "guide.md").write_text("guide")
             extras = analyze_extras(pkg)
-        self.assertEqual(extras["howto_guides"], 1)
+        self.assertEqual(extras["guides"], 1)
 
     def test_missing_directory_is_empty(self):
         extras = analyze_extras(Path("/nonexistent/pkg"))
-        self.assertEqual(extras["howto_guides"], 0)
+        self.assertEqual(extras["guides"], 0)
         self.assertEqual(extras["other_files"], [])
 
 

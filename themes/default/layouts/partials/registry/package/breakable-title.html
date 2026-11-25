@@ -1,0 +1,7 @@
+{{/*
+    Renders a resource or function title with <wbr> break points before each
+    `.`, after each `/`, and at camelCase boundaries, so long names like
+    `kubernetes.rbac.authorization.k8s.io/v1.ClusterRole` wrap at those points
+    first instead of mid-word.
+*/}}
+{{- . | htmlEscape | replaceRE `\.` "<wbr>." | replaceRE `/` "/<wbr>" | replaceRE `([a-z])([A-Z])` "$1<wbr>$2" | safeHTML -}}

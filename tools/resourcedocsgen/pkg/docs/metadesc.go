@@ -41,6 +41,53 @@ var markdownLinkRegex = regexp.MustCompile(`\[([^\]]+)\]\([^)]+\)`)
 // htmlTagRegex strips any remaining HTML tags.
 var htmlTagRegex = regexp.MustCompile(`<[^>]+>`)
 
+// blockquoteMarkerRegex matches a markdown blockquote marker at the start of
+// a line (optionally indented, optionally followed by one space). Terraform
+// -bridged provider descriptions frequently open with a "> Note ..." or
+// "> If ..." callout; left in place, the literal ">" survives into the meta
+// description and gets HTML-escaped when the value is later rendered, so it
+// must come out as plain prose rather than markdown syntax.
+var blockquoteMarkerRegex = regexp.MustCompile(`(?m)^[ \t]*>[ \t]?`)
+
+// isBlockquoteParagraphStart reports whether s begins (after leading
+// whitespace) with a markdown blockquote marker.
+func isBlockquoteParagraphStart(s string) bool {
+	return strings.HasPrefix(strings.TrimLeft(s, " \t"), ">")
+}
+
+// skipLeadingBlockquoteParagraphs advances past any blockquote paragraph(s)
+// found at the very start of s, returning the text starting at the first
+// paragraph that isn't a blockquote (or "" if the whole remaining text is
+// blockquoted).
+//
+// Terraform-bridged provider descriptions frequently open with a "> Note
+// ..." or "> If ..." caveat before the actual resource description.
+// Observed live on random.RandomPassword: the generated meta description
+// was "If the managed resource supports a write-only attribute for the
+// password ...", a caveat about an unrelated ephemeral variant, instead of
+// the resource's real description, "Identical to random.RandomString with
+// the exception that the result is treated as sensitive ...". Simply
+// stripping the "> " marker in place (as blockquoteMarkerRegex does)
+// leaves that caveat looking like ordinary prose and presents it as the
+// resource's description, which misrepresents the resource. This looks
+// past a *leading* caveat for the real opening summary instead. A
+// blockquote that appears after the real description (a supplementary
+// note, as on aws.s3.Bucket) is left alone by this function; only a
+// blockquote at the very start is skipped.
+func skipLeadingBlockquoteParagraphs(s string) string {
+	for {
+		trimmed := strings.TrimLeft(s, "\n")
+		if !isBlockquoteParagraphStart(trimmed) {
+			return trimmed
+		}
+		idx := strings.Index(trimmed, "\n\n")
+		if idx == -1 {
+			return ""
+		}
+		s = trimmed[idx+2:]
+	}
+}
+
 // metaDescWhitespaceRegex collapses any run of whitespace (including
 // newlines) down to a single space.
 var metaDescWhitespaceRegex = regexp.MustCompile(`\s+`)
@@ -58,24 +105,26 @@ var metaDescWhitespaceRegex = regexp.MustCompile(`\s+`)
 // fall back to a generic templated description instead.
 func summarizeForMetaDescription(comment string) string {
 	s := SanitizeDescription(comment)
+	s = skipLeadingBlockquoteParagraphs(s)
 
 	if loc := metaDescCutRegex.FindStringIndex(s); loc != nil {
 		s = s[:loc[0]]
 	}
 
+	s = blockquoteMarkerRegex.ReplaceAllString(s, "")
 	s = markdownLinkRegex.ReplaceAllString(s, "$1")
 	s = htmlTagRegex.ReplaceAllString(s, "")
 	s = strings.NewReplacer("`", "", "**", "", "*", "").Replace(s)
 
 	// Some upstream (typically Terraform-bridged) descriptions carry
-	// backslash-escaped quotes as literal text (e.g. `\"true\"`). The
-	// generated front matter template renders this field through
-	// html/template, which HTML-escapes the quote character to `&#34;`
-	// but leaves any pre-existing backslash untouched, producing the
-	// invalid YAML escape sequence `\&#34;` and breaking the Hugo build.
-	// Drop stray backslashes and normalize straight quotes to a form
-	// that's always safe inside a double-quoted YAML scalar, regardless
-	// of how the surrounding template escapes it.
+	// backslash-escaped quotes as literal text (e.g. `\"true\"`). MetaDesc
+	// is written into the generated front matter unescaped (see header.tmpl,
+	// which renders it through the htmlSafe helper so html/template doesn't
+	// double-encode it against Hugo's own escaping), so a literal double
+	// quote or a stray backslash here would otherwise reach the YAML
+	// document as-is and could break the double-quoted scalar. Drop stray
+	// backslashes and normalize straight quotes to a form that's always
+	// safe inside a double-quoted YAML scalar.
 	s = strings.ReplaceAll(s, `\`, "")
 	s = strings.ReplaceAll(s, `"`, "'")
 

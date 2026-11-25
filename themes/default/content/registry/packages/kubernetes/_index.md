@@ -1,95 +1,292 @@
 ---
 title: Kubernetes
-meta_desc: Provides an overview of how Pulumi works with Kubernetes.
-
+meta_desc: Use the Pulumi Kubernetes provider to manage Kubernetes resources, Helm charts, and YAML manifests in any cluster.
 layout: package
 ---
 
-[Kubernetes][k8s] is an open source project for running and managing containerized applications
-on a cluster of machines.
+The Kubernetes provider for Pulumi manages any resource in the [Kubernetes API](https://kubernetes.io/docs/reference/kubernetes-api/), including custom resources, in a cluster you already have. It also deploys [Helm charts](/registry/packages/kubernetes/api-docs/helm/v4/chart/) and [YAML manifests](/registry/packages/kubernetes/api-docs/yaml/v2/configfile/) as Pulumi resources.
 
-[Pulumi](/docs/get-started) is an infrastructure-as-code tool that exposes the Kubernetes resource API as an
-SDK, alongside other SDKs which span common cloud native utilities, cloud
-provider IaaS offerings, and their catalog of services - managed Kubernetes included.
+The provider connects to your cluster with the same kubeconfig `kubectl` uses. See [Installation & Configuration](./installation-configuration/) for setup and provider options.
 
-<a href="/images/docs/quickstart/kubernetes/cake.svg">
-<img src="/images/docs/quickstart/kubernetes/cake.svg">
-</a>
+## Example
 
-## Use Cases
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 
-The various SDKs allow Kubernetes users to leverage Pulumi for novel forms of cluster
-management, and deployment of app workloads to clusters. Users of
-Kubernetes and Pulumi can:
+{{% choosable language typescript %}}
 
-- Instantiate IaaS resources and managed services from any cloud.
-- Provision managed Kubernetes clusters from the major cloud providers.
-- Provision self-managed (open source) Kubernetes clusters on top of raw IaaS resources or on-prem virtualization providers.
-- Create and orchestrate Kubernetes API resources for app workloads, in the programming language of their choice.
-- Manage real code instead of YAML, JSON, DSL's, or tar archives of templates.
-- Apply standard software development practices to Kubernetes applications, including the use of functions, classes, loops, conditionals, etc.
-- Increase productivity using the power of dev tools such as IDE auto-completion, type &
-   error checking, linting, refactoring, and testing frameworks to validate Kubernetes clusters, app workloads, or both.
+```typescript
+import * as k8s from "@pulumi/kubernetes";
 
-## Pulumi Kubernetes Provider
+const appLabels = { app: "nginx" };
+const deployment = new k8s.apps.v1.Deployment("nginx", {
+    spec: {
+        selector: { matchLabels: appLabels },
+        replicas: 1,
+        template: {
+            metadata: { labels: appLabels },
+            spec: { containers: [{ name: "nginx", image: "nginx" }] },
+        },
+    },
+});
 
-The Kubernetes provider for Pulumi can be used to provision any resources available in the Kubernetes API.  The Kubernetes provider must be configured with a `kubeconfig` or other credentials to connect to a target Kubernetes cluster.
+export const name = deployment.metadata.name;
+```
 
-### Getting Started
+{{% /choosable %}}
+{{% choosable language python %}}
 
-The quickest way to get started with Kubernetes is to follow the [Get Started](/docs/get-started/kubernetes) guide.
+```python
+import pulumi
+from pulumi_kubernetes.apps.v1 import Deployment
 
-## Additional Pulumi Packages for Kubernetes Users
+app_labels = {"app": "nginx"}
 
-### For Cluster Management
+deployment = Deployment(
+    "nginx",
+    spec={
+        "selector": {"match_labels": app_labels},
+        "replicas": 1,
+        "template": {
+            "metadata": {"labels": app_labels},
+            "spec": {"containers": [{"name": "nginx", "image": "nginx"}]},
+        },
+    },
+)
 
-The following SDKs are available to work with IaaS resources, and managed or self-managed Kubernetes clusters.
+pulumi.export("name", deployment.metadata["name"])
+```
 
-The packages are available in Node.js (Javascript and Typescript), Python, Go, .NET and Java.
+{{% /choosable %}}
+{{% choosable language go %}}
 
-- AWS: [`pulumi/aws`](https://github.com/pulumi/aws)
-- Azure: [`pulumi/azure-native`](https://github.com/pulumi/pulumi-azure-native)
-- DigitalOcean: [`pulumi/digitalocean`](https://github.com/pulumi/pulumi-digitalocean)
-- Google Cloud: [`pulumi/gcp`](https://github.com/pulumi/gcp)
+```go
+package main
 
-#### Extension Packages
+import (
+	appsv1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/apps/v1"
+	corev1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/core/v1"
+	metav1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/meta/v1"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
 
-- [`pulumi/awsx`](https://github.com/pulumi/pulumi-awsx) - AWS Extensions
-- [`pulumi/eks`](https://github.com/pulumi/eks) - Manage EKS clusters
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		appLabels := pulumi.StringMap{
+			"app": pulumi.String("nginx"),
+		}
+		deployment, err := appsv1.NewDeployment(ctx, "nginx", &appsv1.DeploymentArgs{
+			Spec: appsv1.DeploymentSpecArgs{
+				Selector: &metav1.LabelSelectorArgs{
+					MatchLabels: appLabels,
+				},
+				Replicas: pulumi.Int(1),
+				Template: &corev1.PodTemplateSpecArgs{
+					Metadata: &metav1.ObjectMetaArgs{
+						Labels: appLabels,
+					},
+					Spec: &corev1.PodSpecArgs{
+						Containers: corev1.ContainerArray{
+							corev1.ContainerArgs{
+								Name:  pulumi.String("nginx"),
+								Image: pulumi.String("nginx"),
+							},
+						},
+					},
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
 
-### For Workload Management
+		ctx.Export("name", deployment.Metadata.Name())
+		return nil
+	})
+}
+```
 
-The [`pulumi/kubernetes`](https://github.com/pulumi/pulumi-kubernetes) provider is available to work with, and deploy app workloads to running Kubernetes clusters:
+{{% /choosable %}}
+{{% choosable language csharp %}}
 
-- JavaScript/TypeScript: [npm](https://www.npmjs.com/package/@pulumi/kubernetes)
-- Python: [PyPI](https://pypi.org/project/pulumi-kubernetes/)
-- Go:
-  - Import package: `github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes`
-  - [GitHub](https://github.com/pulumi/pulumi-kubernetes/tree/master/sdk/go/kubernetes)
-- .NET: [`Pulumi.Kubernetes`](https://www.nuget.org/packages/Pulumi.Kubernetes)
-- Java: [`com.pulumi.kubernetes`](https://search.maven.org/search?q=com.pulumi.kubernetes)
-- [Pulumi YAML](https://github.com/pulumi/pulumi-yaml#pulumiyaml)
+```csharp
+using System.Collections.Generic;
+using Pulumi;
+using Pulumi.Kubernetes.Types.Inputs.Apps.V1;
+using Pulumi.Kubernetes.Types.Inputs.Core.V1;
+using Pulumi.Kubernetes.Types.Inputs.Meta.V1;
 
-[k8s]: https://kubernetes.io
+return await Deployment.RunAsync(() =>
+{
+    var appLabels = new InputMap<string>
+    {
+        { "app", "nginx" },
+    };
 
-## Pulumi Kubernetes Operator
+    var deployment = new Pulumi.Kubernetes.Apps.V1.Deployment("nginx", new DeploymentArgs
+    {
+        Spec = new DeploymentSpecArgs
+        {
+            Selector = new LabelSelectorArgs
+            {
+                MatchLabels = appLabels,
+            },
+            Replicas = 1,
+            Template = new PodTemplateSpecArgs
+            {
+                Metadata = new ObjectMetaArgs
+                {
+                    Labels = appLabels,
+                },
+                Spec = new PodSpecArgs
+                {
+                    Containers =
+                    {
+                        new ContainerArgs
+                        {
+                            Name = "nginx",
+                            Image = "nginx",
+                        },
+                    },
+                },
+            },
+        },
+    });
 
-<a href="./">
-    <img src="/logos/tech/ci-cd/kubernetes.png" align="right" width="150" style="margin: 0 0 32px 16px;">
-</a>
+    return new Dictionary<string, object?>
+    {
+        ["name"] = deployment.Metadata.Apply(m => m.Name),
+    };
+});
+```
 
-The [Pulumi Kubernetes Operator][k8s-operator] is an [extension pattern][k8s-ext-pattern] that
-enables Kubernetes users to create a `Stack` as a first-class API
-resource, and use the `StackController` to drive the updates of the Stack until
-success.
+{{% /choosable %}}
+{{% choosable language java %}}
 
-Deploying [Pulumi Stacks][stack] in Kubernetes provides the capability to build
-out CI/CD and automation systems into your clusters, creating native support to manage your infrastructure alongside your Kubernetes workloads.
+```java
+import com.pulumi.Pulumi;
+import com.pulumi.kubernetes.apps.v1.Deployment;
+import com.pulumi.kubernetes.apps.v1.DeploymentArgs;
+import com.pulumi.kubernetes.apps.v1.inputs.DeploymentSpecArgs;
+import com.pulumi.kubernetes.core.v1.inputs.ContainerArgs;
+import com.pulumi.kubernetes.core.v1.inputs.PodSpecArgs;
+import com.pulumi.kubernetes.core.v1.inputs.PodTemplateSpecArgs;
+import com.pulumi.kubernetes.meta.v1.inputs.LabelSelectorArgs;
+import com.pulumi.kubernetes.meta.v1.inputs.ObjectMetaArgs;
+import java.util.Map;
 
-[Get started][k8s-operator-cicd] with the Pulumi Kubernetes Operator in your [continuous delivery][pulumi-cd] pipelines.
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(ctx -> {
+            var labels = Map.of("app", "nginx");
 
-[k8s-operator]: https://github.com/pulumi/pulumi-kubernetes-operator
-[k8s-ext-pattern]: https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
-[stack]: /docs/concepts/stack
-[k8s-operator-cicd]: /docs/guides/continuous-delivery/pulumi-kubernetes-operator
-[pulumi-cd]: /docs/guides/continuous-delivery
+            var deployment = new Deployment("nginx", DeploymentArgs.builder()
+                .spec(DeploymentSpecArgs.builder()
+                    .selector(LabelSelectorArgs.builder()
+                        .matchLabels(labels)
+                        .build())
+                    .replicas(1)
+                    .template(PodTemplateSpecArgs.builder()
+                        .metadata(ObjectMetaArgs.builder()
+                            .labels(labels)
+                            .build())
+                        .spec(PodSpecArgs.builder()
+                            .containers(ContainerArgs.builder()
+                                .name("nginx")
+                                .image("nginx")
+                                .build())
+                            .build())
+                        .build())
+                    .build())
+                .build());
+
+            ctx.export("name", deployment.metadata().applyValue(m -> m.name().orElse("")));
+        });
+    }
+}
+```
+
+{{% /choosable %}}
+{{% choosable language yaml %}}
+
+```yaml
+variables:
+  appLabels:
+    app: nginx
+
+resources:
+  nginx:
+    type: kubernetes:apps/v1:Deployment
+    properties:
+      spec:
+        selector:
+          matchLabels: ${appLabels}
+        replicas: 1
+        template:
+          metadata:
+            labels: ${appLabels}
+          spec:
+            containers:
+              - name: nginx
+                image: nginx
+
+outputs:
+  name: ${nginx.metadata.name}
+```
+
+{{% /choosable %}}
+{{% choosable language hcl %}}
+
+```hcl
+terraform {
+  required_providers {
+    kubernetes = {
+      source  = "pulumi/kubernetes"
+      version = "4.34.3"
+    }
+  }
+}
+
+locals {
+  labels = { app = "nginx" }
+}
+
+resource "kubernetes_apps_v1_deployment" "nginx" {
+  spec = {
+    selector = { match_labels = local.labels }
+    replicas = 1
+    template = {
+      metadata = { labels = local.labels }
+      spec = {
+        containers = [{
+          name  = "nginx"
+          image = "nginx"
+        }]
+      }
+    }
+  }
+}
+
+output "name" {
+  value = kubernetes_apps_v1_deployment.nginx.metadata.name
+}
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
+
+## Create a cluster
+
+The Kubernetes provider deploys to a running cluster. To create one with Pulumi, use your cloud's package:
+
+- [Amazon EKS](/registry/packages/eks/) creates an EKS cluster and the AWS resources it needs in a single component.
+- [AWS](/registry/packages/aws/), [Azure Native](/registry/packages/azure-native/), [Google Cloud](/registry/packages/gcp/), and [DigitalOcean](/registry/packages/digitalocean/) provide the lower-level resources for EKS, AKS, GKE, and DigitalOcean Kubernetes.
+
+The [Kubernetes templates](/dev/templates/kubernetes/) start a new project that creates a managed cluster on AWS, Azure, or Google Cloud. To deploy workloads to a cluster from the program that creates it, pass the cluster's kubeconfig to an [explicit provider](/docs/iac/concepts/providers/).
+
+## Learn more
+
+- [Pulumi and Kubernetes](/docs/integrations/clouds/kubernetes/) lists everything Pulumi offers for Kubernetes, including ESC integrations and policy packs.
+- [Dev Center tutorials](/dev/tutorials/) walk through complete scenarios, such as deploying Helm charts and managing resources with Server-Side Apply.
+- The [Pulumi Kubernetes Operator](/docs/integrations/clouds/kubernetes/pulumi-kubernetes-operator/) runs Pulumi stacks from inside a cluster, driven by `Stack` custom resources.
+- [Migrating from Kubernetes YAML](/docs/iac/guides/migration/migrating-to-pulumi/from-kubernetes/) shows how to bring existing manifests and Helm charts into Pulumi.

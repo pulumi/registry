@@ -24,14 +24,14 @@
   {{- $apiEntry := dict "title" "API Docs" "path" $apiPage.RelPermalink "hasChildren" true "children" $apiChildren -}}
   {{- $children = $children | append $apiEntry -}}
 {{- end -}}
-{{- /* How-to Guides */ -}}
-{{- $guidesPage := .GetPage (printf "/registry/packages/%s/how-to-guides" $packageName) -}}
+{{- /* Guides */ -}}
+{{- $guidesPage := .GetPage (printf "/registry/packages/%s/guides" $packageName) -}}
 {{- if $guidesPage -}}
   {{- $guideChildren := slice -}}
   {{- range $guidesPage.Pages -}}
     {{- $guideChildren = $guideChildren | append (dict "title" .Title "path" .RelPermalink) -}}
   {{- end -}}
-  {{- $guidesEntry := dict "title" "How-to Guides" "path" $guidesPage.RelPermalink "hasChildren" true "children" $guideChildren -}}
+  {{- $guidesEntry := dict "title" "Guides" "path" $guidesPage.RelPermalink "hasChildren" true "children" $guideChildren -}}
   {{- $children = $children | append $guidesEntry -}}
 {{- end -}}
 {{- dict "pages" $children | jsonify (dict "indent" "  ") -}}

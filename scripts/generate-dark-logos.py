@@ -23,6 +23,7 @@ Rules:
   * Packages whose YAML declares a `logo_url` are skipped too: icon.html short-
     circuits on that before it looks for a local mark, so the variant could never
     be served. Those go through scripts/classify-external-logos.py instead.
+  * Packages in HAND_DRAWN keep a variant drawn by hand and are left alone.
 
 `layouts/partials/registry/package/icon.html` picks the variant up automatically;
 there is nothing to register. Re-run after adding or replacing a local logo:
@@ -45,6 +46,9 @@ LOGO_DIR = os.path.join(
 )
 
 PACKAGE_DIR = os.path.join(ROOT, "themes", "default", "data", "registry", "packages")
+
+# Dark variants drawn by hand in the brand's dark avatar colors; without this the generator deletes them.
+HAND_DRAWN = {"delivery"}
 
 SUFFIX = "-on-dark.svg"
 
@@ -233,6 +237,9 @@ def main():
 
     for name in sources:
         base = name[:-len(".svg")]
+        if base in HAND_DRAWN:
+            skipped.append(name)
+            continue
         src_path = os.path.join(LOGO_DIR, name)
         dst_path = os.path.join(LOGO_DIR, base + SUFFIX)
 
@@ -279,7 +286,7 @@ def main():
     print("sources:  %d" % len(sources))
     print("written:  %d" % len(written))
     print("removed:  %d" % len(removed))
-    print("skipped:  %d (no dark paints, or an external logo_url)" % len(skipped))
+    print("skipped:  %d (no dark paints, an external logo_url, or hand-drawn)" % len(skipped))
     return 0
 
 

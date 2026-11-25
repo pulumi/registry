@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-std/v2.3.2/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-std/v2.3.3/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-std/blob/v2.3.2/docs/installation-configuration.md
+edit_url: https://github.com/pulumi/pulumi-std/blob/v2.3.3/docs/installation-configuration.md
 title: Installation & Configuration
 meta_desc: Information on how to install the Pulumi Standard Library provider.
 layout: installation

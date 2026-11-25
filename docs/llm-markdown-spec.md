@@ -77,7 +77,7 @@ All multi-language content in `cli.md` files is wrapped in **chooser comments**.
 
 1. A `<!-- chooser: language -->` block always ends with `<!-- /chooser -->`.
 2. Each `<!-- option: {tag} -->` block ends with `<!-- /option -->`.
-3. Language tags are: `typescript`, `python`, `go`, `csharp`, `java`, `yaml`.
+3. Language tags are: `typescript`, `python`, `go`, `csharp`, `java`, `yaml`, `hcl`.
    - Note: TypeScript is used for Node.js (the tag is `typescript`, not `nodejs`).
 4. Not all languages are present in every chooser block. A language is omitted if the provider doesn't support it or if no data exists for that language.
 5. Chooser blocks can appear anywhere in the document: examples, constructors, properties, methods, etc.
@@ -323,8 +323,15 @@ The `llm-sitemap.json` file describes the navigable pages for a package.
       ]
     },
     {
-      "title": "How-to Guides",
-      "path": "/registry/packages/{name}/how-to-guides/"
+      "title": "Guides",
+      "path": "/registry/packages/{name}/guides/",
+      "hasChildren": true,
+      "children": [
+        {
+          "title": "{Guide Title}",
+          "path": "/registry/packages/{name}/guides/{guide}/"
+        }
+      ]
     }
   ]
 }
@@ -342,10 +349,10 @@ The `llm-sitemap.json` file describes the navigable pages for a package.
 
 ### Notes
 
-- Only the "API Docs" entry has `hasChildren` and `children`.
+- Only the "API Docs" and "Guides" entries have `hasChildren` and `children`.
 - Children list the top-level modules/sections under API docs. Individual resources and functions within modules are not listed in the sitemap — they are discoverable from the module pages or by constructing URLs from the provider schema.
 - The sitemap is only generated for package root pages. Requesting `llm-sitemap.json` for a subpage returns an empty JSON object `{}`.
-- "Installation & Configuration" and "How-to Guides" entries are only present if those pages exist for the package. Only a handful of packages have "How-to Guides" pages today — they are the hand-maintained migration guides (for example, under `aws`, `gcp`, `eks`, and `kubernetes`).
+- "Installation & Configuration" and "Guides" entries are only present if those pages exist for the package. Only a handful of packages have "Guides" pages today — they are the hand-maintained migration guides (for example, under `aws`, `azure-native`, `gcp`, `eks`, and `kubernetes`).
 
 ---
 

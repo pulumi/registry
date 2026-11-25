@@ -14,9 +14,11 @@ import "./toc";
 import "./pulumi-ai-menu";
 import "./copy-llm-prompt";
 import "./docs-main";
+import "./sidebar-position";
 import "./docs-theme";
 import "./algolia/autocomplete";
 import "./consent-manager";
+import "./consent-media";
 
 // Register all Stencil components.
 defineCustomElements();

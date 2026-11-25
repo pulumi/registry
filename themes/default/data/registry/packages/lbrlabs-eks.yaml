@@ -2,6 +2,8 @@
 # Do not edit by hand unless you're certain you know what you are doing!
 category: Cloud
 component: true
+deprecated: true
+deprecation_reason: Active development has stopped.
 description: A batteries included EKS cluster following best practices.
 featured: false
 keywords:

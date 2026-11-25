@@ -19,16 +19,20 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    env:
-      ESC_ACTION_OIDC_AUTH: true
-      ESC_ACTION_OIDC_ORGANIZATION: pulumi
-      ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
     steps:
+      - name: Authenticate to Pulumi Cloud
+        id: pulumi-auth
+        uses: pulumi/auth-actions@273044cc19e63ea565285da8edd4e059126a0bdb # v2.1.2
+        with:
+          organization: pulumi
+          requested-token-type: urn:pulumi:token-type:access_token:organization
+          export-environment-variables: false
       - name: Fetch secrets from ESC
         id: esc-secrets
-        uses: pulumi/esc-action@32dda43ffe7a2ab21e6bce11c781b44a3e5623cf # v3
+        uses: pulumi/esc-action@eec71a90d9989af7ff14bd700b83fc72fae36119 # v4.0.0
         with:
-          environment: github-secrets/pulumi-registry
+          pulumi-access-token: ${{ steps.pulumi-auth.outputs.pulumi-access-token }}
+          environment: pulumi/github-secrets/pulumi-registry
           export-environment-variables: false
       - uses: actions/checkout@v7
         with:
@@ -39,8 +43,9 @@ jobs:
           python-version: '3.12'
       - name: Set up Go, opting out of the repo-root module cache key
         uses: actions/setup-go@v7
+        id: setup-go
         with:
-          go-version: '1.26'
+          go-version-file: tools/resourcedocsgen/go.mod
           cache: false
       - name: Get registry-mirror-tools version
         id: mirror-version
@@ -57,7 +62,7 @@ jobs:
           path: |
             bin/registry-mirror-discover
             bin/registry-mirror-publish
-          key: registry-mirror-tools-bins-${{ runner.os }}-${{ steps.mirror-version.outputs.hash }}
+          key: registry-mirror-tools-bins-${{ runner.os }}-${{ steps.mirror-version.outputs.hash }}-go${{ steps.setup-go.outputs.go-version }}
       - name: Configure git for private Go modules
         run: git config --global url."https://${{ steps.esc-secrets.outputs.PULUMI_BOT_TOKEN }}:x-oauth-basic@github.com/pulumi/registry-mirror-tools".insteadOf "https://github.com/pulumi/registry-mirror-tools"
       - name: Install registry-mirror-tools

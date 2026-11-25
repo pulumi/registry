@@ -12,7 +12,7 @@ The AzureAD provider must be configured with credentials to deploy and update re
 <!---
 javascript removed
 --->
-{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+{{< chooser language "typescript,python,go,csharp,java,yaml,hcl" >}}
 
 {{% choosable language typescript %}}
 
@@ -20,7 +20,8 @@ javascript removed
 import * as azad from "@pulumi/azuread";
 
 const group = new azad.Group("my-group", {
-    name: "my-group",
+    displayName: "my-group",
+    securityEnabled: true,
 });
 ```
 
@@ -31,7 +32,8 @@ const group = new azad.Group("my-group", {
 import pulumi_azuread as azad
 
 group = azad.Group("my-group",
-            name="my-group")
+            display_name="my-group",
+            security_enabled=True)
 ```
 
 {{% /choosable %}}
@@ -40,13 +42,14 @@ group = azad.Group("my-group",
 ```go
 import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	azad "github.com/pulumi/pulumi-azuread/sdk/v4/go/azuread"
+	azad "github.com/pulumi/pulumi-azuread/sdk/v6/go/azuread"
 )
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		group, err := azad.NewGroup(ctx, "my-group", &azad.GroupArgs{
-			Name: pulumi.String("my-group"),
+		_, err := azad.NewGroup(ctx, "my-group", &azad.GroupArgs{
+			DisplayName:     pulumi.String("my-group"),
+			SecurityEnabled: pulumi.Bool(true),
 		})
 		if err != nil {
 			return err
@@ -69,7 +72,8 @@ await Deployment.RunAsync(() =>
 {
     var group = new Group("my-group", new GroupArgs
     {
-        Name = "my-group",
+        DisplayName = "my-group",
+        SecurityEnabled = true,
     });
 });
 ```
@@ -90,7 +94,8 @@ public class App {
 
     private static void stack(Context ctx) {
 		final var group = new Group("my-group", GroupArgs.builder()
-			.name("my-group")
+			.displayName("my-group")
+			.securityEnabled(true)
 			.build());
 	}
 }
@@ -104,7 +109,27 @@ resources:
   my-group:
     type: azuread:Group
     properties:
-      name: my-group
+      displayName: my-group
+      securityEnabled: true
+```
+
+{{% /choosable %}}
+
+{{% choosable language hcl %}}
+
+```hcl
+terraform {
+  required_providers {
+    azuread = {
+      source = "pulumi/azuread"
+    }
+  }
+}
+
+resource "azuread_group" "my-group" {
+  display_name     = "my-group"
+  security_enabled = true
+}
 ```
 
 {{% /choosable %}}

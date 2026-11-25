@@ -16,7 +16,7 @@ The Amazon EKS provider is available as a package in all Pulumi languages:
 
 * JavaScript/TypeScript: [`@pulumi/eks`](https://www.npmjs.com/package/@pulumi/eks)
 * Python: [`pulumi_eks`](https://pypi.org/project/pulumi-eks/)
-* Go: [`github.com/pulumi/pulumi-eks/sdk/go/eks`](https://github.com/pulumi/pulumi-eks)
+* Go: [`github.com/pulumi/pulumi-eks/sdk/v4/go/eks`](https://pkg.go.dev/github.com/pulumi/pulumi-eks/sdk/v4/go/eks)
 * .NET: [`Pulumi.Eks`](https://www.nuget.org/packages/Pulumi.Eks)
 * Java: [`com.pulumi.eks`](https://search.maven.org/search?q=com.pulumi.eks)
 
@@ -24,10 +24,10 @@ The Amazon EKS provider is available as a package in all Pulumi languages:
 
 Before getting started, you will need to install some pre-requisites:
 
-* [AWS CLI version 1.16.156 or later](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html):
+* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html):
   Amazon EKS uses IAM to provide secure authentication to your Kubernetes cluster.
 
 These are not required but are recommended if you plan on interacting with your Kubernetes cluster:
 
 * [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/): the standard Kubernetes command line interface.
-* [`helm`](https://helm.sh/docs/using_helm/): if you plan on deploying Helm charts to your cluster.
+* [`helm`](https://helm.sh/docs/intro/install/): if you plan on deploying Helm charts to your cluster.

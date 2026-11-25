@@ -139,18 +139,16 @@ pulumi-chooser {
             }
         }
 
-        // Code units (.highlight / .example-program) carry their spacing on the
-        // wrapper and collapse it at the choosable's edges so the card padding isn't
-        // doubled (first → bottom only, last → top only). The pre itself stays
-        // margin-free vertically (my-0, not just mb-0): unlike docs, the registry's
-        // base pre has a top margin that would otherwise leak past the toolbar in the
-        // flush code-only case.
+        // Code units (.highlight) carry their spacing on the wrapper and collapse it
+        // at the choosable's edges so the card padding isn't doubled (first → bottom
+        // only, last → top only). The pre itself stays margin-free vertically (my-0,
+        // not just mb-0): unlike docs, the registry's base pre has a top margin that
+        // would otherwise leak past the toolbar in the flush code-only case.
         pre {
             @apply my-0;
         }
 
-        pulumi-choosable > div > .highlight,
-        pulumi-choosable > div > .example-program {
+        pulumi-choosable > div > .highlight {
             @apply my-4;
 
             &:first-child {
@@ -164,15 +162,8 @@ pulumi-chooser {
 
         // A paragraph/list above already supplies bottom margin; drop the unit's top
         // margin to avoid a doubled gap.
-        pulumi-choosable > div > :is(p, ul, ol) + .highlight,
-        pulumi-choosable > div > :is(p, ul, ol) + .example-program {
+        pulumi-choosable > div > :is(p, ul, ol) + .highlight {
             @apply mt-0;
-        }
-
-        // Drop the footer's bottom margin so the .example-program wrapper is the sole
-        // source of the unit's trailing space.
-        pulumi-choosable .example-program-footer {
-            @apply mb-0;
         }
 
         // Standalone choosers (self-closing shortcode form; the choosables are
@@ -193,11 +184,11 @@ pulumi-chooser {
         }
 
         // Code-only choosers (every choosable holds exactly one code block and
-        // nothing else): run the code flush to the card edges, like example-program
-        // choosers. The pair of :has() conditions means "some choosable has a lone
-        // .highlight, and none has anything more". CSS can't see bare text nodes,
-        // so a choosable mixing loose text with a code block still counts as
-        // code-only — keep prose in real elements (<p>) inside choosables.
+        // nothing else): run the code flush to the card edges. The pair of :has()
+        // conditions means "some choosable has a lone .highlight, and none has
+        // anything more". CSS can't see bare text nodes, so a choosable mixing loose
+        // text with a code block still counts as code-only — keep prose in real
+        // elements (<p>) inside choosables.
         &:has(pulumi-choosable > div > .highlight:only-child):not(:has(pulumi-choosable > div > :not(.highlight:only-child))) {
             @apply px-0 pb-0;
 
@@ -210,25 +201,6 @@ pulumi-chooser {
 
                 pre {
                     @apply rounded-none mb-0;
-                }
-            }
-        }
-
-        // Example-program-only choosers: run the panel flush to the card edges (drop
-        // card padding; overflow-hidden clips the square corners to the card radius).
-        &:has(> .example-program) {
-            @apply px-0 pb-0;
-
-            .chooser-toolbar {
-                @apply mx-0 mb-0;
-            }
-
-            > .example-program {
-                pre,
-                .code-max-h,
-                .highlight,
-                .example-program-footer {
-                    @apply mb-0 rounded-none;
                 }
             }
         }

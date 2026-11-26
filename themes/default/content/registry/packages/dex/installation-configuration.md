@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.8.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.8.1/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/kotaicode/pulumi-dex/blob/v0.8.0/docs/installation-configuration.md
+edit_url: https://github.com/kotaicode/pulumi-dex/blob/v0.8.1/docs/installation-configuration.md
 title: Installation and Configuration
 meta_desc: Learn how to install and configure the Dex provider for Pulumi.
 layout: package
@@ -21,10 +21,10 @@ npm install @kotaicode/pulumi-dex
 
 ### Go
 
-Install the provider using `go get` (fetches the Go module at `sdk/go`; the package import path is `.../sdk/go/dex`):
+Install the provider using `go get` (the Go module lives in `sdk/`; the package import path is `.../sdk/go/dex`):
 
 ```bash
-go get github.com/kotaicode/pulumi-dex/sdk/go
+go get github.com/kotaicode/pulumi-dex/sdk
 ```
 
 ### Python
@@ -40,8 +40,10 @@ pip install pulumi-dex
 The provider binary is automatically downloaded by Pulumi when you use the provider. If you need to install it manually:
 
 ```bash
-pulumi plugin install resource dex v0.1.0
+pulumi plugin install resource dex v<version> --server github://api.github.com/kotaicode/pulumi-dex
 ```
+
+Use the same version as your SDK package (for npm: `npm ls @kotaicode/pulumi-dex`).
 
 Or download from [GitHub Releases](https://github.com/kotaicode/pulumi-dex/releases).
 
@@ -214,7 +216,7 @@ To build, generate SDKs, and test against a local Dex instance:
    ```bash
    make install
    ```
-   Or manually: `pulumi plugin install resource dex v0.1.0 --file bin/pulumi-resource-dex`
+   Or manually: `pulumi plugin install resource dex v<version> --file bin/pulumi-resource-dex`, where `<version>` is the `VERSION` set in the Makefile
 
 3. **Start local Dex** (Docker required):
    ```bash
@@ -234,11 +236,11 @@ To build, generate SDKs, and test against a local Dex instance:
 5. **Test the Go SDK** (optional). In a separate Go project:
    ```bash
    go mod init myapp
-   go get github.com/kotaicode/pulumi-dex/sdk/go
+   go get github.com/kotaicode/pulumi-dex/sdk
    ```
    Then use `import "github.com/kotaicode/pulumi-dex/sdk/go/dex"` in your Pulumi program. To test against the provider repo before publishing, use a `replace` in your `go.mod`:
    ```go
-   replace github.com/kotaicode/pulumi-dex/sdk/go => /path/to/pulumi-provider-dex/sdk/go
+   replace github.com/kotaicode/pulumi-dex/sdk => /path/to/pulumi-dex/sdk
    ```
 
 6. **Stop Dex when done**: `make dex-down` (from repo root).

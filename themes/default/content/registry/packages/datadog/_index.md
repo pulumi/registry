@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-datadog/v5.21.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/pulumi/pulumi-datadog/v5.22.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/pulumi/pulumi-datadog/blob/v5.21.0/docs/_index.md
+edit_url: https://github.com/pulumi/pulumi-datadog/blob/v5.22.0/docs/_index.md
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Datadog Provider
 meta_desc: Provides an overview on how to configure the Pulumi Datadog provider.
@@ -76,7 +76,7 @@ The provider uses pup only when no other credentials are configured. API and app
 - `httpClientRetryMaxRetries` (Number) The HTTP request maximum retry number. Defaults to 3.
 - `httpClientRetryTimeout` (Number) The HTTP request retry timeout period. Defaults to 60 seconds.
 - `ignoreTagKeys` (Set of String) [Experimental - Monitors and Service Level Objectives only] Tag keys whose drift Pulumi should ignore across all resources that support `ignoreTagKeys`. A resource's own `ignoreTagKeys` is merged with this list for that resource. Any `:value` suffix is ignored.
-- `orgUuid` (String) The organization UUID; required for AWS WIF and for `usePup`. Optional for Pulumi Dynamic Provider Credentials, but when configured it must match the organization UUID in the token audience. This can also be set using the `DD_ORG_UUID` environment variable. See the [Datadog API documentation](https://docs.datadoghq.com/api/v1/organizations/) for more information.
+- `orgUuid` (String) The organization UUID; required for AWS WIF and for `usePup`. Optional for Pulumi Dynamic Provider Credentials, but when configured it must match the organization UUID in the token audience. This can also be set using the `DD_ORG_UUID` environment variable. See the [Datadog API documentation](https://docs.datadoghq.com/api/latest/organizations/) for more information.
 - `usePup` (Boolean) Get a bearer token from the pup CLI (pup auth token) after you run pup auth login, so you don't need to store an API key, application key, or access token. Used only when api_key, app_key, bearer_token, cloud provider authentication, and HCP Pulumi dynamic provider credentials are all absent. The provider requests a new token when the current one expires, and fails if pup is then logged in as a different user. Requires org_uuid, and every token must belong to that organization. You can also set this with the `DD_USE_PUP` environment variable.
 - `validate` (String) Enables credential validation during provider initialization. Valid values are [`true`, `false`]. Default is true. When false, initial credential validation is skipped.
 - `workloadIdentityTokenTag` (String) Selects the HCP Pulumi workload identity token tag for this provider configuration, for example DATADOG_ORG_A selects TFC_WORKLOAD_IDENTITY_TOKEN_DATADOG_ORG_A. When set, that token must be present and have a valid Datadog audience; no other token or environment authentication is used as fallback. Explicit API/application keys, bearer_token, or cloudProviderType take precedence. When unset or empty, automatically tries the DATADOG tag and then the untagged token. Tags may contain only letters, numbers, and underscores; TYPE is reserved.

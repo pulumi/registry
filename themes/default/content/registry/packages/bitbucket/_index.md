@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/drfaust92/bitbucket/2.55.2/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/drfaust92/bitbucket/2.57.0/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Bitbucket Provider
@@ -58,6 +58,19 @@ The following configuration inputs are supported in the provider configuration:
   or `BITBUCKET_ACCESS_TOKEN` environment variable. Access tokens are not tied
   to a user, so `bitbucket.getCurrentUser`, the group resources and functions,
   and deploy keys don't work with them.
+
+* `apiUrl` - (Optional) Base URL of the Bitbucket Cloud API, for example to go
+  through a proxy or an API mock. You can also set this via the
+  `BITBUCKET_API_URL` environment variable. Defaults to `https://api.bitbucket.org/`.
+
+* `timeout` - (Optional) Timeout of each API request, as a duration such as
+  `30s` or `5m`. You can also set this via the `BITBUCKET_TIMEOUT` environment
+  variable. Defaults to `2m`.
+
+* `maxRetries` - (Optional) How many times to retry a request that Bitbucket
+  rate limits (HTTP 429), waiting as long as its `Retry-After` header asks.
+  You can also set this via the `BITBUCKET_MAX_RETRIES` environment variable.
+  Defaults to `5`.
 ## Permission Scopes
 
 To interact with the Bitbucket API, an [API Token](https://support.atlassian.com/bitbucket-cloud/docs/api-tokens/)

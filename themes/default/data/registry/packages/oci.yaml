@@ -13,7 +13,7 @@ name: oci
 package_status: ga
 publisher: Pulumi
 repo_url: https://github.com/pulumi/pulumi-oci
-schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-oci/v5.8.0/provider/cmd/pulumi-resource-oci/schema.json
+schema_file_url: https://raw.githubusercontent.com/pulumi/pulumi-oci/v5.9.0/provider/cmd/pulumi-resource-oci/schema.json
 title: Oracle Cloud Infrastructure
-updated_on: 1795060663
-version: v5.8.0
+updated_on: 1795665662
+version: v5.9.0

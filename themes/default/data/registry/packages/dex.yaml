@@ -9,7 +9,7 @@ name: dex
 package_status: public_preview
 publisher: Kotaicode GmbH
 repo_url: https://github.com/kotaicode/pulumi-dex
-schema_file_url: https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.8.1/schema.json
+schema_file_url: https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.10.0/schema.json
 title: Dex
-updated_on: 1795643804
-version: v0.8.1
+updated_on: 1795698609
+version: v0.10.0

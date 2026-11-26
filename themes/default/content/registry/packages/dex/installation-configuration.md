@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.8.1/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.10.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/kotaicode/pulumi-dex/blob/v0.8.1/docs/installation-configuration.md
+edit_url: https://github.com/kotaicode/pulumi-dex/blob/v0.10.0/docs/installation-configuration.md
 title: Installation and Configuration
 meta_desc: Learn how to install and configure the Dex provider for Pulumi.
 layout: package

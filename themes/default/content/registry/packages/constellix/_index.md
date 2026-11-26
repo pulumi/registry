@@ -1,5 +1,5 @@
 ---
-# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/constellix/constellix/0.4.6/index.md
+# WARNING: this file was fetched from https://djoiyj6oj2oxz.cloudfront.net/docs/registry.opentofu.org/constellix/constellix/0.4.7/index.md
 # Do not edit by hand unless you're certain you know what you are doing!
 # *** WARNING: This file was auto-generated. Do not edit by hand unless you're certain you know what you are doing! ***
 title: Constellix Provider
@@ -262,11 +262,11 @@ public class App {
             .name("domain1.com")
             .soa(Map.ofEntries(
                 Map.entry("primary_nameserver", "ns41.constellix.com."),
-                Map.entry("ttl", 1800),
-                Map.entry("refresh", 48100),
-                Map.entry("retry", 7200),
-                Map.entry("expire", 1209),
-                Map.entry("negcache", 8000)
+                Map.entry("ttl", "1800"),
+                Map.entry("refresh", "48100"),
+                Map.entry("retry", "7200"),
+                Map.entry("expire", "1209"),
+                Map.entry("negcache", "8000")
             ))
             .build());
 

@@ -9,7 +9,7 @@ name: constellix
 package_status: public_preview
 publisher: constellix
 repo_url: https://github.com/constellix/terraform-provider-constellix
-schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/constellix/constellix/0.4.6/schema.json
+schema_file_url: https://djoiyj6oj2oxz.cloudfront.net/schemas/registry.opentofu.org/constellix/constellix/0.4.7/schema.json
 title: constellix
-updated_on: 1741390552
-version: 0.4.6
+updated_on: 1795736105
+version: 0.4.7

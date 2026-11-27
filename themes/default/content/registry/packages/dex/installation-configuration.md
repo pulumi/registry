@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.10.0/docs/installation-configuration.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.12.0/docs/installation-configuration.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/kotaicode/pulumi-dex/blob/v0.10.0/docs/installation-configuration.md
+edit_url: https://github.com/kotaicode/pulumi-dex/blob/v0.12.0/docs/installation-configuration.md
 title: Installation and Configuration
 meta_desc: Learn how to install and configure the Dex provider for Pulumi.
 layout: package
@@ -57,11 +57,14 @@ The provider requires configuration to connect to your Dex gRPC API.
 
 ### Optional Configuration
 
-- **`caCert`** (string, secret): PEM-encoded CA certificate for validating Dex's TLS certificate
-- **`clientCert`** (string, secret): PEM-encoded client certificate for mTLS authentication
+- **`caCert`** (string, secret): PEM-encoded CA certificate that issued Dex's TLS certificate. When set, only this CA is trusted instead of the system's root CAs
+- **`clientCert`** (string, secret): PEM-encoded client certificate for mTLS; requires `clientKey`
 - **`clientKey`** (string, secret): PEM-encoded private key for the client certificate
-- **`insecureSkipVerify`** (boolean): Skip TLS verification (development only, default: `false`)
+- **`insecureSkipVerify`** (boolean): TLS without certificate verification (development only, default: `false`); the connection is still encrypted
+- **`plaintext`** (boolean): Connect without TLS (default: `false`). Only for a Dex whose gRPC API has no TLS and is reachable only on a trusted network, such as localhost or inside a cluster. Cannot be combined with the TLS options
 - **`timeoutSeconds`** (number): Per-RPC timeout in seconds (default: `5`)
+
+Without TLS options the provider connects with TLS 1.2 or later and verifies Dex's certificate and host name against the system's root CAs. It never falls back to plaintext.
 
 ### Configuration Examples
 
@@ -80,10 +83,10 @@ const provider = new dex.Provider("dex", {
     timeoutSeconds: 10,
 });
 
-// Development configuration (insecure)
+// Local Dex without TLS (for example the docker-compose setup)
 const devProvider = new dex.Provider("dex-dev", {
     host: "localhost:5557",
-    insecureSkipVerify: true,
+    plaintext: true,
 });
 ```
 
@@ -136,13 +139,13 @@ provider = dex.Provider("dex",
 # Development configuration
 dev_provider = dex.Provider("dex-dev",
     host="localhost:5557",
-    insecure_skip_verify=True
+    plaintext=True
 )
 ```
 
 ### Environment Variables
 
-You can also configure the provider using environment variables, though you'll still need to create a provider instance in your Pulumi program:
+The provider does not read environment variables itself. To take settings from the environment, read them in your Pulumi program:
 
 ```bash
 export DEX_HOST="dex.example.com:5557"
@@ -208,9 +211,9 @@ To build, generate SDKs, and test against a local Dex instance:
 1. **Build the provider and generate schema/SDKs** (from repo root):
    ```bash
    make build
-   make generate-schema   # writes schema.json from the built binary (needs Pulumi CLI)
-   make generate-sdks     # generates TypeScript, Go, and Python SDKs from schema.json
+   make generate-sdks     # builds, writes schema.json from the binary, then generates the TypeScript, Go and Python SDKs
    ```
+   Generation needs the Pulumi CLI version in `.pulumi.version`; with another version `make` prints a warning, and CI fails because the generated code may differ. Any failed step makes `make` fail. CI regenerates schema and SDKs and fails if the committed files differ, so commit the regenerated `schema.json` and `sdk/` together with provider changes.
 
 2. **Install the provider so Pulumi can find it**:
    ```bash
@@ -247,7 +250,7 @@ To build, generate SDKs, and test against a local Dex instance:
 
 ## Security Best Practices
 
-1. **Use TLS/mTLS in Production**: Never use `insecureSkipVerify: true` in production
+1. **Use TLS/mTLS in Production**: Never use `insecureSkipVerify: true` or `plaintext: true` for a Dex outside your machine or cluster
 2. **Protect Secrets**: Use Pulumi secrets for sensitive configuration:
    ```typescript
    const provider = new dex.Provider("dex", {
@@ -268,10 +271,16 @@ To build, generate SDKs, and test against a local Dex instance:
 - Check network connectivity to Dex host:port
 - Verify firewall rules allow gRPC traffic
 
-**Error: `certificate verify failed`**
-- Ensure CA certificate matches Dex's certificate chain
+**Error: `did not answer with TLS`**
+- This Dex serves its gRPC API without TLS. Set `plaintext: true` if it is only reachable on a trusted network, or enable TLS in Dex (`grpc.tlsCert`, `grpc.tlsKey`)
+
+**Error: `is not trusted by this system` or `is not issued by the CA in caCert`**
+- Set `caCert` to the CA certificate that issued Dex's gRPC certificate
 - Check certificate expiration dates
-- For development, use `insecureSkipVerify: true` (not recommended for production)
+- For development only, `insecureSkipVerify: true` skips the check
+
+**Error: `rejected the TLS connection`**
+- Dex requires client certificates (`grpc.tlsClientCA`): set `clientCert` and `clientKey`, signed by a CA Dex trusts
 
 ### Authentication Errors
 

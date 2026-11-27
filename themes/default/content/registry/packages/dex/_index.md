@@ -1,7 +1,7 @@
 ---
-# WARNING: this file was fetched from https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.10.0/docs/_index.md
+# WARNING: this file was fetched from https://raw.githubusercontent.com/kotaicode/pulumi-dex/v0.12.0/docs/_index.md
 # Do not edit by hand unless you're certain you know what you are doing!
-edit_url: https://github.com/kotaicode/pulumi-dex/blob/v0.10.0/docs/_index.md
+edit_url: https://github.com/kotaicode/pulumi-dex/blob/v0.12.0/docs/_index.md
 title: Dex Provider
 meta_desc: A Pulumi provider for managing Dex (dexidp.io) resources via infrastructure as code.
 layout: package
@@ -32,12 +32,11 @@ import * as fs from "fs";
 // Configure the provider
 const provider = new dex.Provider("dex", {
     host: "dex.example.com:5557",
-    // For production, use TLS/mTLS:
+    // TLS is the default. For a certificate from a private CA and for mTLS:
     // caCert: fs.readFileSync("certs/ca.crt", "utf-8"),
     // clientCert: fs.readFileSync("certs/client.crt", "utf-8"),
     // clientKey: fs.readFileSync("certs/client.key", "utf-8"),
-    // For development:
-    insecureSkipVerify: true,
+    // For a local Dex without TLS: plaintext: true,
 });
 
 // Create an OAuth2 client
@@ -76,8 +75,7 @@ func main() {
     pulumi.Run(func(ctx *pulumi.Context) error {
         // Configure the provider
         provider, err := dex.NewProvider(ctx, "dex", &dex.ProviderArgs{
-            Host:              pulumi.String("dex.example.com:5557"),
-            InsecureSkipVerify: pulumi.Bool(true),
+            Host: pulumi.String("dex.example.com:5557"), // TLS by default; Plaintext: pulumi.Bool(true) for a local Dex without TLS
         })
         if err != nil {
             return err
@@ -123,8 +121,7 @@ import pulumi_dex as dex
 
 # Configure the provider
 provider = dex.Provider("dex",
-    host="dex.example.com:5557",
-    insecure_skip_verify=True
+    host="dex.example.com:5557",  # TLS by default; plaintext=True for a local Dex without TLS
 )
 
 # Create an OAuth2 client

@@ -12,7 +12,7 @@ name: incident
 package_status: ga
 publisher: incident-io
 repo_url: https://github.com/incident-io/pulumi-incident
-schema_file_url: https://raw.githubusercontent.com/incident-io/pulumi-incident/v1.0.0/provider/cmd/pulumi-resource-incident/schema.json
+schema_file_url: https://raw.githubusercontent.com/incident-io/pulumi-incident/v1.1.0/provider/cmd/pulumi-resource-incident/schema.json
 title: incident.io
-updated_on: 1795494424
-version: v1.0.0
+updated_on: 1795839787
+version: v1.1.0

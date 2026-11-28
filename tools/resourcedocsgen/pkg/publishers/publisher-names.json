@@ -123,6 +123,7 @@
     "nats-io": "nats-io",
     "netapp": "netapp",
     "netlify": "netlify",
+    "octopusdeploy": "octopusdeploy",
     "octopusdeploylabs": "octopusdeploylabs",
     "onelogin": "onelogin",
     "opennebula": "opennebula",
